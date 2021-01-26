@@ -2,6 +2,9 @@
 title: "Dns Settings on Archlinux"
 date: 2021-01-26T21:43:35+08:00
 draft: false
+keywords: ["Archlinux"]
+tags: ["Archlinux"]
+categories: ["GNU/Linux"]
 ---
 
 ## Arch Linux DNS设置
