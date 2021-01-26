@@ -1,0 +1,6 @@
+baseURL = "https://ayamir.github.io/"
+languageCode = "zh-cn"
+title = "Ayamir's Personal Blog"
+theme = "base16"
+publishDir = "docs"
+pygmentsuseclasses = true
