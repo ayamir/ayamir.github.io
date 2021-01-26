@@ -14,7 +14,7 @@ sudo pacman -S dnsmasq
 
 2. 配置`/etc/resolv.conf`中的域名代理服务器
 
-```shell
+```sh
 # Tencent
 nameserver 119.29.29.29
 nameserver 182.254.118.118
@@ -56,9 +56,7 @@ sudo chattr +i /etc/resolv.conf
 4. 减少主机名查找时间
 
 ```sh
-sudo vim /etc/resolv.conf.tail
-
-option timeout:1
+sudo echo "options timeout:1" > /etc/resolv.conf.tail
 ```
 
 5. 启动`dnsmasq`
