@@ -1,6 +1,6 @@
 ---
 title: "Linux Authority"
-date: 2021-03-07T12:43:35+08:00
+date: 2021-03-07T13:31:59+08:00
 draft: false
 keywords: ["GNU/Linux"]
 tags: ["GNU/Linux"]
