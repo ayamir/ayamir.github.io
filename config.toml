@@ -29,12 +29,6 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Enginee
   highlightTag = "em"
   absoluteURL = false
 
-[params.header]
-  desktopMode = "fixed"
-  mobileMode = "auto"
-  [params.header.title]
-  typeit =true
-
 [params.footer]
   enable = true
   custom = ''
