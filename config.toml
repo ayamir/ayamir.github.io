@@ -8,6 +8,7 @@ enableRobotsTXT = true
 enableEmoji = true
 theme = "LoveIt"
 defaultTheme = "auto"
+publishDir = "docs"
 
 [params]
   # LoveIt 主题版本
