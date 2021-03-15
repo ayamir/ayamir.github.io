@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Ayamir&#39;s Blog</title>
+    <link>https://ayamir.github.io/post/</link>
+    <description>Recent content in Posts on Ayamir&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 26 Jan 2021 21:43:35 +0800</lastBuildDate><atom:link href="https://ayamir.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dns Settings on Archlinux</title>
+      <link>https://ayamir.github.io/post/dns-settings-on-archlinux/</link>
+      <pubDate>Tue, 26 Jan 2021 21:43:35 +0800</pubDate>
+      
+      <guid>https://ayamir.github.io/post/dns-settings-on-archlinux/</guid>
+      <description>Arch Linux DNS设置 安装dnsmasq sudo pacman -S dnsmasq 配置/etc/resolv.conf中的域名代理服务器 # Tencent nameserver 119.29.29.29 nameserver 182.254.118.118 # Ali nameserver 223.5.5.5 nameserver 223.6.6.6 # OpenDNS IPv4 nameservers nameserver 208.67.222.222 nameserver 208.67.220.220 # OpenDNS IPv6</description>
+    </item>
+    
+    <item>
+      <title>Linux Authority</title>
+      <link>https://ayamir.github.io/post/linux-authority/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ayamir.github.io/post/linux-authority/</guid>
+      <description>文件和目录的权限 权限属性： id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多</description>
+    </item>
+    
+  </channel>
+</rss>
