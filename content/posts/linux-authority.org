@@ -2,8 +2,8 @@
 #+DATE: <2021-03-15 Mon>
 #+DRAFT: false
 #+KEYWORDS: ["GNU/Linux"]
-#+TAGS: GNU/Linux
-#+CATEGORIES: ["GNU/Linux"]
+#+tags[]: GNU/Linux
+#+categories[]: ["GNU/Linux"]
 
 
 * 文件和目录的权限
