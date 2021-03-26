@@ -5,6 +5,17 @@
         <description>GNU/Linux - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><atom:link href="https://ayamir.github.io/tags/gnu/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>Python Selenium Settings On Microsoft Edge Dev On Linux</title>
+    <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <description><![CDATA[Get Correct Version  microsoft-edge-dev --version  The output is `Microsoft Edge 91.0.831.1 dev` in my case.
+  Get Corresponding WebDriver  Find the corresponding version at msedgewebdriverstorage and download the zip.
+ Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.
+  Write Code  Following is a example.
+from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&#34;/usr/bin/microsoft-edge-dev&#34; options.set_capability(&#34;platform&#34;, &#34;LINUX&#34;) webdriver_path = r&#34;/home/ayamir/.]]></description>
+</item><item>
     <title>Linux Authority</title>
     <link>https://ayamir.github.io/posts/linux-authority/</link>
     <pubDate>Mon, 15 Mar 2021 00:00:00 &#43;0000</pubDate>
