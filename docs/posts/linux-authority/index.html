@@ -160,7 +160,7 @@
 <p>
 下图为使用<a href="https://github.com/ogham/exa">exa</a>命令的部分截图</p>
 <p>
-<img src="../文件和目录的权限/2021-03-15_17-50-10_screenshot.png" alt="../文件和目录的权限/2021-03-15_17-50-10_screenshot.png" title="../文件和目录的权限/2021-03-15_17-50-10_screenshot.png" /></p>
+<img src="文件和目录的权限/2021-03-15_17-50-10_screenshot.png" alt="文件和目录的权限/2021-03-15_17-50-10_screenshot.png" title="文件和目录的权限/2021-03-15_17-50-10_screenshot.png" /></p>
 <p>
 上图中的 Permission 字段下面的字母表示权限
 第一个字母表示 <strong>文件类型</strong> ：</p>
@@ -231,7 +231,7 @@ id：显示用户身份标识
 <p>
 下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果</p>
 <p>
-<img src="../id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" alt="../id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" title="../id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" /></p>
+<img src="id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" alt="id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" title="id：显示用户身份标识/2021-03-15_18-07-00_screenshot.png" /></p>
 <p>
 uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名
 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称</p>
@@ -412,7 +412,7 @@ umask：设置文件默认权限
 <p>掩码中 1 对应位处的权限会被取消，0则不受影响
 所以会有这样的结果：</p>
 <p>
-<img src="../umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" alt="../umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" title="../umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" /></p>
+<img src="umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" alt="umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" title="umask：设置文件默认权限/2021-03-15_18-46-59_screenshot.png" /></p>
 <p>
 再来谈最前面的 0:因为除了 rwx 之外还有较少用到的权限设置</p>
 <ol>
@@ -476,7 +476,7 @@ su：以另一个用户身份运行 shell
 <p>如果包含&#34;-l&#34;选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
 即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
 <p>
-<img src="../su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" alt="../su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" title="../su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" /></p>
+<img src="su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" alt="su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" title="su：以另一个用户身份运行_shell/2021-03-15_18-10-26_screenshot.png" /></p>
 </div>
 </div>
 <div id="outline-container-headline-7" class="outline-3">
@@ -489,7 +489,7 @@ su：以另一个用户身份运行 shell
 </div>
 <p>命令内容必须用 <strong>&#39;&#39;</strong> 引用起来（也可以是双引号）</p>
 <p>
-<img src="../su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" alt="../su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" title="../su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" /></p>
+<img src="su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" alt="su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" title="su：以另一个用户身份运行_shell/2021-03-15_18-12-18_screenshot.png" /></p>
 </div>
 </div>
 </div>
@@ -563,7 +563,7 @@ chown：更改文件所有者
 </tbody>
 </table>
 <p>
-<img src="../chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" alt="../chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" title="../chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" /></p>
+<img src="chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" alt="chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" title="chown：更改文件所有者/2021-03-15_18-30-53_screenshot.png" /></p>
 <p>
 图中使用 root 用户在/home/ayamir 目录下创建了一个 foo.txt 文件，最后将此文件的所有者和所属组都改为了 ayamir（rg 是<a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>）</p>
 </div>
@@ -595,7 +595,7 @@ passwd：更改用户密码
 执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
 拥有 root 用户权限的用户可以设置所有用户的密码</p>
 <p>
-<img src="../passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" alt="../passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" title="../passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" /></p>
+<img src="passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" alt="passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" title="passwd：更改用户密码/2021-03-15_18-41-36_screenshot.png" /></p>
 <p>
 上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
 </div>
@@ -630,7 +630,7 @@ passwd：更改用户密码
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.82.0-DEV">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir" target="_blank">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
