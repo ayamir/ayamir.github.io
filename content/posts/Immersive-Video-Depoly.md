@@ -22,7 +22,9 @@ draft: false
 
 - 因为找不到 glog 库因此加入软链接操作
 
-  `ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0 `
+  ```shell
+  ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
+  ```
 
 2. 重新编译内核
 
@@ -37,23 +39,33 @@ draft: false
 
    - 手动下载 Linux 内核源代码到`/usr/src/`目录
 
-     `wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz`
+     ```shell
+     wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
+     ```
 
    - 解压
 
-     `tar xpvf linux-5.11.1.tar.gz`
+     ```shell
+     tar xpvf linux-5.11.1.tar.gz
+     ```
 
    - 复制现有内核配置
 
-     `cd linux-5.11.1 && cp -v /boot/config-$(uname -r) .config`
+     ```shell
+     cd linux-5.11.1 && cp -v /boot/config-$(uname -r) .config
+     ```
 
    - 安装必要的包
 
-     `sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev`
+     ```shell
+     sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
+     ```
 
    - 进入内核配置界面
 
-     `sudo make menuconfig`
+     ```shell
+     sudo make menuconfig
+     ```
 
    - 按下`/`键分别查询`CONFIG_NUMA`和`CONFIG_NUMA_EMU`位置
 
@@ -61,22 +73,32 @@ draft: false
 
    - 重新编译并等待安装结束
 
-     `sudo make -j $(nproc) && sudo make modules_install && sudo make install`
+     ```shell
+     sudo make -j $(nproc) && sudo make modules_install && sudo make install
+     ```
 
-3. 修改`grub`启动参数加入fake numa配置
+3. 修改`grub`启动参数加入 fake numa 配置
 
-   `sudo vim /etc/default/grub`
+   ```shell
+   sudo vim /etc/default/grub
+   ```
 
-   `GRUB_CMDLINE_LINUX="numa=fake=2"`
+   找到对应行并修改为
+
+   ```shell
+   GRUB_CMDLINE_LINUX="numa=fake=2"
+   ```
 
 4. 更新`grub`并重启
 
-   `sudo update-grub && sudo reboot`
+   ```shell
+   sudo update-grub && sudo reboot
+   ```
 
-5. 执行`numactl -H`检查numa节点数目为2
+5. 执行`numactl -H`检查 numa 节点数目为 2
 
 6. 重新执行脚本一切正常
 
-# Client端搭建
+# Client 端搭建
 
-需要Ubuntu18.04环境，虚拟机中安装之后按照README命令，执行脚本一切正常
+需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常
