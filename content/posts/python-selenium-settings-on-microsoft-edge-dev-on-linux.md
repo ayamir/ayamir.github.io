@@ -14,14 +14,14 @@ categories: ["Python"]
 microsoft-edge-dev --version
 ```
 
-The output is \`Microsoft Edge 91.0.831.1 dev\` in my case.
+The output is `Microsoft Edge 91.0.831.1 dev` in my case.
 
 
 ## Get Corresponding WebDriver
 
 Find the corresponding version at [msedgewebdriverstorage](https://msedgewebdriverstorage.z22.web.core.windows.net/) and download the zip.
 
-Extract it to you path like \`/usr/local/bin\` or \`$HOME/.local/bin\`.
+Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.
 
 
 ## Write Code
