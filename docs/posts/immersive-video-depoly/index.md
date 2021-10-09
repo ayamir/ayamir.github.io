@@ -61,9 +61,15 @@
      sudo make menuconfig
      ```
 
+     ![image-20211009193021685](./images/image-20211009193021685.png)
+
    - 按下`/`键分别查询`CONFIG_NUMA`和`CONFIG_NUMA_EMU`位置
 
+     ![image-20211009193047750](./images/image-20211009193047750.png)
+
    - 手动勾选对应选项之后保存退出
+
+     ![image-20211009192905903](./images/image-20211009192905903.png)
 
    - 重新编译并等待安装结束
 
@@ -83,6 +89,8 @@
    GRUB_CMDLINE_LINUX="numa=fake=2"
    ```
 
+   ![image-20211009193122989](./images/image-20211009193122989.png)
+
 4. 更新`grub`并重启
 
    ```shell
@@ -91,9 +99,15 @@
 
 5. 执行`numactl -H`检查 numa 节点数目为 2
 
-6. 重新执行脚本一切正常
+   ![image-20211009193147756](./images/image-20211009193147756.png)
+
+6. 重新执行脚本如图说明一切正常
+
+   ![image-20211009193252833](./images/image-20211009193252833.png)
 
 # Client 端搭建
 
 需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常
+
+![image-20211009193325118](./images/image-20211009193325118.png)
 

@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/immersive-video-depoly\/"
-        },"genre": "posts","keywords": "Immersive-Video","wordcount":  487 ,
+        },"genre": "posts","keywords": "Immersive-Video","wordcount":  491 ,
         "url": "https:\/\/ayamir.github.io\/posts\/immersive-video-depoly\/","datePublished": "2021-10-09T15:31:46+08:00","dateModified": "2021-10-09T15:31:46+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,7 +104,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Immersive Video OMAF-Sample Depoly</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-09">2021-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 487 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-09">2021-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 491 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -159,12 +159,36 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
 <li>
 <p>进入内核配置界面</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
-</code></pre></div></li>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193021685.png"
+        data-srcset="./images/image-20211009193021685.png, ./images/image-20211009193021685.png 1.5x, ./images/image-20211009193021685.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193021685.png"
+        title="image-20211009193021685" /></p>
+</li>
 <li>
 <p>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193047750.png"
+        data-srcset="./images/image-20211009193047750.png, ./images/image-20211009193047750.png 1.5x, ./images/image-20211009193047750.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193047750.png"
+        title="image-20211009193047750" /></p>
 </li>
 <li>
 <p>手动勾选对应选项之后保存退出</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009192905903.png"
+        data-srcset="./images/image-20211009192905903.png, ./images/image-20211009192905903.png 1.5x, ./images/image-20211009192905903.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009192905903.png"
+        title="image-20211009192905903" /></p>
 </li>
 <li>
 <p>重新编译并等待安装结束</p>
@@ -177,20 +201,52 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
 </code></pre></div><p>找到对应行并修改为</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
-</code></pre></div></li>
+</code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193122989.png"
+        data-srcset="./images/image-20211009193122989.png, ./images/image-20211009193122989.png 1.5x, ./images/image-20211009193122989.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193122989.png"
+        title="image-20211009193122989" /></p>
+</li>
 <li>
 <p>更新<code>grub</code>并重启</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
 </code></pre></div></li>
 <li>
 <p>执行<code>numactl -H</code>检查 numa 节点数目为 2</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193147756.png"
+        data-srcset="./images/image-20211009193147756.png, ./images/image-20211009193147756.png 1.5x, ./images/image-20211009193147756.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193147756.png"
+        title="image-20211009193147756" /></p>
 </li>
 <li>
-<p>重新执行脚本一切正常</p>
+<p>重新执行脚本如图说明一切正常</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193252833.png"
+        data-srcset="./images/image-20211009193252833.png, ./images/image-20211009193252833.png 1.5x, ./images/image-20211009193252833.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193252833.png"
+        title="image-20211009193252833" /></p>
 </li>
 </ol>
 <h1 id="client-端搭建">Client 端搭建</h1>
 <p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./images/image-20211009193325118.png"
+        data-srcset="./images/image-20211009193325118.png, ./images/image-20211009193325118.png 1.5x, ./images/image-20211009193325118.png 2x"
+        data-sizes="auto"
+        alt="./images/image-20211009193325118.png"
+        title="image-20211009193325118" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
