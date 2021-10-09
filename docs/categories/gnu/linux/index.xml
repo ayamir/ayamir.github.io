@@ -12,12 +12,12 @@
     <guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
     <description><![CDATA[Delete old sync files sudo rm /var/lib/pacman/sync/* Re init pacman-key sudo pacman-key --init Populate key sudo pacman-key --populate Re sync sudo pacman -Syyy Now you can update successfully!]]></description>
 </item><item>
-    <title>Linux Authority</title>
+    <title>Linux权限相关命令解读</title>
     <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 00:00:00 &#43;0000</pubDate>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/linux-authority/</guid>
-    <description><![CDATA[文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号]]></description>
+    <description><![CDATA[文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 剩下的 9 个位置上的字符称为 文件模式 ，每]]></description>
 </item><item>
     <title>Dns Settings on Archlinux</title>
     <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>

@@ -1,20 +1,28 @@
-# Python Selenium Settings On Microsoft Edge Dev On Linux
+# Python selenium settings on microsoft-edge-dev
 
 
 
-* Get Correct Version
-#+BEGIN_SRC shell
+## Get Correct Version
+
+```shell
 microsoft-edge-dev --version
-#+END_SRC
-The output is `Microsoft Edge 91.0.831.1 dev` in my case.
-* Get Corresponding WebDriver
-Find the corresponding version at [[https://msedgewebdriverstorage.z22.web.core.windows.net/][msedgewebdriverstorage]] and download the zip.
+```
 
-Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.
+The output is \`Microsoft Edge 91.0.831.1 dev\` in my case.
 
-* Write Code
+
+## Get Corresponding WebDriver
+
+Find the corresponding version at [msedgewebdriverstorage](https://msedgewebdriverstorage.z22.web.core.windows.net/) and download the zip.
+
+Extract it to you path like \`/usr/local/bin\` or \`$HOME/.local/bin\`.
+
+
+## Write Code
+
 Following is a example.
-#+BEGIN_SRC python
+
+```python
 from msedge.selenium_tools import EdgeOptions, Edge
 
 options = EdgeOptions()
@@ -28,7 +36,11 @@ browser = Edge(options=options, executable_path=webdriver_path)
 browser.get("http://localhost:8000")
 
 assert "Django" in browser.title
-#+END_SRC
-* Launch it
-[[file:Launch_it/2021-03-26_15-40-04_screenshot.png]]
+```
+
+
+## Launch it
+
+![img](https://i.loli.net/2021/10/09/xneYFgATV6P75Hm.png)
+
 
