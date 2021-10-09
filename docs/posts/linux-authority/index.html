@@ -9,8 +9,8 @@
 <meta property="og:description" content="文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/linux-authority/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-03-15T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-03-15T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-03-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-15T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux Authority"/>
@@ -376,11 +376,11 @@ umask：设置文件默认权限
 <p>使用八进制表示法表示从文件模式属性中删除一个位掩码
 掩码的意思：用掩码来取消不同的文件模式</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">umask</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">umask</code></pre></div>
 </div>
 <p>可以看到输出为：</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="m">0022</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="m">0022</span></code></pre></div>
 </div>
 <p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
@@ -422,11 +422,11 @@ umask：设置文件默认权限
 设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
 设置程序 setuid：</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">chmod u+s program_name</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">chmod u+s program_name</code></pre></div>
 </div>
 <p>结果：</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">-rwsr-xr-x</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">-rwsr-xr-x</code></pre></div>
 </div>
 <p>可以看到第二组权限中第一个符号是 s</p>
 </li>
@@ -436,11 +436,11 @@ umask：设置文件默认权限
 设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
 对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">chmod g+s dir_name</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">chmod g+s dir_name</code></pre></div>
 </div>
 <p>结果：</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">drwxrwsr-x</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">drwxrwsr-x</code></pre></div>
 </div>
 <p>可以看到第二组权限中最后一个符号是 s(替换了 x)</p>
 </li>
@@ -449,11 +449,11 @@ umask：设置文件默认权限
 标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
 用来控制对共享目录的访问</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">chmod +t dir_name</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">chmod +t dir_name</code></pre></div>
 </div>
 <p>结果：</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">drwxrwxrwt</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">drwxrwxrwt</code></pre></div>
 </div>
 <p>可以看到第三组权限中最后一个符号是 t(替换了 x)</p>
 </li>
@@ -471,7 +471,7 @@ su：以另一个用户身份运行 shell
 </h3>
 <div id="outline-text-headline-6" class="outline-text-3">
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">su <span class="o">[</span>-<span class="o">[</span>l<span class="o">]]</span> <span class="o">[</span>user<span class="o">]</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">su <span class="o">[</span>-<span class="o">[</span>l<span class="o">]]</span> <span class="o">[</span>user<span class="o">]</span></code></pre></div>
 </div>
 <p>如果包含&#34;-l&#34;选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
 即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
@@ -485,7 +485,7 @@ su：以另一个用户身份运行 shell
 </h3>
 <div id="outline-text-headline-7" class="outline-text-3">
 <div class="src src-text">
-<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">su -c &#39;comand&#39;</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text">su -c &#39;comand&#39;</code></pre></div>
 </div>
 <p>命令内容必须用 <strong>&#39;&#39;</strong> 引用起来（也可以是双引号）</p>
 <p>
@@ -509,7 +509,7 @@ sudo 和 su 的区别
 <p>sudo 比 su 有更丰富的功能，而且可以配置
 通过修改配置文件来配置 sudo</p>
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">EDITOR</span><span class="o">=</span>vim visudo</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">EDITOR</span><span class="o">=</span>vim visudo</code></pre></div>
 </div>
 <p>执行上面的命令可以用 vim 来编辑 sudo 的配置文件
 常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限</p>
@@ -534,7 +534,7 @@ chown：更改文件所有者
 </h3>
 <div id="outline-text-headline-11" class="outline-text-3">
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">chown <span class="o">[</span>owner<span class="o">][</span>:<span class="o">[</span>group<span class="o">]]</span> file ...</code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">chown <span class="o">[</span>owner<span class="o">][</span>:<span class="o">[</span>group<span class="o">]]</span> file ...</code></pre></div>
 </div>
 <p>
 第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
@@ -589,7 +589,7 @@ passwd：更改用户密码
 </h3>
 <div id="outline-text-headline-14" class="outline-text-3">
 <div class="src src-shell">
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">passwd <span class="o">[</span>user<span class="o">]</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">passwd <span class="o">[</span>user<span class="o">]</span></code></pre></div>
 </div>
 <p>用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
 执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
@@ -630,7 +630,7 @@ passwd：更改用户密码
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir" target="_blank">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
