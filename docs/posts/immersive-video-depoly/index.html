@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/immersive-video-depoly\/"
-        },"genre": "posts","keywords": "Immersive-Video","wordcount":  491 ,
+        },"genre": "posts","keywords": "Immersive-Video","wordcount":  469 ,
         "url": "https:\/\/ayamir.github.io\/posts\/immersive-video-depoly\/","datePublished": "2021-10-09T15:31:46+08:00","dateModified": "2021-10-09T15:31:46+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,60 +104,63 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Immersive Video OMAF-Sample Depoly</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-09">2021-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 491 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-09">2021-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 469 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#server-端搭建">Server 端搭建</a>
+      <ul>
+        <li><a href="#修改-dockerfile">修改 Dockerfile</a></li>
+        <li><a href="#重新编译内核">重新编译内核</a></li>
+      </ul>
+    </li>
+    <li><a href="#client-端搭建">Client 端搭建</a></li>
+  </ul>
+</nav></div>
             </div><div class="content" id="content"><p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
 <p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<h1 id="server-端搭建">Server 端搭建</h1>
+<h2 id="server-端搭建">Server 端搭建</h2>
+<h3 id="修改-dockerfile">修改 Dockerfile</h3>
 <ol>
-<li>修改 Dockerfile</li>
-</ol>
-<ul>
 <li>
 <p>手动设置 wget 和 git 的 http_proxy</p>
 </li>
 <li>
-<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，
-修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
+<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
 </li>
 <li>
 <p>因为找不到 glog 库因此加入软链接操作</p>
+</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
-</code></pre></div></li>
-</ul>
-<ol start="2">
-<li>
-<p>重新编译内核</p>
+</code></pre></div><h3 id="重新编译内核">重新编译内核</h3>
 <p>运行脚本时显示 libnuma 错误因此推断与 numa 设置有关</p>
 <p>执行<code>numactl -H</code>显示只有一个 node，报错输出显示需要至少两个 numa 节点</p>
-<p>关于 numa(Non-Uniform Memory Access)实际与物理 cpu 设置相关</p>
-<p>查询资料之后获知可以使用 fake
-numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
-<ul>
-<li>
-<p>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</p>
+<p>查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
+<ol>
+<li>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
-</code></pre></div></li>
-<li>
-<p>解压</p>
+</code></pre></div><ol start="2">
+<li>解压</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar xpvf linux-5.11.1.tar.gz
-</code></pre></div></li>
-<li>
-<p>复制现有内核配置</p>
+</code></pre></div><ol start="3">
+<li>复制现有内核配置</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> linux-5.11.1 <span class="o">&amp;&amp;</span> cp -v /boot/config-<span class="k">$(</span>uname -r<span class="k">)</span> .config
-</code></pre></div></li>
-<li>
-<p>安装必要的包</p>
+</code></pre></div><ol start="4">
+<li>安装必要的包</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
-</code></pre></div></li>
-<li>
-<p>进入内核配置界面</p>
+</code></pre></div><ol start="5">
+<li>进入内核配置界面</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
 </code></pre></div><p><img
         class="lazyload"
@@ -167,9 +170,9 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/nF4faG93X6L5CsV.png"
         title="image-20211009193021685" /></p>
-</li>
-<li>
-<p>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</p>
+<ol start="6">
+<li>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</li>
+</ol>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -178,9 +181,9 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/B6YvCUfxwFyQDzZ.png"
         title="image-20211009193047750" /></p>
-</li>
-<li>
-<p>手动勾选对应选项之后保存退出</p>
+<ol start="7">
+<li>手动勾选对应选项之后保存退出</li>
+</ol>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -189,15 +192,13 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/aTsqJfkxNznE8Yw.png"
         title="image-20211009192905903" /></p>
-</li>
-<li>
-<p>重新编译并等待安装结束</p>
+<ol start="8">
+<li>重新编译并等待安装结束</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make -j <span class="k">$(</span>nproc<span class="k">)</span> <span class="o">&amp;&amp;</span> sudo make modules_install <span class="o">&amp;&amp;</span> sudo make install
-</code></pre></div></li>
-</ul>
-</li>
-<li>
-<p>修改<code>grub</code>启动参数加入 fake numa 配置</p>
+</code></pre></div><ol start="9">
+<li>修改<code>grub</code>启动参数加入 fake numa 配置</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
 </code></pre></div><p>找到对应行并修改为</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
@@ -209,13 +210,13 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/kSg1xMt3aNJXviQ.png"
         title="image-20211009193122989" /></p>
-</li>
-<li>
-<p>更新<code>grub</code>并重启</p>
+<ol start="10">
+<li>更新<code>grub</code>并重启</li>
+</ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
-</code></pre></div></li>
-<li>
-<p>执行<code>numactl -H</code>检查 numa 节点数目为 2</p>
+</code></pre></div><ol start="11">
+<li>执行<code>numactl -H</code>检查 numa 节点数目为 2</li>
+</ol>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -224,9 +225,9 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/TksudNKlZYpGCB4.png"
         title="image-20211009193147756" /></p>
-</li>
-<li>
-<p>重新执行脚本如图说明一切正常</p>
+<ol start="12">
+<li>重新执行脚本如图说明一切正常</li>
+</ol>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -235,9 +236,7 @@ numa 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的�
         data-sizes="auto"
         alt="https://i.loli.net/2021/10/09/zDc3qXB98vZAOie.png"
         title="image-20211009193252833" /></p>
-</li>
-</ol>
-<h1 id="client-端搭建">Client 端搭建</h1>
+<h2 id="client-端搭建">Client 端搭建</h2>
 <p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
 <p><img
         class="lazyload"
