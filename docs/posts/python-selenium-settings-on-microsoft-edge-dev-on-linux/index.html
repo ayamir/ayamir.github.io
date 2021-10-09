@@ -6,9 +6,9 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Python selenium settings on microsoft-edge-dev - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Python selenium settings on microsoft-edge-dev" />
-<meta property="og:description" content="Get Correct Version microsoft-edge-dev --version The output is `Microsoft Edge 91.0.831.1 dev` in my case.
+<meta property="og:description" content="Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.
 Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.
-Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.
+Extract it to you path like /usr/local/bin or $HOME/.local/bin.
 Write Code Following is a example.
 from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&#34;/usr/bin/microsoft-edge-dev&#34; options.set_capability(&#34;platform&#34;, &#34;LINUX&#34;) webdriver_path = r&#34;/home/ayamir/.local/bin/msedgewebdriver&#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&#34;http://localhost:8000&#34;) assert &#34;Django&#34; in browser." />
 <meta property="og:type" content="article" />
@@ -18,9 +18,9 @@ from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() opti
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Python selenium settings on microsoft-edge-dev"/>
-<meta name="twitter:description" content="Get Correct Version microsoft-edge-dev --version The output is `Microsoft Edge 91.0.831.1 dev` in my case.
+<meta name="twitter:description" content="Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.
 Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.
-Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.
+Extract it to you path like /usr/local/bin or $HOME/.local/bin.
 Write Code Following is a example.
 from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&#34;/usr/bin/microsoft-edge-dev&#34; options.set_capability(&#34;platform&#34;, &#34;LINUX&#34;) webdriver_path = r&#34;/home/ayamir/.local/bin/msedgewebdriver&#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&#34;http://localhost:8000&#34;) assert &#34;Django&#34; in browser."/>
 <meta name="application-name" content="Ayamir&#39;s blog">
@@ -129,10 +129,10 @@ from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() opti
 </nav></div>
             </div><div class="content" id="content"><h2 id="get-correct-version">Get Correct Version</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
-</code></pre></div><p>The output is `Microsoft Edge 91.0.831.1 dev` in my case.</p>
+</code></pre></div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
 <h2 id="get-corresponding-webdriver">Get Corresponding WebDriver</h2>
 <p>Find the corresponding version at <a href="https://msedgewebdriverstorage.z22.web.core.windows.net/" target="_blank" rel="noopener noreffer">msedgewebdriverstorage</a> and download the zip.</p>
-<p>Extract it to you path like `/usr/local/bin` or `$HOME/.local/bin`.</p>
+<p>Extract it to you path like <code>/usr/local/bin</code> or <code>$HOME/.local/bin</code>.</p>
 <h2 id="write-code">Write Code</h2>
 <p>Following is a example.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
