@@ -1,11 +1,5 @@
----
-title: "Immersive Video OMAF-Sample Depoly"
-date: 2021-10-09T15:31:46+08:00
-keywords: ["Immersive-Video", "Ubuntu", "Docker"]
-tags: ["Immersive-Video"]
-categories: ["Immersive-Video"]
-draft: false
----
+# Immersive Video OMAF-Sample Deploy
+
 
 原仓库地址：[Immersive-Video-Sample](https://github.com/OpenVisualCloud/Immersive-Video-Sample)
 
@@ -112,3 +106,4 @@ sudo update-grub && sudo reboot
 需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常
 
 ![image-20211009193325118](https://i.loli.net/2021/10/09/75BOFntKyeTIrhv.png)
+
