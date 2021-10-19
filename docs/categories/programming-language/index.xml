@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Programming Language - 分类 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/categories/programming-language/</link>
+        <description>Programming Language - 分类 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
+    <title>重学C&#43;&#43;：1.类型系统</title>
+    <link>https://ayamir.github.io/posts/cpp-types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/cpp-types/</guid>
+    <description><![CDATA[常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等]]></description>
+</item></channel>
+</rss>

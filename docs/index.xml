@@ -4,9 +4,16 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>重学C&#43;&#43;：1.类型系统</title>
+    <link>https://ayamir.github.io/posts/cpp-types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/cpp-types/</guid>
+    <description><![CDATA[常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等]]></description>
+</item><item>
     <title>Immersive Video OMAF-Sample Deploy</title>
     <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
     <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate>
