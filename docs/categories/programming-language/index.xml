@@ -11,5 +11,16 @@
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/cpp-types/</guid>
     <description><![CDATA[常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等]]></description>
+</item><item>
+    <title>Python selenium settings on microsoft-edge-dev</title>
+    <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <description><![CDATA[Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.
+Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.
+Extract it to you path like /usr/local/bin or $HOME/.local/bin.
+Write Code Following is a example.
+from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&#34;/usr/bin/microsoft-edge-dev&#34; options.set_capability(&#34;platform&#34;, &#34;LINUX&#34;) webdriver_path = r&#34;/home/ayamir/.local/bin/msedgewebdriver&#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&#34;http://localhost:8000&#34;) assert &#34;Django&#34; in browser.]]></description>
 </item></channel>
 </rss>
