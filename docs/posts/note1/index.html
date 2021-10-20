@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>重学C&#43;&#43;：1.类型系统 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：1.类型系统" />
-<meta property="og:description" content="常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等" />
+        <title>360度流媒体面临的挑战、机遇和解决方案 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="360度流媒体面临的挑战、机遇和解决方案" />
+<meta property="og:description" content="360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/cpp-types/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-18T19:32:22+08:00" />
-<meta property="article:modified_time" content="2021-10-18T19:32:22+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-20T20:08:38+08:00" />
+<meta property="article:modified_time" content="2021-10-20T20:08:38+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="重学C&#43;&#43;：1.类型系统"/>
-<meta name="twitter:description" content="常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等"/>
+<meta name="twitter:title" content="360度流媒体面临的挑战、机遇和解决方案"/>
+<meta name="twitter:description" content="360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/cpp-types/" /><link rel="prev" href="https://ayamir.github.io/posts/immersive-video-deploy/" /><link rel="next" href="https://ayamir.github.io/posts/note1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note1/" /><link rel="prev" href="https://ayamir.github.io/posts/cpp-types/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "重学C++：1.类型系统",
+        "headline": "360度流媒体面临的挑战、机遇和解决方案",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/cpp-types\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  410 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/cpp-types\/","datePublished": "2021-10-18T19:32:22+08:00","dateModified": "2021-10-18T19:32:22+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/note1\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  1021 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note1\/","datePublished": "2021-10-20T20:08:38+08:00","dateModified": "2021-10-20T20:08:38+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,10 +102,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：1.类型系统</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-18">2021-10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 410 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">360度流媒体面临的挑战、机遇和解决方案</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-20">2021-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1021 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -113,37 +113,121 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#常见的坑">常见的坑</a></li>
-    <li><a href="#必须要理解的点">必须要理解的点</a></li>
-    <li><a href="#建议">建议</a></li>
+    <li><a href="#360度流媒体视频框架">360度流媒体视频框架</a>
+      <ul>
+        <li><a href="#视频采集和拼接">视频采集和拼接</a></li>
+        <li><a href="#使用不同的投影策略实现降维">使用不同的投影策略实现降维</a></li>
+        <li><a href="#编码视频内容">编码视频内容</a></li>
+        <li><a href="#分包和传输">分包和传输</a></li>
+        <li><a href="#渲染和展示">渲染和展示</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="常见的坑">常见的坑</h2>
-<ol>
-<li>int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。</li>
-<li>字符型被分为3种：char, signed char, unsigned char，前两种并不等价。
-虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</li>
-<li>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</li>
+            </div><div class="content" id="content"><h2 id="360度流媒体视频框架">360度流媒体视频框架</h2>
+<h3 id="视频采集和拼接">视频采集和拼接</h3>
+<p>使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容</p>
+<h3 id="使用不同的投影策略实现降维">使用不同的投影策略实现降维</h3>
+<p>策略主要分为2种：视角独立型和视角依赖型</p>
+<h4 id="视角独立型">视角独立型</h4>
+<p>整个3D的视频内容被按照统一的质量投影到2D平面上</p>
+<p>主要包括等距长方形投影和立方贴图投影</p>
+<ul>
+<li>
+<p>等距长方形投影</p>
+<p>使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上</p>
+<p>视角范围：左180度～右180度、上90度～下90度</p>
+<p>缺点：</p>
+<ul>
+<li>极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽</li>
+<li>由于图像失真导致压缩效率不足</li>
+</ul>
+</li>
+<li>
+<p>立方贴图投影</p>
+<p>六边立方体组合用于将球体的像素映射到立方体上的相关像素</p>
+<p>在游戏中被广泛应用</p>
+<p>优点：</p>
+<ul>
+<li>节省空间，相比于等距长方形投影视频体积能减少25%</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>只能渲染有限的用户视野</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>
+<p>视角依赖型</p>
+<p>视角内的内容比之外的内容有更高保真度的表示</p>
+<p>主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影</p>
+</li>
 </ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</li>
-<li>变量的组成部分：类型和值。说白了就是一个定性一个定量。类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。值在实际代码运行过程中则被各种函数使用参与运算。</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>明确数值不可能为负时使用unsigned类型。</li>
-<li>使用int执行整数运算，范围不够时使用long long。</li>
-<li>使用double执行浮点数运算。</li>
-<li>算术表达式中不要使用bool和char。</li>
-<li>避免写出依赖实现环境的代码，否则代码不可移植。</li>
-<li>避免有符号类型和无符号类型之间的隐式类型转换。</li>
-</ol>
+<ul>
+<li>
+<p>金字塔投影</p>
+<p>球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向</p>
+<p>优点：</p>
+<ul>
+<li>节省空间，降低80%的视频体积</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>用户以120度旋转视角时，视频的质量会像旋转180度一样急速下降</li>
+</ul>
+</li>
+<li>
+<p>截断方形金字塔投影</p>
+<p>大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔</p>
+<p>优点：</p>
+<ul>
+<li>减少了边缘数据，提高了高码率视频的推流性能</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>使边缘更加锐利</li>
+</ul>
+</li>
+<li>
+<p>偏移立方贴图投影</p>
+<p>与原始的立方贴图投影类似，球体的像素点被投影到立方体的6个面上</p>
+<p>优点：</p>
+<ul>
+<li>视角方向的内容会有更高的质量，提供平滑的视频质量变化</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>存储开销很大</li>
+</ul>
+</li>
+</ul>
+<h3 id="编码视频内容">编码视频内容</h3>
+<p>目前主要的编码方式有AVC/H.264和HEVC/H.265。</p>
+<h4 id="h264">H.264</h4>
+<p>使用16x16的宏块结构对帧编码。</p>
+<p>因为使用了编码器的动作预测的特性，编码的数据大小得到减少。</p>
+<h4 id="h265">H.265</h4>
+<p>相比于同质量的H.264编码方式，H.265编码减少了50%的比特率。</p>
+<p>H.265支持tiling特性来实现高效视频推流。</p>
+<p>每个tile在物理上被分割然后在普通的流中拼接，并且使用一个解码器来解码。</p>
+<h4 id="vvc">VVC</h4>
+<p>相比于H.265，下一代标准VVC有望提高30%的压缩效率。</p>
+<h3 id="分包和传输">分包和传输</h3>
+<h4 id="分包">分包</h4>
+<p>使用DASH协议分包。</p>
+<h4 id="传输">传输</h4>
+<p>依赖于雾计算和边缘计算等技术可以缩短分发中心和客户端之间的距离进而实现快速响应和低缓冲时间。</p>
+<h3 id="渲染和展示">渲染和展示</h3>
+<h4 id="客户端处理">客户端处理</h4>
+<p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
+<h4 id="云端处理">云端处理</h4>
+<p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-10-18</span>
+                <span>更新于 2021-10-20</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -156,14 +240,13 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/c&#43;&#43;/">C&#43;&#43;</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/immersive-video/">Immersive-Video</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/immersive-video-deploy/" class="prev" rel="prev" title="Immersive Video OMAF-Sample Deploy"><i class="fas fa-angle-left fa-fw"></i>Immersive Video OMAF-Sample Deploy</a>
-            <a href="/posts/note1/" class="next" rel="next" title="360度流媒体面临的挑战、机遇和解决方案">360度流媒体面临的挑战、机遇和解决方案<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/cpp-types/" class="prev" rel="prev" title="重学C&#43;&#43;：1.类型系统"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：1.类型系统</a></div>
 </div>
 </article></div>
             </main><footer class="footer">

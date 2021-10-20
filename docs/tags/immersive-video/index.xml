@@ -4,7 +4,14 @@
         <link>https://ayamir.github.io/tags/immersive-video/</link>
         <description>Immersive-Video - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>360度流媒体面临的挑战、机遇和解决方案</title>
+    <link>https://ayamir.github.io/posts/note1/</link>
+    <pubDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note1/</guid>
+    <description><![CDATA[360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2]]></description>
+</item><item>
     <title>Immersive Video OMAF-Sample Deploy</title>
     <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
     <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate>
