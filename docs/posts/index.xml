@@ -4,7 +4,14 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 21 Oct 2021 10:50:54 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>适应性视频推流方案</title>
+    <link>https://ayamir.github.io/posts/note2/</link>
+    <pubDate>Thu, 21 Oct 2021 10:50:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note2/</guid>
+    <description><![CDATA[适应性方案概述 适应性方案可以在处理不同目标对象时帮助改善推流体验。 目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。 适应]]></description>
+</item><item>
     <title>360度流媒体面临的挑战、机遇和解决方案</title>
     <link>https://ayamir.github.io/posts/note1/</link>
     <pubDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</pubDate>

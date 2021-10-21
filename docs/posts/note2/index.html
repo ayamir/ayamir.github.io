@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>360度流媒体面临的挑战、机遇和解决方案 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="360度流媒体面临的挑战、机遇和解决方案" />
-<meta property="og:description" content="360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2" />
+        <title>适应性视频推流方案 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="适应性视频推流方案" />
+<meta property="og:description" content="适应性方案概述 适应性方案可以在处理不同目标对象时帮助改善推流体验。 目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。 适应" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/note1/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-20T20:08:38+08:00" />
-<meta property="article:modified_time" content="2021-10-20T20:08:38+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-21T10:50:54+08:00" />
+<meta property="article:modified_time" content="2021-10-21T10:50:54+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="360度流媒体面临的挑战、机遇和解决方案"/>
-<meta name="twitter:description" content="360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2"/>
+<meta name="twitter:title" content="适应性视频推流方案"/>
+<meta name="twitter:description" content="适应性方案概述 适应性方案可以在处理不同目标对象时帮助改善推流体验。 目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。 适应"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note1/" /><link rel="prev" href="https://ayamir.github.io/posts/cpp-types/" /><link rel="next" href="https://ayamir.github.io/posts/note2/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note2/" /><link rel="prev" href="https://ayamir.github.io/posts/note1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "360度流媒体面临的挑战、机遇和解决方案",
+        "headline": "适应性视频推流方案",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/note1\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  1021 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note1\/","datePublished": "2021-10-20T20:08:38+08:00","dateModified": "2021-10-20T20:08:38+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/note2\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  1691 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note2\/","datePublished": "2021-10-21T10:50:54+08:00","dateModified": "2021-10-21T10:50:54+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,10 +102,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">360度流媒体面临的挑战、机遇和解决方案</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">适应性视频推流方案</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-20">2021-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1021 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-21">2021-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1691 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -113,121 +113,101 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#360度流媒体视频框架">360度流媒体视频框架</a>
+    <li><a href="#适应性方案概述">适应性方案概述</a></li>
+    <li><a href="#适应性方案分类">适应性方案分类</a>
       <ul>
-        <li><a href="#视频采集和拼接">视频采集和拼接</a></li>
-        <li><a href="#使用不同的投影策略实现降维">使用不同的投影策略实现降维</a></li>
-        <li><a href="#编码视频内容">编码视频内容</a></li>
-        <li><a href="#分包和传输">分包和传输</a></li>
-        <li><a href="#渲染和展示">渲染和展示</a></li>
+        <li><a href="#服务端适应">服务端适应</a></li>
+        <li><a href="#客户端适应">客户端适应</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="360度流媒体视频框架">360度流媒体视频框架</h2>
-<h3 id="视频采集和拼接">视频采集和拼接</h3>
-<p>使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容</p>
-<h3 id="使用不同的投影策略实现降维">使用不同的投影策略实现降维</h3>
-<p>策略主要分为2种：视角独立型和视角依赖型</p>
-<h4 id="视角独立型">视角独立型</h4>
-<p>整个3D的视频内容被按照统一的质量投影到2D平面上</p>
-<p>主要包括等距长方形投影和立方贴图投影</p>
-<ul>
+            </div><div class="content" id="content"><h2 id="适应性方案概述">适应性方案概述</h2>
+<p>适应性方案可以在处理不同目标对象时帮助改善推流体验。</p>
+<p>目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。</p>
+<p>适应性的视频比特率需要同时匹配网络条件和质量目标的需求。</p>
+<h2 id="适应性方案分类">适应性方案分类</h2>
+<h3 id="服务端适应">服务端适应</h3>
+<p>大多数服务端适应的方案要求客户端发送系统或网络相关信息。</p>
+<h4 id="质量导向的适应方案quality-oriented-adaptive-schemeqoas">质量导向的适应方案（Quality-Oriented Adaptive Scheme/QOAS）</h4>
+<p>向终端用户提供了高知觉质量的媒体内容。</p>
+<ol>
 <li>
-<p>等距长方形投影</p>
-<p>使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上</p>
-<p>视角范围：左180度～右180度、上90度～下90度</p>
-<p>缺点：</p>
-<ul>
-<li>极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽</li>
-<li>由于图像失真导致压缩效率不足</li>
-</ul>
+<p>QOAS是C-S架构，决策在服务器端产生。</p>
 </li>
 <li>
-<p>立方贴图投影</p>
-<p>六边立方体组合用于将球体的像素映射到立方体上的相关像素</p>
-<p>在游戏中被广泛应用</p>
-<p>优点：</p>
-<ul>
-<li>节省空间，相比于等距长方形投影视频体积能减少25%</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>只能渲染有限的用户视野</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li>
-<p>视角依赖型</p>
-<p>视角内的内容比之外的内容有更高保真度的表示</p>
-<p>主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影</p>
+<p>QOAS基于客户知觉质量的反馈，提供对推流质量等级的调整。</p>
 </li>
 </ol>
-<ul>
+<h4 id="智能优先级适应方案intelligent-prioritized-adaptive-schemeipas">智能优先级适应方案（intelligent Prioritized Adaptive Scheme/iPAS）</h4>
+<p>专用于802.11网络。</p>
+<ol>
 <li>
-<p>金字塔投影</p>
-<p>球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向</p>
-<p>优点：</p>
-<ul>
-<li>节省空间，降低80%的视频体积</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>用户以120度旋转视角时，视频的质量会像旋转180度一样急速下降</li>
-</ul>
+<p>iPAS服务器上的基于固有印象的带宽分配模块被用于组合QoS相关的参数和视频内容特征来进行内容的优先级分类和带宽份额分配。</p>
 </li>
 <li>
-<p>截断方形金字塔投影</p>
-<p>大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔</p>
-<p>优点：</p>
+<p>通过区分多媒体流，iPAS提供可用无线信道的优先级分配。</p>
+</li>
+</ol>
+<h4 id="设备导向的适应方案device-oriented-adaptive-multimedia-schemedoas">设备导向的适应方案（Device-Oriented Adaptive multimedia Scheme/DOAS）</h4>
+<p>专用于LTE网络，建立在LTE下行链路调度机制之上。</p>
+<ol>
+<li>DOAS专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的QoE。</li>
+</ol>
+<h3 id="客户端适应">客户端适应</h3>
+<h4 id="基于吞吐量的适应方案">基于吞吐量的适应方案</h4>
+<p>这类方案基于估计的网络吞吐量从服务端选择视频的比特率。</p>
+<ol>
+<li>HTTP客户端通过之前的观察记录来估计网络的吞吐量。</li>
+<li>通过测量端获取时间（segment fetch time/SFT）来代表发起和收到回复的瞬时HTTP GET请求之间的时间段，以此来确定一个推流会话中吞吐量的变化，进而独立地做出适应决策。</li>
+<li>在分布式网络中，同时考虑并发和顺序的SFT。通过比较实际的和理想的SFT来选择未来的segment的质量等级。</li>
+</ol>
+<h5 id="festive算法">FESTIVE算法</h5>
+<p>适用于多个HAS客户端共享一个常见的拥塞带宽链路的情形。</p>
+<p>以<strong>效率、稳定性、公平性</strong>为度量因素的适应性算法。</p>
+<p>探索了一种为<strong>分段调度、吞吐量估计和比特率选择</strong>而生的健壮的机制。</p>
+<p>包含一个随机调度器来调度下一个视频块的下载。</p>
+<p>多个客户端共享容量为$W$的满带宽链路，每个客户端$x$在$t$时刻播放的视频比特率为$b_x,_t$ ，需要避免以下3种问题：</p>
 <ul>
-<li>减少了边缘数据，提高了高码率视频的推流性能</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>使边缘更加锐利</li>
-</ul>
+<li>
+<p><em>Inefficiency</em>：多个HAS客户端必须能选择最可能的表示来提高QoE。</p>
+<p>$$ Inefficiency = \frac{|\sum_{x}b_x,_t - W|}{W} $$</p>
+<p>低<em>Inefficiency</em>值表明多个客户端对带宽实现了最有效的利用。</p>
 </li>
 <li>
-<p>偏移立方贴图投影</p>
-<p>与原始的立方贴图投影类似，球体的像素点被投影到立方体的6个面上</p>
-<p>优点：</p>
-<ul>
-<li>视角方向的内容会有更高的质量，提供平滑的视频质量变化</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>存储开销很大</li>
-</ul>
+<p><em>Unfairness</em>：可用带宽应该被均等地分配。</p>
+<p>$$ Unfairness = \sqrt{1-JainFair} $$</p>
+<p>低<em>Unfairness</em>值表明多个客户端有相近的比特率。</p>
+</li>
+<li>
+<p><em>Instability</em>：不必要的比特率切换会损害推流体验</p>
+<p>$$Instability = \frac{\sum_{d=0}^{k-1}|b_{x,t-d} - b_{x,t-d-1}|*w(d)}{\sum_{d=1}^{k}b_{x,t-d} * w(d)}$$</p>
 </li>
 </ul>
-<h3 id="编码视频内容">编码视频内容</h3>
-<p>目前主要的编码方式有AVC/H.264和HEVC/H.265。</p>
-<h4 id="h264">H.264</h4>
-<p>使用16x16的宏块结构对帧编码。</p>
-<p>因为使用了编码器的动作预测的特性，编码的数据大小得到减少。</p>
-<h4 id="h265">H.265</h4>
-<p>相比于同质量的H.264编码方式，H.265编码减少了50%的比特率。</p>
-<p>H.265支持tiling特性来实现高效视频推流。</p>
-<p>每个tile在物理上被分割然后在普通的流中拼接，并且使用一个解码器来解码。</p>
-<h4 id="vvc">VVC</h4>
-<p>相比于H.265，下一代标准VVC有望提高30%的压缩效率。</p>
-<h3 id="分包和传输">分包和传输</h3>
-<h4 id="分包">分包</h4>
-<p>使用DASH协议分包。</p>
-<h4 id="传输">传输</h4>
-<p>依赖于雾计算和边缘计算等技术可以缩短分发中心和客户端之间的距离进而实现快速响应和低缓冲时间。</p>
-<h3 id="渲染和展示">渲染和展示</h3>
-<h4 id="客户端处理">客户端处理</h4>
-<p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
-<h4 id="云端处理">云端处理</h4>
-<p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
+<h5 id="probe-and-adaptpanda算法">Probe AND Adapt(PANDA)算法</h5>
+<p>用于检测网络状况，考虑未来比特率选择的平均目标数据比特率。</p>
+<p>目标是当多个HAS客户端共享一个拥塞带宽信道时，通过正确探测网络，进而最小化<strong>比特率震荡</strong>。</p>
+<p>PANDA算法在性能上击败了FESTIVE算法，并且PANDA算法在这些解决方案中表现出了最好的适应性，在不同带宽情况和播放器设置下实现了最优的<strong>效率、公平性和稳定性</strong>。</p>
+<p>整体上的推流质量不只依赖于本地的吞吐量测量，还依赖服务端的网络容量。</p>
+<ol>
+<li>利用服务器发起的推送机制来降低DASH内容推流到移动客户端的端到端延迟。</li>
+<li>利用$$HTTP/2$$的流终止特性来实现中间质量调整。</li>
+<li>基于估计的用户QoE，功耗和可用资源来改善用户端的推流体验。</li>
+</ol>
+<p>虽然有证据表明性能得到了提高，但是评估工作只是在受控的LAN环境下有效。</p>
+<h5 id="cross-session-stateful-predictorcs2p方案">Cross Session Stateful Predictor(CS2P)方案</h5>
+<p>一种数据驱动的吞吐量估计方案，以克服不准确的 HAS 流量预测问题。</p>
+<p>将共享相似特性的推流会话分簇，然后对每个簇使用隐马尔科夫模型预测相应的吞吐量样本。</p>
+<p>在一个大规模数据集上实验性的评估表明：CS2P高效地估计了可用的网络吞吐量，进而改善了整体上的视频比特率的适应性。</p>
+<p>CFA和Pytheas等方案和CS2P类似，也使用数据驱动的控制器来估计可用的吞吐量。</p>
+<p>但是这些工作<strong>不支持异构系统</strong>并且<strong>需要额外的训练复杂性</strong>，使其不够具有吸引力。</p>
+<p>基于吞吐量的适应性方案主要的挑战在于对吞吐量的精确估计。</p>
+<p>为360度视频采用一个没有经过精巧设计的吞吐量估计机制可能会导致不稳定性和较差的QoE，在高度动态化的无线和蜂窝网络中尤甚。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-10-20</span>
+                <span>更新于 2021-10-21</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -246,8 +226,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/cpp-types/" class="prev" rel="prev" title="重学C&#43;&#43;：1.类型系统"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：1.类型系统</a>
-            <a href="/posts/note2/" class="next" rel="next" title="适应性视频推流方案">适应性视频推流方案<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/note1/" class="prev" rel="prev" title="360度流媒体面临的挑战、机遇和解决方案"><i class="fas fa-angle-left fa-fw"></i>360度流媒体面临的挑战、机遇和解决方案</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
