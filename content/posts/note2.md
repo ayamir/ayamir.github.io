@@ -2,6 +2,7 @@
 title: "适应性视频推流方案"
 date: 2021-10-21T10:50:54+08:00
 draft: false
+math: true
 keywords: ["Immersive Video"]
 tags: ["Immersive Video"]
 categories: ["Immersive Video"]
@@ -90,7 +91,7 @@ PANDA算法在性能上击败了FESTIVE算法，并且PANDA算法在这些解决
 整体上的推流质量不只依赖于本地的吞吐量测量，还依赖服务端的网络容量。
 
 1. 利用服务器发起的推送机制来降低DASH内容推流到移动客户端的端到端延迟。
-2. 利用$$HTTP/2$$的流终止特性来实现中间质量调整。
+2. 利用*HTTP/2*的流终止特性来实现中间质量调整。
 3. 基于估计的用户QoE，功耗和可用资源来改善用户端的推流体验。
 
 虽然有证据表明性能得到了提高，但是评估工作只是在受控的LAN环境下有效。
