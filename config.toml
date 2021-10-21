@@ -39,6 +39,19 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Enginee
   since = 2021
   license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
+[params.page.math]
+  enable = true
+  copyTex = true
+  mhchem = true
+
+[params.page.toc]
+  enable = true
+  auto = false
+
+[params.page.code]
+  copy = true
+  maxShownLines = 10
+
 [params.section]
   paginate = 20
   rss = 10
