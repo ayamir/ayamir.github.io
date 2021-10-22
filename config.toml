@@ -68,7 +68,7 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Enginee
   social = true
   [params.home.posts]
   enable = true
-  paginate = 6
+  paginate = 10
   defaultHiddenFromHomePage = false
 
 [params.social]
@@ -118,7 +118,7 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Enginee
 
 # LoveIt 新增 | 0.2.7 Cookie 许可配置
 [params.cookieconsent]
-  enable = true
+  enable = false
   # 用于 Cookie 许可横幅的文本字符串
   [params.cookieconsent.content]
     message = ""
@@ -137,7 +137,7 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Enginee
 # LoveIt 新增 | 0.2.8 兼容性设置
 [params.compatibility]
   # 是否使用 Polyfill.io 来兼容旧式浏览器
-  polyfill = false
+  polyfill = true
   # 是否使用 object-fit-images 来兼容旧式浏览器
   objectFit = false
 
