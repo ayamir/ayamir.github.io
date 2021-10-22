@@ -1,7 +1,6 @@
 ---
 title: "重学C++：1.类型系统"
 date: 2021-10-18T19:32:22+08:00
-lastmod: 2021-10-22T12:16:22+08:00
 draft: false
 keywords: ["C++"]
 tags: ["C++"]
