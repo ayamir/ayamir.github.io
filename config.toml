@@ -6,6 +6,7 @@ title = "Ayamir's Blog"
 preserveTaxonomyNames = true
 enableRobotsTXT = true
 enableEmoji = true
+enableGitInfo = true
 theme = "LoveIt"
 defaultTheme = "auto"
 publishDir = "docs"
