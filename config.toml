@@ -23,13 +23,17 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "P
 
 [params.search]
   enable = true
-  type = "lunr"
+  type = "algolia"
   contentLength = 4000
   placeholder = ""
   maxResultLength = 10
   snippetLength = 50
   highlightTag = "em"
   absoluteURL = false
+  [params.search.algolia]
+    index = "ayamir_io"
+    appId = "ZO1JYZIF7J"
+    searchKey = "2d94be64af0985c7d1980d1ed75ee698"
 
 [params.footer]
   enable = true
@@ -67,6 +71,9 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "P
   enable = true
   avatarURL = "https://avatars.githubusercontent.com/u/61657399?s=400&u=7a71222b05d3e29bae8c36647b078d8aad923bfe&v=4"
   social = true
+  typeit = true
+  subtitle = "Until to the End of Interest..."
+  disclaimer = "Hardwork always pays off, whatever you do."
   [params.home.posts]
   enable = true
   paginate = 10

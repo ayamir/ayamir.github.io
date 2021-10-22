@@ -1,0 +1,13 @@
+---
+baseurl: "/"
+DefaultContentLanguage: "zh-cn"
+hasCJKLanguage: true
+languageCode: "zh-cn"
+title: "Ayamir's Blog"
+theme: "FeelIt"
+metaDataFormat: "yaml"
+algolia:
+  index: "ayamir_io"
+  key: "2d94be64af0985c7d1980d1ed75ee698"
+  appID: "ZO1JYZIF7J"
+---

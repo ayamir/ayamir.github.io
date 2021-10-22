@@ -1,0 +1,141 @@
+[
+    {
+        "title": "重学C++：1.类型系统",
+        "uri": "posts/Cpp-Types",
+        "content": "int  short  long  long long            unsigned                 3  char  signed char  unsigned char                                                                                                                                                                                                      undefined   0                                          extern                                                                                                                                                                                                                                                                                                                                                                                                               extern                     extern int i           int i           extern int   10           Q                  A   C                                                                                                                                                                                                       unsigned      int              long long    double                   bool char                                                  C  11                          int units_sold   0  int units_sold 0               int units_sold 0   int units_sold    0                                          long double pi   3 1415926536  int a pi   b    pi                           int a pi   b   pi                                               undefined",
+        "objectID": "posts/Cpp-Types",
+        "date": "2021-10-18T11:32:22.000Z",
+        "draft": false,
+        "keywords": [
+            "C++"
+        ],
+        "tags": [
+            "C++"
+        ],
+        "categories": [
+            "Programming Language"
+        ]
+    },
+    {
+        "title": "Dns Settings on Archlinux",
+        "uri": "posts/dns-settings-on-archlinux",
+        "content": "Arch Linux DNS     dnsmasq sudo pacman  S dnsmasq    etc resolv conf          Tencent nameserver 119 29 29 29 nameserver 182 254 118 118 Ali nameserver 223 5 5 5 nameserver 223 6 6 6 OpenDNS IPv4 nameservers nameserver 208 67 222 222 nameserver 208 67 220 220 OpenDNS IPv6 nameservers nameserver 2620 0 ccc  2 nameserver 2620 0 ccd  2 Google IPv4 nameservers nameserver 8 8 8 8 nameserver 8 8 4 4 Google IPv6 nameservers nameserver 2001 4860 4860  8888 nameserver 2001 4860 4860  8844 Comodo nameservers nameserver 8 26 56 26 nameserver 8 20 247 20 Generated NetworkManager nameserver 192 168 1 1    etc resolv conf    sudo chattr  i  etc resolv conf           sudo echo  options timeout 1     etc resolv conf tail   dnsmasq sudo systemctl enable dnsmasq service   now",
+        "objectID": "posts/dns-settings-on-archlinux",
+        "date": "2021-01-26T13:43:35.000Z",
+        "draft": false,
+        "keywords": [
+            "Archlinux"
+        ],
+        "tags": [
+            "Archlinux"
+        ],
+        "categories": [
+            "GNU/Linux"
+        ]
+    },
+    {
+        "title": "How to Fix GPGME Error on Archlinux",
+        "uri": "posts/how-to-fix-GPGME-error",
+        "content": "Delete old sync files sudo rm  var lib pacman sync   Re init pacman key sudo pacman key   init Populate key sudo pacman key   populate Re sync sudo pacman  Syyy update successfully",
+        "objectID": "posts/how-to-fix-GPGME-error",
+        "date": "2021-06-11T00:50:43.000Z",
+        "draft": false,
+        "keywords": [
+            "Archlinux"
+        ],
+        "tags": [
+            "Archlinux"
+        ],
+        "categories": [
+            "GNU/Linux"
+        ]
+    },
+    {
+        "title": "Immersive Video OMAF-Sample Deploy",
+        "uri": "posts/Immersive-Video-Deploy",
+        "content": "Immersive Video Sample         Immersive Video Sample Server        Dockerfile      wget   git   http_proxy   package    not found      package          glog            ln  s  usr local lib64 libglog so 0 6 0  usr local lib64 libglog so 0                libnuma         numa        numactl  H       node              numa                 fakenuma            Ubuntu                       Linux        usr src    wget https   mirrors edge kernel org pub linux kernel v5 x linux 5 11 1 tar gz    tar xpvf linux 5 11 1 tar gz          cd linux 5 11 1    cp  v  boot config   uname  r   config        sudo apt install build essential libncurses dev bison flex libssl dev libelf dev          sudo menuconfig         CONFIGNUMA CONFIGNUMA_EMU                              sudo  j   nproc     sudo modules_install    sudo install   grub       fake numa    sudo vim  etc default grub           GRUBCMDLINELINUX  numa fake 2    grub    sudo update grub    sudo reboot   numactl  H   numa       2                Client        Ubuntu18 04               README",
+        "objectID": "posts/Immersive-Video-Deploy",
+        "date": "2021-10-09T07:31:46.000Z",
+        "keywords": [
+            "Immersive-Video",
+            "Ubuntu",
+            "Docker"
+        ],
+        "tags": [
+            "Immersive-Video"
+        ],
+        "categories": [
+            "Immersive-Video"
+        ],
+        "draft": false
+    },
+    {
+        "title": "Linux权限相关命令解读",
+        "uri": "posts/linux-authority",
+        "content": "exa             Permission                                           d      l                    rwxrwxrwx                            c                          modem b                                      9                   3                                                       r                                w                                                          x                       id                                                                                           Gentoo Linux            id       uid   gid                                groups                                  UNIX                      users    Linux                         chmod        chmod                              0 000     1 001    x2013 x 2 010  w  3 011  wx 4 100 r   5 101 r x 6 110 rw  7 111 rwx        7 6 5 4 0             u user             g group        o others        all u g o               rsquo   rsquo           rsquo   rsquo                    u x         u x          x          o rw         go rw                   u x go rx                              rsquo  R rsquo   rsquo    x2013 recursive rsquo        umask                                                        umask          0022    linux                     Gentoo Linux             0022        0     0 2 2           000 010 010            rw  rw  rw     000 000 000 010        rw  rw  r       1             0                         0      rwx               setuid   4000 8                        ID              ID           ID           root                     setuid                                                  setuid  chmod u s program_name      rwsr xr x                  s setgid   2000 8         ID          ID             ID                                              setgid                         chmod g s dir_name     drwxrwsr x                   s     x  sticky   1000 8                       linux           sticky           sticky                                        root              chmod  t dir_name     drwxrwxrwt                   t     x  su            shell    su      su    l    user       ldquo  l rdquo        shell session    user            shell   user                                     su          su  c  comand           rsquo  rsquo                sudo              sudo   su     sudo   su                            sudo EDITOR vim visudo            vim     sudo                     wheel      wheel          root       sudo         root                   sudo  l       sudo          chown            chown owner  file             chown                                    bob        gt bob bob users        gt bob         gt users  admins         gt admins bob         gt bob         gt bob              root     home ayamir          foo txt                       ayamir rg  ripgrep  chgrp                           UNIX     chown                                          chown       chgrp                           chown       passwd             passwd  user       user                          user                                  root                        Gentoo Linux     passwd      ayamir                passwd",
+        "objectID": "posts/linux-authority",
+        "date": "2021-03-15T13:43:35.000Z",
+        "draft": false,
+        "keywords": [
+            "GNU/Linux"
+        ],
+        "tags": [
+            "GNU/Linux"
+        ],
+        "categories": [
+            "GNU/Linux"
+        ]
+    },
+    {
+        "title": "360度流媒体面临的挑战、机遇和解决方案",
+        "uri": "posts/note1",
+        "content": "360                      360                 3D                          2                      3D                2D                                                                 180   180   90   90                                                                                                                         25                                                                  TSP                                                                      80              120                180                                                                                                                          6                                                               AVC H 264 HEVC H 265  H 264   16x16                                         H 265        H 264     H 265     50       H 265  tiling               tile                                VVC    H 265      VVC    30                   DASH",
+        "objectID": "posts/note1",
+        "date": "2021-10-20T12:08:38.000Z",
+        "draft": false,
+        "keywords": [
+            "Immersive Video"
+        ],
+        "tags": [
+            "Immersive Video"
+        ],
+        "categories": [
+            "Immersive Video"
+        ]
+    },
+    {
+        "title": "适应性视频推流方案",
+        "uri": "posts/note2",
+        "content": "Quality Oriented Adaptive Scheme QOAS                      QOAS C S              QOAS                                    intelligent Prioritized Adaptive Scheme iPAS     802 11    iPAS                       QoS                                         iPAS                          Device Oriented Adaptive multimedia Scheme DOAS     LTE      LTE            DOAS                            QoE                                               HTTP                                 segment fetch time SFT              HTTP GET                                                           SFT            SFT      segment       FESTIVE        HAS                                                                                                               W              x   t             bx t         3     Inefficiency   HAS                 QoE     Inefficiency    frac   sum x bx _t   W   W      Inefficiency                      Unfairness                  Unfairness    sqrt 1 JainFair      Unfairness                 Instability                    Instability    frac  sum d 0   k 1  b x t d    b x t d 1  w d    sum d 1   k b_ x t d  w d     Probe Adapt PANDA                                        HAS                                    PANDA         FESTIVE     PANDA                                                                                                       DASH                    HTTP 2                        QoE                                                LAN       Cross Session Stateful Predictor CS2P                                                                                                CS2P                                   CFA Pytheas    CS2P                                                                                            360                                    QoE",
+        "objectID": "posts/note2",
+        "date": "2021-10-21T02:50:54.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "Immersive Video"
+        ],
+        "tags": [
+            "Immersive Video"
+        ],
+        "categories": [
+            "Immersive Video"
+        ]
+    },
+    {
+        "title": "Python selenium settings on microsoft-edge-dev",
+        "uri": "posts/python-selenium-settings-on-microsoft-edge-dev-on-linux",
+        "content": "Correct Version microsoft edge dev   version output Microsoft Edge 91 0 831 1 dev case  Corresponding WebDriver Find corresponding version msedgewebdriverstorage download zip  Extract path  usr local bin  HOME  local bin  Write Code Following example  msedge selenium_tools import EdgeOptions  Edge options   EdgeOptions   options use_chromium   True options binary_location   r  usr bin microsoft edge dev  options set_capability  platform    LINUX   webdriver_path   r  home ayamir  local bin msedgewebdriver  browser   Edge options options  executablepath webdriverpath  browser get  http   localhost 8000   assert  Django  browser title Launch",
+        "objectID": "posts/python-selenium-settings-on-microsoft-edge-dev-on-linux",
+        "date": "2021-03-26T13:43:35.000Z",
+        "draft": false,
+        "keywords": [
+            "Python"
+        ],
+        "tags": [
+            "Python"
+        ],
+        "categories": [
+            "Programming Language"
+        ]
+    }
+]
