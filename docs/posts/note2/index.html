@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note2\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  1687 ,
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  2576 ,
         "url": "https:\/\/ayamir.github.io\/posts\/note2\/","datePublished": "2021-10-21T10:50:54+08:00","dateModified": "2021-10-21T17:40:28+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,8 +104,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">适应性视频推流方案</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-21">2021-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1687 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-21">2021-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2576 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -132,6 +132,13 @@
                     <li><a href="#festive算法">FESTIVE算法</a></li>
                     <li><a href="#probe-and-adaptpanda算法">Probe AND Adapt(PANDA)算法</a></li>
                     <li><a href="#cross-session-stateful-predictorcs2p方案">Cross Session Stateful Predictor(CS2P)方案</a></li>
+                  </ul>
+                </li>
+                <li><a href="#基于缓冲区的适应方案">基于缓冲区的适应方案</a>
+                  <ul>
+                    <li><a href="#如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</a></li>
+                    <li><a href="#如何优化缓冲区利用率">如何优化缓冲区利用率</a></li>
+                    <li><a href="#如何降低dash流的排队延迟">如何降低DASH流的排队延迟</a></li>
                   </ul>
                 </li>
               </ul>
@@ -223,6 +230,61 @@
 <p>但是这些工作<strong>不支持异构系统</strong>并且<strong>需要额外的训练复杂性</strong>，使其不够具有吸引力。</p>
 <p>基于吞吐量的适应性方案主要的挑战在于对吞吐量的精确估计。</p>
 <p>为360度视频采用一个没有经过精巧设计的吞吐量估计机制可能会导致不稳定性和较差的QoE，在高度动态化的无线和蜂窝网络中尤甚。</p>
+<h4 id="基于缓冲区的适应方案">基于缓冲区的适应方案</h4>
+<p>客户端会在播放视频时根据当前缓冲区的占用情况请求将要到来的segment。</p>
+<h5 id="如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</h5>
+<ol>
+<li>
+<p>在多客户端启用缓存的环境中，结合客户端测量工具集和补偿算法构造模型。</p>
+<p>这个模型可以高效探测比特率切换时间并通过选择切换适当的比特率来进行补偿，最终实现了可达20%的比特率改善。</p>
+</li>
+<li>
+<p>Buffer Based Adaptation(BBA)方法</p>
+<p>应用于Netfix客户端时可以减少可达20%的重新缓冲事件。</p>
+<p>BBA方法考虑的缓冲区较大，因此对于比较短的视频不一定有这样的性能。</p>
+</li>
+<li>
+<p>Buffer Occupancy-based Lyapunov Algorithm(BOLA)</p>
+<p>把比特率适应性问题看作是与播放质量和重新缓冲时间相关的最优化问题。</p>
+<p>BOLA旨在通过把缓冲区大小保持在设定的目标水平来避免重新缓冲。</p>
+<p>对于缓冲区级别的突然下降，BOLA通过请求最低可用视频比特率来避免停顿事件的频率。</p>
+</li>
+</ol>
+<h5 id="如何优化缓冲区利用率">如何优化缓冲区利用率</h5>
+<ol>
+<li>
+<p>Adaptation and Buffer Management Algorithm(ABMA+)</p>
+<ul>
+<li>基于重新缓冲事件的可能性确定未来representation的下载时间。</li>
+<li>通过基于预先计算的缓冲区大小和segment下载时间选择最大比特率来确保流畅的播放。</li>
+</ul>
+<p>这样可以实现低计算开销的良好部署。</p>
+</li>
+<li>
+<p>Scalable Video Coding(SVC)/Bandwidth Independent Efficient Buffering(BIEB)</p>
+<ul>
+<li>基于层分发获取视频块，进而维持稳定的缓冲区大小来避免频繁的中断。</li>
+<li>没有考虑QoE模型中的卡顿和质量切换。</li>
+<li>涉及额外的编码和处理开销。</li>
+</ul>
+</li>
+<li>
+<p>使用PID控制器的控制论方法</p>
+<ul>
+<li>强制执行缓冲区设置点来使缓冲区保持在最佳水平。</li>
+<li>略微降低视频比特率，以防止调整不必要的视频比特率。</li>
+</ul>
+</li>
+</ol>
+<h5 id="如何降低dash流的排队延迟">如何降低DASH流的排队延迟</h5>
+<p>DASH流会经历最长可达1s的排队延迟和严重拥塞，导致缓冲区膨胀问题，而这会严重损害实时多媒体服务的QoE。</p>
+<p>旨在减少网络拥塞的主动队列管理 (AQM) 策略并没有充分减少这种不必要的延迟。</p>
+<ol>
+<li>DASH客户端根据网络设备的队列大小动态接收窗口大小可以显著减轻缓冲区膨胀效应。</li>
+<li>由于长期的viewport预测的高度不确定性，充足的缓冲区空间对于360度视频的流畅播放来说并不可行。</li>
+<li>通常小于3s的缓冲区大小对于短期的viewport预测来讲比较适合。</li>
+<li>由于小缓冲区很有可能造成播放卡顿，因此较短持续时间的segment可以被用于基于tile的流中，但是相比于长持续时间的segment，这样也会降低编码效率。</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
