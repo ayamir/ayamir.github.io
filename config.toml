@@ -15,7 +15,7 @@ publishDir = "docs"
   # LoveIt 主题版本
 version = "0.2.X"
 description = "Welcome to Ayamir's blog."
-keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Software Engineer"]
+keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "Projects"]
 
 [params.app]
   title = "Ayamir's blog"
