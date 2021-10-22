@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/cpp-types\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  410 ,
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  1117 ,
         "url": "https:\/\/ayamir.github.io\/posts\/cpp-types\/","datePublished": "2021-10-18T19:32:22+08:00","dateModified": "2021-10-18T19:32:22+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,8 +104,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：1.类型系统</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-18">2021-10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 410 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-18">2021-10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1117 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -124,24 +124,148 @@
 </nav></div>
             </div><div class="content" id="content"><h2 id="常见的坑">常见的坑</h2>
 <ol>
-<li>int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。</li>
-<li>字符型被分为3种：char, signed char, unsigned char，前两种并不等价。
-虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</li>
-<li>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</li>
+<li>
+<p>int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。</p>
+</li>
+<li>
+<p>字符型被分为3种：char, signed char, unsigned char，前两种并不等价。
+虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</p>
+</li>
+<li>
+<p>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</p>
+</li>
+<li>
+<p>虽然变量初始化时候使用了<code>=</code>号，但是初始化和变量赋值并不相同。</p>
+</li>
+<li>
+<p>变量默认初始化：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量类型</th>
+<th style="text-align:center">位置在函数内部</th>
+<th style="text-align:center">位置在函数外部</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">内置类型</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">自定义类型</td>
+<td style="text-align:center">由类决定</td>
+<td style="text-align:center">由类决定</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>如果在函数体内部试图初始化一个<code>extern</code>标记的变量会引发错误。</p>
+</li>
+<li>
+<p>在嵌套作用域中，内层作用域中的<strong>定义</strong>可以覆盖外层作用域中<strong>声明</strong>的变量。</p>
+<p>可以显式使用<strong>域操作符</strong><code>::</code>来指明使用哪层的变量。</p>
+</li>
 </ol>
 <h2 id="必须要理解的点">必须要理解的点</h2>
 <ol>
-<li>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</li>
-<li>变量的组成部分：类型和值。说白了就是一个定性一个定量。类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。值在实际代码运行过程中则被各种函数使用参与运算。</li>
+<li>
+<p>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</p>
+</li>
+<li>
+<p>变量的组成部分：类型和值。说白了就是一个定性一个定量。</p>
+<p>类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。</p>
+<p>值在实际代码运行过程中则被各种函数使用参与运算。</p>
+</li>
+<li>
+<p>变量声明和定义：</p>
+<p>声明的意思就是：我要用这个变量。</p>
+<p>定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">声明</th>
+<th style="text-align:center">定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">规定变量的类型和名字</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">申请空间</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">初始化</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">执行多次</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>用<code>extern</code>标记<strong>未初始化</strong>的变量来表明只对变量作声明：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>             <span class="c1">//声明并且定义
+</span><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//声明并且定义
+</span></code></pre></div><p>Q：为什么会有声明和定义这两个概念？</p>
+<p>A：因为C++支持<em>分离式编译</em>机制，这允许程序被分割成若干个文件，每个文件可以被独立编译。如果要在多个文件中使用同一个变量，就必须要将声明和定义分离。变量的定义必须且只能出现在一个文件中，其他用到这个变量的文件必须对其进行声明，且绝对不能进行重复定义。</p>
+</li>
+<li>
+<p>名字的作用域：</p>
+<p>同一个名字在不同的作用域中可以指向不同的实体。</p>
+<p>名字的有效区域始于<strong>声明</strong>语句，以<strong>声明</strong>语句所在的作用域末端结束。</p>
+</li>
 </ol>
 <h2 id="建议">建议</h2>
 <ol>
-<li>明确数值不可能为负时使用unsigned类型。</li>
-<li>使用int执行整数运算，范围不够时使用long long。</li>
-<li>使用double执行浮点数运算。</li>
-<li>算术表达式中不要使用bool和char。</li>
-<li>避免写出依赖实现环境的代码，否则代码不可移植。</li>
-<li>避免有符号类型和无符号类型之间的隐式类型转换。</li>
+<li>
+<p>明确数值不可能为负时使用unsigned类型。</p>
+</li>
+<li>
+<p>使用int执行整数运算，范围不够时使用long long。</p>
+</li>
+<li>
+<p>使用double执行浮点数运算。</p>
+</li>
+<li>
+<p>算术表达式中不要使用bool和char。</p>
+</li>
+<li>
+<p>避免写出依赖实现环境的代码，否则代码不可移植。</p>
+</li>
+<li>
+<p>避免有符号类型和无符号类型之间的隐式类型转换。</p>
+</li>
+<li>
+<p>C++11中引入了<strong>列表初始化</strong>，例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// 传统的初始化方式
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">units_sold</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="c1">// 现代的初始化方式
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</code></pre></div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="n">pi</span><span class="p">},</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="n">pi</span><span class="p">};</span>   <span class="c1">// 错误：没有执行类型转换，因为可能丢失信息
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">a</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span>     <span class="c1">// 正确：执行了隐式类型转化，丢失了信息
+</span></code></pre></div></li>
+<li>
+<p>对每个内置类型的变量都执行显式默认初始化以防止undefined行为。</p>
+</li>
+<li>
+<p>在变量第一次使用的地方进行<strong>定义</strong>操作。</p>
+</li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
