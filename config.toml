@@ -51,7 +51,7 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "P
 
 [params.page.toc]
   enable = true
-  auto = false
+  auto = true
 
 [params.page.code]
   copy = true
