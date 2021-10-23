@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note2\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  2576 ,
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  4943 ,
         "url": "https:\/\/ayamir.github.io\/posts\/note2\/","datePublished": "2021-10-21T10:50:54+08:00","dateModified": "2021-10-22T20:59:36+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,8 +104,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">适应性视频推流方案</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-21">2021-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2576 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-21">2021-10-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4943 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -127,18 +127,43 @@
             </li>
             <li><a href="#客户端适应">客户端适应</a>
               <ul>
-                <li><a href="#基于吞吐量的适应方案">基于吞吐量的适应方案</a>
+                <li><a href="#基于吞吐量的自适应方案">基于吞吐量的自适应方案</a>
                   <ul>
                     <li><a href="#festive算法">FESTIVE算法</a></li>
                     <li><a href="#probe-and-adaptpanda算法">Probe AND Adapt(PANDA)算法</a></li>
                     <li><a href="#cross-session-stateful-predictorcs2p方案">Cross Session Stateful Predictor(CS2P)方案</a></li>
                   </ul>
                 </li>
-                <li><a href="#基于缓冲区的适应方案">基于缓冲区的适应方案</a>
+                <li><a href="#基于缓冲区的自适应方案">基于缓冲区的自适应方案</a>
                   <ul>
                     <li><a href="#如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</a></li>
                     <li><a href="#如何优化缓冲区利用率">如何优化缓冲区利用率</a></li>
                     <li><a href="#如何降低dash流的排队延迟">如何降低DASH流的排队延迟</a></li>
+                  </ul>
+                </li>
+                <li><a href="#混合自适应方案">混合自适应方案</a>
+                  <ul>
+                    <li><a href="#model-predictive-controlmpc">Model Predictive Control(MPC)</a></li>
+                    <li><a href="#throughput-and-buffer-occupancy-based-adaptationtboa">Throughput and Buffer Occupancy-based Adaptation(TBOA)</a></li>
+                    <li><a href="#fuzzy-logic-based-dash">fuzzy logic-based DASH</a></li>
+                    <li><a href="#spectrum-based-quality-adaptationsquad算法">Spectrum-based Quality Adaptation(SQUAD)算法</a></li>
+                    <li><a href="#throughput-friendly-dashtfdash">Throughput Friendly DASH/TFDASH</a></li>
+                  </ul>
+                </li>
+                <li><a href="#基于多路径的自适应方案">基于多路径的自适应方案</a>
+                  <ul>
+                    <li><a href="#multipath-transmission-control-protocolmptcp">Multipath Transmission Control Protocol(MPTCP)</a></li>
+                    <li><a href="#cmt-qa方案">CMT-QA方案</a></li>
+                    <li><a href="#multi-source-playermsplayer">Multi-source player(MSPlayer)</a></li>
+                    <li><a href="#cross-layer-fairness-solution">Cross-layer Fairness solution</a></li>
+                    <li><a href="#kim-and-chungs-work">Kim and Chung&rsquo;s work</a></li>
+                    <li><a href="#gos-work">Go&rsquo;s work</a></li>
+                    <li><a href="#基于mpeg-dash的推流策略实验性评估">基于MPEG-DASH的推流策略实验性评估</a></li>
+                    <li><a href="#davvi">DAVVI</a></li>
+                    <li><a href="#elgablis-work">Elgabli&rsquo;s work</a></li>
+                    <li><a href="#zhangs-work">Zhang&rsquo;s work</a></li>
+                    <li><a href="#yun-and-chungs-work">Yun and Chung&rsquo;s work</a></li>
+                    <li><a href="#rahman-and-chungs-work">Rahman and Chung&rsquo;s work</a></li>
                   </ul>
                 </li>
               </ul>
@@ -182,7 +207,7 @@
 <li>DOAS专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的QoE。</li>
 </ol>
 <h3 id="客户端适应">客户端适应</h3>
-<h4 id="基于吞吐量的适应方案">基于吞吐量的适应方案</h4>
+<h4 id="基于吞吐量的自适应方案">基于吞吐量的自适应方案</h4>
 <p>这类方案基于估计的网络吞吐量从服务端选择视频的比特率。</p>
 <ol>
 <li>HTTP客户端通过之前的观察记录来估计网络的吞吐量。</li>
@@ -230,7 +255,7 @@
 <p>但是这些工作<strong>不支持异构系统</strong>并且<strong>需要额外的训练复杂性</strong>，使其不够具有吸引力。</p>
 <p>基于吞吐量的适应性方案主要的挑战在于对吞吐量的精确估计。</p>
 <p>为360度视频采用一个没有经过精巧设计的吞吐量估计机制可能会导致不稳定性和较差的QoE，在高度动态化的无线和蜂窝网络中尤甚。</p>
-<h4 id="基于缓冲区的适应方案">基于缓冲区的适应方案</h4>
+<h4 id="基于缓冲区的自适应方案">基于缓冲区的自适应方案</h4>
 <p>客户端会在播放视频时根据当前缓冲区的占用情况请求将要到来的segment。</p>
 <h5 id="如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</h5>
 <ol>
@@ -272,7 +297,8 @@
 <p>使用PID控制器的控制论方法</p>
 <ul>
 <li>强制执行缓冲区设置点来使缓冲区保持在最佳水平。</li>
-<li>略微降低视频比特率，以防止调整不必要的视频比特率。</li>
+<li>略微降低视频比特率，以防止不必要的视频比特率调整。</li>
+<li>在多个客户端竞争的情况下，不能保证公平性。</li>
 </ul>
 </li>
 </ol>
@@ -285,6 +311,158 @@
 <li>通常小于3s的缓冲区大小对于短期的viewport预测来讲比较适合。</li>
 <li>由于小缓冲区很有可能造成播放卡顿，因此较短持续时间的segment可以被用于基于tile的流中，但是相比于长持续时间的segment，这样也会降低编码效率。</li>
 </ol>
+<h4 id="混合自适应方案">混合自适应方案</h4>
+<p>客户端同时考虑吞吐量和播放缓冲信号来确定即将到来的segments的视频比特率。</p>
+<h5 id="model-predictive-controlmpc">Model Predictive Control(MPC)</h5>
+<p>利用良好定义的参数集合来估计可用的网络和缓冲区资源，进而为高QoE的比特率做出最优调整的控制论方法。</p>
+<p>提出的QoE模型采用视频的平均质量$R_k$，平均比特率切换，重新缓冲事件，和初始延迟$T_s$作计算：
+$$
+QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| \</p>
+<ul>
+<li>\mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
+$$
+$C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</li>
+</ul>
+<p>$\lambda, \mu, \mu_s$：可以根据用户兴趣进行调整的权重</p>
+<ul>
+<li>
+<p>MPC用调和平均的方法来估计吞吐量，并且能够明确管理复杂的控制对象。</p>
+</li>
+<li>
+<p>只研究了单播放器的情况，因此没有公平性的考量。</p>
+</li>
+</ul>
+<h5 id="throughput-and-buffer-occupancy-based-adaptationtboa">Throughput and Buffer Occupancy-based Adaptation(TBOA)</h5>
+<p>选择合适的视频比特率来获得单个或多个客户端环境中改进的推流体验。</p>
+<ul>
+<li>
+<p>激进地提高了比特率来最高效地利用可用的带宽。</p>
+</li>
+<li>
+<p>等待缓冲区超过某个级别，然后降低比特率以获得稳定的性能。</p>
+</li>
+<li>
+<p>为缓冲区等级设置三个阈值，例如：</p>
+<p>$0 &lt; B_{min} &lt; B_{low} &lt; B_{high}$</p>
+<p>目标区间在$B_{low}$和$B_{high}$之间。</p>
+<p>算法努力使最优区间$B_{opt}满足$ $B_{opt} = B_{low} + B_{high} \over 2$。</p>
+<p>通过控制$B_{low}$和$B_{high}$的阈值，使缓冲区和比特率的变化稳定来应对未知的TCP吞吐量。</p>
+</li>
+<li>
+<p>算法表现的流畅而公平，但是没有把用户满意度的度量考虑在内。</p>
+</li>
+</ul>
+<h5 id="fuzzy-logic-based-dash">fuzzy logic-based DASH</h5>
+<p>控制重新缓冲事件和视频推流的质量。</p>
+<ul>
+<li>考虑了平均吞吐量的估计方法，获得了更高的视频比特率和更少的质量波动。</li>
+<li>没有考虑QoE度量。</li>
+</ul>
+<p>为了更好地调整比特率做出的改进：</p>
+<ul>
+<li>用Kaufman&rsquo;s Adaptive Moving Average/KAMA测量法估计吞吐量。</li>
+<li>用Grey Prediction Model/GPM来估计缓冲区等级。</li>
+</ul>
+<p>竞争流模拟环境中，改进所取得的效果：</p>
+<ul>
+<li>平均情况下达到50%的公平性。</li>
+<li>最好情况下达到17%的更好的接收质量。</li>
+</ul>
+<h5 id="spectrum-based-quality-adaptationsquad算法">Spectrum-based Quality Adaptation(SQUAD)算法</h5>
+<p>解决吞吐量预测和缓冲区等级估计的不连续性。</p>
+<ul>
+<li>吞吐量和缓冲区等级反馈信号都被用于选择恰当的质量。</li>
+<li>在一开始获取最低质量的segment来减少启动时间。</li>
+<li>在视频质量切换频率和幅度方面性能显著提高。</li>
+</ul>
+<p>尚未有方案讨论如何在视频质量和带宽利用率之间做出很好的平衡。</p>
+<h5 id="throughput-friendly-dashtfdash">Throughput Friendly DASH/TFDASH</h5>
+<p>获得多个竞争客户端情形下的公平性、稳定性和效率。</p>
+<ul>
+<li>通过避免OFF端获得了最大并且公平的带宽利用率。</li>
+<li>双阈值的缓冲区保证播放时的稳定性。</li>
+</ul>
+<p>在单客户端的环境中，混合适应方案表现的很合理。</p>
+<p>但是多个客户端一起竞争带宽时会迅速扼杀整个网络。</p>
+<p>当客户端的缓冲区达到了最大阈值时，客户端进入了ON-OFF阶段，此时客户端只对自己的视频比特率做了调整而没有考虑其他客户端，因而不能正确地估计可用的带宽资源。</p>
+<p>这会导致竞争客户端之间带宽利用不足以及带宽分配不均。</p>
+<h4 id="基于多路径的自适应方案">基于多路径的自适应方案</h4>
+<p>解决的主要问题是在异质网络之上，如何面对交付内容的增加。</p>
+<h5 id="multipath-transmission-control-protocolmptcp">Multipath Transmission Control Protocol(MPTCP)</h5>
+<ul>
+<li>有用但是并不理想
+<ul>
+<li>因为需要发送端和接收端同时修改内核堆栈。</li>
+<li>因为受到网络运营商的限制可能无法通过中间件。</li>
+</ul>
+</li>
+</ul>
+<h5 id="cmt-qa方案">CMT-QA方案</h5>
+<p>采用多种特定的网络技术来实现并发的多路内容交付。</p>
+<h5 id="multi-source-playermsplayer">Multi-source player(MSPlayer)</h5>
+<p>实现多条链路之上的高质量视频传送和弹性的容错机制。</p>
+<ul>
+<li>
+<p>客户端驱动的对未来视频segment的比特率分配依赖于估计的网络状况。</p>
+</li>
+<li>
+<p>视频segment可以在两种可用网络之上进行下载，但是多路径的下载可能会造成交付顺序错乱。</p>
+</li>
+</ul>
+<h5 id="cross-layer-fairness-solution">Cross-layer Fairness solution</h5>
+<p>通过探索数据链路层和传输层之间的交互来分析数据传输路径的实时质量，提出了一个公平性驱动的高效流控机制。</p>
+<p>在模拟环境中，相比于CMT-QA方案：</p>
+<ul>
+<li>获得了更高的公平性评级。</li>
+<li>获得了更低的平均吞吐量和PSNR（峰值信噪比）。</li>
+</ul>
+<h5 id="kim-and-chungs-work">Kim and Chung&rsquo;s work</h5>
+<p>同时利用WiFi和LTE网络接口，从多个视频源下载部分segment。</p>
+<ul>
+<li>对多路径的聚合带宽进行平滑处理以避免带宽波动。</li>
+<li>实现了一种部分segment请求策略以避免乱序问题，经过各种路径传输的部分片段
+在呈现给用户之前进行组合。</li>
+</ul>
+<h5 id="gos-work">Go&rsquo;s work</h5>
+<p>在网络成本限制下，调度跨网络间相同比特率的视频块中的所有segment。</p>
+<h5 id="基于mpeg-dash的推流策略实验性评估">基于MPEG-DASH的推流策略实验性评估</h5>
+<p>以低功耗为移动设备提供了WiFi和LTE网络下的无缝视频播放。</p>
+<ul>
+<li>没有分析感知视频质量的影响。</li>
+</ul>
+<h5 id="davvi">DAVVI</h5>
+<p>基于HTTP的推流系统，为了实现3G和WiFi网络之上的多信道支持。</p>
+<ul>
+<li>基于每个信道的质量，视频segment被动态地划分成subsegment，以便于最大负载可以被应用到每个信道上。</li>
+</ul>
+<p>为多媒体内容交付使用多个网络接口需要为路径质量测量和数据调度精心设计机制，来避免丢包和乱序交付的问题。</p>
+<p>然而因为无线异质网络的高度动态性和复杂性，现有的方案在测量实时信息的时候是受限的。</p>
+<h5 id="elgablis-work">Elgabli&rsquo;s work</h5>
+<p>考虑了基于 SVC 的优先自适应视频传输的两条路径。</p>
+<ul>
+<li>属于每一层的段可以根据质量、块deadline和路径偏好从可用路由之一传输。</li>
+<li>没有考虑在任何路径上应用最大贡献度。</li>
+</ul>
+<h5 id="zhangs-work">Zhang&rsquo;s work</h5>
+<p>提出了一种基于两个流的优先级感知自适应解决方案，它为每个流使用不同的视频比特率。</p>
+<ul>
+<li>实现了一个集成带宽的方式来为高优先级流启用更高的视频比特率，并在没有足够的可用带宽时终止低优先级流。</li>
+</ul>
+<h5 id="yun-and-chungs-work">Yun and Chung&rsquo;s work</h5>
+<p>为多视图视频提出了一种基于DASH的推流框架，它包括基于缓冲区的服务器推送方案和并行传输机制，以减少不同传输视图之间的切换时间。</p>
+<ul>
+<li>只有一种路径配置被应用。</li>
+</ul>
+<h5 id="rahman-and-chungs-work">Rahman and Chung&rsquo;s work</h5>
+<p>介绍了基于 HAS 的多视图会议流解决方案，其中演示者、观众和演示屏幕的多个流通过多条路径同时传输。</p>
+<ul>
+<li>对所有的3个流分配相同的优先级。</li>
+<li>采用统一带宽的方式，以便于统一的质量可以被分配到所有流的segment上。</li>
+<li>对于多个流的每个segment，其路径以通过考虑网络吞吐量和每个segment的比特率来决定。</li>
+<li>没有考虑多信道的影响，这可能降低整体性能。</li>
+</ul>
+<p>利用多路径网络的特点和优先级特性可以为360度tile视频推流提供更高的推流性能。</p>
+<p>提出的所有自适应策略都是通用的，目标是标准的视频交付，并没有对360度视频内容做出特别的考虑。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
