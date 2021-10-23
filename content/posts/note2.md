@@ -178,8 +178,7 @@ DASH流会经历最长可达1s的排队延迟和严重拥塞，导致缓冲区�
 
 提出的QoE模型采用视频的平均质量$R_k$，平均比特率切换，重新缓冲事件，和初始延迟$T_s$作计算：
 $$
-QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| \\
-- \mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
+QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| - \mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
 $$
 $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小
 

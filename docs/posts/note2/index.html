@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/note2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-10-21T10:50:54+08:00" />
-<meta property="article:modified_time" content="2021-10-22T20:59:36+08:00" />
+<meta property="article:modified_time" content="2021-10-23T21:16:24+08:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="适应性视频推流方案"/>
@@ -28,7 +28,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note2\/"
         },"genre": "posts","keywords": "Immersive Video","wordcount":  4943 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note2\/","datePublished": "2021-10-21T10:50:54+08:00","dateModified": "2021-10-22T20:59:36+08:00","publisher": {
+        "url": "https:\/\/ayamir.github.io\/posts\/note2\/","datePublished": "2021-10-21T10:50:54+08:00","dateModified": "2021-10-23T21:16:24+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -317,12 +317,9 @@
 <p>利用良好定义的参数集合来估计可用的网络和缓冲区资源，进而为高QoE的比特率做出最优调整的控制论方法。</p>
 <p>提出的QoE模型采用视频的平均质量$R_k$，平均比特率切换，重新缓冲事件，和初始延迟$T_s$作计算：
 $$
-QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| \</p>
-<ul>
-<li>\mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
+QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| - \mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
 $$
-$C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</li>
-</ul>
+$C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</p>
 <p>$\lambda, \mu, \mu_s$：可以根据用户兴趣进行调整的权重</p>
 <ul>
 <li>
@@ -467,7 +464,7 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-10-22</span>
+                <span>更新于 2021-10-23</span>
             </div>
             <div class="post-info-license"></div>
         </div>
