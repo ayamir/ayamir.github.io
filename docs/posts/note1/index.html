@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note1\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  1021 ,
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  1031 ,
         "url": "https:\/\/ayamir.github.io\/posts\/note1\/","datePublished": "2021-10-20T20:08:38+08:00","dateModified": "2021-10-20T22:37:31+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,7 +104,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">360度流媒体面临的挑战、机遇和解决方案</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-20">2021-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1021 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-20">2021-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1031 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -120,7 +120,19 @@
             <li><a href="#视频采集和拼接">视频采集和拼接</a></li>
             <li><a href="#使用不同的投影策略实现降维">使用不同的投影策略实现降维</a>
               <ul>
-                <li><a href="#视角独立型">视角独立型</a></li>
+                <li><a href="#视角独立型">视角独立型</a>
+                  <ul>
+                    <li><a href="#等距长方形投影erp">等距长方形投影(ERP)</a></li>
+                    <li><a href="#立方贴图投影cmp">立方贴图投影(CMP)</a></li>
+                  </ul>
+                </li>
+                <li><a href="#视角依赖型">视角依赖型</a>
+                  <ul>
+                    <li><a href="#金字塔投影">金字塔投影</a></li>
+                    <li><a href="#截断方形金字塔投影">截断方形金字塔投影</a></li>
+                    <li><a href="#偏移立方贴图投影">偏移立方贴图投影</a></li>
+                  </ul>
+                </li>
               </ul>
             </li>
             <li><a href="#编码视频内容">编码视频内容</a>
@@ -156,9 +168,7 @@
 <h4 id="视角独立型">视角独立型</h4>
 <p>整个3D的视频内容被按照统一的质量投影到2D平面上</p>
 <p>主要包括等距长方形投影和立方贴图投影</p>
-<ul>
-<li>
-<p>等距长方形投影</p>
+<h5 id="等距长方形投影erp">等距长方形投影(ERP)</h5>
 <p>使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上</p>
 <p>视角范围：左180度～右180度、上90度～下90度</p>
 <p>缺点：</p>
@@ -166,10 +176,8 @@
 <li>极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽</li>
 <li>由于图像失真导致压缩效率不足</li>
 </ul>
-</li>
-<li>
-<p>立方贴图投影</p>
-<p>六边立方体组合用于将球体的像素映射到立方体上的相关像素</p>
+<h5 id="立方贴图投影cmp">立方贴图投影(CMP)</h5>
+<p>六面立方体组合用于将球体的像素映射到立方体上的相关像素</p>
 <p>在游戏中被广泛应用</p>
 <p>优点：</p>
 <ul>
@@ -179,18 +187,10 @@
 <ul>
 <li>只能渲染有限的用户视野</li>
 </ul>
-</li>
-</ul>
-<ol start="2">
-<li>
-<p>视角依赖型</p>
+<h4 id="视角依赖型">视角依赖型</h4>
 <p>视角内的内容比之外的内容有更高保真度的表示</p>
 <p>主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影</p>
-</li>
-</ol>
-<ul>
-<li>
-<p>金字塔投影</p>
+<h5 id="金字塔投影">金字塔投影</h5>
 <p>球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向</p>
 <p>优点：</p>
 <ul>
@@ -200,9 +200,7 @@
 <ul>
 <li>用户以120度旋转视角时，视频的质量会像旋转180度一样急速下降</li>
 </ul>
-</li>
-<li>
-<p>截断方形金字塔投影</p>
+<h5 id="截断方形金字塔投影">截断方形金字塔投影</h5>
 <p>大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔</p>
 <p>优点：</p>
 <ul>
@@ -212,9 +210,7 @@
 <ul>
 <li>使边缘更加锐利</li>
 </ul>
-</li>
-<li>
-<p>偏移立方贴图投影</p>
+<h5 id="偏移立方贴图投影">偏移立方贴图投影</h5>
 <p>与原始的立方贴图投影类似，球体的像素点被投影到立方体的6个面上</p>
 <p>优点：</p>
 <ul>
@@ -223,8 +219,6 @@
 <p>缺点：</p>
 <ul>
 <li>存储开销很大</li>
-</ul>
-</li>
 </ul>
 <h3 id="编码视频内容">编码视频内容</h3>
 <p>目前主要的编码方式有AVC/H.264和HEVC/H.265。</p>
