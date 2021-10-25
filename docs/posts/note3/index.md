@@ -94,7 +94,7 @@ DASH插件需要支持相同质量视频的推流。
 
 + 部分交付
 
-<img src="https://i.loli.net/2021/10/25/oi8ZDSzyFj6dtXC.png" alt="三种策略在不同视域的两个连续segment上的表现形式" style="zoom: 50%;" />
+![三种策略在不同视域的两个连续segment上的表现形式](https://i.loli.net/2021/10/25/oi8ZDSzyFj6dtXC.png)
 
 #### 分块模式
 
