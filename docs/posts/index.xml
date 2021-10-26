@@ -10,73 +10,1282 @@
     <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/const/</guid>
-    <description><![CDATA[常见的坑 仅用const修饰的对象只在单个文件中有效，如果想在多个文件之间共享const对象，必须在对象定义的前面加extern。 允许为一个常]]></description>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>仅用<code>const</code>修饰的对象只在单个文件中有效，如果想在多个文件之间共享<code>const</code>对象，必须在对象<strong>定义</strong>的前面加<code>extern</code>。</p>
+</li>
+<li>
+<p>允许为一个常量引用绑定非常量的对象、字面量和表达式。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 正确
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>      <span class="c1">// 正确
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 正确
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r4</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>        <span class="c1">// 错误
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r5</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+<span class="n">r5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 正确
+</span><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>                 <span class="c1">// 错误
+</span></code></pre></div></li>
+<li>
+<p>指向常量的指针和常量指针：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">errNumb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">curErr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">errNumb</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mutPPi</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pPi</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+</code></pre></div><p>从声明语句的变量符号开始，自右向左看：</p>
+<p><code>curErr</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
+<p><code>mutPPi</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+<p><code>pPi</code>首先是一个不可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p><code>const</code>对象在创建时必须进行初始化。</p>
+</li>
+<li>
+<p>常量引用即对<code>const</code>对象的引用。</p>
+</li>
+<li>
+<p>常量引用绑定<em>不可变对象</em>和<em>可变对象</em>时含义不同。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">可变对象</th>
+<th style="text-align:center">不可变对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">用常量引用绑定</td>
+<td style="text-align:center">可以</td>
+<td style="text-align:center">必须</td>
+</tr>
+<tr>
+<td style="text-align:center">常量引用的含义</td>
+<td style="text-align:center">不能通过此引用改变对象的值</td>
+<td style="text-align:center">不可以改变对象的值</td>
+</tr>
+</tbody>
+</table>
+<p>常量引用绑定到可变对象上：对原有可操作性质的窄化，减少操作肯定不会引发错误，所以是允许的。</p>
+<p>非常量引用绑定到不可变对象上：对原有可操作性质的拓宽，增加不允许的操作会出错、，所以不可变对象必须使用常量引用。</p>
+</li>
+<li>
+<p>因为指针是对象，而引用不是对象，所以<code>const</code>和指针的组合有2种情况，<code>const</code>和引用的组合只有1种情况。</p>
+<ul>
+<li>指针
+<ul>
+<li>指向常量的指针（pointer to const）：不能通过此指针修改对应的量。</li>
+<li>常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。</li>
+</ul>
+</li>
+<li>引用
+<ul>
+<li>常量引用：不能通过此引用修改对应的量。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+]]></description>
 </item><item>
     <title>重学C&#43;&#43;：引用和指针</title>
     <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
     <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
-    <description><![CDATA[常见的坑 &amp;和*在不同的上下文里面其含义并不相同，因此完全可以当成不同的符号看待。 int i = 42; int &amp;r = i; // &amp;在类型名后出现，是声明的]]></description>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>&amp;</code>和<code>*</code>在不同的上下文里面其含义并不相同，因此<strong>完全可以当成不同的符号看待</strong>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>    <span class="c1">// &amp;在类型名后出现，是声明的一部分，表明r是一个引用
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>        <span class="c1">// *在类型名后出现，是声明的一部分，表明p是一个指针
+</span><span class="c1"></span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>        <span class="c1">// &amp;在表达式中出现，是取地址符
+</span><span class="c1"></span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">43</span><span class="p">;</span>       <span class="c1">// *在表达式中出现，是解引用符
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// &amp;是声明的一部分，*是解引用符
+</span></code></pre></div></li>
+<li>
+<p>指针可以用<code>0</code>进行初始化成空指针，但是不可以用<code>0</code>赋值。</p>
+</li>
+<li>
+<p>指针之间使用<code>==</code>来比较时，如果结果是<code>true</code>，对应多种情况：</p>
+<ul>
+<li>都是空指针</li>
+<li>都是同一个地址
+<ul>
+<li>都指向同一个对象</li>
+<li>一个指针指向某一个对象，另一个指针指向另一对象的下一地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>引用和指针——都可以用于间接访问对象</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">引用</th>
+<th style="text-align:center">指针</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">复合类型</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">表示符号</td>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center">含义</td>
+<td style="text-align:center">变量的别名</td>
+<td style="text-align:center">变量在内存中的地址</td>
+</tr>
+<tr>
+<td style="text-align:center">初始化和赋值时是否需要类型匹配</td>
+<td style="text-align:center">必须匹配（除常量引用）</td>
+<td style="text-align:center">必须匹配（除void*和指向常量的指针）</td>
+</tr>
+<tr>
+<td style="text-align:center">是否需要初始化</td>
+<td style="text-align:center">必须初始化</td>
+<td style="text-align:center">无需初始化</td>
+</tr>
+<tr>
+<td style="text-align:center">可否重新绑定其他变量</td>
+<td style="text-align:center">不可以</td>
+<td style="text-align:center">可以</td>
+</tr>
+<tr>
+<td style="text-align:center">可否嵌套定义</td>
+<td style="text-align:center">不可以</td>
+<td style="text-align:center">可以</td>
+</tr>
+</tbody>
+</table>
+<p>引用：</p>
+<ul>
+<li>引用只能<strong>绑定</strong>在对象上，不能绑定在字面量或者表达式上。</li>
+<li>引用只是原有对象的<strong>别名</strong>，并非对象，因此不可以定义引用的引用。</li>
+<li>定义引用时并不开辟新的内存空间，因此不可以定义引用的指针。</li>
+</ul>
+<p>指针：</p>
+<ul>
+<li>
+<p>指针本身就是一个对象，能执行的操作自由度远超过引用。</p>
+<ul>
+<li>
+<p>可以实现嵌套定义，即指针的指针。</p>
+</li>
+<li>
+<p>可以实现指针的引用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>         <span class="c1">// p是int型指针
+</span><span class="c1"></span><span class="kt">int</span> <span class="o">*&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>    <span class="c1">// r是指针p的引用，从r开始自右向左读，&amp;表明r是一个引用，引用的是指针，指针指向的类型是int
+</span><span class="c1"></span>
+<span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>         <span class="c1">// r是p的别名，即给p赋值为i的地址，即令p指向i
+</span><span class="c1"></span><span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>         <span class="c1">// r是p的别名，对r解引用即对p解引用，即将p所指向的地址处变量的值赋值为0
+</span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>指针初始化和赋值时需要使用&amp;运算符取得对象的地址。</p>
+</li>
+<li>
+<p>指针值的情况：</p>
+<ol>
+<li>指向一个对象。</li>
+<li>指向紧邻对象所占空间的下一个位置。</li>
+<li>空指针，没有指向任何对象。</li>
+<li>无效指针，除上述情况之外。</li>
+</ol>
+<p>对第4种无效指针的操作是未定义的，后果无法预计。</p>
+<p>2、3两种值虽然有效，但是因为没有指向任何对象，所以对其操作的后果同样无法预计。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>void*</code>眼中内存空间仅仅是内存空间，并不能访问内存空间中的对象。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>
+<p>初始化所有的指针，并且<strong>在对象定义完成之后</strong>再定义指向它的指针。</p>
+</li>
+<li>
+<p>避免使用<code>0</code>和<code>NULL</code>初始化空指针，应该使用<code>nullptr</code>。</p>
+</li>
+<li>
+<p>在使用指针之前检查其是否为<code>nullptr</code>。</p>
+</li>
+<li>
+<p><strong>记住赋值改变的永远是等号左侧的对象。</strong></p>
+</li>
+<li>
+<p>面对复杂的指针或引用的声明语句时，从变量名开始自右向左阅读来弄清楚其真实含义。</p>
+</li>
+</ol>
+]]></description>
 </item><item>
     <title>自适应360度视频推流方案</title>
     <link>https://ayamir.github.io/posts/note3/</link>
     <pubDate>Mon, 25 Oct 2021 09:34:10 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/note3/</guid>
-    <description><![CDATA[概述 360度视频的推流手段逐渐从视角独立型方案变成基于tile的视角依赖型方案。 相比于常规视频，360度视频被编码成全向的场景。 自适应360]]></description>
+    <description><![CDATA[<h2 id="概述">概述</h2>
+<p>360度视频的推流手段逐渐从视角独立型方案变成基于tile的视角依赖型方案。</p>
+<p>相比于常规视频，360度视频被编码成全向的场景。</p>
+<p>自适应360度视频推流利用DASH框架来实现比特率的自适应。</p>
+<h2 id="分类">分类</h2>
+<h3 id="viewport-independent-streaming">Viewport-Independent Streaming</h3>
+<h4 id="服务端的任务">服务端的任务</h4>
+<ul>
+<li>使用如ERP、CMP等视角独立型的投影方式，360度视频被投影到一个球体上。</li>
+</ul>
+<h4 id="客户端的任务">客户端的任务</h4>
+<ul>
+<li>投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。</li>
+<li>客户端需要支持对应的投影格式。</li>
+<li>客户端像处理传统视频一样完成比特率自适应。
+<ul>
+<li>基于网络特征向将要到来的segment请求相同投影格式的表示</li>
+</ul>
+</li>
+</ul>
+<p>DASH插件需要支持相同质量视频的推流。</p>
+<h4 id="应用">应用</h4>
+<p>视角独立型推流主要用于体育、教育和旅游视频内容。</p>
+<h4 id="优点">优点</h4>
+<ul>
+<li>简单</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li>相比于视角依赖型方案视频编码效率低了30%。</li>
+<li>为不可见的区域要求大量带宽和解码资源。</li>
+</ul>
+<h3 id="viewport-dependent-streaming">Viewport-Dependent Streaming</h3>
+<h4 id="终端设备的任务">终端设备的任务</h4>
+<ul>
+<li>只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。</li>
+<li>监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。</li>
+<li>为服务端准备和用户方向相关的几个自适应集。</li>
+</ul>
+<h4 id="客户端的任务-1">客户端的任务</h4>
+<ul>
+<li>根据网络情况和估计的视角位置决定获取哪个自适应集。</li>
+</ul>
+<h4 id="难点">难点</h4>
+<ul>
+<li>可视区域的确定</li>
+<li>与用户头部移动的同步</li>
+<li>质量调整</li>
+<li>提供平滑的播放体验</li>
+</ul>
+<h4 id="现有的工作">现有的工作</h4>
+<h5 id="各种投影方式在实际推流中表现如何">各种投影方式在实际推流中表现如何？</h5>
+<ul>
+<li>相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。</li>
+<li>偏移CMP获得了5.6%到16.4%的平均可见质量。
+<ul>
+<li>提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。</li>
+<li>相比于理想的下载过程，这种二维自适应策略可以花费20%的额外网络带宽下载超过57%的额外视频块。</li>
+</ul>
+</li>
+</ul>
+<h5 id="如何在网络资源受限的情况下提供高质量的推流">如何在网络资源受限的情况下提供高质量的推流？</h5>
+<ul>
+<li>为视角依赖型推流产生不同质量的segment。
+<ul>
+<li>当流中只有有限的representation时，利用Quality Emphasized Regions策略来缩放特定区域的分辨率。</li>
+<li>在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的360度场景，动态的视角覆盖率提供了更好的画面质量。</li>
+<li>这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。</li>
+</ul>
+</li>
+<li>为立体视频的背景和前景视图采用不对称质量。
+<ul>
+<li>可以分别为背景块和前景块分别节省15%和41%的比特率。</li>
+</ul>
+</li>
+</ul>
+<h5 id="dash需要做什么">DASH需要做什么？</h5>
+<ul>
+<li>manifest中需要包含视角位置信息和投影元数据。</li>
+<li>优化获取random access point的周期来优化视角分辨率自适应体验。</li>
+<li>考虑低延迟和活跃的视角切换。</li>
+</ul>
+<h3 id="tile-based-streaming">Tile-based Streaming</h3>
+<p>传统视频被分成多个块，360度视频在块的基础上还被分成多个大小相等或者不等的tile，以此更加精确地调整画面的细节质量。</p>
+<h4 id="分块策略">分块策略</h4>
+<ul>
+<li>
+<p>基本完全交付</p>
+</li>
+<li>
+<p>高级完全交付</p>
+</li>
+<li>
+<p>部分交付</p>
+</li>
+</ul>
+<p></p>
+<h4 id="分块模式">分块模式</h4>
+<p>1x1，3x2，5x3，6x4，8x5</p>
+<p>其中6x4的模式实现了较好的带宽消耗和编码效率的折中。</p>
+<p>在不同的带宽条件下，基本完全交付策略获得了大约65%的带宽节约。</p>
+<h4 id="具体方案">具体方案</h4>
+<h5 id="clustile">ClusTile</h5>
+<p>基于分簇的方式，推送满足最小带宽需求的tile来克服编码效率和计算开销。</p>
+<ul>
+<li>相比于传统和高级的基于tile的推流方案，分别实现了72%和52%的带宽节约。</li>
+<li>当实际看到的和下载的tile有差异时，基于分簇的tile选取可能会导致选择不当。</li>
+</ul>
+<h5 id="ghoshs-work">Ghosh&rsquo;s work</h5>
+<p>提议以最低可获得的质量下载周围和远处的tile。</p>
+<ul>
+<li>相比于其他算法，视角及其周边区域的可变质量提高了20%的QoE水平。</li>
+</ul>
+<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
+<p>介绍了一种自适应 360° 视频流框架。</p>
+<ul>
+<li>
+<p>利用视觉注意力度量来计算每个帧的最佳平铺模式。</p>
+</li>
+<li>
+<p>使用选中的模式，为不同区域的tile分配非统一的比特率。</p>
+</li>
+<li>
+<p>比特率的选取取决于估计的视角和网络状况。</p>
+</li>
+<li>
+<p>因为很大部分的带宽被用于传输非视角内的tile，框架难以优化视角内的质量。</p>
+</li>
+</ul>
+<h5 id="xies-work">Xie&rsquo;s work</h5>
+<p>提出了一套优化框架，以此来最小化预取tile的错误，改善与不同比特率相关联的tile边界的平滑程度。</p>
+<ul>
+<li>
+<p>定义了两个QoE函数，目标是最小化：</p>
+<p>预期质量失真$\Phi(X)$</p>
+<p>当考虑tile看到概率时视角的空间质量方差$\Psi(X)$：
+$$
+\Phi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}D_{i,j} * x_{i,j} * p_{i,j}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j} * s_{i}}
+$$</p>
+<p>$$
+\Psi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*p_i * (D_{i,j} - s_i * \Phi(X))^{2}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*s_i}
+$$</p>
+</li>
+<li>
+<p>基于目标缓冲区的自适应方法用于在需要短期视口预测的小缓冲区下进行平滑播放</p>
+<p>在自适应的第k步，当第k个segment集合下载完成时，缓冲区占用率$b_k$由下面的式子给出：
+$$
+b_k = b_{k-1} - \frac{R_k*T}{C_k} + T
+$$
+为了避免用尽所有块，缓冲区的占用率被通过设定一个目标缓冲区水平$B_{target}$所控制，即$b_k = B_{target}$。</p>
+</li>
+<li>
+<p>平均空间质量方差是0.97，比其他基于tile的策略小。</p>
+</li>
+<li>
+<p>所提出的概率自适应框架在感知质量上实现了约 39% 的增益，平均降低了 46% 的空间质量方差。</p>
+</li>
+</ul>
+<h5 id="vander-hoofts-work">Vander Hooft&rsquo;s work</h5>
+<p>将360度帧划分成视角内区域和视角外区域。</p>
+<ul>
+<li>首先为所有区域都选择最低质量，然后提高视角内tile的质量。</li>
+<li>如果带宽依然可用，接着提高剩下的tile的质量。</li>
+<li>启发式的方式在带宽可用的基础上积极提高视角内tile的质量。</li>
+<li>没有考虑视角比特率调整时视角预测的错误。</li>
+</ul>
+<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
+<p>提出了一种新的自适应机制，它在每个segment中同时考虑头部移动和视角的预测错误，动态地决定视角内的比特率。</p>
+<ul>
+<li>联合适应扩展块的覆盖范围和比特率。</li>
+<li>在不同记录的用户头部运动下的实验评估表明，在不获取非视角内区域过多带宽利用率的情况下，视口质量有所提高。</li>
+</ul>
+]]></description>
 </item><item>
     <title>自适应视频推流方案</title>
     <link>https://ayamir.github.io/posts/note2/</link>
     <pubDate>Thu, 21 Oct 2021 10:50:54 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/note2/</guid>
-    <description><![CDATA[概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。 目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。 适应性的视频比]]></description>
+    <description><![CDATA[<h2 id="概述">概述</h2>
+<p>自适应方案可以在处理不同目标对象时帮助改善推流体验。</p>
+<p>目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。</p>
+<p>适应性的视频比特率需要同时匹配网络条件和质量目标的需求。</p>
+<h2 id="分类">分类</h2>
+<h3 id="服务端适应">服务端适应</h3>
+<p>大多数服务端适应的方案要求客户端发送系统或网络相关信息。</p>
+<h4 id="质量导向的适应方案quality-oriented-adaptive-schemeqoas">质量导向的适应方案（Quality-Oriented Adaptive Scheme/QOAS）</h4>
+<p>向终端用户提供了高知觉质量的媒体内容。</p>
+<ol>
+<li>
+<p>QOAS是C-S架构，决策在服务器端产生。</p>
+</li>
+<li>
+<p>QOAS基于客户知觉质量的反馈，提供对推流质量等级的调整。</p>
+</li>
+</ol>
+<h4 id="智能优先级适应方案intelligent-prioritized-adaptive-schemeipas">智能优先级适应方案（intelligent Prioritized Adaptive Scheme/iPAS）</h4>
+<p>专用于802.11网络。</p>
+<ol>
+<li>
+<p>iPAS服务器上的基于固有印象的带宽分配模块被用于组合QoS相关的参数和视频内容特征来进行内容的优先级分类和带宽份额分配。</p>
+</li>
+<li>
+<p>通过区分多媒体流，iPAS提供可用无线信道的优先级分配。</p>
+</li>
+</ol>
+<h4 id="设备导向的适应方案device-oriented-adaptive-multimedia-schemedoas">设备导向的适应方案（Device-Oriented Adaptive multimedia Scheme/DOAS）</h4>
+<p>专用于LTE网络，建立在LTE下行链路调度机制之上。</p>
+<ol>
+<li>DOAS专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的QoE。</li>
+</ol>
+<h3 id="客户端适应">客户端适应</h3>
+<h4 id="基于吞吐量的自适应方案">基于吞吐量的自适应方案</h4>
+<p>这类方案基于估计的网络吞吐量从服务端选择视频的比特率。</p>
+<ol>
+<li>HTTP客户端通过之前的观察记录来估计网络的吞吐量。</li>
+<li>通过测量端获取时间（segment fetch time/SFT）来代表发起和收到回复的瞬时HTTP GET请求之间的时间段，以此来确定一个推流会话中吞吐量的变化，进而独立地做出适应决策。</li>
+<li>在分布式网络中，同时考虑并发和顺序的SFT。通过比较实际的和理想的SFT来选择未来的segment的质量等级。</li>
+</ol>
+<h5 id="festive算法">FESTIVE算法</h5>
+<p>适用于多个HAS客户端共享一个常见的拥塞带宽链路的情形。</p>
+<p>以<strong>效率、稳定性、公平性</strong>为度量因素的适应性算法。</p>
+<p>探索了一种为<strong>分段调度、吞吐量估计和比特率选择</strong>而生的健壮的机制。</p>
+<p>包含一个随机调度器来调度下一个视频块的下载。</p>
+<p>多个客户端共享容量为$W$的满带宽链路，每个客户端$x$在$t$时刻播放的视频比特率为$b_x,_t$ ，需要避免以下3种问题：</p>
+<ul>
+<li>
+<p><em>Inefficiency</em>：多个HAS客户端必须能选择最可能的表示来提高QoE。</p>
+<p>$$ Inefficiency = \frac{|\sum_{x}b_x,_t - W|}{W} $$</p>
+<p>低<em>Inefficiency</em>值表明多个客户端对带宽实现了最有效的利用。</p>
+</li>
+<li>
+<p><em>Unfairness</em>：可用带宽应该被均等地分配。</p>
+<p>$$ Unfairness = \sqrt{1-JainFair} $$</p>
+<p>低<em>Unfairness</em>值表明多个客户端有相近的比特率。</p>
+</li>
+<li>
+<p><em>Instability</em>：不必要的比特率切换会损害推流体验</p>
+<p>$$Instability = \frac{\sum_{d=0}^{k-1}|b_{x,t-d} - b_{x,t-d-1}|*w(d)}{\sum_{d=1}^{k}b_{x,t-d} * w(d)}$$</p>
+</li>
+</ul>
+<h5 id="probe-and-adaptpanda算法">Probe AND Adapt(PANDA)算法</h5>
+<p>用于检测网络状况，考虑未来比特率选择的平均目标数据比特率。</p>
+<p>目标是当多个HAS客户端共享一个拥塞带宽信道时，通过正确探测网络，进而最小化<strong>比特率震荡</strong>。</p>
+<p>PANDA算法在性能上击败了FESTIVE算法，并且PANDA算法在这些解决方案中表现出了最好的适应性，在不同带宽情况和播放器设置下实现了最优的<strong>效率、公平性和稳定性</strong>。</p>
+<p>整体上的推流质量不只依赖于本地的吞吐量测量，还依赖服务端的网络容量。</p>
+<ol>
+<li>利用服务器发起的推送机制来降低DASH内容推流到移动客户端的端到端延迟。</li>
+<li>利用<em>HTTP/2</em>的流终止特性来实现中间质量调整。</li>
+<li>基于估计的用户QoE，功耗和可用资源来改善用户端的推流体验。</li>
+</ol>
+<p>虽然有证据表明性能得到了提高，但是评估工作只是在受控的LAN环境下有效。</p>
+<h5 id="cross-session-stateful-predictorcs2p方案">Cross Session Stateful Predictor(CS2P)方案</h5>
+<p>一种数据驱动的吞吐量估计方案，以克服不准确的 HAS 流量预测问题。</p>
+<p>将共享相似特性的推流会话分簇，然后对每个簇使用隐马尔科夫模型预测相应的吞吐量样本。</p>
+<p>在一个大规模数据集上实验性的评估表明：CS2P高效地估计了可用的网络吞吐量，进而改善了整体上的视频比特率的适应性。</p>
+<p>CFA和Pytheas等方案和CS2P类似，也使用数据驱动的控制器来估计可用的吞吐量。</p>
+<p>但是这些工作<strong>不支持异构系统</strong>并且<strong>需要额外的训练复杂性</strong>，使其不够具有吸引力。</p>
+<p>基于吞吐量的适应性方案主要的挑战在于对吞吐量的精确估计。</p>
+<p>为360度视频采用一个没有经过精巧设计的吞吐量估计机制可能会导致不稳定性和较差的QoE，在高度动态化的无线和蜂窝网络中尤甚。</p>
+<h4 id="基于缓冲区的自适应方案">基于缓冲区的自适应方案</h4>
+<p>客户端会在播放视频时根据当前缓冲区的占用情况请求将要到来的segment。</p>
+<h5 id="如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</h5>
+<ol>
+<li>
+<p>在多客户端启用缓存的环境中，结合客户端测量工具集和补偿算法构造模型。</p>
+<p>这个模型可以高效探测比特率切换时间并通过选择切换适当的比特率来进行补偿，最终实现了可达20%的比特率改善。</p>
+</li>
+<li>
+<p>Buffer Based Adaptation(BBA)方法</p>
+<p>应用于Netfix客户端时可以减少可达20%的重新缓冲事件。</p>
+<p>BBA方法考虑的缓冲区较大，因此对于比较短的视频不一定有这样的性能。</p>
+</li>
+<li>
+<p>Buffer Occupancy-based Lyapunov Algorithm(BOLA)</p>
+<p>把比特率适应性问题看作是与播放质量和重新缓冲时间相关的最优化问题。</p>
+<p>BOLA旨在通过把缓冲区大小保持在设定的目标水平来避免重新缓冲。</p>
+<p>对于缓冲区级别的突然下降，BOLA通过请求最低可用视频比特率来避免停顿事件的频率。</p>
+</li>
+</ol>
+<h5 id="如何优化缓冲区利用率">如何优化缓冲区利用率</h5>
+<ol>
+<li>
+<p>Adaptation and Buffer Management Algorithm(ABMA+)</p>
+<ul>
+<li>基于重新缓冲事件的可能性确定未来representation的下载时间。</li>
+<li>通过基于预先计算的缓冲区大小和segment下载时间选择最大比特率来确保流畅的播放。</li>
+</ul>
+<p>这样可以实现低计算开销的良好部署。</p>
+</li>
+<li>
+<p>Scalable Video Coding(SVC)/Bandwidth Independent Efficient Buffering(BIEB)</p>
+<ul>
+<li>基于层分发获取视频块，进而维持稳定的缓冲区大小来避免频繁的中断。</li>
+<li>没有考虑QoE模型中的卡顿和质量切换。</li>
+<li>涉及额外的编码和处理开销。</li>
+</ul>
+</li>
+<li>
+<p>使用PID控制器的控制论方法</p>
+<ul>
+<li>强制执行缓冲区设置点来使缓冲区保持在最佳水平。</li>
+<li>略微降低视频比特率，以防止不必要的视频比特率调整。</li>
+<li>在多个客户端竞争的情况下，不能保证公平性。</li>
+</ul>
+</li>
+</ol>
+<h5 id="如何降低dash流的排队延迟">如何降低DASH流的排队延迟</h5>
+<p>DASH流会经历最长可达1s的排队延迟和严重拥塞，导致缓冲区膨胀问题，而这会严重损害实时多媒体服务的QoE。</p>
+<p>旨在减少网络拥塞的主动队列管理 (AQM) 策略并没有充分减少这种不必要的延迟。</p>
+<ol>
+<li>DASH客户端根据网络设备的队列大小动态接收窗口大小可以显著减轻缓冲区膨胀效应。</li>
+<li>由于长期的viewport预测的高度不确定性，充足的缓冲区空间对于360度视频的流畅播放来说并不可行。</li>
+<li>通常小于3s的缓冲区大小对于短期的viewport预测来讲比较适合。</li>
+<li>由于小缓冲区很有可能造成播放卡顿，因此较短持续时间的segment可以被用于基于tile的流中，但是相比于长持续时间的segment，这样也会降低编码效率。</li>
+</ol>
+<h4 id="混合自适应方案">混合自适应方案</h4>
+<p>客户端同时考虑吞吐量和播放缓冲信号来确定即将到来的segments的视频比特率。</p>
+<h5 id="model-predictive-controlmpc">Model Predictive Control(MPC)</h5>
+<p>利用良好定义的参数集合来估计可用的网络和缓冲区资源，进而为高QoE的比特率做出最优调整的控制论方法。</p>
+<p>提出的QoE模型采用视频的平均质量$R_k$，平均比特率切换，重新缓冲事件，和初始延迟$T_s$作计算：
+$$
+QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| - \mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
+$$
+$C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</p>
+<p>$\lambda, \mu, \mu_s$：可以根据用户兴趣进行调整的权重</p>
+<ul>
+<li>
+<p>MPC用调和平均的方法来估计吞吐量，并且能够明确管理复杂的控制对象。</p>
+</li>
+<li>
+<p>只研究了单播放器的情况，因此没有公平性的考量。</p>
+</li>
+</ul>
+<h5 id="throughput-and-buffer-occupancy-based-adaptationtboa">Throughput and Buffer Occupancy-based Adaptation(TBOA)</h5>
+<p>选择合适的视频比特率来获得单个或多个客户端环境中改进的推流体验。</p>
+<ul>
+<li>
+<p>激进地提高了比特率来最高效地利用可用的带宽。</p>
+</li>
+<li>
+<p>等待缓冲区超过某个级别，然后降低比特率以获得稳定的性能。</p>
+</li>
+<li>
+<p>为缓冲区等级设置三个阈值，例如：</p>
+<p>$0 &lt; B_{min} &lt; B_{low} &lt; B_{high}$</p>
+<p>目标区间在$B_{low}$和$B_{high}$之间。</p>
+<p>算法努力使最优区间$B_{opt}满足$ $B_{opt} = B_{low} + B_{high} \over 2$。</p>
+<p>通过控制$B_{low}$和$B_{high}$的阈值，使缓冲区和比特率的变化稳定来应对未知的TCP吞吐量。</p>
+</li>
+<li>
+<p>算法表现的流畅而公平，但是没有把用户满意度的度量考虑在内。</p>
+</li>
+</ul>
+<h5 id="fuzzy-logic-based-dash">fuzzy logic-based DASH</h5>
+<p>控制重新缓冲事件和视频推流的质量。</p>
+<ul>
+<li>考虑了平均吞吐量的估计方法，获得了更高的视频比特率和更少的质量波动。</li>
+<li>没有考虑QoE度量。</li>
+</ul>
+<p>为了更好地调整比特率做出的改进：</p>
+<ul>
+<li>用Kaufman&rsquo;s Adaptive Moving Average/KAMA测量法估计吞吐量。</li>
+<li>用Grey Prediction Model/GPM来估计缓冲区等级。</li>
+</ul>
+<p>竞争流模拟环境中，改进所取得的效果：</p>
+<ul>
+<li>平均情况下达到50%的公平性。</li>
+<li>最好情况下达到17%的更好的接收质量。</li>
+</ul>
+<h5 id="spectrum-based-quality-adaptationsquad算法">Spectrum-based Quality Adaptation(SQUAD)算法</h5>
+<p>解决吞吐量预测和缓冲区等级估计的不连续性。</p>
+<ul>
+<li>吞吐量和缓冲区等级反馈信号都被用于选择恰当的质量。</li>
+<li>在一开始获取最低质量的segment来减少启动时间。</li>
+<li>在视频质量切换频率和幅度方面性能显著提高。</li>
+</ul>
+<p>尚未有方案讨论如何在视频质量和带宽利用率之间做出很好的平衡。</p>
+<h5 id="throughput-friendly-dashtfdash">Throughput Friendly DASH/TFDASH</h5>
+<p>获得多个竞争客户端情形下的公平性、稳定性和效率。</p>
+<ul>
+<li>通过避免OFF端获得了最大并且公平的带宽利用率。</li>
+<li>双阈值的缓冲区保证播放时的稳定性。</li>
+</ul>
+<p>在单客户端的环境中，混合适应方案表现的很合理。</p>
+<p>但是多个客户端一起竞争带宽时会迅速扼杀整个网络。</p>
+<p>当客户端的缓冲区达到了最大阈值时，客户端进入了ON-OFF阶段，此时客户端只对自己的视频比特率做了调整而没有考虑其他客户端，因而不能正确地估计可用的带宽资源。</p>
+<p>这会导致竞争客户端之间带宽利用不足以及带宽分配不均。</p>
+<h4 id="基于多路径的自适应方案">基于多路径的自适应方案</h4>
+<p>解决的主要问题是在异质网络之上，如何面对交付内容的增加。</p>
+<h5 id="multipath-transmission-control-protocolmptcp">Multipath Transmission Control Protocol(MPTCP)</h5>
+<ul>
+<li>有用但是并不理想
+<ul>
+<li>因为需要发送端和接收端同时修改内核堆栈。</li>
+<li>因为受到网络运营商的限制可能无法通过中间件。</li>
+</ul>
+</li>
+</ul>
+<h5 id="cmt-qa方案">CMT-QA方案</h5>
+<p>采用多种特定的网络技术来实现并发的多路内容交付。</p>
+<h5 id="multi-source-playermsplayer">Multi-source player(MSPlayer)</h5>
+<p>实现多条链路之上的高质量视频传送和弹性的容错机制。</p>
+<ul>
+<li>
+<p>客户端驱动的对未来视频segment的比特率分配依赖于估计的网络状况。</p>
+</li>
+<li>
+<p>视频segment可以在两种可用网络之上进行下载，但是多路径的下载可能会造成交付顺序错乱。</p>
+</li>
+</ul>
+<h5 id="cross-layer-fairness-solution">Cross-layer Fairness solution</h5>
+<p>通过探索数据链路层和传输层之间的交互来分析数据传输路径的实时质量，提出了一个公平性驱动的高效流控机制。</p>
+<p>在模拟环境中，相比于CMT-QA方案：</p>
+<ul>
+<li>获得了更高的公平性评级。</li>
+<li>获得了更低的平均吞吐量和PSNR（峰值信噪比）。</li>
+</ul>
+<h5 id="kim-and-chungs-work">Kim and Chung&rsquo;s work</h5>
+<p>同时利用WiFi和LTE网络接口，从多个视频源下载部分segment。</p>
+<ul>
+<li>对多路径的聚合带宽进行平滑处理以避免带宽波动。</li>
+<li>实现了一种部分segment请求策略以避免乱序问题，经过各种路径传输的部分片段
+在呈现给用户之前进行组合。</li>
+</ul>
+<h5 id="gos-work">Go&rsquo;s work</h5>
+<p>在网络成本限制下，调度跨网络间相同比特率的视频块中的所有segment。</p>
+<h5 id="基于mpeg-dash的推流策略实验性评估">基于MPEG-DASH的推流策略实验性评估</h5>
+<p>以低功耗为移动设备提供了WiFi和LTE网络下的无缝视频播放。</p>
+<ul>
+<li>没有分析感知视频质量的影响。</li>
+</ul>
+<h5 id="davvi">DAVVI</h5>
+<p>基于HTTP的推流系统，为了实现3G和WiFi网络之上的多信道支持。</p>
+<ul>
+<li>基于每个信道的质量，视频segment被动态地划分成subsegment，以便于最大负载可以被应用到每个信道上。</li>
+</ul>
+<p>为多媒体内容交付使用多个网络接口需要为路径质量测量和数据调度精心设计机制，来避免丢包和乱序交付的问题。</p>
+<p>然而因为无线异质网络的高度动态性和复杂性，现有的方案在测量实时信息的时候是受限的。</p>
+<h5 id="elgablis-work">Elgabli&rsquo;s work</h5>
+<p>考虑了基于 SVC 的优先自适应视频传输的两条路径。</p>
+<ul>
+<li>属于每一层的段可以根据质量、块deadline和路径偏好从可用路由之一传输。</li>
+<li>没有考虑在任何路径上应用最大贡献度。</li>
+</ul>
+<h5 id="zhangs-work">Zhang&rsquo;s work</h5>
+<p>提出了一种基于两个流的优先级感知自适应解决方案，它为每个流使用不同的视频比特率。</p>
+<ul>
+<li>实现了一个集成带宽的方式来为高优先级流启用更高的视频比特率，并在没有足够的可用带宽时终止低优先级流。</li>
+</ul>
+<h5 id="yun-and-chungs-work">Yun and Chung&rsquo;s work</h5>
+<p>为多视图视频提出了一种基于DASH的推流框架，它包括基于缓冲区的服务器推送方案和并行传输机制，以减少不同传输视图之间的切换时间。</p>
+<ul>
+<li>只有一种路径配置被应用。</li>
+</ul>
+<h5 id="rahman-and-chungs-work">Rahman and Chung&rsquo;s work</h5>
+<p>介绍了基于 HAS 的多视图会议流解决方案，其中演示者、观众和演示屏幕的多个流通过多条路径同时传输。</p>
+<ul>
+<li>对所有的3个流分配相同的优先级。</li>
+<li>采用统一带宽的方式，以便于统一的质量可以被分配到所有流的segment上。</li>
+<li>对于多个流的每个segment，其路径以通过考虑网络吞吐量和每个segment的比特率来决定。</li>
+<li>没有考虑多信道的影响，这可能降低整体性能。</li>
+</ul>
+<p>利用多路径网络的特点和优先级特性可以为360度tile视频推流提供更高的推流性能。</p>
+<p>提出的所有自适应策略都是通用的，目标是标准的视频交付，并没有对360度视频内容做出特别的考虑。</p>
+]]></description>
 </item><item>
     <title>360度流媒体面临的挑战、机遇和解决方案</title>
     <link>https://ayamir.github.io/posts/note1/</link>
     <pubDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/note1/</guid>
-    <description><![CDATA[360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2]]></description>
+    <description><![CDATA[<h2 id="360度流媒体视频框架">360度流媒体视频框架</h2>
+<h3 id="视频采集和拼接">视频采集和拼接</h3>
+<p>使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容</p>
+<h3 id="使用不同的投影策略实现降维">使用不同的投影策略实现降维</h3>
+<p>策略主要分为2种：视角独立型和视角依赖型</p>
+<h4 id="视角独立型">视角独立型</h4>
+<p>整个3D的视频内容被按照统一的质量投影到2D平面上</p>
+<p>主要包括等距长方形投影和立方贴图投影</p>
+<h5 id="等距长方形投影erp">等距长方形投影(ERP)</h5>
+<p>使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上</p>
+<p>视角范围：左180度～右180度、上90度～下90度</p>
+<p>缺点：</p>
+<ul>
+<li>极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽</li>
+<li>由于图像失真导致压缩效率不足</li>
+</ul>
+<h5 id="立方贴图投影cmp">立方贴图投影(CMP)</h5>
+<p>六面立方体组合用于将球体的像素映射到立方体上的相关像素</p>
+<p>在游戏中被广泛应用</p>
+<p>优点：</p>
+<ul>
+<li>节省空间，相比于等距长方形投影视频体积能减少25%</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>只能渲染有限的用户视野</li>
+</ul>
+<h4 id="视角依赖型">视角依赖型</h4>
+<p>视角内的内容比之外的内容有更高保真度的表示</p>
+<p>主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影</p>
+<h5 id="金字塔投影">金字塔投影</h5>
+<p>球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向</p>
+<p>优点：</p>
+<ul>
+<li>节省空间，降低80%的视频体积</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>用户以120度旋转视角时，视频的质量会像旋转180度一样急速下降</li>
+</ul>
+<h5 id="截断方形金字塔投影">截断方形金字塔投影</h5>
+<p>大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔</p>
+<p>优点：</p>
+<ul>
+<li>减少了边缘数据，提高了高码率视频的推流性能</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>使边缘更加锐利</li>
+</ul>
+<h5 id="偏移立方贴图投影">偏移立方贴图投影</h5>
+<p>与原始的立方贴图投影类似，球体的像素点被投影到立方体的6个面上</p>
+<p>优点：</p>
+<ul>
+<li>视角方向的内容会有更高的质量，提供平滑的视频质量变化</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>存储开销很大</li>
+</ul>
+<h3 id="编码视频内容">编码视频内容</h3>
+<p>目前主要的编码方式有AVC/H.264和HEVC/H.265。</p>
+<h4 id="h264">H.264</h4>
+<p>使用16x16的宏块结构对帧编码。</p>
+<p>因为使用了编码器的动作预测的特性，编码的数据大小得到减少。</p>
+<h4 id="h265">H.265</h4>
+<p>相比于同质量的H.264编码方式，H.265编码减少了50%的比特率。</p>
+<p>H.265支持tiling特性来实现高效视频推流。</p>
+<p>每个tile在物理上被分割然后在普通的流中拼接，并且使用一个解码器来解码。</p>
+<h4 id="vvc">VVC</h4>
+<p>相比于H.265，下一代标准VVC有望提高30%的压缩效率。</p>
+<h3 id="分包和传输">分包和传输</h3>
+<h4 id="分包">分包</h4>
+<p>使用DASH协议分包。</p>
+<h4 id="传输">传输</h4>
+<p>依赖于雾计算和边缘计算等技术可以缩短分发中心和客户端之间的距离进而实现快速响应和低缓冲时间。</p>
+<h3 id="渲染和展示">渲染和展示</h3>
+<h4 id="客户端处理">客户端处理</h4>
+<p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
+<h4 id="云端处理">云端处理</h4>
+<p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
+]]></description>
 </item><item>
     <title>重学C&#43;&#43;：类型系统基础</title>
     <link>https://ayamir.github.io/posts/cpp-types/</link>
     <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/cpp-types/</guid>
-    <description><![CDATA[常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等]]></description>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>int</code>, <code>short</code>, <code>long</code>, <code>long long</code>都是带符号的，在前面添加<code>unsigned</code>就能得到无符号类型。</p>
+</li>
+<li>
+<p>字符型被分为3种：<code>char</code>, <code>signed char</code>, <code>unsigned char</code>，前两种并不等价。
+虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</p>
+</li>
+<li>
+<p>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</p>
+</li>
+<li>
+<p>虽然变量初始化时候使用了<code>=</code>号，但是初始化和变量赋值并不相同。</p>
+</li>
+<li>
+<p>变量默认初始化：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量类型</th>
+<th style="text-align:center">位置在函数内部</th>
+<th style="text-align:center">位置在函数外部</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">内置类型</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">自定义类型</td>
+<td style="text-align:center">由类决定</td>
+<td style="text-align:center">由类决定</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">default_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 输出必定是0
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+    <span class="c1">// 输出是随机值
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">default_initialize</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></li>
+<li>
+<p>如果在函数体内部试图初始化一个<code>extern</code>标记的变量会引发错误。</p>
+</li>
+<li>
+<p>在嵌套作用域中，内层作用域中的<strong>定义</strong>可以覆盖外层作用域中<strong>声明</strong>的变量。</p>
+<p>可以显式使用<strong>域操作符</strong><code>::</code>来指明使用哪层的变量。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</p>
+</li>
+<li>
+<p>变量的组成部分：类型和值。说白了就是一个定性一个定量。</p>
+<p>类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。</p>
+<p>值在实际代码运行过程中则被各种函数使用参与运算。</p>
+</li>
+<li>
+<p>变量声明和定义：</p>
+<p>声明的意思就是：我要用这个变量。</p>
+<p>定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">声明</th>
+<th style="text-align:center">定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">规定变量的类型和名字</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">申请空间</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">初始化</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">执行多次</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>用<code>extern</code>标记<strong>未初始化</strong>的变量来表明只对变量作声明：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>             <span class="c1">//声明并且定义
+</span><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//声明并且定义
+</span></code></pre></div><p>Q：为什么会有声明和定义这两个概念？</p>
+<p>A：因为C++支持<em>分离式编译</em>机制，这允许程序被分割成若干个文件，每个文件可以被独立编译。如果要在多个文件中使用同一个变量，就必须要将声明和定义分离。变量的定义必须且只能出现在一个文件中，其他用到这个变量的文件必须对其进行声明，且绝对不能进行重复定义。</p>
+</li>
+<li>
+<p>名字的作用域：</p>
+<p>同一个名字在不同的作用域中可以指向不同的实体。</p>
+<p>名字的有效区域始于<strong>声明</strong>语句，以<strong>声明</strong>语句所在的作用域末端结束。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>
+<p>明确数值不可能为负时使用<code>unsigned</code>类型。</p>
+</li>
+<li>
+<p>使用<code>int</code>执行整数运算，范围不够时使用<code>long long</code>。</p>
+</li>
+<li>
+<p>使用<code>double</code>执行浮点数运算。</p>
+</li>
+<li>
+<p>算术表达式中不要使用<code>bool</code>和<code>char</code>。</p>
+</li>
+<li>
+<p>避免写出依赖实现环境的代码，否则代码不可移植。</p>
+</li>
+<li>
+<p>避免有符号类型和无符号类型之间的隐式类型转换。</p>
+</li>
+<li>
+<p>C++11中引入了<strong>列表初始化</strong>，例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// 传统的初始化方式
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">units_sold</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="c1">// 现代的初始化方式
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</code></pre></div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="n">pi</span><span class="p">},</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="n">pi</span><span class="p">};</span>   <span class="c1">// 错误：没有执行类型转换，因为可能丢失信息
+</span><span class="c1"></span><span class="kt">int</span> <span class="nf">a</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span>     <span class="c1">// 正确：执行了隐式类型转化，丢失了信息
+</span></code></pre></div></li>
+<li>
+<p>对每个内置类型的变量都执行<strong>显式默认初始化</strong>以防止undefined行为。</p>
+</li>
+<li>
+<p>在变量第一次使用的地方进行<strong>定义</strong>操作。</p>
+</li>
+</ol>
+]]></description>
 </item><item>
     <title>Immersive Video OMAF-Sample Deploy</title>
     <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
     <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/immersive-video-deploy/</guid>
-    <description><![CDATA[原仓库地址：Immersive-Video-Sample 修改之后的仓库：Immersive-Video-Sample Server 端搭建 修改 Dockerfile 手动设置 wget]]></description>
+    <description><![CDATA[<p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
+<p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
+<h2 id="server-端搭建">Server 端搭建</h2>
+<h3 id="修改-dockerfile">修改 Dockerfile</h3>
+<ol>
+<li>
+<p>手动设置 wget 和 git 的 http_proxy</p>
+</li>
+<li>
+<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
+</li>
+<li>
+<p>因为找不到 glog 库因此加入软链接操作</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
+</code></pre></div><h3 id="重新编译内核">重新编译内核</h3>
+<p>运行脚本时显示 libnuma 错误因此推断与 numa 设置有关</p>
+<p>执行<code>numactl -H</code>显示只有一个 node，报错输出显示需要至少两个 numa 节点</p>
+<p>查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
+<ol>
+<li>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
+</code></pre></div><ol start="2">
+<li>解压</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar xpvf linux-5.11.1.tar.gz
+</code></pre></div><ol start="3">
+<li>复制现有内核配置</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> linux-5.11.1 <span class="o">&amp;&amp;</span> cp -v /boot/config-<span class="k">$(</span>uname -r<span class="k">)</span> .config
+</code></pre></div><ol start="4">
+<li>安装必要的包</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
+</code></pre></div><ol start="5">
+<li>进入内核配置界面</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
+</code></pre></div><p></p>
+<ol start="6">
+<li>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</li>
+</ol>
+<p></p>
+<ol start="7">
+<li>手动勾选对应选项之后保存退出</li>
+</ol>
+<p></p>
+<ol start="8">
+<li>重新编译并等待安装结束</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make -j <span class="k">$(</span>nproc<span class="k">)</span> <span class="o">&amp;&amp;</span> sudo make modules_install <span class="o">&amp;&amp;</span> sudo make install
+</code></pre></div><ol start="9">
+<li>修改<code>grub</code>启动参数加入 fake numa 配置</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
+</code></pre></div><p>找到对应行并修改为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
+</code></pre></div><p></p>
+<ol start="10">
+<li>更新<code>grub</code>并重启</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
+</code></pre></div><ol start="11">
+<li>执行<code>numactl -H</code>检查 numa 节点数目为 2</li>
+</ol>
+<p></p>
+<ol start="12">
+<li>重新执行脚本如图说明一切正常</li>
+</ol>
+<p></p>
+<h2 id="client-端搭建">Client 端搭建</h2>
+<p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
+<p></p>
+]]></description>
 </item><item>
     <title>How to Fix GPGME Error on Archlinux</title>
     <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
     <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
-    <description><![CDATA[Delete old sync files sudo rm /var/lib/pacman/sync/* Re init pacman-key sudo pacman-key --init Populate key sudo pacman-key --populate Re sync sudo pacman -Syyy Now you can update successfully!]]></description>
+    <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
+</code></pre></div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --init
+</code></pre></div><h2 id="populate-key">Populate key</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --populate
+</code></pre></div><h2 id="re-sync">Re sync</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
+</code></pre></div><p>Now you can update successfully!</p>
+]]></description>
 </item><item>
     <title>Python selenium settings on microsoft-edge-dev</title>
     <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
     <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
-    <description><![CDATA[Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.
-Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.
-Extract it to you path like /usr/local/bin or $HOME/.local/bin.
-Write Code Following is a example.
-from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&#34;/usr/bin/microsoft-edge-dev&#34; options.set_capability(&#34;platform&#34;, &#34;LINUX&#34;) webdriver_path = r&#34;/home/ayamir/.local/bin/msedgewebdriver&#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&#34;http://localhost:8000&#34;) assert &#34;Django&#34; in browser.]]></description>
+    <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
+</code></pre></div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
+<h2 id="get-corresponding-webdriver">Get Corresponding WebDriver</h2>
+<p>Find the corresponding version at <a href="https://msedgewebdriverstorage.z22.web.core.windows.net/" target="_blank" rel="noopener noreffer">msedgewebdriverstorage</a> and download the zip.</p>
+<p>Extract it to you path like <code>/usr/local/bin</code> or <code>$HOME/.local/bin</code>.</p>
+<h2 id="write-code">Write Code</h2>
+<p>Following is a example.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">EdgeOptions</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">use_chromium</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binary_location</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/usr/bin/microsoft-edge-dev&#34;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">set_capability</span><span class="p">(</span><span class="s2">&#34;platform&#34;</span><span class="p">,</span> <span class="s2">&#34;LINUX&#34;</span><span class="p">)</span>
+
+<span class="n">webdriver_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/home/ayamir/.local/bin/msedgewebdriver&#34;</span>
+
+<span class="n">browser</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">executable_path</span><span class="o">=</span><span class="n">webdriver_path</span><span class="p">)</span>
+<span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;http://localhost:8000&#34;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="s2">&#34;Django&#34;</span> <span class="ow">in</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span>
+</code></pre></div><h2 id="launch-it">Launch it</h2>
+<p></p>
+]]></description>
 </item><item>
     <title>Linux权限相关命令解读</title>
     <link>https://ayamir.github.io/posts/linux-authority/</link>
     <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/linux-authority/</guid>
-    <description><![CDATA[文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 剩下的 9 个位置上的字符称为 文件模式 ，每]]></description>
+    <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
+<p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
+<p></p>
+<p>上图中的 Permission 字段下面的字母表示权限
+第一个字母表示 <strong>文件类型</strong> ：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>剩下的 9 个位置上的字符称为 <strong>文件模式</strong> ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="id显示用户身份标识">id：显示用户身份标识</h2>
+<p>一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权
+用户之上是群组，一个群组可以由多个用户组成
+文件和目录的访问权限由其所有者授予群组或者用户</p>
+<p>下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果</p>
+<p></p>
+<p>uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名
+groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称</p>
+<p>许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users
+现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组</p>
+<h2 id="chmod更改文件模式">chmod：更改文件模式</h2>
+<p>chmod 支持两种标识方法</p>
+<ol>
+<li>
+<p>八进制表示法</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>常用的模式有 7,6,5,4,0</p>
+</li>
+<li>
+<p>符号表示法</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>如果没有指定字符默认使用 all
+’+’表示添加一种权限
+’-’表示删除一种权限
+例如：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>’-R’=’&amp;##x2013;recursive’表示递归设置</p>
+</li>
+</ol>
+<h2 id="umask设置文件默认权限">umask：设置文件默认权限</h2>
+<p>使用八进制表示法表示从文件模式属性中删除一个位掩码
+掩码的意思：用掩码来取消不同的文件模式</p>
+<pre><code>umask
+</code></pre>
+<p>可以看到输出为：</p>
+<pre><code>0022
+</code></pre>
+<p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
+0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>掩码中 1 对应位处的权限会被取消，0则不受影响
+所以会有这样的结果：</p>
+<p></p>
+<p>再来谈最前面的 0:因为除了 rwx 之外还有较少用到的权限设置</p>
+<ol>
+<li>
+<p>setuid 位:4000(8 进制)
+设置此位到一个可执行文件时，有效用户 ID 将从实际运行此程序的用户 ID 变成该程序拥有者的 ID
+设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
+设置程序 setuid：</p>
+<pre><code>chmod u+s program_name
+</code></pre>
+<p>结果：</p>
+<pre><code>-rwsr-xr-x
+</code></pre>
+<p>可以看到第二组权限中第一个符号是 s</p>
+</li>
+<li>
+<p>setgid 位:2000(8 进制)
+有效组 ID 从该用户的实际组 ID 更改为该文件所有者的组 ID
+设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
+对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有</p>
+<pre><code>chmod g+s dir_name
+</code></pre>
+<p>结果：</p>
+<pre><code>drwxrwsr-x
+</code></pre>
+<p>可以看到第二组权限中最后一个符号是 s(替换了 x)</p>
+</li>
+<li>
+<p>sticky 位:1000(8 进制)
+标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
+用来控制对共享目录的访问</p>
+<pre><code>chmod +t dir_name
+</code></pre>
+<p>结果：</p>
+<pre><code>drwxrwxrwt
+</code></pre>
+<p>可以看到第三组权限中最后一个符号是 t(替换了 x)</p>
+</li>
+</ol>
+<h2 id="su以另一个用户身份运行-shell">su：以另一个用户身份运行 shell</h2>
+<h3 id="使用-su-命令登录">使用 su 命令登录</h3>
+<pre><code>su [-[l]] [user]
+</code></pre>
+<p>如果包含“-l”选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
+即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
+<p></p>
+<h3 id="使用-su-命令执行单个命令">使用 su 命令执行单个命令</h3>
+<pre><code>su -c 'comand'
+</code></pre>
+<p>命令内容必须用 <strong>’’</strong> 引用起来（也可以是双引号）</p>
+<p></p>
+<h2 id="sudo以另一个用户身份执行命令">sudo：以另一个用户身份执行命令</h2>
+<h3 id="sudo-和-su-的区别">sudo 和 su 的区别</h3>
+<ol>
+<li>
+<p>sudo 比 su 有更丰富的功能，而且可以配置
+通过修改配置文件来配置 sudo</p>
+<pre><code>EDITOR=vim visudo
+</code></pre>
+<p>执行上面的命令可以用 vim 来编辑 sudo 的配置文件
+常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限</p>
+</li>
+<li>
+<p>使用 sudo 命令输入的不是 root 的密码，而是自己的密码
+可以使用 `sudo -l`来查看通过 sudo 命令能获得的权限</p>
+</li>
+</ol>
+<h2 id="chown更改文件所有者">chown：更改文件所有者</h2>
+<h3 id="用法">用法</h3>
+<pre><code>chown [owner][:[group]] file ...
+</code></pre>
+<p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p></p>
+<p>图中使用 root 用户在/home/ayamir 目录下创建了一个 foo.txt 文件，最后将此文件的所有者和所属组都改为了 ayamir（rg 是<a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener noreffer">ripgrep</a>）</p>
+<h2 id="chgrp更改文件所属群组">chgrp：更改文件所属群组</h2>
+<p>这个命令是历史遗留问题，在早期的 UNIX 版本中，chown 只能更改文件的所有者，而不能改变文件的所属群组，因此出现了这个命令，事实上现在的 chown 已经能实现 chgrp 的功能，因此没必要再使用这个命令（其使用方式几乎与 chown 命令相同）</p>
+<h2 id="passwd更改用户密码">passwd：更改用户密码</h2>
+<h3 id="一般用法">一般用法</h3>
+<pre><code>passwd [user]
+</code></pre>
+<p>用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
+执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
+拥有 root 用户权限的用户可以设置所有用户的密码</p>
+<p></p>
+<p>上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
+]]></description>
 </item></channel>
 </rss>

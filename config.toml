@@ -44,6 +44,26 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "P
   since = 2021
   license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
+[params.page]
+    # LoveIt 新增 | 0.2.0 是否在主页隐藏一篇文章
+    hiddenFromHomePage = false
+    # LoveIt 新增 | 0.2.0 是否在搜索结果中隐藏一篇文章
+    hiddenFromSearch = false
+    # LoveIt 新增 | 0.2.0 是否使用 twemoji
+    twemoji = false
+    # 是否使用 lightgallery
+    lightgallery = false
+    # LoveIt 新增 | 0.2.0 是否使用 ruby 扩展语法
+    ruby = true
+    # LoveIt 新增 | 0.2.0 是否使用 fraction 扩展语法
+    fraction = true
+    # LoveIt 新增 | 0.2.0 是否使用 fontawesome 扩展语法
+    fontawesome = true
+    # 是否在文章页面显示原始 Markdown 文档链接
+    linkToMarkdown = true
+    # LoveIt 新增 | 0.2.4 是否在 RSS 中显示全文内容
+    rssFullText = true
+
 [params.page.math]
   enable = true
   copyTex = true
@@ -83,6 +103,7 @@ keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "P
   GitHub = "ayamir"
   Zhihu = "MiraculousMoon"
   Email = "miracle_l@bupt.edu.cn"
+  RSS = true
 
 # LoveIt 新增 | 0.2.5 TypeIt 配置
 [params.typeit]
