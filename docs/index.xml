@@ -4,9 +4,23 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 25 Oct 2021 09:34:10 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>重学C&#43;&#43;：Const二三事</title>
+    <link>https://ayamir.github.io/posts/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/const/</guid>
+    <description><![CDATA[常见的坑 仅用const修饰的对象只在单个文件中有效，如果想在多个文件之间共享const对象，必须在对象定义的前面加extern。 允许为一个常]]></description>
+</item><item>
+    <title>重学C&#43;&#43;：引用和指针</title>
+    <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
+    <description><![CDATA[常见的坑 &amp;和*在不同的上下文里面其含义并不相同，因此完全可以当成不同的符号看待。 int i = 42; int &amp;r = i; // &amp;在类型名后出现，是声明的]]></description>
+</item><item>
     <title>自适应360度视频推流方案</title>
     <link>https://ayamir.github.io/posts/note3/</link>
     <pubDate>Mon, 25 Oct 2021 09:34:10 &#43;0800</pubDate>
@@ -28,7 +42,7 @@
     <guid>https://ayamir.github.io/posts/note1/</guid>
     <description><![CDATA[360度流媒体视频框架 视频采集和拼接 使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容 使用不同的投影策略实现降维 策略主要分为2]]></description>
 </item><item>
-    <title>重学C&#43;&#43;：1.类型系统</title>
+    <title>重学C&#43;&#43;：类型系统基础</title>
     <link>https://ayamir.github.io/posts/cpp-types/</link>
     <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate>
     <author>作者</author>
@@ -66,12 +80,5 @@ from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() opti
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/linux-authority/</guid>
     <description><![CDATA[文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 剩下的 9 个位置上的字符称为 文件模式 ，每]]></description>
-</item><item>
-    <title>Dns Settings on Archlinux</title>
-    <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
-    <description><![CDATA[Arch Linux DNS设置 安装dnsmasq sudo pacman -S dnsmasq 配置/etc/resolv.conf中的域名代理服务器 # Tencent nameserver 119.29.29.29 nameserver 182.254.118.118 # Ali nameserver 223.5.5.5 nameserver 223.6.6.6 # OpenDNS IPv4 nameservers nameserver 208.67.222.222 nameserver 208.67.220.220 # OpenDNS IPv6]]></description>
 </item></channel>
 </rss>
