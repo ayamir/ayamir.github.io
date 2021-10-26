@@ -3,9 +3,9 @@
 
 ## 常见的坑
 
-1. int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。
+1. `int`, `short`, `long`, `long long`都是带符号的，在前面添加`unsigned`就能得到无符号类型。
 
-2. 字符型被分为3种：char, signed char, unsigned char，前两种并不等价。
+2. 字符型被分为3种：`char`, `signed char`, `unsigned char`，前两种并不等价。
    虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。
    
 3. 有符号类型在与无符号类型运算时会隐式转换为无符号类型。
