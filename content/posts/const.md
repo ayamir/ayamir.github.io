@@ -66,7 +66,7 @@ categories: ["Programming Language"]
 
 5. `constexpr`属于顶层`const`，因此`constexpr`修饰指针意味着指针本身不可变。
 
-6. `auto`默认会忽略顶层`const`，保留底层`const`，如果需要顶层`const`则需要显式加入。
+6. `auto`默认会去除顶层`const`，保留底层`const`，如果需要顶层`const`则需要显式加入。
 
    ```C++
    int i = 0;
@@ -78,7 +78,12 @@ categories: ["Programming Language"]
    const auto f = ci; // f是一个初始化值为0的不可变int对象
    ```
 
-   
+7. `decltype`不会去除顶层`const`。
+
+   ```C++
+   const int ci = 0;
+   decltype(ci) x = 0;   // x的类型是const int
+   ```
 
 ## 必须要理解的点
 

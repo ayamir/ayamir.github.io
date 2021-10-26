@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/const\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  1386 ,
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  1427 ,
         "url": "https:\/\/ayamir.github.io\/posts\/const\/","datePublished": "2021-10-26T15:53:11+08:00","dateModified": "2021-10-26T21:14:21+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -104,7 +104,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：Const二三事</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-26">2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1386 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-26">2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1427 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -166,7 +166,7 @@
 <p><code>constexpr</code>属于顶层<code>const</code>，因此<code>constexpr</code>修饰指针意味着指针本身不可变。</p>
 </li>
 <li>
-<p><code>auto</code>默认会忽略顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
+<p><code>auto</code>默认会去除顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cr</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>       <span class="c1">// b是一个初始化值为0的可变int对象 
@@ -174,6 +174,11 @@
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>       <span class="c1">// d是一个初始化为指向可变int类对象i的可变指针对象
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>      <span class="c1">// e是一个初始化为指向不可变int类对象ci的可变指针对象
 </span><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span> <span class="c1">// f是一个初始化值为0的不可变int对象
+</span></code></pre></div></li>
+<li>
+<p><code>decltype</code>不会去除顶层<code>const</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// x的类型是const int
 </span></code></pre></div></li>
 </ol>
 <h2 id="必须要理解的点">必须要理解的点</h2>
