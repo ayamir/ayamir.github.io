@@ -139,12 +139,12 @@
 </span></code></pre></div></li>
 <li>
 <p>指向常量的指针和常量指针：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">errNumb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
 
-<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">curErr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">errNumb</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mutPPi</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pPi</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">cur_err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">err_numb</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mut_pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
 </code></pre></div><p>从声明语句的变量符号开始，自右向左看：</p>
 <p><code>curErr</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
 <p><code>mutPPi</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>

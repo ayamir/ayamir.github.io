@@ -21,12 +21,12 @@
 3. 指向常量的指针和常量指针：
 
    ```C++
-   int errNumb = 0;
+   int err_numb = 0;
    const double pi = 3.1415;
    
-   int *const curErr = &errNumb;
-   const double *mutPPi = &pi;
-   const double *const pPi = &pi;
+   int *const cur_err = &err_numb;
+   const double *mut_pi_pointer = &pi;
+   const double *const pi_pointer = &pi;
    ```
 
    从声明语句的变量符号开始，自右向左看：
