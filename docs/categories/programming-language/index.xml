@@ -4,7 +4,42 @@
         <link>https://ayamir.github.io/categories/programming-language/</link>
         <description>Programming Language - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
+    <title>重学C&#43;&#43;：类型推导</title>
+    <link>https://ayamir.github.io/posts/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/auto/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>auto</code>可以在一条语句中声明多个变量，但是所有变量的类型必须一致。</p>
+</li>
+<li>
+<p><code>decltype</code>在分析表达式类型时并不执行表达式。</p>
+</li>
+<li>
+<p><code>decltype</code>处理解引用操作之后返回的是引用类型，而引用类型的变量必须初始化。</p>
+</li>
+<li>
+<p><code>decltype((variable))</code>的结果永远是引用。</p>
+<p><code>decltype(variable)</code>的结果只有当<code>variable</code>是引用时才是引用。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li><code>auto</code>用于变量初始化时的类型推导，<code>decltype</code>用于分析表达式的类型。</li>
+<li><code>auto</code>对引用类型推导时实际上用的是引用对象的值。</li>
+<li><code>auto</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
+<li><code>decltype</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li><code>auto</code>尽量只在类型较长但比较清晰时使用。</li>
+<li><code>decltype</code>尽量不要使用。</li>
+</ol>
+]]></description>
+</item><item>
     <title>重学C&#43;&#43;：Const二三事</title>
     <link>https://ayamir.github.io/posts/const/</link>
     <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate>
