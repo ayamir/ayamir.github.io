@@ -4,7 +4,139 @@
         <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
         <description>C&#43;&#43; - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/c&#43;&#43;/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/c&#43;&#43;/" rel="self" type="application/rss+xml" /><item>
+    <title>重学C&#43;&#43;：容器和迭代器</title>
+    <link>https://ayamir.github.io/posts/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/iterator/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。</p>
+</li>
+<li>
+<p><code>string</code>虽然不是容器，但是支持很多容器的操作。</p>
+</li>
+<li>
+<p>容器不为空时：<code>begin()</code>返回的是容器中第一个元素的位置；<code>end()</code>返回的是容器中最后一个元素的<strong>后一个位置</strong>。</p>
+<p>容器为空时：<code>begin()</code>和<code>end()</code>返回的都是最后一个元素的<strong>后一个位置</strong>。</p>
+</li>
+<li>
+<p>任何可能改变容器大小的操作都会使容器的迭代器失效。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>和指针类似的是，迭代器支持对对象的间接访问。</p>
+</li>
+<li>
+<p>和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如<code>begin()</code>, <code>end()</code>。</p>
+</li>
+<li>
+<p>所有迭代器都支持的运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center"><code>*iter</code></td>
+<td style="text-align:center">返回迭代器<code>iter</code>指向元素的<strong>引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">-&gt;</td>
+<td style="text-align:center"><code>iter-&gt;mem</code></td>
+<td style="text-align:center">解引用<code>iter</code>并获取该元素名为<code>mem</code>的成员，即<code>(*iter).mem</code></td>
+</tr>
+<tr>
+<td style="text-align:center">++</td>
+<td style="text-align:center"><code>++iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的后一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">&ndash;</td>
+<td style="text-align:center"><code>--iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的前一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">==</td>
+<td style="text-align:center"><code>iter1 == iter2</code></td>
+<td style="text-align:center">如果两个迭代器指向相同的元素返回<code>true</code>，否则返回<code>false</code></td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td style="text-align:center"><code>iter1 != iter2</code></td>
+<td style="text-align:center">上面例子的反面</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>迭代器的类型有两种：<code>iterator</code>和<code>const_iterator</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
+</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">iterator</span> <span class="n">its</span><span class="p">;</span>               <span class="c1">// 可用于读写string对象中的元素
+</span><span class="c1"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">citv</span><span class="p">;</span>   <span class="c1">// 只能读取元素
+</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">cits</span><span class="p">;</span>        <span class="c1">// 只能读取元素
+</span></code></pre></div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
+<p>C++11中引入了<code>cbegin()</code>和<code>cend()</code>来专门返回<code>const_iterator</code>。</p>
+</li>
+<li>
+<p>认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。</p>
+</li>
+<li>
+<p><code>vector</code>和<code>string</code>的迭代器支持的<strong>额外的</strong>运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>iter + n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的后n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter - n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的前n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter += n</code></td>
+<td style="text-align:center">运算得到的新迭代器赋值给<code>iter</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter -= n</code></td>
+<td style="text-align:center">同上</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter1 - iter2</code></td>
+<td style="text-align:center">两个迭代器之间的距离，可正可负</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td style="text-align:center">同两类型的下标运算符中的数字的关系，位置靠前的较小</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>一般不在意迭代器的类型，因此使用<code>auto</code>来标注。</li>
+<li>循环结束的判断条件习惯使用迭代器和<code>!=</code>，这样可以不用在意容器类型。</li>
+<li>凡是使用了迭代器的循环体中都不能有改变容器大小的操作如<code>push_back()</code>。</li>
+</ol>
+]]></description>
+</item><item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
     <link>https://ayamir.github.io/posts/vector/</link>
     <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate>

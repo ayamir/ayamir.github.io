@@ -4,7 +4,139 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>重学C&#43;&#43;：容器和迭代器</title>
+    <link>https://ayamir.github.io/posts/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/iterator/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。</p>
+</li>
+<li>
+<p><code>string</code>虽然不是容器，但是支持很多容器的操作。</p>
+</li>
+<li>
+<p>容器不为空时：<code>begin()</code>返回的是容器中第一个元素的位置；<code>end()</code>返回的是容器中最后一个元素的<strong>后一个位置</strong>。</p>
+<p>容器为空时：<code>begin()</code>和<code>end()</code>返回的都是最后一个元素的<strong>后一个位置</strong>。</p>
+</li>
+<li>
+<p>任何可能改变容器大小的操作都会使容器的迭代器失效。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>和指针类似的是，迭代器支持对对象的间接访问。</p>
+</li>
+<li>
+<p>和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如<code>begin()</code>, <code>end()</code>。</p>
+</li>
+<li>
+<p>所有迭代器都支持的运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center"><code>*iter</code></td>
+<td style="text-align:center">返回迭代器<code>iter</code>指向元素的<strong>引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">-&gt;</td>
+<td style="text-align:center"><code>iter-&gt;mem</code></td>
+<td style="text-align:center">解引用<code>iter</code>并获取该元素名为<code>mem</code>的成员，即<code>(*iter).mem</code></td>
+</tr>
+<tr>
+<td style="text-align:center">++</td>
+<td style="text-align:center"><code>++iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的后一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">&ndash;</td>
+<td style="text-align:center"><code>--iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的前一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">==</td>
+<td style="text-align:center"><code>iter1 == iter2</code></td>
+<td style="text-align:center">如果两个迭代器指向相同的元素返回<code>true</code>，否则返回<code>false</code></td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td style="text-align:center"><code>iter1 != iter2</code></td>
+<td style="text-align:center">上面例子的反面</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>迭代器的类型有两种：<code>iterator</code>和<code>const_iterator</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
+</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">iterator</span> <span class="n">its</span><span class="p">;</span>               <span class="c1">// 可用于读写string对象中的元素
+</span><span class="c1"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">citv</span><span class="p">;</span>   <span class="c1">// 只能读取元素
+</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">cits</span><span class="p">;</span>        <span class="c1">// 只能读取元素
+</span></code></pre></div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
+<p>C++11中引入了<code>cbegin()</code>和<code>cend()</code>来专门返回<code>const_iterator</code>。</p>
+</li>
+<li>
+<p>认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。</p>
+</li>
+<li>
+<p><code>vector</code>和<code>string</code>的迭代器支持的<strong>额外的</strong>运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>iter + n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的后n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter - n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的前n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter += n</code></td>
+<td style="text-align:center">运算得到的新迭代器赋值给<code>iter</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter -= n</code></td>
+<td style="text-align:center">同上</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter1 - iter2</code></td>
+<td style="text-align:center">两个迭代器之间的距离，可正可负</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td style="text-align:center">同两类型的下标运算符中的数字的关系，位置靠前的较小</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>一般不在意迭代器的类型，因此使用<code>auto</code>来标注。</li>
+<li>循环结束的判断条件习惯使用迭代器和<code>!=</code>，这样可以不用在意容器类型。</li>
+<li>凡是使用了迭代器的循环体中都不能有改变容器大小的操作如<code>push_back()</code>。</li>
+</ol>
+]]></description>
+</item><item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
     <link>https://ayamir.github.io/posts/vector/</link>
     <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate>
@@ -1316,88 +1448,6 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
 <p>在变量第一次使用的地方进行<strong>定义</strong>操作。</p>
 </li>
 </ol>
-]]></description>
-</item><item>
-    <title>Immersive Video OMAF-Sample Deploy</title>
-    <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
-    <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/immersive-video-deploy/</guid>
-    <description><![CDATA[<p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<h2 id="server-端搭建">Server 端搭建</h2>
-<h3 id="修改-dockerfile">修改 Dockerfile</h3>
-<ol>
-<li>
-<p>手动设置 wget 和 git 的 http_proxy</p>
-</li>
-<li>
-<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
-</li>
-<li>
-<p>因为找不到 glog 库因此加入软链接操作</p>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
-</code></pre></div><h3 id="重新编译内核">重新编译内核</h3>
-<p>运行脚本时显示 libnuma 错误因此推断与 numa 设置有关</p>
-<p>执行<code>numactl -H</code>显示只有一个 node，报错输出显示需要至少两个 numa 节点</p>
-<p>查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
-<ol>
-<li>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
-</code></pre></div><ol start="2">
-<li>解压</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar xpvf linux-5.11.1.tar.gz
-</code></pre></div><ol start="3">
-<li>复制现有内核配置</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> linux-5.11.1 <span class="o">&amp;&amp;</span> cp -v /boot/config-<span class="k">$(</span>uname -r<span class="k">)</span> .config
-</code></pre></div><ol start="4">
-<li>安装必要的包</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
-</code></pre></div><ol start="5">
-<li>进入内核配置界面</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
-</code></pre></div><p></p>
-<ol start="6">
-<li>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</li>
-</ol>
-<p></p>
-<ol start="7">
-<li>手动勾选对应选项之后保存退出</li>
-</ol>
-<p></p>
-<ol start="8">
-<li>重新编译并等待安装结束</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make -j <span class="k">$(</span>nproc<span class="k">)</span> <span class="o">&amp;&amp;</span> sudo make modules_install <span class="o">&amp;&amp;</span> sudo make install
-</code></pre></div><ol start="9">
-<li>修改<code>grub</code>启动参数加入 fake numa 配置</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
-</code></pre></div><p>找到对应行并修改为</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
-</code></pre></div><p></p>
-<ol start="10">
-<li>更新<code>grub</code>并重启</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
-</code></pre></div><ol start="11">
-<li>执行<code>numactl -H</code>检查 numa 节点数目为 2</li>
-</ol>
-<p></p>
-<ol start="12">
-<li>重新执行脚本如图说明一切正常</li>
-</ol>
-<p></p>
-<h2 id="client-端搭建">Client 端搭建</h2>
-<p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
-<p></p>
 ]]></description>
 </item></channel>
 </rss>
