@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>重学C&#43;&#43;：类型推导 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：类型推导" />
-<meta property="og:description" content="常见的坑 auto可以在一条语句中声明多个变量，但是所有变量的类型必须一致。 decltype在分析表达式类型时并不执行表达式。 decltype" />
+        <title>重学C&#43;&#43;：标准库类型string - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：标准库类型string" />
+<meta property="og:description" content="常见的坑 string.size()和string.length()等价。 string.size()和其他STL容器的命名风格相一致（如vec" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/auto/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-26T21:14:32+08:00" />
-<meta property="article:modified_time" content="2021-10-26T21:33:33+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/string/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-28T10:31:33+08:00" />
+<meta property="article:modified_time" content="2021-10-28T10:31:33+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="重学C&#43;&#43;：类型推导"/>
-<meta name="twitter:description" content="常见的坑 auto可以在一条语句中声明多个变量，但是所有变量的类型必须一致。 decltype在分析表达式类型时并不执行表达式。 decltype"/>
+<meta name="twitter:title" content="重学C&#43;&#43;：标准库类型string"/>
+<meta name="twitter:description" content="常见的坑 string.size()和string.length()等价。 string.size()和其他STL容器的命名风格相一致（如vec"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/auto/" /><link rel="prev" href="https://ayamir.github.io/posts/const/" /><link rel="next" href="https://ayamir.github.io/posts/string/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/string/" /><link rel="prev" href="https://ayamir.github.io/posts/auto/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "重学C++：类型推导",
+        "headline": "重学C++：标准库类型string",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/auto\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  339 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/auto\/","datePublished": "2021-10-26T21:14:32+08:00","dateModified": "2021-10-26T21:33:33+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/string\/"
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  951 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/string\/","datePublished": "2021-10-28T10:31:33+08:00","dateModified": "2021-10-28T10:31:33+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,10 +102,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：类型推导</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：标准库类型string</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-26">2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 339 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 951 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -125,42 +125,104 @@
             </div><div class="content" id="content"><h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
-<p><code>auto</code>可以在一条语句中声明多个变量，但是所有变量的类型必须一致。</p>
+<p><code>string.size()</code>和<code>string.length()</code>等价。</p>
+<p><code>string.size()</code>和其他<code>STL</code>容器的命名风格相一致（如<code>vector</code>, <code>map</code>）。</p>
+<p><code>string.length()</code>出现主要是因为这样的命名符合人的直觉，有更好的可读性。</p>
 </li>
 <li>
-<p><code>decltype</code>在分析表达式类型时并不执行表达式。</p>
+<p><code>string::size_type</code>是无符号类型，和<code>int</code>不同，能存放下任何<code>string</code>对象的大小。</p>
 </li>
 <li>
-<p><code>decltype</code>处理解引用操作之后返回的是引用类型，而引用类型的变量必须初始化。</p>
-</li>
-<li>
-<p><code>decltype((variable))</code>的结果永远是引用。</p>
-<p><code>decltype(variable)</code>的结果只有当<code>variable</code>是引用时才是引用。</p>
-</li>
+<p><code>+</code>两边至少有一端需要是<code>string</code>对象，不允许两个字符串字面量单独相加。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+<span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+<span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span><span class="p">;</span>   <span class="c1">// 正确，从左到右运算时能保证至少一段是string对象
+</span><span class="c1"></span><span class="n">string</span> <span class="n">c</span> <span class="o">=</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>   <span class="c1">// 错误，从左到右运算时第一个+左右都是字符串字面量
+</span></code></pre></div></li>
 </ol>
 <h2 id="必须要理解的点">必须要理解的点</h2>
 <ol>
-<li><code>auto</code>用于变量初始化时的类型推导，<code>decltype</code>用于分析表达式的类型。</li>
-<li><code>auto</code>对引用类型推导时实际上用的是引用对象的值。</li>
-<li><code>auto</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
-<li><code>decltype</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
+<li>
+<p><code>string</code>的初始化方式有两种，一种是默认初始化，另一种是拷贝初始化。</p>
+</li>
+<li>
+<p><code>string.size()</code>返回值类型为<code>string::size_type</code>，出现这种类型是为了体现标准库类型和机器无关的特性。</p>
+</li>
+<li>
+<p><code>string</code>对象的比较运算完全实现了运算符重载（<code>==</code>, <code>!=</code>, <code>&lt;</code>,<code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>）。</p>
+<p><code>==</code>表明两个对象的内容和长度完全一致，反之任一不同则<code>!=</code>。</p>
+<p>不等关系运算符比较的法则：</p>
+<ol>
+<li>如果两个对象长度不同，但是从前到后内容一致，则长度较短的对象较小。</li>
+<li>如果两个对象从前到后有对应位置的字符不同，则这个位置的两个字符的大小关系就是两个对象的大小关系。</li>
+</ol>
+</li>
+<li>
+<p><code>string</code>对象赋值操作就是内容的替换。</p>
+</li>
+<li>
+<p><code>string</code>对象相加操作就是内容的拼接，<code>+=</code>操作同理。</p>
+</li>
+<li>
+<p><code>string</code>对象可以与字符串字面量相加。</p>
+</li>
+<li>
+<p>形如<code>cname</code>的<code>C++</code>头文件兼容形如<code>ctype.h</code>的<code>C</code>头文件，<code>C++</code>头文件中定义的名字可以在<code>std</code>中找到。</p>
+</li>
 </ol>
 <h2 id="建议">建议</h2>
 <ol>
-<li><code>auto</code>尽量只在类型较长但比较清晰时使用。</li>
-<li><code>decltype</code>尽量不要使用。</li>
+<li>
+<p>表达式中出现<code>string.size()</code>函数时就不应该使用<code>int</code>类型，这样可以避免<code>int</code>和<code>unsigned</code>混用的问题。</p>
+</li>
+<li>
+<p><code>C++</code>和<code>C</code>兼容的头文件作选择时，选择<code>C++</code>的头文件。</p>
+</li>
+<li>
+<p>处理<code>string</code>对象中每一个字符时，使用<code>foreach</code>语句。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;cctype&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="n">str</span><span class="p">{</span><span class="s">&#34;Some String&#34;</span><span class="p">};</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 使用引用来改变原字符串内容
+</span><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</code></pre></div></li>
+<li>
+<p>处理<code>string</code>对象中特定字符时使用<code>[]</code>（下标运算符）或者迭代器。</p>
+<p>使用<code>[]</code>访问字符之前检查<code>string</code>对象是否为空。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>
+<p><code>string</code>对象下标使用<code>string::size_type</code>作为类型而非<code>int</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span>
+<span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">index_of_space</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">);</span>
+</code></pre></div></li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-10-26</span>
+                <span>更新于 2021-10-28</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/posts/auto/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/posts/string/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
                 <span></span>
@@ -175,8 +237,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/const/" class="prev" rel="prev" title="重学C&#43;&#43;：Const二三事"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：Const二三事</a>
-            <a href="/posts/string/" class="next" rel="next" title="重学C&#43;&#43;：标准库类型string">重学C&#43;&#43;：标准库类型string<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/auto/" class="prev" rel="prev" title="重学C&#43;&#43;：类型推导"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：类型推导</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
