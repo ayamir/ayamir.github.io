@@ -4,7 +4,71 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>重学C&#43;&#43;：标准库类模板Vector</title>
+    <link>https://ayamir.github.io/posts/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/vector/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>vector</code>的默认初始化是否合法取决于<code>vector</code>内对象所属的类是否要求显式初始化。</p>
+</li>
+<li>
+<p>使用<code>()</code>和<code>{}</code>对<code>vector</code>执行初始化含义不同。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>    <span class="c1">// 存储1个int对象，值为10
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>    <span class="c1">// 存储10个int对象，值为0
+</span><span class="c1"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 存储10个int对象，值都是1
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v4</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span> <span class="c1">// 存储2个int对象，值分别是10和1
+</span></code></pre></div></li>
+<li>
+<p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
+<ol>
+<li>
+<p>如果<code>{}</code>内容可以用于初始化，则采用<code>{}</code>默认的初始化含义。</p>
+</li>
+<li>
+<p>如果<code>{}</code>中的内容无法用<code>{}</code>默认的初始化含义做出解释，则会按照<code>()</code>的初始化含义去解释<code>{}</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="s">&#34;hi&#34;</span><span class="p">};</span>      <span class="c1">// 存储1个值为hi的string对象
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>        <span class="c1">// 存储10个值为空的string对象
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;hi&#34;</span><span class="p">};</span>  <span class="c1">// 存储10个值为hi的string对象
+</span></code></pre></div></li>
+</ol>
+</li>
+<li>
+<p>与<code>string</code>相同，<code>vector</code>也有<code>size_type</code>作为其<code>size()</code>的返回值类型。</p>
+<p>但是使用时必须首先指定<code>vector</code>由哪个类型定义。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 错误
+</span></code></pre></div></li>
+<li>
+<p>只有<code>vector</code>内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。</p>
+</li>
+<li>
+<p>增加<code>vector</code>中的元素只能使用<code>push_back()</code>，而不能使用对下标赋值的方式。</p>
+</li>
+</ol>
+<h2 id="必须理解的点">必须理解的点</h2>
+<ol>
+<li><code>vector</code>是类模板而非类型。</li>
+<li><code>vector</code>中只能容纳对象，不能容纳引用。</li>
+<li><code>vector</code>对象能高效增长，增加<code>vector</code>中的元素需要使用<code>push_back()</code>成员函数。</li>
+<li><code>vector</code>的成员函数（<code>empty()</code>, <code>size()</code>）和各种运算符（赋值、关系、下标）的操作使用方法和规则基本同<code>string</code>。</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>不需要在创建<code>vector</code>时确定其中的元素及其大小。</li>
+<li>在循环体内部包含向<code>vector</code>对象添加元素的操作时，不应该使用<code>foreach</code>循环。</li>
+</ol>
+]]></description>
+</item><item>
     <title>重学C&#43;&#43;：标准库类型string</title>
     <link>https://ayamir.github.io/posts/string/</link>
     <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate>
@@ -1334,22 +1398,6 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
 <h2 id="client-端搭建">Client 端搭建</h2>
 <p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
 <p></p>
-]]></description>
-</item><item>
-    <title>How to Fix GPGME Error on Archlinux</title>
-    <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
-    <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
-</code></pre></div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --init
-</code></pre></div><h2 id="populate-key">Populate key</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --populate
-</code></pre></div><h2 id="re-sync">Re sync</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
-</code></pre></div><p>Now you can update successfully!</p>
 ]]></description>
 </item></channel>
 </rss>

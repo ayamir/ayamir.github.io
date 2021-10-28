@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>重学C&#43;&#43;：标准库类型string - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：标准库类型string" />
-<meta property="og:description" content="常见的坑 string.size()和string.length()等价。 string.size()和其他STL容器的命名风格相一致（如vec" />
+        <title>重学C&#43;&#43;：标准库类模板Vector - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：标准库类模板Vector" />
+<meta property="og:description" content="常见的坑 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义不同。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/string/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-28T10:31:33+08:00" />
-<meta property="article:modified_time" content="2021-10-28T15:29:45+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/vector/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-28T15:35:17+08:00" />
+<meta property="article:modified_time" content="2021-10-28T15:35:17+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="重学C&#43;&#43;：标准库类型string"/>
-<meta name="twitter:description" content="常见的坑 string.size()和string.length()等价。 string.size()和其他STL容器的命名风格相一致（如vec"/>
+<meta name="twitter:title" content="重学C&#43;&#43;：标准库类模板Vector"/>
+<meta name="twitter:description" content="常见的坑 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义不同。"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/string/" /><link rel="prev" href="https://ayamir.github.io/posts/auto/" /><link rel="next" href="https://ayamir.github.io/posts/vector/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/vector/" /><link rel="prev" href="https://ayamir.github.io/posts/string/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "重学C++：标准库类型string",
+        "headline": "重学C++：标准库类模板Vector",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/string\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  951 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/string\/","datePublished": "2021-10-28T10:31:33+08:00","dateModified": "2021-10-28T15:29:45+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/vector\/"
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  694 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/vector\/","datePublished": "2021-10-28T15:35:17+08:00","dateModified": "2021-10-28T15:35:17+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,9 +102,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：标准库类型string</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：标准库类模板Vector</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 951 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 694 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -116,7 +116,7 @@
     <li>
       <ul>
         <li><a href="#常见的坑">常见的坑</a></li>
-        <li><a href="#必须要理解的点">必须要理解的点</a></li>
+        <li><a href="#必须理解的点">必须理解的点</a></li>
         <li><a href="#建议">建议</a></li>
       </ul>
     </li>
@@ -125,92 +125,59 @@
             </div><div class="content" id="content"><h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
-<p><code>string.size()</code>和<code>string.length()</code>等价。</p>
-<p><code>string.size()</code>和其他<code>STL</code>容器的命名风格相一致（如<code>vector</code>, <code>map</code>）。</p>
-<p><code>string.length()</code>出现主要是因为这样的命名符合人的直觉，有更好的可读性。</p>
+<p><code>vector</code>的默认初始化是否合法取决于<code>vector</code>内对象所属的类是否要求显式初始化。</p>
 </li>
 <li>
-<p><code>string::size_type</code>是无符号类型，和<code>int</code>不同，能存放下任何<code>string</code>对象的大小。</p>
+<p>使用<code>()</code>和<code>{}</code>对<code>vector</code>执行初始化含义不同。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>    <span class="c1">// 存储1个int对象，值为10
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>    <span class="c1">// 存储10个int对象，值为0
+</span><span class="c1"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 存储10个int对象，值都是1
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v4</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span> <span class="c1">// 存储2个int对象，值分别是10和1
+</span></code></pre></div></li>
+<li>
+<p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
+<ol>
+<li>
+<p>如果<code>{}</code>内容可以用于初始化，则采用<code>{}</code>默认的初始化含义。</p>
 </li>
 <li>
-<p><code>+</code>两边至少有一端需要是<code>string</code>对象，不允许两个字符串字面量单独相加。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
-<span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
-<span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span><span class="p">;</span>   <span class="c1">// 正确，从左到右运算时能保证至少一段是string对象
-</span><span class="c1"></span><span class="n">string</span> <span class="n">c</span> <span class="o">=</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>   <span class="c1">// 错误，从左到右运算时第一个+左右都是字符串字面量
+<p>如果<code>{}</code>中的内容无法用<code>{}</code>默认的初始化含义做出解释，则会按照<code>()</code>的初始化含义去解释<code>{}</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="s">&#34;hi&#34;</span><span class="p">};</span>      <span class="c1">// 存储1个值为hi的string对象
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>        <span class="c1">// 存储10个值为空的string对象
+</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;hi&#34;</span><span class="p">};</span>  <span class="c1">// 存储10个值为hi的string对象
 </span></code></pre></div></li>
 </ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>
-<p><code>string</code>的初始化方式有两种，一种是默认初始化，另一种是拷贝初始化。</p>
 </li>
 <li>
-<p><code>string.size()</code>返回值类型为<code>string::size_type</code>，出现这种类型是为了体现标准库类型和机器无关的特性。</p>
+<p>与<code>string</code>相同，<code>vector</code>也有<code>size_type</code>作为其<code>size()</code>的返回值类型。</p>
+<p>但是使用时必须首先指定<code>vector</code>由哪个类型定义。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 错误
+</span></code></pre></div></li>
+<li>
+<p>只有<code>vector</code>内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。</p>
 </li>
 <li>
-<p><code>string</code>对象的比较运算完全实现了运算符重载（<code>==</code>, <code>!=</code>, <code>&lt;</code>,<code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>）。</p>
-<p><code>==</code>表明两个对象的内容和长度完全一致，反之任一不同则<code>!=</code>。</p>
-<p>不等关系运算符比较的法则：</p>
-<ol>
-<li>如果两个对象长度不同，但是从前到后内容一致，则长度较短的对象较小。</li>
-<li>如果两个对象从前到后有对应位置的字符不同，则这个位置的两个字符的大小关系就是两个对象的大小关系。</li>
+<p>增加<code>vector</code>中的元素只能使用<code>push_back()</code>，而不能使用对下标赋值的方式。</p>
+</li>
 </ol>
-</li>
-<li>
-<p><code>string</code>对象赋值操作就是内容的替换。</p>
-</li>
-<li>
-<p><code>string</code>对象相加操作就是内容的拼接，<code>+=</code>操作同理。</p>
-</li>
-<li>
-<p><code>string</code>对象可以与字符串字面量相加。</p>
-</li>
-<li>
-<p>形如<code>cname</code>的<code>C++</code>头文件兼容形如<code>ctype.h</code>的<code>C</code>头文件，<code>C++</code>头文件中定义的名字可以在<code>std</code>中找到。</p>
-</li>
+<h2 id="必须理解的点">必须理解的点</h2>
+<ol>
+<li><code>vector</code>是类模板而非类型。</li>
+<li><code>vector</code>中只能容纳对象，不能容纳引用。</li>
+<li><code>vector</code>对象能高效增长，增加<code>vector</code>中的元素需要使用<code>push_back()</code>成员函数。</li>
+<li><code>vector</code>的成员函数（<code>empty()</code>, <code>size()</code>）和各种运算符（赋值、关系、下标）的操作使用方法和规则基本同<code>string</code>。</li>
 </ol>
 <h2 id="建议">建议</h2>
 <ol>
-<li>
-<p>表达式中出现<code>string.size()</code>函数时就不应该使用<code>int</code>类型，这样可以避免<code>int</code>和<code>unsigned</code>混用的问题。</p>
-</li>
-<li>
-<p><code>C++</code>和<code>C</code>兼容的头文件作选择时，选择<code>C++</code>的头文件。</p>
-</li>
-<li>
-<p>处理<code>string</code>对象中每一个字符时，使用<code>foreach</code>语句。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;cctype&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
-
-<span class="n">string</span> <span class="n">str</span><span class="p">{</span><span class="s">&#34;Some String&#34;</span><span class="p">};</span>
-<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// 使用引用来改变原字符串内容
-</span><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</code></pre></div></li>
-<li>
-<p>处理<code>string</code>对象中特定字符时使用<code>[]</code>（下标运算符）或者迭代器。</p>
-<p>使用<code>[]</code>访问字符之前检查<code>string</code>对象是否为空。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></li>
-<li>
-<p><code>string</code>对象下标使用<code>string::size_type</code>作为类型而非<code>int</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
-
-<span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span>
-<span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">index_of_space</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">);</span>
-</code></pre></div></li>
+<li>不需要在创建<code>vector</code>时确定其中的元素及其大小。</li>
+<li>在循环体内部包含向<code>vector</code>对象添加元素的操作时，不应该使用<code>foreach</code>循环。</li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -222,7 +189,7 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/posts/string/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/posts/vector/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
                 <span></span>
@@ -237,8 +204,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/auto/" class="prev" rel="prev" title="重学C&#43;&#43;：类型推导"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：类型推导</a>
-            <a href="/posts/vector/" class="next" rel="next" title="重学C&#43;&#43;：标准库类模板Vector">重学C&#43;&#43;：标准库类模板Vector<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/string/" class="prev" rel="prev" title="重学C&#43;&#43;：标准库类型string"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：标准库类型string</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
