@@ -124,16 +124,16 @@
 <li>相比于单静态层，多个动态缓存模型可以帮助管理唐突的viewport和网络变化来改善多用户的viewport命中率。</li>
 <li>无论环境怎样，主动缓存都可以通过采用预测机制来预取和缓存部分视频来提高感知质量。</li>
 </ul>
-<h3 id="360度视频的协同传输">360度视频的协同传输</h3>
-<h4 id="背景-2">背景</h4>
+<h2 id="360度视频的协同传输">360度视频的协同传输</h2>
+<h3 id="背景-2">背景</h3>
 <ul>
 <li>360度视频推流有较大的用户需求并且在逐渐增长。</li>
 <li>目前推流viewport之外的冗余信息会浪费重要的网络带宽。</li>
 <li>相同的360度视频内容，在带宽受限的网络之上被推流给多个用户时，码率的需求变得更难满足。</li>
 </ul>
 <p>几个方法应用了360度视频的协同传输，进而改善传输效率。</p>
-<h4 id="方案">方案</h4>
-<h5 id="ahmadis-work">Ahmadi&rsquo;s work</h5>
+<h3 id="方案">方案</h3>
+<h4 id="ahmadis-work">Ahmadi&rsquo;s work</h4>
 <p>引入了基于DASH的加权tile方法来优化子用户组请求的tile编码性能。</p>
 <ul>
 <li>提出了多播流方案基于被用户看到的可能性对tile分配适当的权重。</li>
@@ -141,35 +141,35 @@
 <li>实际上因为相邻tile的不同质量导致了空间质量变化，最终造成糟糕的推流体验。</li>
 <li>不必要的离散优化问题巨大，不能保证有积极的表现。</li>
 </ul>
-<h5 id="baos-work">Bao&rsquo;s work</h5>
+<h4 id="baos-work">Bao&rsquo;s work</h4>
 <p>基于动作预测和并发观看用户的信道条件提出了一种多播框架，来只分发可能被看到的360度视频块。</p>
 <ul>
 <li>没有在无线多播传输中考虑优化资源分配。</li>
 </ul>
-<h5 id="guos-work">Guo&rsquo;s work</h5>
+<h4 id="guos-work">Guo&rsquo;s work</h4>
 <p>为每个用户假设了一种随机动作模式和不稳定的信道条件，并且开发了多播机会来避免冗余数据传输。</p>
 <p>作者考虑了两个非凸的问题：</p>
 <ol>
 <li>在给定视频质量的约束下，最小化平均传输时间和能源消耗。</li>
 <li>在给定的传输时间和能源预算下，最大化每个用户的视频质量。</li>
 </ol>
-<h5 id="longs-work">Long&rsquo;s work</h5>
+<h4 id="longs-work">Long&rsquo;s work</h4>
 <p>考虑了传输时间、视频质量的平滑性和能源限制，在单服务器多用户无线网络环境中优化多个用户的聚合效用。</p>
 <ul>
 <li>为了减少传输复杂性，作者准备了多种质量的tile，并为每组用户将tile划分到不相邻的子集中。</li>
 </ul>
-<h5 id="zhangs-work-1">Zhang&rsquo;s work</h5>
+<h4 id="zhangs-work-1">Zhang&rsquo;s work</h4>
 <p>引入了一种使用SVC质量自适应方法的协同推流策略，来改善移动自组网环境中，观看360度内容的多个用户间的带宽共享。</p>
 <ul>
 <li>当遇到可用网络资源限制时，提出的启发性方式基于被看到的可能性和聚合的组级别偏好设置选择最优的tile子集。</li>
 </ul>
-<h5 id="kans-work">Kan&rsquo;s work</h5>
+<h4 id="kans-work">Kan&rsquo;s work</h4>
 <p>提出了一种服务端混合多播-单播协同推流方案来分发不同质量的360度视频到多个用户。</p>
 <ul>
 <li>基于用户的观看行为对其进行分簇，以此来轻松共享相同的视频内容。</li>
 <li>为每个tile联合选择传输模式和适当的码率来提高整体的QoE。</li>
 </ul>
-<h5 id="huang-and-zhangs-work">Huang and Zhang&rsquo;s work</h5>
+<h4 id="huang-and-zhangs-work">Huang and Zhang&rsquo;s work</h4>
 <p>设计了一种MIMO网络中的MAC调度方式。</p>
 <ul>
 <li>资源分配策略基于三个主要的函数
@@ -180,7 +180,7 @@
 </ol>
 </li>
 </ul>
-<h5 id="li-and-gaos-work">Li and Gao&rsquo;s work</h5>
+<h4 id="li-and-gaos-work">Li and Gao&rsquo;s work</h4>
 <p>提出了多用户VR框架，其中边缘云自适应地存储和重用冗余VR帧，以减少计算和传输负载。</p>
 <ul>
 <li>两级cache的设计：用户端的小型本地cache和边缘的大型中央cache。</li>
