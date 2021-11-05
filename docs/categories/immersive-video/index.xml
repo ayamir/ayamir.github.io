@@ -4,7 +4,164 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 30 Oct 2021 19:20:00 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 04 Nov 2021 11:01:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>自适应360度视频推流挑战</title>
+    <link>https://ayamir.github.io/posts/note5/</link>
+    <pubDate>Thu, 04 Nov 2021 11:01:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note5/</guid>
+    <description><![CDATA[<h1 id="背景">背景</h1>
+<p>用户使用头戴设备比使用传统显示器观看360度视频内容时的满意度对于扰乱更加敏感。</p>
+<p>沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。</p>
+<p>目前主要面临的挑战有以下4个：</p>
+<p></p>
+<h2 id="viewport预测">Viewport预测</h2>
+<h3 id="背景-1">背景</h3>
+<p>HMD的本质特征是快速响应用户头部的移动。当用户改变viewport时HMD处理交互并检测相关的viewport来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport预测在优化的360度视频推流中非常必要。配备有位置传感器的可穿戴HMD允许客户端更新其视角方向相应的视角场景。</p>
+<h3 id="分类">分类</h3>
+<ul>
+<li><em>内容不可知</em>的方式基于历史信息对viewport进行预测。</li>
+<li><em>内容感知</em>的方式需要视频内容信息来预测未来的viewport。</li>
+</ul>
+<h3 id="内容不可知方式">内容不可知方式</h3>
+<h4 id="分类-1">分类</h4>
+<ul>
+<li>平均线性回归LR</li>
+<li>航位推算DR</li>
+<li>聚类</li>
+<li>机器学习ML</li>
+<li>编解码器体系结构</li>
+</ul>
+<h4 id="现有成果">现有成果</h4>
+<h5 id="qians-worklr">Qian&rsquo;s work——LR</h5>
+<p>使用平均线性回归和加权线性回归模型来做viewport预测，之后对与预测区域重叠的tile进行整体推流。</p>
+<ul>
+<li>当预测后0.5s、1s、2s加权线性回归表现更好</li>
+</ul>
+<h5 id="petrangelis-worklr">Petrangeli&rsquo;s work——LR</h5>
+<p>将被划分成tile的等矩形的帧分成3个区域：viewport区、相邻区、其他区。</p>
+<p>结合观察者头部的移动，将可变比特率分配给可见和不可见区域。</p>
+<p>作者利用最近（100毫秒）用户观看历史的线性外推来预测未来的注视点。</p>
+<h5 id="mavlankar-and-girods-work运动向量">Mavlankar and Girod&rsquo;s work——运动向量</h5>
+<p>使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。</p>
+<h5 id="la-fuentes-work运动向量">La Fuente&rsquo;s work——运动向量</h5>
+<p>考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个tile上。</p>
+<p>当进行进一步的预测时（超过2s），这种方式限制了预测的精度。</p>
+<p>如果视频tile被基于错误的预测而被请求，用户的实际viewport可能会被没有请求因而没有内容的黑色tile所覆盖。</p>
+<h5 id="bans-workknnlr">Ban&rsquo;s work——KNN+LR</h5>
+<p>使用KNN算法利用跨用户观看历史，使用LR模型利用户个体化的行为。</p>
+<p>就视角预测的准确率而言，分别取得了20%和48%的绝对和相对改进。</p>
+<h5 id="lius-workcluster">Liu&rsquo;s work——cluster</h5>
+<p>提出了使用数据融合方法，通过考虑几个特征来估计未来视角位置。特征例如：用户的参与度、用户观看同一视频的行为、单个用户观看多个视频的行为、最终用户设备、移动性水平。</p>
+<h5 id="petrangelis-workcluster">Petrangeli&rsquo;s work——cluster</h5>
+<p>基于车辆轨迹预测的概念，考虑了类似的轨迹形成一个簇来预测未来的viewport。</p>
+<p>结果表明这种方法为更长的视野提高了精确度。</p>
+<p>检查了来自三个欧拉角的不同轨迹，这样做可能导致性能不足。</p>
+<h5 id="rossis-workcluster">Rossi&rsquo;s work——cluster</h5>
+<p>提出了一种聚类的方法，基于球形空间中有意义的viewport重叠来确认用户的簇。</p>
+<p>基于Bron-Kerbosch（BK）算法的聚类算法能够识别大量用户，这些用户观看的是相同的60%的3s长球形视频块。</p>
+<p>与基准相比，该方法为簇提供了可兼容且重要的几何viewport重叠。</p>
+<h5 id="jiangs-work">Jiang&rsquo;s work</h5>
+<p>背景：</p>
+<p>LR方法对于长期的预测视野会导致较差的预测精度。长短时记忆（LSTM）是一种递归神经网络（RNN）架构，适用于序列建模和模式开发。</p>
+<p>方法：</p>
+<p>为了在FoV预测中获取比LR方法更高的精确度，开发了一种使用带有128个神经元的LSTM模型的viewport预测方法。</p>
+<ul>
+<li>分析了360度数据集，观察到用户在水平方向头部有快速转向，但是在垂直方向几乎是稳定的。</li>
+<li>实验表明，这种方法同时考虑水平和垂直方向的头部移动时，比LR等方法产生了更少的预测错误。</li>
+</ul>
+<h5 id="baos-work">Bao&rsquo;s work</h5>
+<p>背景：</p>
+<p>对150个用户进行了16个视频剪辑的主观实验，并对其行为进行了分析。</p>
+<p>使用3个方向的欧拉角$\theta$, $\phi$, $\psi$来表示用户在3D空间中头部的移动，结果表明不同方向的动作有强自相关性和消极的互相关性。因此多个角度的预测可以分开进行。</p>
+<p>方法：</p>
+<p>开发两个独立的LSTM模型来分别预测$\theta$和$\phi$，之后将预测结果应用于目标区域流来有效利用可用网络资源。</p>
+<h5 id="hous-work">Hou&rsquo;s work</h5>
+<ul>
+<li>提出一种基于深度学习的视角产生方法来只对提前预测的360度视频和3自由度的VR应用的viewport tile进行抽取和推流。（使用了大规模的数据集来训练模型）</li>
+<li>使用包含多层感知器和LSTM模型来预测6自由度的VR环境中头部乃至身体的移动，预测的视野被预渲染来做到低延迟的VR体验。</li>
+</ul>
+<h5 id="heyses-work">Heyse&rsquo;s work</h5>
+<p>背景：</p>
+<p>在某些例子中，用户的移动在视频的不同部分中非常不稳定。这增加了机器学习方式的训练压力。</p>
+<p>方法：</p>
+<p>提出了一个基于RL模型的上下文代理，这个模型首先检测用户的显著移动，然后预测移动的方向。这种分层自学习执行器优于球形轨迹外推法（这种方法将用户运动建模为轨迹的一部分，而不是单位球体上的完整轨迹）</p>
+<h5 id="qians-work">Qian&rsquo;s work</h5>
+<p>提出了一种叫做Flare的算法来最小化实际viewport和预测viewport之间的不匹配。</p>
+<ul>
+<li>应用了一种ML方法来执行频繁的viewport预测，包括从130名用户收集的1300条头部运动轨迹的4个间隔。</li>
+<li>使用viewport轨迹预测，Flare可以将错误预测替换成最新预测。</li>
+</ul>
+<h5 id="yu-and-lius-work">Yu and Liu&rsquo;s work</h5>
+<p>背景：</p>
+<p>LSTM网络本身具有耗时的线性训练特性。编解码器的LSTM模型把训练过程并行化，相比于LR和LSTM本身而言，改善了预测精度。</p>
+<p>方法：</p>
+<p>使用基于注意力的LSTM编解码器网络体系结构来避免昂贵的递归并能更好地捕获viewport变化。</p>
+<ul>
+<li>提出的体系结构相比于传统的RNN，获得了更高的预测精度，更低的训练复杂度和更快的收敛。</li>
+</ul>
+<h5 id="jamalis-work">Jamali&rsquo;s work</h5>
+<p>提出使用LSTM编解码器网络来做长期的viewport预测（例如3.5s）。</p>
+<p>收集了低延迟异质网络上跨用户的方向反馈来调整高延迟网络上目标用户的预测性能。</p>
+<h3 id="内容感知方式">内容感知方式</h3>
+<h4 id="背景-2">背景</h4>
+<p>内容感知方式可以提高预测效率。</p>
+<h4 id="具体方法">具体方法</h4>
+<h5 id="aladaglis-work">Aladagli&rsquo;s work</h5>
+<p>提出了一个显著性驱动的模型来提高预测精度。</p>
+<ul>
+<li>没有考虑用户在360度视频中的视角行为。</li>
+<li>viewport预测错误可以通过理解用户对360度视频独特的可见注意力最小化。</li>
+</ul>
+<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
+<p>背景：</p>
+<p>大多数现存的方法把显著性图看作是360度显示中的位置信息来获得更好的预测结果。</p>
+<p>通用的显著性和位置信息体系结构基于固定预测模型。</p>
+<p>方法：</p>
+<p>提出了<code>PanoSalNet</code>来捕获用户在360度帧中独特的可见注意力来改善显著性检测的性能。</p>
+<ul>
+<li>同时使用HMD特性和显著性图的固定预测模型获得了可测量的结果。</li>
+</ul>
+<h5 id="xus-work">Xu&rsquo;s work</h5>
+<p>提出了两个DRL(Deep Reinforcement Learning)模型用于同时考虑运动轨迹和可见注意力特性的viewport预测网络。</p>
+<ul>
+<li>离线模型基于内容流行度检测每个帧里的显著性。</li>
+<li>在线模型基于从离线模型获得的显著性图和之前的viewport预测信息预测viewport方向和大小。</li>
+<li>这个网络只能预测30ms的下一个viewport位置。</li>
+</ul>
+<h5 id="xus-work-1">Xu&rsquo;s work</h5>
+<p>收集了大规模的被使用带有眼部轨迹跟踪的HMD的45个观测者观察的动态360度视频数据集，提出了基于历史扫描路径和图像特征预测注视位移的方法。</p>
+<ul>
+<li>在与当前注视点、viewport和整个图像相关的三个空间尺度上执行了显著性计算。</li>
+<li>可能的图像特性被通过向CNN喂图像和相应的显著性图，同时LSTM模型捕获历史信息来抽取出来。</li>
+<li>之后将LSTM和CNN特性耦合起来，用于下一次的用户注视信息预测。</li>
+</ul>
+<h5 id="fans-work">Fan&rsquo;s work</h5>
+<p>用户更容易被运动的物体吸引，因此除了显著性图之外，Fan等人也考虑了使用预训练  的CNN来估计用户未来注视点的内容运动图。</p>
+<ul>
+<li>由于可能存在多个运动，这让预测变得不可靠，因此运动贴图的开发还需要进一步的研究。</li>
+</ul>
+<h5 id="yangs-work">Yang&rsquo;s work</h5>
+<ul>
+<li>使用CNN模型基于历史观测角度信息预测了单viewport。</li>
+<li>接着考虑了一种使用内容不可知和内容感知方法如RNN和CFVT模型的融合层的viewport轨迹预测策略。</li>
+<li>融合模型使其同时支持更好地预测并且提高了大概40%的精度。</li>
+</ul>
+<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
+<p>将viewport轨迹转换为基于viewport的视觉注意图，然后对不同大小的tile进行推流以保证更高的编码效率。</p>
+<h5 id="lis-work">Li&rsquo;s work</h5>
+<p>现有的预测模型对未来的预测能力有限，Li等人提出了两种模型，分别用于viewport相关和基于tile的推流系统。</p>
+<ul>
+<li>第一个模型应用了基于用户轨迹的LSTM编解码网络体系结构。</li>
+<li>第二个模型应用了卷积LSTM编解码体系结构，使用序列的热图来预测用户的未来方向。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>精确的方向预测使360度视频的客户端可以以高分辨率下载最相关的tile。</p>
+<p>当前采用显著性和位置信息的神经网络模型的性能比直接利用当前观察位置进行未来viewport位置估计的简单无运动的基线方法表现差。估计的显著性中的噪音等级限制了这些模型的预测精度。并且这些模型也引入了额外的计算复杂度。</p>
+<p>对于360度视频注意点的可靠预测和用户观看可能性与显著性图之间关系的理解，显著性模型必须被改善并通过训练大规模的数据集来适应，尤其是被配备了不同摄像机旋转的镜头所捕获的数据。</p>
+<p>另一方面，卷积LSTM编解码器和基于轨迹的预测方法适合长期预测，并能带来相当大的QoE改进，特别是在协作流媒体环境中。</p>
+]]></description>
+</item><item>
     <title>沉浸式流媒体网络问题的相关解决方案</title>
     <link>https://ayamir.github.io/posts/note4/</link>
     <pubDate>Sat, 30 Oct 2021 19:20:00 &#43;0800</pubDate>
