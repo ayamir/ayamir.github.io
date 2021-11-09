@@ -160,6 +160,176 @@
 <p>当前采用显著性和位置信息的神经网络模型的性能比直接利用当前观察位置进行未来viewport位置估计的简单无运动的基线方法表现差。估计的显著性中的噪音等级限制了这些模型的预测精度。并且这些模型也引入了额外的计算复杂度。</p>
 <p>对于360度视频注意点的可靠预测和用户观看可能性与显著性图之间关系的理解，显著性模型必须被改善并通过训练大规模的数据集来适应，尤其是被配备了不同摄像机旋转的镜头所捕获的数据。</p>
 <p>另一方面，卷积LSTM编解码器和基于轨迹的预测方法适合长期预测，并能带来相当大的QoE改进，特别是在协作流媒体环境中。</p>
+<h2 id="qoe评估">QoE评估</h2>
+<h3 id="背景-3">背景</h3>
+<p>由于全方位视频非常普遍，因此，通过这种类型的视频分发来确定用户的特定质量方面是至关重要的。QoE在视频推流应用中扮演着重要角色。在传统视频推流中，QoE很大程度上被网络负载和分发性能所影响。现有的次优目标度量方法并不适用于全向视频，因为全向视频受网络状况和用户视角行为的影响很大。</p>
+<h3 id="主观质量评估">主观质量评估</h3>
+<p>主观质量评估是估计360度视频推流质量的现实并且可靠的方法。</p>
+<h4 id="upeniks-work">Upenik&rsquo;s work</h4>
+<p>用一台MergeVR HMD执行了主观测试来体验360度图像。</p>
+<ul>
+<li>实验数据包括主观分数、视角轨迹、在每个图像上花费的时间由软件上获得。</li>
+<li>视角方向信息被用于计算显著性图。</li>
+<li>但是这项研究没有考虑对360度视频的评估。</li>
+</ul>
+<h4 id="zhangs-work">Zhang&rsquo;s work</h4>
+<p>为了弥补360度视频和常规视频度量方式之间的性能差距，为全景视频提出了一种主观质量评估方法，称为<em>SAMPVIQ</em>。</p>
+<ul>
+<li>23位参与者被允许观看4个受损视频，整体视频质量体验的评分在0～5分之间。</li>
+<li>参与者之间存在较大的评分差异。</li>
+</ul>
+<h4 id="xus-work-2">Xu&rsquo;s work</h4>
+<p>提出两种主观测量方式：总体区分平均意见分数(O-DMOS)和矢量区分平均意见分数(V-DMOS)来获得360度视频的质量损失。</p>
+<ul>
+<li>类似于传统食品的DMOS度量方式，O-DMOS度量方式计算主观测试序列的总计区分分数。</li>
+</ul>
+<h4 id="schatzs-work">Schatz&rsquo;s work</h4>
+<p>研究了使用HMD观看360度内容时停顿事件的影响。</p>
+<ul>
+<li>沉浸式内容的主观质量评估并非不重要，可能导致比实际推荐更多的开放性问题。</li>
+<li>通常来讲人们的期望于传统的HAS相似，即如果可能的话，根本没有停顿。</li>
+</ul>
+<h4 id="可用的开源工具">可用的开源工具</h4>
+<p>AVTrack360，OpenTrack和360player能捕获用户观看360度视频的头部轨迹。</p>
+<p>VRate是一个在VR环境中提供主观问卷调查的基于Unity的工具。</p>
+<p>安卓应用*<a href="https://github.com/zerepolbap/miro360" target="_blank" rel="noopener noreffer">MIRO360</a>*，支持未来VR主观测试的指南开发。</p>
+<h4 id="cybersickness"><code>Cybersickness</code></h4>
+<p><code>Cybersickness</code>是一种获得高QoE的潜在障碍，它能引起疲劳、恶心、不适和呕吐。</p>
+<h5 id="singlas-work">Singla&rsquo;s work</h5>
+<p>使用受限的带宽和分辨率，在不同的延迟情况下进行了两个主观实验。</p>
+<ul>
+<li>开发了主观测试平台、测试方法和指标来评估viewport自适应360度视频推流中的视频感知等级和<code>Cybersickness</code>。</li>
+<li>基于tile的推流在带宽受限的情况下表现很好。</li>
+<li>47ms的延迟实际上不影响感知质量。</li>
+</ul>
+<h5 id="trans-work">Tran&rsquo;s work</h5>
+<p>考虑了几个影响因子例如内容的空间复杂性，数量参数，分辨率特性和渲染模型来评估cybersickness，质量，可用性和用户的存在。</p>
+<ul>
+<li>VR环境中快速移动的内容很容易引发cybersickness。</li>
+<li>由于高可用性和存在性，用户的cybersickness也可能加剧。</li>
+</ul>
+<h5 id="singlas-work-1">Singla&rsquo;s work</h5>
+<p>评估了28名受试者在Oculus Rift和HTC Vive头戴式电脑上观看6个全高清和超高清分辨率YouTube视频时的观看不适感。</p>
+<ul>
+<li>HMD的类型轻微地影响感知质量。</li>
+<li>分辨率和内容类型强烈影响个人体验。</li>
+<li>女性用户感到<code>cybersickness</code>的人数更多。</li>
+</ul>
+<h4 id="空间存在感">空间存在感</h4>
+<p>空间存在感能增强沉浸感。</p>
+<h5 id="zous-work">Zou&rsquo;s work</h5>
+<p>方法：</p>
+<p>提出了一个主观框架来测量25名受试者的空间存在感。</p>
+<ul>
+<li>提出的框架包括三层，从上到下分别为：空间存在层、感知层、科技影响层。</li>
+<li>心理上的空间存在感形成了空间存在层。</li>
+<li>感知层以视频真实感、音频真实感和交互元素为特征。</li>
+<li>科技影响层由几个模块组成，这些模块与感知层相连，以反映传感器的真实性。</li>
+</ul>
+<h5 id="huponts-work">Hupont&rsquo;s work</h5>
+<p>应用通用感知的原则来研究在Oculus HMD和传统2D显示器上玩游戏的用户的空间存在感。</p>
+<ul>
+<li>与2D显示器相比，3D虚拟现实主义显示出更高的惊奇、沉浸感、存在感、可用性和兴奋感。</li>
+</ul>
+<h4 id="生理特征度量">生理特征度量</h4>
+<h5 id="salgados-work">Salgado&rsquo;s work</h5>
+<p>方法：</p>
+<p>捕获多种多样的生理度量，例如心率HR，皮肤电活性EDA、皮肤温度、心电图信号ECG、呼吸速率、血压BVP、脑电图信号EEG来评价沉浸式模拟器的质量。</p>
+<h5 id="egans-work">Egan&rsquo;s work</h5>
+<p>基于HR和EDA信号评估VR和非VR渲染模式质量分数。</p>
+<ul>
+<li>相比于HR，EDA对质量分数有强烈的影响。</li>
+</ul>
+<h4 id="技术因素感知">技术因素感知</h4>
+<p>不同的技术和感知特征，如失真、清晰度、色彩、对比度、闪烁等，用于评估感知视频质量。</p>
+<h5 id="fremereys-work">Fremerey&rsquo;s work</h5>
+<p>确定了可视质量强烈地依赖于应用的运动插值（MI）算法和视频特征，例如相机旋转和物体的运动。</p>
+<p>在一项主观实验中，12位视频专家回顾了使用FFmpeg混合、FFmpeg MCI（运动补偿插值）和butterflow插值到90 fps的四个视频序列。作者发现，与其他算法相比，MCI在QoE方面提供了极好的改进。</p>
+<h4 id="总结-1">总结</h4>
+<p>主观测试与人眼直接相关，并揭示了360度视频质量评估的不同方面的影响。</p>
+<p>在这些方面中，空间存在感和由佩戴VR头戴设备观看360度视频导致的<em>cybersickness</em>极为重要，因为这些效果并不在传统的2D视频观看中出现。</p>
+<p>主观评估需要综合的手工努力并因此昂贵耗时并易于出错，相对而言，客观评估更易于管理和可行。</p>
+<h3 id="客观质量评估">客观质量评估</h3>
+<p>由于类似的编码结构和2D平面投影格式，对360度内容应用客观质量评估很自然。</p>
+<h4 id="计算psnr">计算PSNR</h4>
+<p>现有投影方式中的采样密度在每个像素位置并不均匀。</p>
+<h5 id="yus-work">Yu&rsquo;s work</h5>
+<p>为基于球形的PSNR计算引入S-PSNR和L-PSNR。</p>
+<ul>
+<li>S-PSNR通过对球面上所有位置的像素点做同等加权来计算PSNR。</li>
+<li>利用插值算法，S-PSNR可以完成对支持多种投影模式的360度视频的客观质量评估。</li>
+<li>L-PSNR通过基于纬度和访问频率的像素点加权测量PSNR。</li>
+<li>L-PSNR可以测量viewport的平均PSNR而无需特定的头部运动轨迹。</li>
+</ul>
+<h5 id="zakharchenkos-work">Zakharchenko&rsquo;s work</h5>
+<p>提出了一种Craster Parabolic Projection-PSNR (CPP-PSNR) 度量方式来比较多种投影方案，通过不改变空间分辨率和不计算实际像素位置的PSNR，将像素重新映射成CPP投影。</p>
+<ul>
+<li>CPP投影方式可能使视频分辨率大幅下降。</li>
+</ul>
+<h5 id="suns-work">Sun&rsquo;s work</h5>
+<p>提出了一种叫做weighted-to-spherically-uniform PSNR (WS-PSNR)的质量度量方式，以此来测量原始和受损内容之间的质量变化。</p>
+<ul>
+<li>根据像素在球面上的位置考虑权重。</li>
+</ul>
+<h4 id="计算ssim">计算SSIM</h4>
+<p>SSIM是另一种质量评估指标，它通过三个因素反映图像失真，包括亮度、对比度和结构。</p>
+<h5 id="chens-work">Chen&rsquo;s work</h5>
+<p>为2D和360度视频分析了SSIM结果，引入了球型结构的相似性度量（S-SSIM）来计算原始和受损的360度视频之间的相似性。</p>
+<ul>
+<li>在S-SSIM中，使用重投影来计算两个提取的viewport之间的相似性。</li>
+</ul>
+<h5 id="zhous-work">Zhou&rsquo;s work</h5>
+<p>考虑相似性的权重提出了WS-SSIM来测量投影区域中窗口的相似性。</p>
+<ul>
+<li>性能评估表明，与其他质量评估指标相比，WS-SSIM更接近人类感知。</li>
+</ul>
+<h5 id="van-der-hoofts-work">Van der Hooft&rsquo;s work</h5>
+<p>提出了<em>ProbGaze</em>度量方式，基于tile的空间尺寸和viewport中的注视点。</p>
+<ul>
+<li>考虑外围tile的权重来提供合适的质量测量。</li>
+<li>相比于基于中心和基于平均的PSNR和SSIM度量方式，<em>ProbGaze</em>能估计当用户突然改变viewport位置时的视频质量变化。</li>
+</ul>
+<h5 id="xus-work-3">Xu&rsquo;s work</h5>
+<p>引入了两种客观质量评估度量手段：基于内容感知的PSNR和非内容感知的PSNR，用于编码360度视频。</p>
+<ul>
+<li>第一种方式基于空间全景内容对像素失真进行加权。</li>
+<li>第二种方式考虑人类偏好的统计数据来估计质量损失。</li>
+</ul>
+<h4 id="基于psnr和ssim方式的改进">基于PSNR和SSIM方式的改进</h4>
+<p>尽管各种基于PSNR和SSIM的方式被广阔地应用到了360度视频的质量评估中，但这些方式都没有真正地捕获到感知质量，特别是当HMD被用于观看视频时。因此需要为360度内容特别设计一种优化的质量度量方式。</p>
+<h5 id="upeniks-work-1">Upenik&rsquo;s work</h5>
+<p>考虑了一场使用4张高质量360度全景图像来让45名受试者在不同的编码设定下评估和比较客观质量度量方式性能的主观实验。</p>
+<ul>
+<li>现有的客观度量方式和主观感知到的质量相关性较低。</li>
+</ul>
+<h5 id="trans-work-1">Tran&rsquo;s work</h5>
+<p>论证主观度量和客观度量之间相关性较高，但是使用的数据集较小。</p>
+<h4 id="基于ml的方式">基于ML的方式</h4>
+<p>基于ML的方式可以弥补客观评估和主观评估之间的差距。</p>
+<h5 id="da-costa-filhos-work">Da Costa Filho&rsquo;s work</h5>
+<p>提出了一个有两个阶段的模型。</p>
+<ul>
+<li>首先自适应VR视频的播放性能由机器学习算法所确定。</li>
+<li>之后模型利用估计的度量手段如视频质量、质量变化、卡顿时间和启动延迟来确定用户的QoE。</li>
+</ul>
+<h5 id="lis-work-1">Li&rsquo;s work</h5>
+<p>引入了基于DRL的质量获取模型，在一次推流会话中同时考虑头部和眼部的移动。</p>
+<ul>
+<li>360度视频被分割成几个补丁。</li>
+<li>低观看概率的补丁被消除。</li>
+<li>参考和受损视频序列都被输入到深度学习可执行文件中，以计算补丁的质量分数。</li>
+<li>之后分数被加权并加到一起得到最终的分数。</li>
+</ul>
+<h5 id="yangs-work-1">Yang&rsquo;s work</h5>
+<p>考虑了多质量等级的特性和融合模型。</p>
+<ul>
+<li>质量特性用<code>region of interest(ROI)</code>图来计算，其中包括像素点等级、区域等级、对象等级和赤道偏差。</li>
+<li>混合模型由后向传播的神经网络构造而成，这个神经网络组合了多种质量特性来获取整体的质量评分。</li>
+</ul>
+<h4 id="总结-2">总结</h4>
+<p>精确的QoE获取是优化360度视频推流服务中重要的因素，也是自适应分发方案中基础的一环。</p>
+<p>单独考虑VR中的可视质量对完整的QoE框架而言并不足够。</p>
+<p>为能获得学界的认可，找到其他因素的影响也很必要，例如<code>cybersickness</code>，生理症状，用户的不适感，HMD的重量和可用性，VR音频，viewport降级率，网络特性（延迟，抖动，带宽等），内容特性（相机动作，帧率，编码，投影等），推流特性（viewport偏差，播放缓冲区，时空质量变化等）。</p>
 ]]></description>
 </item><item>
     <title>沉浸式流媒体网络问题的相关解决方案</title>
