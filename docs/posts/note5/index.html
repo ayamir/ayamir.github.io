@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/note5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-11-04T11:01:18+08:00" />
-<meta property="article:modified_time" content="2021-11-10T10:24:40+08:00" />
+<meta property="article:modified_time" content="2021-11-10T17:01:15+08:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="自适应360度视频推流挑战"/>
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note5\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  9272 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note5\/","datePublished": "2021-11-04T11:01:18+08:00","dateModified": "2021-11-10T10:24:40+08:00","publisher": {
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  10274 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note5\/","datePublished": "2021-11-04T11:01:18+08:00","dateModified": "2021-11-10T17:01:15+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -104,8 +104,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">自适应360度视频推流挑战</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-04">2021-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9272 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-04">2021-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10274 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 21 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -284,6 +284,33 @@
               </ul>
             </li>
             <li><a href="#总结-3">总结</a></li>
+          </ul>
+        </li>
+        <li><a href="#360度直播推流">360度直播推流</a>
+          <ul>
+            <li><a href="#背景-5">背景</a>
+              <ul>
+                <li><a href="#内容分发">内容分发</a>
+                  <ul>
+                    <li><a href="#hus-work">Hu&rsquo;s work</a></li>
+                    <li><a href="#griwodzs-work">Griwodz&rsquo;s work</a></li>
+                  </ul>
+                </li>
+                <li><a href="#视频转码">视频转码</a>
+                  <ul>
+                    <li><a href="#lius-work-1">Liu&rsquo;s work</a></li>
+                    <li><a href="#baigs-work">Baig&rsquo;s work</a></li>
+                    <li><a href="#les-work">Le&rsquo;s work</a></li>
+                  </ul>
+                </li>
+                <li><a href="#内容拼接缝合">内容拼接缝合</a>
+                  <ul>
+                    <li><a href="#chens-work-1">Chen&rsquo;s work</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#总结-4">总结</a></li>
           </ul>
         </li>
       </ul>
@@ -724,6 +751,50 @@
 <p>在单用户和多用户的环境中，边缘辅助的解决方式对于控制延迟而言占主要地位。</p>
 <p>此外还有服务端的viewport计算、服务端push机制和远程渲染机制都能用于低延迟的控制。</p>
 <p>现有的4G网络足以支持早期的自适应沉浸式多媒体，正在成长的5G网络更能满足沉浸式内容的需求。</p>
+<h2 id="360度直播推流">360度直播推流</h2>
+<h3 id="背景-5">背景</h3>
+<p>传统的广播电视频道是直播推流的流行来源。现在私人的360度直播视频在各个社交媒体上也有大幅增长。</p>
+<p>因为视频生产者和消费者之间在云端的转码操作，360度视频推流是更为延迟敏感的应用。</p>
+<p>现有的处理设备在诸如转码、渲染等实时处理任务上受到了限制。</p>
+<h4 id="内容分发">内容分发</h4>
+<h5 id="hus-work">Hu&rsquo;s work</h5>
+<p>提出了一套基于云端的直播推流系统，叫做<code>MELiveOV</code>，它使高分辨率的全向内容的处理任务以毛细管分布的方式分发到多个支持5G的云端服务器。</p>
+<ul>
+<li>端到端的直播推流系统包括内容创作模块、传输模块和viewport预测模块。</li>
+<li>移动边缘辅助的推流设计减少了50%的带宽需求。</li>
+</ul>
+<h5 id="griwodzs-work">Griwodz&rsquo;s work</h5>
+<p>为360度直播推流开发了优化FoV的原型，结合了RTP和基于DASH的<code>pull-patching</code>来传送两种质量等级的360度视频给华为IPTV机顶盒和Gear VR头戴设备。</p>
+<ul>
+<li>作者通过在单个H.265硬件解码器上多路复用多个解码器来实现集体解码器的想法，以此减少切换时间。</li>
+</ul>
+<h4 id="视频转码">视频转码</h4>
+<h5 id="lius-work-1">Liu&rsquo;s work</h5>
+<p>研究表明只转码viewport区域有潜力大幅减少高性能转码的计算需求。</p>
+<h5 id="baigs-work">Baig&rsquo;s work</h5>
+<p>开发了快速编码方案来分发直播的4K视频到消费端设备。</p>
+<ul>
+<li>采用了分层视频编码的方式来在高度动态且不可预测的WiGig和WiFi链路上分发质量可变的块。</li>
+</ul>
+<h5 id="les-work">Le&rsquo;s work</h5>
+<p>使用RTSP网络控制协议为CCTV的360度直播推流提出了实时转码和加密系统。</p>
+<ul>
+<li>转码方式基于ARIA加密库，Intel媒体SDK和FFmpeg库。</li>
+<li>系统可以管理并行的转码操作，实现高速的转码性能。</li>
+</ul>
+<h4 id="内容拼接缝合">内容拼接缝合</h4>
+<p>相比于其他因素如捕获、转码、解码、渲染，内容拼接在决定整体上的推流质量时扮演至关重要的角色。</p>
+<h5 id="chens-work-1">Chen&rsquo;s work</h5>
+<p>提出了一种内容驱动的拼接方式，这种方式将360度帧的语义信息的不同类型看作事件，以此来优化拼接时间预算。</p>
+<ul>
+<li>基于VR帧中的语义信息，tile执行器模块选择合适的tile设计。</li>
+<li>拼接器模块然后执行基于tile的拼接，这样，基于可用资源，事件tile有更高的拼接质量。</li>
+<li>评估表明系统通过实现89.4%的时间预算，很好地适应了不同的事件和时间限制。</li>
+</ul>
+<h3 id="总结-4">总结</h3>
+<p>相比于点播式流媒体，360度直播推流面临多个挑战，例如在事先不知情的情况下处理用户导航、视频的首次流式传输以及实时视频的转码。在多用户场景中，这些挑战更为棘手。</p>
+<p>关于处理多个用户的观看模式，可伸缩的多播可以用于在低带宽和高带宽网络上以接近于按需推流的质量等级。</p>
+<p>基于ROI的tile拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
