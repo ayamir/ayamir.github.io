@@ -4,9 +4,61 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 11 Nov 2021 20:08:03 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>自适应策略之viewport依赖型</title>
+    <link>https://ayamir.github.io/posts/note7/</link>
+    <pubDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note7/</guid>
+    <description><![CDATA[<h2 id="概述">概述</h2>
+<p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
+<h2 id="通常的实现方式">通常的实现方式</h2>
+<p>在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证viewport的平滑转换。</p>
+<p>提出QER(Quality-focused Regios)的概念使viewport内部的视频分辨率高于viewport之外的视频分辨率。</p>
+<p>非对称的方式以不同的空间分辨率推流来节省带宽。</p>
+<ul>
+<li>在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。</li>
+<li>优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在viewport中生成。</li>
+<li>缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。</li>
+</ul>
+<h2 id="自适应推流参数">自适应推流参数</h2>
+<ol>
+<li>可用带宽和网络吞吐量</li>
+<li>Viewport预测的位置</li>
+<li>客户端播放器的可用缓冲</li>
+</ol>
+<h2 id="参数计算公式">参数计算公式</h2>
+<ul>
+<li>
+<p>第n个估计的Viewport：$V^e(n)$</p>
+<p>$V^e(n) = V_{fb}$</p>
+<p>$V_{fb}$是最新报告的viewport位置</p>
+</li>
+<li>
+<p>第n个估计的吞吐量：$T^e(n)$</p>
+<p>$T^e(n) = T_{fb}$</p>
+<p>$T_{fb}$是最新报告的吞吐量</p>
+</li>
+<li>
+<p>比特率：$R_{bits}$</p>
+<p>$R_{bits} = (1-\beta)T^e(n)$</p>
+<p>$\beta$是安全边缘</p>
+</li>
+<li>
+<p>第n个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$</p>
+<p>$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$</p>
+<p>$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$</p>
+<p>$w_k = \frac{A(t,k)}{A_{vp}}$</p>
+<p>$L=总帧数$</p>
+<p>$w_k$表示在第k个帧中与viewport所重叠的tile程度</p>
+<p>$A(t,k)$表示第k个帧中tile $t$ 重叠的区域</p>
+<p>$A_{vp}$表示viewport中总共的区域</p>
+</li>
+</ul>
+]]></description>
+</item><item>
     <title>沉浸式流媒体现有标准</title>
     <link>https://ayamir.github.io/posts/note6/</link>
     <pubDate>Thu, 11 Nov 2021 20:08:03 &#43;0800</pubDate>
@@ -1329,295 +1381,6 @@
 <p>面对复杂的指针或引用的声明语句时，从变量名开始自右向左阅读来弄清楚其真实含义。</p>
 </li>
 </ol>
-]]></description>
-</item><item>
-    <title>自适应360度视频推流方案</title>
-    <link>https://ayamir.github.io/posts/note3/</link>
-    <pubDate>Mon, 25 Oct 2021 09:34:10 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/note3/</guid>
-    <description><![CDATA[<h2 id="概述">概述</h2>
-<p>360度视频的推流手段逐渐从视角独立型方案变成基于tile的视角依赖型方案。</p>
-<p>相比于常规视频，360度视频被编码成全向的场景。</p>
-<p>自适应360度视频推流利用DASH框架来实现比特率的自适应。</p>
-<h2 id="分类">分类</h2>
-<h3 id="viewport-independent-streaming">Viewport-Independent Streaming</h3>
-<h4 id="服务端的任务">服务端的任务</h4>
-<ul>
-<li>使用如ERP、CMP等视角独立型的投影方式，360度视频被投影到一个球体上。</li>
-</ul>
-<h4 id="客户端的任务">客户端的任务</h4>
-<ul>
-<li>投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。</li>
-<li>客户端需要支持对应的投影格式。</li>
-<li>客户端像处理传统视频一样完成比特率自适应。
-<ul>
-<li>基于网络特征向将要到来的segment请求相同投影格式的表示</li>
-</ul>
-</li>
-</ul>
-<p>DASH插件需要支持相同质量视频的推流。</p>
-<h4 id="应用">应用</h4>
-<p>视角独立型推流主要用于体育、教育和旅游视频内容。</p>
-<h4 id="优点">优点</h4>
-<ul>
-<li>简单</li>
-</ul>
-<h4 id="缺点">缺点</h4>
-<ul>
-<li>相比于视角依赖型方案视频编码效率低了30%。</li>
-<li>为不可见的区域要求大量带宽和解码资源。</li>
-</ul>
-<h3 id="viewport-dependent-streaming">Viewport-Dependent Streaming</h3>
-<h4 id="终端设备的任务">终端设备的任务</h4>
-<ul>
-<li>只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。</li>
-<li>监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。</li>
-<li>为服务端准备和用户方向相关的几个自适应集。</li>
-</ul>
-<h4 id="客户端的任务-1">客户端的任务</h4>
-<ul>
-<li>根据网络情况和估计的视角位置决定获取哪个自适应集。</li>
-</ul>
-<h4 id="难点">难点</h4>
-<ul>
-<li>可视区域的确定</li>
-<li>与用户头部移动的同步</li>
-<li>质量调整</li>
-<li>提供平滑的播放体验</li>
-</ul>
-<h4 id="现有的工作">现有的工作</h4>
-<h5 id="各种投影方式在实际推流中表现如何">各种投影方式在实际推流中表现如何？</h5>
-<ul>
-<li>相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。</li>
-<li>偏移CMP获得了5.6%到16.4%的平均可见质量。
-<ul>
-<li>提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。</li>
-<li>相比于理想的下载过程，这种二维自适应策略可以花费20%的额外网络带宽下载超过57%的额外视频块。</li>
-</ul>
-</li>
-</ul>
-<h5 id="如何在网络资源受限的情况下提供高质量的推流">如何在网络资源受限的情况下提供高质量的推流？</h5>
-<ul>
-<li>为视角依赖型推流产生不同质量的segment。
-<ul>
-<li>当流中只有有限的representation时，利用Quality Emphasized Regions策略来缩放特定区域的分辨率。</li>
-<li>在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的360度场景，动态的视角覆盖率提供了更好的画面质量。</li>
-<li>这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。</li>
-</ul>
-</li>
-<li>为立体视频的背景和前景视图采用不对称质量。
-<ul>
-<li>可以分别为背景块和前景块分别节省15%和41%的比特率。</li>
-</ul>
-</li>
-</ul>
-<h5 id="dash需要做什么">DASH需要做什么？</h5>
-<ul>
-<li>manifest中需要包含视角位置信息和投影元数据。</li>
-<li>优化获取random access point的周期来优化视角分辨率自适应体验。</li>
-<li>考虑低延迟和活跃的视角切换。</li>
-</ul>
-<h3 id="tile-based-streaming">Tile-based Streaming</h3>
-<p>传统视频被分成多个块，360度视频在块的基础上还被分成多个大小相等或者不等的tile，以此更加精确地调整画面的细节质量。</p>
-<h4 id="分块策略">分块策略</h4>
-<ul>
-<li>
-<p>基本完全交付</p>
-</li>
-<li>
-<p>高级完全交付</p>
-</li>
-<li>
-<p>部分交付</p>
-</li>
-</ul>
-<p></p>
-<h4 id="分块模式">分块模式</h4>
-<p>1x1，3x2，5x3，6x4，8x5</p>
-<p>其中6x4的模式实现了较好的带宽消耗和编码效率的折中。</p>
-<p>在不同的带宽条件下，基本完全交付策略获得了大约65%的带宽节约。</p>
-<h4 id="具体方案">具体方案</h4>
-<h5 id="clustile">ClusTile</h5>
-<p>基于分簇的方式，推送满足最小带宽需求的tile来克服编码效率和计算开销。</p>
-<ul>
-<li>相比于传统和高级的基于tile的推流方案，分别实现了72%和52%的带宽节约。</li>
-<li>当实际看到的和下载的tile有差异时，基于分簇的tile选取可能会导致选择不当。</li>
-</ul>
-<h5 id="ghoshs-work">Ghosh&rsquo;s work</h5>
-<p>提议以最低可获得的质量下载周围和远处的tile。</p>
-<ul>
-<li>相比于其他算法，视角及其周边区域的可变质量提高了20%的QoE水平。</li>
-</ul>
-<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
-<p>介绍了一种自适应 360° 视频流框架。</p>
-<ul>
-<li>
-<p>利用视觉注意力度量来计算每个帧的最佳平铺模式。</p>
-</li>
-<li>
-<p>使用选中的模式，为不同区域的tile分配非统一的比特率。</p>
-</li>
-<li>
-<p>比特率的选取取决于估计的视角和网络状况。</p>
-</li>
-<li>
-<p>因为很大部分的带宽被用于传输非视角内的tile，框架难以优化视角内的质量。</p>
-</li>
-</ul>
-<h5 id="xies-work">Xie&rsquo;s work</h5>
-<p>提出了一套优化框架，以此来最小化预取tile的错误，改善与不同比特率相关联的tile边界的平滑程度。</p>
-<ul>
-<li>
-<p>定义了两个QoE函数，目标是最小化：</p>
-<p>预期质量失真$\Phi(X)$</p>
-<p>当考虑tile看到概率时视角的空间质量方差$\Psi(X)$：
-$$
-\Phi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}D_{i,j} * x_{i,j} * p_{i,j}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j} * s_{i}}
-$$</p>
-<p>$$
-\Psi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*p_i * (D_{i,j} - s_i * \Phi(X))^{2}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*s_i}
-$$</p>
-</li>
-<li>
-<p>基于目标缓冲区的自适应方法用于在需要短期视口预测的小缓冲区下进行平滑播放</p>
-<p>在自适应的第k步，当第k个segment集合下载完成时，缓冲区占用率$b_k$由下面的式子给出：
-$$
-b_k = b_{k-1} - \frac{R_k*T}{C_k} + T
-$$
-为了避免用尽所有块，缓冲区的占用率被通过设定一个目标缓冲区水平$B_{target}$所控制，即$b_k = B_{target}$。</p>
-</li>
-<li>
-<p>平均空间质量方差是0.97，比其他基于tile的策略小。</p>
-</li>
-<li>
-<p>所提出的概率自适应框架在感知质量上实现了约 39% 的增益，平均降低了 46% 的空间质量方差。</p>
-</li>
-</ul>
-<h5 id="vander-hoofts-work">Vander Hooft&rsquo;s work</h5>
-<p>将360度帧划分成视角内区域和视角外区域。</p>
-<ul>
-<li>首先为所有区域都选择最低质量，然后提高视角内tile的质量。</li>
-<li>如果带宽依然可用，接着提高剩下的tile的质量。</li>
-<li>启发式的方式在带宽可用的基础上积极提高视角内tile的质量。</li>
-<li>没有考虑视角比特率调整时视角预测的错误。</li>
-</ul>
-<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
-<p>提出了一种新的自适应机制，它在每个segment中同时考虑头部移动和视角的预测错误，动态地决定视角内的比特率。</p>
-<ul>
-<li>联合适应扩展块的覆盖范围和比特率。</li>
-<li>在不同记录的用户头部运动下的实验评估表明，在不获取非视角内区域过多带宽利用率的情况下，视角内容质量有所提高。</li>
-</ul>
-<h4 id="dash-srd扩展">DASH SRD扩展</h4>
-<p>DASH的SRD扩展提供了多种版本的tile的关联来节省更多的比特率。</p>
-<h5 id="le-feuvre-and-concolatos-work">Le Feuvre and Concolato&rsquo;s work</h5>
-<p>他们应用了这个SRD特性，引入了同时为独立的和运动受限的HEVC tile的不同优先级设定，以此来高效地实现基于tile的方案。</p>
-<ul>
-<li>使用开源的GPAC多媒体框架开发了一个DASH客户端，以此来执行带有可配置参数的基于tile的推流。</li>
-</ul>
-<h5 id="dacuntos-work">D&rsquo;Acunto&rsquo;s work</h5>
-<p>提出了一种 <a href="https://github.com/tnomedialab/dash-srd.js" target="_blank" rel="noopener noreffer">MPEG-DASH SRD 方法</a>来促进可缩放和可平移视频的平滑推流。</p>
-<ul>
-<li>总是下载低分辨率的tile来避免用户移动视角时的重新缓冲。</li>
-<li>当前视野区域被上采样并展示给用户，以此来支持高质量的缩放功能。</li>
-<li>用<code>JavaScript</code>实现了SRD视频播放器。</li>
-</ul>
-<h5 id="hosseinis-work">Hosseini&rsquo;s work</h5>
-<p>基于SRD实现了视角内容、相邻tile和剩余tile的优先级推流。</p>
-<ul>
-<li>用6个3D网格构建了一套3D座标系来在3D空间中平滑地表示tile。</li>
-<li>相比于基础的方式，这种区分质量的推流方案节省了72%的带宽。</li>
-</ul>
-<h5 id="kim-and-yangs-work">Kim and Yang&rsquo;s work</h5>
-<p>使用改进的MPEG-DASH SRD来在质量可变的tile层中作选择。</p>
-<ul>
-<li>基于他们之前的工作设计并实现了一个支持多层渲染的 360° VR 播放器，以支持高度不可预测的头部运动数据的高分辨率和低延迟流。</li>
-</ul>
-<h4 id="motion-constrained-tileset">Motion-Constrained TileSet</h4>
-<p>在HEVC中，运动约束贴图集(MCTS)是将整个帧表示为子视频的相邻分割，并为自由选择的贴图集提供解码支持。</p>
-<h5 id="zares-work">Zare&rsquo;s work</h5>
-<p>将MCTS的概念应用到了全景视频推流中。</p>
-<ul>
-<li>将两个质量版本的视频分割成tile，以原始的分辨率推流视角内的tile，以低分辨率推流剩余的tile。</li>
-<li>它已经表明，选定图块的可变比特率会降低 30% 到 40% 的比特率。</li>
-</ul>
-<h5 id="skupins-work">Skupin&rsquo;s work</h5>
-<p>陈述了一种使用HEVC编码器的基于tile的可变分辨率的推流系统。</p>
-<ul>
-<li>使用立方贴图投影的360度视频被分割成24个网格，每个代表了一个独立的比特流。</li>
-<li>两种不同质量的版本被推流到客户端，例如8个tile以高质量推送，16个tile以低质量推送。</li>
-</ul>
-<h5 id="sons-work">Son&rsquo;s work</h5>
-<p>在基于视角的移动VR推流中，为独立的tile提取和传输实现了基于MCTS的HEVC和可缩放的HEVC编解码器。</p>
-<ul>
-<li>节省了超过47%的带宽。</li>
-<li>相比于原始的HM和SHM编码器表现不佳，因为MCTS限制了时间运动信息。</li>
-</ul>
-<h5 id="lees-work">Lee&rsquo;s work</h5>
-<p>用MCTS编码360度视频tile，并使用显著性检测网络将混合质量的视频tile推流给终端用户。</p>
-<ul>
-<li>通过显著性模型改进MCTS的使用，可以在不增加任何复杂性的情况下灵活地对感兴趣的tile区域进行解码支持。</li>
-</ul>
-<h4 id="scalable-video-code">Scalable Video Code</h4>
-<p>可伸缩视频编码SVC是实现viewport自适应的一种替代策略。</p>
-<p>基础层总被需要并且能从客户端预取来避免重新缓冲事件。</p>
-<p>提高层改善viewport质量并且可以在带宽充足的时候被请求。</p>
-<p>SVC促进了一种高效的网络内缓存支持来减少多个客户端请求相同内容时的分发开销。</p>
-<h5 id="nasrabadis-work">Nasrabadi&rsquo;s work</h5>
-<p>使用了一种可伸缩编码方案来解决360度视频推流的重新缓冲的问题。</p>
-<ul>
-<li>存在质量波动的问题，因为没有使用任何机制来处理viewport的预测错误。</li>
-</ul>
-<h5 id="nguyens-work-1">Nguyen&rsquo;s work</h5>
-<p>建议使用SVC协同viewport预测来克服网络信道和头部运动的随机性。</p>
-<ul>
-<li>实验表明，所提出的平铺层更新和后期平铺终止特征可使viewport质量提高17%。</li>
-</ul>
-<h4 id="ai方法的应用">AI方法的应用</h4>
-<p>背景：传统视频推流中使用强化学习来高效调整视频比特率和实现长期的QoE回报。</p>
-<p>和传统视频内容不同，360度视频包含几个新的方面比如tile大小、viewport预测等。</p>
-<p>直接将现有的强化学习自适应策略应用到360度视频上可能会降低推流性能。</p>
-<h5 id="fus-work">Fu&rsquo;s work</h5>
-<p>为360度视频提出了称为<em>360SRL</em>的一种序列化强化学习方法，它基于之前决策的QoE回报而非估计的带宽状况做出自适应决策。</p>
-<ul>
-<li>360SRL使用基于tile的推流模拟器来增强训练阶段。</li>
-<li>跟踪驱动的评估表明，360SRL比基线适应方法取得了12%的QoE改善。</li>
-</ul>
-<h5 id="jiangs-work">Jiang&rsquo;s work</h5>
-<p>基于历史带宽、缓冲区空间、tile大小和viewport预测错误等，利用强化学习来做viewport和非viewport内tile的比特率选择。</p>
-<ul>
-<li>所提出系统的架构由状态缓冲区、视口预测 (VPP) 和tile比特率选择 (TBS) 代理组成。</li>
-<li>状态缓冲区向VPP和TBS代理提供用户查看模式和网络状态。</li>
-<li>VPP代理然后使用LSTM模型估计下一个viewport位置。</li>
-<li>TBS 代理由 Asynchronous Advantage Actor-Critic (A3C)算法训练以执行合适的比特率决策。</li>
-</ul>
-<h5 id="quans-work">Quan&rsquo;s work</h5>
-<p>通过卷积神经网络(CNN)提取像素运动来分析用户QoE，并使用它对tile动态分组，从而在视频质量和编码效率之间提供重要的平衡。</p>
-<ul>
-<li>使用了基于强化学习的自适应代理，它可以智能地使每个图块的质量适应动态环境。</li>
-<li>使用真实LTE带宽跟踪验证该方案，在感知质量方面表现出了卓越的性能，同时也节省了带宽资源。</li>
-</ul>
-<p>背景：深度学习使强化学习能够使用多方面的状态和动作空间进一步优化聚合回报。</p>
-<h5 id="kan-and-xiaos-work">Kan and Xiao&rsquo;s work</h5>
-<p>设计了一套深度强化学习的框架，基于对环境因素的探索和开发，自适应地调整推流策略。</p>
-<ul>
-<li>这两种方案都采用DRL的A3C算法来进行比特率决策，因为A3C算法能使代理变得越来越智能化。</li>
-<li>性能评估表明，所提出的系统平衡了各种 QoE 指标，包括平均视觉质量、平均质量波动和重新缓冲事件等。</li>
-</ul>
-<h5 id="zhangs-work">Zhang&rsquo;s work</h5>
-<p>提出了一个深度强化学习模型，它考虑viewport预测准确度和网络状况，使用基于LSTM的ACTOR-CRITIC(AC)网络动态地学习适应比特率分配。</p>
-<ul>
-<li>方案能够很好地适应广泛的动态特性，并且与传统方法相比，提供了20%到30%的改进QoE回报。</li>
-</ul>
-<h4 id="总结">总结</h4>
-<p>基于tile的推流只需要少量的服务端内容版本。</p>
-<p>与依赖视图的推流相比，它包含更低的存储和处理开销。</p>
-<p>提出的大多数方案为viewport及其临近的tile使用不同的分辨率，这会为高效推流减少带宽开销。</p>
-<p>但是这种区分分辨率的tile为了防止viewport预测错误会显著地降低能察觉到的视频质量。</p>
-<p>一个50个用户的主观实验表明，当混合1920x1080和960x540分辨率的块时，绝大多数用户能观察到明显的质量降低。</p>
-<p>但是当混合1920x1080和1600x900分辨率的块时，用户只会注意到微小的差别。</p>
-<p>对于高运动内容，这种混合效应甚至会导致严重的质量下降。</p>
-<p>因此为了动态执行tile的选择和基于DRL的比特率适应，需要有一个推流分辨率的恰当选择，进而在流质量、空间质量方差、视口预测误差和带宽效率之间获得完美的平衡。</p>
 ]]></description>
 </item></channel>
 </rss>

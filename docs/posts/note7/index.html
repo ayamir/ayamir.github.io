@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>沉浸式流媒体现有标准 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="沉浸式流媒体现有标准" />
-<meta property="og:description" content="OMAF(Omnidirectional Media Format) OMAF是第1个国际化的沉浸式媒体格式，描述了对360度视频进行编码、演示、消费的方法。 OMAF与与现有格式兼容，包括编码（例如HEV" />
+        <title>自适应策略之viewport依赖型 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="自适应策略之viewport依赖型" />
+<meta property="og:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/note6/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-11T20:08:03+08:00" />
-<meta property="article:modified_time" content="2021-11-11T21:03:31+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-14T13:24:59+08:00" />
+<meta property="article:modified_time" content="2021-11-14T13:24:59+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="沉浸式流媒体现有标准"/>
-<meta name="twitter:description" content="OMAF(Omnidirectional Media Format) OMAF是第1个国际化的沉浸式媒体格式，描述了对360度视频进行编码、演示、消费的方法。 OMAF与与现有格式兼容，包括编码（例如HEV"/>
+<meta name="twitter:title" content="自适应策略之viewport依赖型"/>
+<meta name="twitter:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note6/" /><link rel="prev" href="https://ayamir.github.io/posts/note5/" /><link rel="next" href="https://ayamir.github.io/posts/note7/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note7/" /><link rel="prev" href="https://ayamir.github.io/posts/note6/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "沉浸式流媒体现有标准",
+        "headline": "自适应策略之viewport依赖型",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/note6\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  805 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note6\/","datePublished": "2021-11-11T20:08:03+08:00","dateModified": "2021-11-11T21:03:31+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/note7\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  601 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note7\/","datePublished": "2021-11-14T13:24:59+08:00","dateModified": "2021-11-14T13:24:59+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,9 +102,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">沉浸式流媒体现有标准</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">自适应策略之viewport依赖型</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-11">2021-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 805 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-14">2021-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 601 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -115,67 +115,70 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#omafomnidirectional-media-format">OMAF(Omnidirectional Media Format)</a></li>
-        <li><a href="#omafdash-mpd">OMAF+DASH-&gt;MPD</a></li>
-        <li><a href="#cmafcommon-media-application-format">CMAF(Common Media Application Format)</a></li>
-        <li><a href="#isobmffiso-base-media-file-format">ISOBMFF(ISO Base Media File Format)</a></li>
-        <li><a href="#3dof3-degree-of-freedom">3DoF(3 Degree of Freedom)</a></li>
-        <li><a href="#3dof">3DoF+</a></li>
-        <li><a href="#6dof">6DoF</a></li>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#通常的实现方式">通常的实现方式</a></li>
+        <li><a href="#自适应推流参数">自适应推流参数</a></li>
+        <li><a href="#参数计算公式">参数计算公式</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="omafomnidirectional-media-format">OMAF(Omnidirectional Media Format)</h2>
-<p><code>OMAF</code>是第1个国际化的沉浸式媒体格式，描述了对360度视频进行编码、演示、消费的方法。</p>
-<p><code>OMAF</code>与与现有格式兼容，包括编码（例如<code>HEVC</code>），文件格式（例如<code>ISOBMFF</code>），交付信号（例如<code>DASH</code>，<code>MMT</code>）。</p>
-<p><code>OMAF</code>中还包括编码、投影、分包和viewport方向的元数据。</p>
-<h2 id="omafdash-mpd">OMAF+DASH-&gt;MPD</h2>
-<p>OMAF与DASH相结合，再加上一些额外的描述构成了MPD文件格式，用于向客户端通知360度媒体的属性。</p>
-<p>OMAF规定了9中媒体配置文件，包括3种视频配置文件：基于HEVC的viewport独立型、基于HEVC的viewport依赖型、基于AVC的viewport依赖型。</p>
-<p>OMAF为视角独立型的推流提供了无视viewport位置的连续的视频帧质量。</p>
-<p>常规的HEVC编码方式和DASH推流格式可以用于viewport独立型的推流工作。</p>
-<p>但是使用HEVC/AVC编码方式的基于viewport的自适应操作是OMAF的一项技术开发，允许无限制地使用矩形RWP来增强viewport区域的质量。</p>
-<h2 id="cmafcommon-media-application-format">CMAF(Common Media Application Format)</h2>
-<p>致力于提供跨多个应用和设备之间的统一的编码格式和媒体配置文件。</p>
-<p>CMAF使请求低延迟的segment成为可能。</p>
-<h2 id="isobmffiso-base-media-file-format">ISOBMFF(ISO Base Media File Format)</h2>
-<p>ISOBMFF是用于定时数据交换、管理和显示的最流行的文件格式。</p>
+            </div><div class="content" id="content"><h2 id="概述">概述</h2>
+<p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
+<h2 id="通常的实现方式">通常的实现方式</h2>
+<p>在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证viewport的平滑转换。</p>
+<p>提出QER(Quality-focused Regios)的概念使viewport内部的视频分辨率高于viewport之外的视频分辨率。</p>
+<p>非对称的方式以不同的空间分辨率推流来节省带宽。</p>
+<ul>
+<li>在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。</li>
+<li>优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在viewport中生成。</li>
+<li>缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。</li>
+</ul>
+<h2 id="自适应推流参数">自适应推流参数</h2>
+<ol>
+<li>可用带宽和网络吞吐量</li>
+<li>Viewport预测的位置</li>
+<li>客户端播放器的可用缓冲</li>
+</ol>
+<h2 id="参数计算公式">参数计算公式</h2>
 <ul>
 <li>
-<p>文件由一系列兼容并且可扩展的文件级别的box组成。</p>
+<p>第n个估计的Viewport：$V^e(n)$</p>
+<p>$V^e(n) = V_{fb}$</p>
+<p>$V_{fb}$是最新报告的viewport位置</p>
 </li>
 <li>
-<p>每个box表示1个由4个指针字符代码组成的数据结构。</p>
+<p>第n个估计的吞吐量：$T^e(n)$</p>
+<p>$T^e(n) = T_{fb}$</p>
+<p>$T_{fb}$是最新报告的吞吐量</p>
 </li>
 <li>
-<p>ISOBMFF的媒体数据流和元数据流被分别分发。</p>
-<ul>
-<li>媒体数据流中包括编码过的音频和视频数据。</li>
-<li>元数据流中包括媒体类型、编码属性、时间戳、大小等元数据，也包括全向内容的额外信息如投影格式、旋转、帧分包、编码和分发等元数据。</li>
+<p>比特率：$R_{bits}$</p>
+<p>$R_{bits} = (1-\beta)T^e(n)$</p>
+<p>$\beta$是安全边缘</p>
+</li>
+<li>
+<p>第n个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$</p>
+<p>$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$</p>
+<p>$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$</p>
+<p>$w_k = \frac{A(t,k)}{A_{vp}}$</p>
+<p>$L=总帧数$</p>
+<p>$w_k$表示在第k个帧中与viewport所重叠的tile程度</p>
+<p>$A(t,k)$表示第k个帧中tile $t$ 重叠的区域</p>
+<p>$A_{vp}$表示viewport中总共的区域</p>
+</li>
 </ul>
-</li>
-<li>
-<p>ISOBMFF为了访问方便，保证有价值信息能灵活聚合。</p>
-</li>
-</ul>
-<h2 id="3dof3-degree-of-freedom">3DoF(3 Degree of Freedom)</h2>
-<p>在3DoF场景中，用户可以自由的移动头部以三个方向：摆动、俯仰、旋转。</p>
-<h2 id="3dof">3DoF+</h2>
-<p>用户的头部可以以任意方向移动：上下、左右、前后</p>
-<h2 id="6dof">6DoF</h2>
-<p>不只用户的头部，用户的身体也是自由的。同时支持方向与位置的自由。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-11-11</span>
+                <span>更新于 2021-11-14</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/posts/note6/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/posts/note7/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
                 <span></span>
@@ -190,8 +193,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/note5/" class="prev" rel="prev" title="自适应360度视频推流挑战"><i class="fas fa-angle-left fa-fw"></i>自适应360度视频推流挑战</a>
-            <a href="/posts/note7/" class="next" rel="next" title="自适应策略之viewport依赖型">自适应策略之viewport依赖型<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/note6/" class="prev" rel="prev" title="沉浸式流媒体现有标准"><i class="fas fa-angle-left fa-fw"></i>沉浸式流媒体现有标准</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
