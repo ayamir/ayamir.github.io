@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>自适应策略之viewport依赖型 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="自适应策略之viewport依赖型" />
-<meta property="og:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供" />
+        <title>360度视频的音频处理 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="360度视频的音频处理" />
+<meta property="og:description" content="背景 空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。 360度视频由于空间音频而变得更加可靠，因为声音的通" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/note7/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-14T13:24:59+08:00" />
-<meta property="article:modified_time" content="2021-11-14T14:23:17+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-14T16:52:20+08:00" />
+<meta property="article:modified_time" content="2021-11-14T16:52:20+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="自适应策略之viewport依赖型"/>
-<meta name="twitter:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供"/>
+<meta name="twitter:title" content="360度视频的音频处理"/>
+<meta name="twitter:description" content="背景 空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。 360度视频由于空间音频而变得更加可靠，因为声音的通"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note7/" /><link rel="prev" href="https://ayamir.github.io/posts/note6/" /><link rel="next" href="https://ayamir.github.io/posts/note8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note8/" /><link rel="prev" href="https://ayamir.github.io/posts/note7/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "自适应策略之viewport依赖型",
+        "headline": "360度视频的音频处理",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/note7\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  601 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note7\/","datePublished": "2021-11-14T13:24:59+08:00","dateModified": "2021-11-14T14:23:17+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/note8\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  1175 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note8\/","datePublished": "2021-11-14T16:52:20+08:00","dateModified": "2021-11-14T16:52:20+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,10 +102,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">自适应策略之viewport依赖型</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">360度视频的音频处理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-14">2021-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 601 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-14">2021-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1175 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -115,59 +115,101 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#概述">概述</a></li>
-        <li><a href="#通常的实现方式">通常的实现方式</a></li>
-        <li><a href="#自适应推流参数">自适应推流参数</a></li>
-        <li><a href="#参数计算公式">参数计算公式</a></li>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#空间音频的再现技术">空间音频的再现技术</a>
+          <ul>
+            <li><a href="#物理重建">物理重建</a>
+              <ul>
+                <li><a href="#多信道再现技术">多信道再现技术</a></li>
+              </ul>
+            </li>
+            <li><a href="#感知重建">感知重建</a>
+              <ul>
+                <li><a href="#双耳录制技术">双耳录制技术</a>
+                  <ul>
+                    <li><a href="#头部相关传递函数hrtf">头部相关传递函数（HRTF）</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#环境声学">环境声学</a>
+          <ul>
+            <li><a href="#概述">概述</a></li>
+            <li><a href="#区别">区别</a></li>
+            <li><a href="#格式">格式</a></li>
+            <li><a href="#用途">用途</a>
+              <ul>
+                <li><a href="#一阶环境音频的用途">一阶环境音频的用途</a></li>
+                <li><a href="#高阶环境音频的用途">高阶环境音频的用途</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="概述">概述</h2>
-<p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
-<h2 id="通常的实现方式">通常的实现方式</h2>
-<p>在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证viewport的平滑转换。</p>
-<p>提出QER(Quality-focused Regios)的概念使viewport内部的视频分辨率高于viewport之外的视频分辨率。</p>
-<p>非对称的方式以不同的空间分辨率推流来节省带宽。</p>
-<ul>
-<li>在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。</li>
-<li>优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在viewport中生成。</li>
-<li>缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。</li>
-</ul>
-<h2 id="自适应推流参数">自适应推流参数</h2>
+            </div><div class="content" id="content"><h2 id="背景">背景</h2>
+<p>空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。</p>
+<p>360度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。</p>
+<p>360度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过</p>
+<h2 id="空间音频的再现技术">空间音频的再现技术</h2>
+<h3 id="物理重建">物理重建</h3>
+<p>物理重建技术用于合成尽可能接近所需信号的整个声场。</p>
+<p>立体声配置在最流行的声音再现方法中使用两个扬声器，以促进更多的空间信息（包括距离、方向感、环境和舞台合奏）。而多信道再现方法在声学环境中使用，并在消费类设备中流行。</p>
+<h4 id="多信道再现技术">多信道再现技术</h4>
+<p>同样的声压场也通过其他物理重建技术产生，如环境中存在的环境声学和波场合成（WFS）。</p>
+<p>需要麦克风阵列来捕获更多的空间声场。</p>
+<p>因为不能直接用于声场特性分析，麦克风记录的内容需要后期处理。</p>
+<p>麦克风阵列用于语音增强、声源分离、回声消除和声音再现。</p>
+<h3 id="感知重建">感知重建</h3>
+<p>心理声学技术用于感知重建，以产生对空间声音特征的感知。</p>
+<p>感知重建技术复制空间音频的自然听觉感受来表示物理音频。</p>
+<h4 id="双耳录制技术">双耳录制技术</h4>
+<p>双耳录制技术是立体声录制的一种扩展形式，提供3D的听觉体验。</p>
+<p>双耳录制技术通过使用两个360度麦克风尽可能的复制人耳，这与使用定向麦克风捕捉声音的常规立体声录音相同。</p>
+<p>假人头部的360度麦克风用作人耳的代理，因为它提供了耳朵的精确几何坐标。</p>
+<p>假人头部还产生与人头轮廓相互作用的声波。借助360度麦克风，与任何其他记录方法相比，空间立体图像的捕获更精确。</p>
+<h5 id="头部相关传递函数hrtf">头部相关传递函数（HRTF）</h5>
+<p>用于双耳音频的实时技术中，以再现复杂的线索，帮助我们通过过滤音频信号来定位声音。</p>
+<p>多个因素（如耳朵、头部和听力环境）会影响线索，因为在现实中，我们会重新定位自己以定位声音。</p>
+<p>选择合适的录音/重放技术对于使听到的声音与真实场景中的体验相同至关重要。</p>
+<h2 id="环境声学">环境声学</h2>
+<h3 id="概述">概述</h3>
+<p>环境声学也被称为3D音频，被用于记录、混成和播放一个中心点周围的360度音频。</p>
+<h3 id="区别">区别</h3>
+<p>环境音频和传统的环绕声技术不同。</p>
 <ol>
-<li>可用带宽和网络吞吐量</li>
-<li>Viewport预测的位置</li>
-<li>客户端播放器的可用缓冲</li>
+<li>
+<p>双声道和传统环绕声技术背后的原理是相同的，都是通过将声音信号送到特定的扬声器来创建音频。</p>
+<p>环境音频不受任何特定扬声器的预先限制，因为它在即使音域旋转的情况下，也能创造出平滑的音频。</p>
+</li>
+<li>
+<p>传统环绕声的格式只有在声音场景保持静态的情况下才能提供出色的成像效果。</p>
+<p>环境音频提供一个完整的球体，将声音均匀地传播到整个球体。</p>
+</li>
 </ol>
-<h2 id="参数计算公式">参数计算公式</h2>
-<ul>
-<li>
-<p>第n个估计的Viewport：$V^e(n)$</p>
-<p>$V^e(n) = V_{fb}$</p>
-<p>$V_{fb}$是最新报告的viewport位置</p>
-</li>
-<li>
-<p>第n个估计的吞吐量：$T^e(n)$</p>
-<p>$T^e(n) = T_{fb}$</p>
-<p>$T_{fb}$是最新报告的吞吐量</p>
-</li>
-<li>
-<p>比特率：$R_{bits}$</p>
-<p>$R_{bits} = (1-\beta)T^e(n)$</p>
-<p>$\beta$是安全边缘</p>
-</li>
-<li>
-<p>第n个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$</p>
-<p>$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$</p>
-<p>$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$</p>
-<p>$w_k = \frac{A(t,k)}{A_{vp}}$</p>
-<p>$L=总帧数$</p>
-<p>$w_k$表示在第k个帧中与viewport所重叠的tile程度</p>
-<p>$A(t,k)$表示第k个帧中tile $t$ 重叠的区域</p>
-<p>$A_{vp}$表示viewport中总共的区域</p>
-</li>
-</ul>
+<h3 id="格式">格式</h3>
+<p>环境音频有6种格式，分别为：A、B、C、D、E、G。</p>
+<h3 id="用途">用途</h3>
+<h4 id="一阶环境音频的用途">一阶环境音频的用途</h4>
+<p>第一阶的环境音频或B格式的环境音频，其麦克风用于使用四面体阵列表示线性VR。</p>
+<p>此外，这些在四个通道中进行处理，例如提供非定向压力水平的“W”。同时，“X、Y和Z”分别促进了从前到后、从侧到侧以及从上到下的方向信息。</p>
+<p>一阶环境音频仅适用于相对较小的场景，因为其有限的空间保真度会影响声音定位。</p>
+<h4 id="高阶环境音频的用途">高阶环境音频的用途</h4>
+<p>高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。</p>
+<h2 id="总结">总结</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://i.loli.net/2021/11/14/xyWRo9EMu2HwlLZ.png"
+        data-srcset="https://i.loli.net/2021/11/14/xyWRo9EMu2HwlLZ.png, https://i.loli.net/2021/11/14/xyWRo9EMu2HwlLZ.png 1.5x, https://i.loli.net/2021/11/14/xyWRo9EMu2HwlLZ.png 2x"
+        data-sizes="auto"
+        alt="https://i.loli.net/2021/11/14/xyWRo9EMu2HwlLZ.png"
+        title="image-20211114175508284" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -178,7 +220,7 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/posts/note7/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/posts/note8/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
                 <span></span>
@@ -193,8 +235,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/note6/" class="prev" rel="prev" title="沉浸式流媒体现有标准"><i class="fas fa-angle-left fa-fw"></i>沉浸式流媒体现有标准</a>
-            <a href="/posts/note8/" class="next" rel="next" title="360度视频的音频处理">360度视频的音频处理<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/note7/" class="prev" rel="prev" title="自适应策略之viewport依赖型"><i class="fas fa-angle-left fa-fw"></i>自适应策略之viewport依赖型</a></div>
 </div>
 </article></div>
             </main><footer class="footer">

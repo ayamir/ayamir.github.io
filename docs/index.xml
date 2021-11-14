@@ -4,9 +4,67 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>360度视频的音频处理</title>
+    <link>https://ayamir.github.io/posts/note8/</link>
+    <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note8/</guid>
+    <description><![CDATA[<h2 id="背景">背景</h2>
+<p>空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。</p>
+<p>360度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。</p>
+<p>360度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过</p>
+<h2 id="空间音频的再现技术">空间音频的再现技术</h2>
+<h3 id="物理重建">物理重建</h3>
+<p>物理重建技术用于合成尽可能接近所需信号的整个声场。</p>
+<p>立体声配置在最流行的声音再现方法中使用两个扬声器，以促进更多的空间信息（包括距离、方向感、环境和舞台合奏）。而多信道再现方法在声学环境中使用，并在消费类设备中流行。</p>
+<h4 id="多信道再现技术">多信道再现技术</h4>
+<p>同样的声压场也通过其他物理重建技术产生，如环境中存在的环境声学和波场合成（WFS）。</p>
+<p>需要麦克风阵列来捕获更多的空间声场。</p>
+<p>因为不能直接用于声场特性分析，麦克风记录的内容需要后期处理。</p>
+<p>麦克风阵列用于语音增强、声源分离、回声消除和声音再现。</p>
+<h3 id="感知重建">感知重建</h3>
+<p>心理声学技术用于感知重建，以产生对空间声音特征的感知。</p>
+<p>感知重建技术复制空间音频的自然听觉感受来表示物理音频。</p>
+<h4 id="双耳录制技术">双耳录制技术</h4>
+<p>双耳录制技术是立体声录制的一种扩展形式，提供3D的听觉体验。</p>
+<p>双耳录制技术通过使用两个360度麦克风尽可能的复制人耳，这与使用定向麦克风捕捉声音的常规立体声录音相同。</p>
+<p>假人头部的360度麦克风用作人耳的代理，因为它提供了耳朵的精确几何坐标。</p>
+<p>假人头部还产生与人头轮廓相互作用的声波。借助360度麦克风，与任何其他记录方法相比，空间立体图像的捕获更精确。</p>
+<h5 id="头部相关传递函数hrtf">头部相关传递函数（HRTF）</h5>
+<p>用于双耳音频的实时技术中，以再现复杂的线索，帮助我们通过过滤音频信号来定位声音。</p>
+<p>多个因素（如耳朵、头部和听力环境）会影响线索，因为在现实中，我们会重新定位自己以定位声音。</p>
+<p>选择合适的录音/重放技术对于使听到的声音与真实场景中的体验相同至关重要。</p>
+<h2 id="环境声学">环境声学</h2>
+<h3 id="概述">概述</h3>
+<p>环境声学也被称为3D音频，被用于记录、混成和播放一个中心点周围的360度音频。</p>
+<h3 id="区别">区别</h3>
+<p>环境音频和传统的环绕声技术不同。</p>
+<ol>
+<li>
+<p>双声道和传统环绕声技术背后的原理是相同的，都是通过将声音信号送到特定的扬声器来创建音频。</p>
+<p>环境音频不受任何特定扬声器的预先限制，因为它在即使音域旋转的情况下，也能创造出平滑的音频。</p>
+</li>
+<li>
+<p>传统环绕声的格式只有在声音场景保持静态的情况下才能提供出色的成像效果。</p>
+<p>环境音频提供一个完整的球体，将声音均匀地传播到整个球体。</p>
+</li>
+</ol>
+<h3 id="格式">格式</h3>
+<p>环境音频有6种格式，分别为：A、B、C、D、E、G。</p>
+<h3 id="用途">用途</h3>
+<h4 id="一阶环境音频的用途">一阶环境音频的用途</h4>
+<p>第一阶的环境音频或B格式的环境音频，其麦克风用于使用四面体阵列表示线性VR。</p>
+<p>此外，这些在四个通道中进行处理，例如提供非定向压力水平的“W”。同时，“X、Y和Z”分别促进了从前到后、从侧到侧以及从上到下的方向信息。</p>
+<p>一阶环境音频仅适用于相对较小的场景，因为其有限的空间保真度会影响声音定位。</p>
+<h4 id="高阶环境音频的用途">高阶环境音频的用途</h4>
+<p>高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。</p>
+<h2 id="总结">总结</h2>
+<p></p>
+]]></description>
+</item><item>
     <title>自适应策略之viewport依赖型</title>
     <link>https://ayamir.github.io/posts/note7/</link>
     <pubDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</pubDate>
@@ -1233,153 +1291,6 @@
 <h2 id="建议">建议</h2>
 <ol>
 <li>如果认定变量是一个常量表达式，那就将其声明成<code>constexpr</code>类型。</li>
-</ol>
-]]></description>
-</item><item>
-    <title>重学C&#43;&#43;：引用和指针</title>
-    <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
-    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
-<ol>
-<li>
-<p><code>&amp;</code>和<code>*</code>在不同的上下文里面其含义并不相同，因此<strong>完全可以当成不同的符号看待</strong>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>    <span class="c1">// &amp;在类型名后出现，是声明的一部分，表明r是一个引用
-</span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>        <span class="c1">// *在类型名后出现，是声明的一部分，表明p是一个指针
-</span><span class="c1"></span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>        <span class="c1">// &amp;在表达式中出现，是取地址符
-</span><span class="c1"></span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">43</span><span class="p">;</span>       <span class="c1">// *在表达式中出现，是解引用符
-</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// &amp;是声明的一部分，*是解引用符
-</span></code></pre></div></li>
-<li>
-<p>指针可以用<code>0</code>进行初始化成空指针，但是不可以用<code>0</code>赋值。</p>
-</li>
-<li>
-<p>指针之间使用<code>==</code>来比较时，如果结果是<code>true</code>，对应多种情况：</p>
-<ul>
-<li>都是空指针</li>
-<li>都是同一个地址
-<ul>
-<li>都指向同一个对象</li>
-<li>一个指针指向某一个对象，另一个指针指向另一对象的下一地址</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>
-<p>引用和指针——都可以用于间接访问对象</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">引用</th>
-<th style="text-align:center">指针</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">复合类型</td>
-<td style="text-align:center">✅</td>
-<td style="text-align:center">✅</td>
-</tr>
-<tr>
-<td style="text-align:center">表示符号</td>
-<td style="text-align:center">&amp;</td>
-<td style="text-align:center">*</td>
-</tr>
-<tr>
-<td style="text-align:center">含义</td>
-<td style="text-align:center">变量的别名</td>
-<td style="text-align:center">变量在内存中的地址</td>
-</tr>
-<tr>
-<td style="text-align:center">初始化和赋值时是否需要类型匹配</td>
-<td style="text-align:center">必须匹配（除常量引用）</td>
-<td style="text-align:center">必须匹配（除void*和指向常量的指针）</td>
-</tr>
-<tr>
-<td style="text-align:center">是否需要初始化</td>
-<td style="text-align:center">必须初始化</td>
-<td style="text-align:center">无需初始化</td>
-</tr>
-<tr>
-<td style="text-align:center">可否重新绑定其他变量</td>
-<td style="text-align:center">不可以</td>
-<td style="text-align:center">可以</td>
-</tr>
-<tr>
-<td style="text-align:center">可否嵌套定义</td>
-<td style="text-align:center">不可以</td>
-<td style="text-align:center">可以</td>
-</tr>
-</tbody>
-</table>
-<p>引用：</p>
-<ul>
-<li>引用只能<strong>绑定</strong>在对象上，不能绑定在字面量或者表达式上。</li>
-<li>引用只是原有对象的<strong>别名</strong>，并非对象，因此不可以定义引用的引用。</li>
-<li>定义引用时并不开辟新的内存空间，因此不可以定义引用的指针。</li>
-</ul>
-<p>指针：</p>
-<ul>
-<li>
-<p>指针本身就是一个对象，能执行的操作自由度远超过引用。</p>
-<ul>
-<li>
-<p>可以实现嵌套定义，即指针的指针。</p>
-</li>
-<li>
-<p>可以实现指针的引用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>         <span class="c1">// p是int型指针
-</span><span class="c1"></span><span class="kt">int</span> <span class="o">*&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>    <span class="c1">// r是指针p的引用，从r开始自右向左读，&amp;表明r是一个引用，引用的是指针，指针指向的类型是int
-</span><span class="c1"></span>
-<span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>         <span class="c1">// r是p的别名，即给p赋值为i的地址，即令p指向i
-</span><span class="c1"></span><span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>         <span class="c1">// r是p的别名，对r解引用即对p解引用，即将p所指向的地址处变量的值赋值为0
-</span></code></pre></div></li>
-</ul>
-</li>
-<li>
-<p>指针初始化和赋值时需要使用&amp;运算符取得对象的地址。</p>
-</li>
-<li>
-<p>指针值的情况：</p>
-<ol>
-<li>指向一个对象。</li>
-<li>指向紧邻对象所占空间的下一个位置。</li>
-<li>空指针，没有指向任何对象。</li>
-<li>无效指针，除上述情况之外。</li>
-</ol>
-<p>对第4种无效指针的操作是未定义的，后果无法预计。</p>
-<p>2、3两种值虽然有效，但是因为没有指向任何对象，所以对其操作的后果同样无法预计。</p>
-</li>
-</ul>
-</li>
-<li>
-<p><code>void*</code>眼中内存空间仅仅是内存空间，并不能访问内存空间中的对象。</p>
-</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>
-<p>初始化所有的指针，并且<strong>在对象定义完成之后</strong>再定义指向它的指针。</p>
-</li>
-<li>
-<p>避免使用<code>0</code>和<code>NULL</code>初始化空指针，应该使用<code>nullptr</code>。</p>
-</li>
-<li>
-<p>在使用指针之前检查其是否为<code>nullptr</code>。</p>
-</li>
-<li>
-<p><strong>记住赋值改变的永远是等号左侧的对象。</strong></p>
-</li>
-<li>
-<p>面对复杂的指针或引用的声明语句时，从变量名开始自右向左阅读来弄清楚其真实含义。</p>
-</li>
 </ol>
 ]]></description>
 </item></channel>
