@@ -4,7 +4,55 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>沉浸式流媒体面临的挑战和启示</title>
+    <link>https://ayamir.github.io/posts/note9/</link>
+    <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note9/</guid>
+    <description><![CDATA[<h2 id="最终的目标">最终的目标</h2>
+<p>主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。</p>
+<h2 id="具体的任务">具体的任务</h2>
+<ol>
+<li>
+<p>从360度视频的采集到显示的过程中，引入了好几种失真。</p>
+<p>应该重点增加新的拼接、投影和分包方式以减少噪音。</p>
+</li>
+<li>
+<p>除了捕获和使用360度视频来表示真实世界和实际交互内容之外，环境中还包括3D对象。</p>
+<p>3D对象的合并对于真实的视图而言是一个挑战。</p>
+</li>
+<li>
+<p>因为在推流会话中，用户的头部移动高度可变，所以固定的tiling方案可能会导致非最优的viewport质量。</p>
+<p>推流框架中的tile数量应该被动态选择，进而提高推流质量。</p>
+</li>
+<li>
+<p>自适应的机制应该足够智能来根据环境因素精确地做出适应。</p>
+<p>应该制定基于深度强化学习的策略，来给360度视频帧中不同区域的tile分配合适的比特率。</p>
+</li>
+<li>
+<p>用户在360度视频中的自由导航很容易让其感觉忧虑自己错过了什么重要的东西。</p>
+<p>在360度视频中导航的时候，需要支持自然的可见角度方向。</p>
+<p>丰富的环境应配备新颖的定向机制，以支持360度视频，同时降低认知负荷，以克服此问题。</p>
+</li>
+<li>
+<p>真实的导航依赖viewport预测机制。</p>
+<p>现代的预测方式应该使用时空图像特性以及用户的位置信息，采用合适的编解码器卷积LSTM结构来减少长期预测误差。</p>
+</li>
+<li>
+<p>沉浸式的场景随着用户的交互应该发生变化。</p>
+<p>由于用户与场景的交互而产生的新挑战是通过编码和传输透视图创建的。</p>
+<p>因此预测用户的行为来实现对交互内容的高效编码和推流非常关键。</p>
+</li>
+<li>
+<p>对360度视频的质量获取方法和度量手段需要进一步研究。</p>
+</li>
+<li>
+<p>360度视频中特殊的音效需要引起注意。</p>
+</li>
+</ol>
+]]></description>
+</item><item>
     <title>360度视频的音频处理</title>
     <link>https://ayamir.github.io/posts/note8/</link>
     <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate>

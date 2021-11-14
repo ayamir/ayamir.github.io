@@ -4,9 +4,57 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>沉浸式流媒体面临的挑战和启示</title>
+    <link>https://ayamir.github.io/posts/note9/</link>
+    <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note9/</guid>
+    <description><![CDATA[<h2 id="最终的目标">最终的目标</h2>
+<p>主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。</p>
+<h2 id="具体的任务">具体的任务</h2>
+<ol>
+<li>
+<p>从360度视频的采集到显示的过程中，引入了好几种失真。</p>
+<p>应该重点增加新的拼接、投影和分包方式以减少噪音。</p>
+</li>
+<li>
+<p>除了捕获和使用360度视频来表示真实世界和实际交互内容之外，环境中还包括3D对象。</p>
+<p>3D对象的合并对于真实的视图而言是一个挑战。</p>
+</li>
+<li>
+<p>因为在推流会话中，用户的头部移动高度可变，所以固定的tiling方案可能会导致非最优的viewport质量。</p>
+<p>推流框架中的tile数量应该被动态选择，进而提高推流质量。</p>
+</li>
+<li>
+<p>自适应的机制应该足够智能来根据环境因素精确地做出适应。</p>
+<p>应该制定基于深度强化学习的策略，来给360度视频帧中不同区域的tile分配合适的比特率。</p>
+</li>
+<li>
+<p>用户在360度视频中的自由导航很容易让其感觉忧虑自己错过了什么重要的东西。</p>
+<p>在360度视频中导航的时候，需要支持自然的可见角度方向。</p>
+<p>丰富的环境应配备新颖的定向机制，以支持360度视频，同时降低认知负荷，以克服此问题。</p>
+</li>
+<li>
+<p>真实的导航依赖viewport预测机制。</p>
+<p>现代的预测方式应该使用时空图像特性以及用户的位置信息，采用合适的编解码器卷积LSTM结构来减少长期预测误差。</p>
+</li>
+<li>
+<p>沉浸式的场景随着用户的交互应该发生变化。</p>
+<p>由于用户与场景的交互而产生的新挑战是通过编码和传输透视图创建的。</p>
+<p>因此预测用户的行为来实现对交互内容的高效编码和推流非常关键。</p>
+</li>
+<li>
+<p>对360度视频的质量获取方法和度量手段需要进一步研究。</p>
+</li>
+<li>
+<p>360度视频中特殊的音效需要引起注意。</p>
+</li>
+</ol>
+]]></description>
+</item><item>
     <title>360度视频的音频处理</title>
     <link>https://ayamir.github.io/posts/note8/</link>
     <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate>
@@ -1157,140 +1205,6 @@
 <ol>
 <li><code>auto</code>尽量只在类型较长但比较清晰时使用。</li>
 <li><code>decltype</code>尽量不要使用。</li>
-</ol>
-]]></description>
-</item><item>
-    <title>重学C&#43;&#43;：Const二三事</title>
-    <link>https://ayamir.github.io/posts/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/const/</guid>
-    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
-<ol>
-<li>
-<p>仅用<code>const</code>修饰的对象只在单个文件中有效，如果想在多个文件之间共享<code>const</code>对象，必须在对象<strong>定义</strong>的前面加<code>extern</code>。</p>
-</li>
-<li>
-<p>允许为一个常量引用绑定非常量的对象、字面量和表达式。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 正确
-</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>      <span class="c1">// 正确
-</span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 正确
-</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r4</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>        <span class="c1">// 错误
-</span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r5</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
-<span class="n">r5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 正确
-</span><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>                 <span class="c1">// 错误
-</span></code></pre></div></li>
-<li>
-<p>指向常量的指针和常量指针：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">cur_err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">err_numb</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mut_pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
-</code></pre></div><p>从声明语句的变量符号开始，自右向左看：</p>
-<p><code>cur_err</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
-<p><code>mut_pi_pointer</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
-<p><code>pi_pointer</code>首先是一个不可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
-</li>
-<li>
-<p>当<code>typedef</code>遇到<code>const</code>时容易出现错误理解：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
-<span class="k">const</span> <span class="n">pstring</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">const</span> <span class="n">pstring</span> <span class="o">*</span><span class="n">ps</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div><p><code>pstring</code>是<code>char *</code>的别名，即指向<code>char</code>的指针。</p>
-<p><code>const</code>修饰的是<code>pstring</code>，因此<code>cstr</code>是：初始化值为<code>nullptr</code>的<strong>不可变指针</strong>。</p>
-<p>错误理解会用<code>char *</code>替换掉<code>pstring</code>，即：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div><p>这样从<code>cstr</code>开始自右向左读的话，<code>cstr</code>就会被理解成：指向<strong>字符常量</strong>的<strong>可变指针</strong>。</p>
-</li>
-<li>
-<p><code>constexpr</code>属于顶层<code>const</code>，因此<code>constexpr</code>修饰指针意味着指针本身不可变。</p>
-</li>
-<li>
-<p><code>auto</code>默认会去除顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cr</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>
-<span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>       <span class="c1">// b是一个初始化值为0的可变int对象 
-</span><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cr</span><span class="p">;</span>       <span class="c1">// c同b
-</span><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>       <span class="c1">// d是一个初始化为指向可变int类对象i的可变指针对象
-</span><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>      <span class="c1">// e是一个初始化为指向不可变int类对象ci的可变指针对象
-</span><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span> <span class="c1">// f是一个初始化值为0的不可变int对象
-</span></code></pre></div></li>
-<li>
-<p><code>decltype</code>不会去除顶层<code>const</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// x的类型是const int
-</span></code></pre></div></li>
-</ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>
-<p><code>const</code>对象在创建时必须进行初始化。</p>
-</li>
-<li>
-<p>常量引用即对<code>const</code>对象的引用。</p>
-</li>
-<li>
-<p>常量引用绑定<em>不可变对象</em>和<em>可变对象</em>时含义不同。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">可变对象</th>
-<th style="text-align:center">不可变对象</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">用常量引用绑定</td>
-<td style="text-align:center">可以</td>
-<td style="text-align:center">必须</td>
-</tr>
-<tr>
-<td style="text-align:center">常量引用的含义</td>
-<td style="text-align:center">不能通过此引用改变对象的值</td>
-<td style="text-align:center">不可以改变对象的值</td>
-</tr>
-</tbody>
-</table>
-<p>常量引用绑定到可变对象上：对原有可操作性质的窄化，减少操作肯定不会引发错误，所以是允许的。</p>
-<p>非常量引用绑定到不可变对象上：对原有可操作性质的拓宽，增加不允许的操作会出错、，所以不可变对象必须使用常量引用。</p>
-</li>
-<li>
-<p>因为指针是对象，而引用不是对象，所以<code>const</code>和指针的组合有2种情况，<code>const</code>和引用的组合只有1种情况。</p>
-<ul>
-<li>指针
-<ul>
-<li>指向常量的指针（pointer to const）：不能通过此指针修改对应的量。</li>
-<li>常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。</li>
-</ul>
-</li>
-<li>引用
-<ul>
-<li>常量引用：不能通过此引用修改对应的量。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>顶层<code>const</code>表示指针本身是常量，推广之后可以指任意对象是常量；</p>
-<p>底层<code>const</code>表示指针指向的对象是常量，推广之后主要于指针和引用等复合类型的基本类型部分有关。</p>
-</li>
-<li>
-<p><strong>常量表达式</strong>指：值不会改变，在编译过程中就能得到计算结果的表达式。</p>
-</li>
-<li>
-<p>为什么需要<code>constexpr</code>？</p>
-<p>因为实际中很难判断一个初始值是否为常量表达式。</p>
-<p>使用<code>constexpr</code>相当于把验证变量的值是否是一个常量表达式的工作交给了编译器。</p>
-<p>用<code>constexpr</code>声明的变量一定是一个变量，并且必须用常量表达式来初始化。</p>
-</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>如果认定变量是一个常量表达式，那就将其声明成<code>constexpr</code>类型。</li>
 </ol>
 ]]></description>
 </item></channel>
