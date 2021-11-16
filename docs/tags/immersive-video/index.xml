@@ -4,7 +4,27 @@
         <link>https://ayamir.github.io/tags/immersive-video/</link>
         <description>Immersive-Video - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>沉浸式推流中应用层的优化</title>
+    <link>https://ayamir.github.io/posts/note10/</link>
+    <pubDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note10/</guid>
+    <description><![CDATA[<h2 id="背景">背景</h2>
+<p>大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需要1个GET请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。</p>
+<p>在基于VR的HAS方案中，播放1条视频片段就需要取得多种资源：1次GET请求需要同时请求基础的tile层和每个空间视频tile。使用4x4的tile方案时，客户端需要发起不少于17次GET请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。</p>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="使用多条持久的tcp连接">使用多条持久的TCP连接</h3>
+<p>大多数的现代浏览器都支持同时建立并维持多达6条TCP连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。</p>
+<p>类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的tile。</p>
+<h3 id="使用http2协议的服务端push特性">使用HTTP/2协议的服务端push特性</h3>
+<p>HTTP/2协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。</p>
+<p>服务端直接push短视频片段可以减少视频的启动时间和端到端延迟。</p>
+<p>并且，服务端push特性可以应用在基于tile的VR视频推流中，客户端可以向服务器同时请求一条视频片段的所有tile。</p>
+<p>服务端可以使用特制的请求处理器，允许客户端为每个tile定义一系列质量等级。</p>
+<p>因此可以将应用的启发式自适应的速率的决定传达给服务器，这允许客户端以期望的质量级别取得所有图块。</p>
+]]></description>
+</item><item>
     <title>沉浸式流媒体面临的挑战和启示</title>
     <link>https://ayamir.github.io/posts/note9/</link>
     <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate>
@@ -1546,88 +1566,6 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
 <p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
 <h4 id="云端处理">云端处理</h4>
 <p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
-]]></description>
-</item><item>
-    <title>Immersive Video OMAF-Sample Deploy</title>
-    <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
-    <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/immersive-video-deploy/</guid>
-    <description><![CDATA[<p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<h2 id="server-端搭建">Server 端搭建</h2>
-<h3 id="修改-dockerfile">修改 Dockerfile</h3>
-<ol>
-<li>
-<p>手动设置 wget 和 git 的 http_proxy</p>
-</li>
-<li>
-<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
-</li>
-<li>
-<p>因为找不到 glog 库因此加入软链接操作</p>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
-</code></pre></div><h3 id="重新编译内核">重新编译内核</h3>
-<p>运行脚本时显示 libnuma 错误因此推断与 numa 设置有关</p>
-<p>执行<code>numactl -H</code>显示只有一个 node，报错输出显示需要至少两个 numa 节点</p>
-<p>查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
-<ol>
-<li>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
-</code></pre></div><ol start="2">
-<li>解压</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar xpvf linux-5.11.1.tar.gz
-</code></pre></div><ol start="3">
-<li>复制现有内核配置</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> linux-5.11.1 <span class="o">&amp;&amp;</span> cp -v /boot/config-<span class="k">$(</span>uname -r<span class="k">)</span> .config
-</code></pre></div><ol start="4">
-<li>安装必要的包</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
-</code></pre></div><ol start="5">
-<li>进入内核配置界面</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
-</code></pre></div><p></p>
-<ol start="6">
-<li>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</li>
-</ol>
-<p></p>
-<ol start="7">
-<li>手动勾选对应选项之后保存退出</li>
-</ol>
-<p></p>
-<ol start="8">
-<li>重新编译并等待安装结束</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make -j <span class="k">$(</span>nproc<span class="k">)</span> <span class="o">&amp;&amp;</span> sudo make modules_install <span class="o">&amp;&amp;</span> sudo make install
-</code></pre></div><ol start="9">
-<li>修改<code>grub</code>启动参数加入 fake numa 配置</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
-</code></pre></div><p>找到对应行并修改为</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
-</code></pre></div><p></p>
-<ol start="10">
-<li>更新<code>grub</code>并重启</li>
-</ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
-</code></pre></div><ol start="11">
-<li>执行<code>numactl -H</code>检查 numa 节点数目为 2</li>
-</ol>
-<p></p>
-<ol start="12">
-<li>重新执行脚本如图说明一切正常</li>
-</ol>
-<p></p>
-<h2 id="client-端搭建">Client 端搭建</h2>
-<p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
-<p></p>
 ]]></description>
 </item></channel>
 </rss>
