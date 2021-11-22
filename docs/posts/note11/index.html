@@ -5,30 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>重学C&#43;&#43;：标准库类模板Vector - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：标准库类模板Vector" />
-<meta property="og:description" content="常见的坑 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义不同。" />
+        <title>沉浸式流媒体传输的实际度量 - Ayamir&#39;s Blog</title><meta name="Description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="沉浸式流媒体传输的实际度量" />
+<meta property="og:description" content="度量指标 viewport预测精度。 使用预测的viewport坐标和实际用户的viewport坐标的大圈距离来量化。 视频质量。 viewport" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/vector/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-28T15:35:17+08:00" />
-<meta property="article:modified_time" content="2021-10-28T17:03:02+08:00" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note11/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-22T15:21:59+08:00" />
+<meta property="article:modified_time" content="2021-11-22T15:21:59+08:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="重学C&#43;&#43;：标准库类模板Vector"/>
-<meta name="twitter:description" content="常见的坑 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义不同。"/>
+<meta name="twitter:title" content="沉浸式流媒体传输的实际度量"/>
+<meta name="twitter:description" content="度量指标 viewport预测精度。 使用预测的viewport坐标和实际用户的viewport坐标的大圈距离来量化。 视频质量。 viewport"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/vector/" /><link rel="prev" href="https://ayamir.github.io/posts/string/" /><link rel="next" href="https://ayamir.github.io/posts/iterator/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note11/" /><link rel="prev" href="https://ayamir.github.io/posts/note10/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "重学C++：标准库类模板Vector",
+        "headline": "沉浸式流媒体传输的实际度量",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/vector\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  694 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/vector\/","datePublished": "2021-10-28T15:35:17+08:00","dateModified": "2021-10-28T17:03:02+08:00","publisher": {
+            "@id": "https:\/\/ayamir.github.io\/posts\/note11\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  159 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note11\/","datePublished": "2021-11-22T15:21:59+08:00","dateModified": "2021-11-22T15:21:59+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -102,10 +102,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">重学C&#43;&#43;：标准库类模板Vector</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/programming-language/"><i class="far fa-folder fa-fw"></i>Programming Language</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 694 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">沉浸式流媒体传输的实际度量</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-22">2021-11-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 159 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -115,81 +115,47 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#常见的坑">常见的坑</a></li>
-        <li><a href="#必须理解的点">必须理解的点</a></li>
-        <li><a href="#建议">建议</a></li>
+        <li><a href="#度量指标">度量指标</a></li>
+        <li><a href="#度量参数">度量参数</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="常见的坑">常见的坑</h2>
+            </div><div class="content" id="content"><h2 id="度量指标">度量指标</h2>
 <ol>
-<li>
-<p><code>vector</code>的默认初始化是否合法取决于<code>vector</code>内对象所属的类是否要求显式初始化。</p>
+<li>viewport预测精度。
+<ul>
+<li>使用预测的viewport坐标和实际用户的viewport坐标的大圈距离来量化。</li>
+</ul>
 </li>
-<li>
-<p>使用<code>()</code>和<code>{}</code>对<code>vector</code>执行初始化含义不同。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>    <span class="c1">// 存储1个int对象，值为10
-</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>    <span class="c1">// 存储10个int对象，值为0
-</span><span class="c1"></span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 存储10个int对象，值都是1
-</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v4</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span> <span class="c1">// 存储2个int对象，值分别是10和1
-</span></code></pre></div></li>
-<li>
-<p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
-<ol>
-<li>
-<p>如果<code>{}</code>内容可以用于初始化，则采用<code>{}</code>默认的初始化含义。</p>
-</li>
-<li>
-<p>如果<code>{}</code>中的内容无法用<code>{}</code>默认的初始化含义做出解释，则会按照<code>()</code>的初始化含义去解释<code>{}</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
-<span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
-
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="s">&#34;hi&#34;</span><span class="p">};</span>      <span class="c1">// 存储1个值为hi的string对象
-</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>        <span class="c1">// 存储10个值为空的string对象
-</span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;hi&#34;</span><span class="p">};</span>  <span class="c1">// 存储10个值为hi的string对象
-</span></code></pre></div></li>
-</ol>
-</li>
-<li>
-<p>与<code>string</code>相同，<code>vector</code>也有<code>size_type</code>作为其<code>size()</code>的返回值类型。</p>
-<p>但是使用时必须首先指定<code>vector</code>由哪个类型定义。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
-</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 错误
-</span></code></pre></div></li>
-<li>
-<p>只有<code>vector</code>内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。</p>
-</li>
-<li>
-<p>增加<code>vector</code>中的元素只能使用<code>push_back()</code>，而不能使用对下标赋值的方式。</p>
+<li>视频质量。
+<ul>
+<li>viewport内部的tile质量（1～5）。</li>
+<li>tile在最高质量层之上花费的时间。</li>
+<li>根据用户视线的分布而提出的加权质量度量。</li>
+</ul>
 </li>
 </ol>
-<h2 id="必须理解的点">必须理解的点</h2>
+<h2 id="度量参数">度量参数</h2>
 <ol>
-<li><code>vector</code>是类模板而非类型。</li>
-<li><code>vector</code>中只能容纳对象，不能容纳引用。</li>
-<li><code>vector</code>对象能高效增长，增加<code>vector</code>中的元素需要使用<code>push_back()</code>成员函数。</li>
-<li><code>vector</code>的成员函数（<code>empty()</code>, <code>size()</code>）和各种运算符（赋值、关系、下标）的操作使用方法和规则基本同<code>string</code>。</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>不需要在创建<code>vector</code>时确定其中的元素及其大小。</li>
-<li>在循环体内部包含向<code>vector</code>对象添加元素的操作时，不应该使用<code>foreach</code>循环。</li>
+<li>分块策略</li>
+<li>带宽</li>
+<li>延迟</li>
+<li>viewport预测</li>
+<li>HTTP版本</li>
+<li>持久化的连接数量</li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-10-28</span>
+                <span>更新于 2021-11-22</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/posts/vector/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/posts/note11/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
                 <span></span>
@@ -198,14 +164,13 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/c&#43;&#43;/">C&#43;&#43;</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/immersive-video/">Immersive-Video</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/string/" class="prev" rel="prev" title="重学C&#43;&#43;：标准库类型string"><i class="fas fa-angle-left fa-fw"></i>重学C&#43;&#43;：标准库类型string</a>
-            <a href="/posts/iterator/" class="next" rel="next" title="重学C&#43;&#43;：容器和迭代器">重学C&#43;&#43;：容器和迭代器<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/note10/" class="prev" rel="prev" title="沉浸式推流中应用层的优化"><i class="fas fa-angle-left fa-fw"></i>沉浸式推流中应用层的优化</a></div>
 </div>
 </article></div>
             </main><footer class="footer">

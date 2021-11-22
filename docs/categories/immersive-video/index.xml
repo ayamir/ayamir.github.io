@@ -4,7 +4,38 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>沉浸式流媒体传输的实际度量</title>
+    <link>https://ayamir.github.io/posts/note11/</link>
+    <pubDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note11/</guid>
+    <description><![CDATA[<h2 id="度量指标">度量指标</h2>
+<ol>
+<li>viewport预测精度。
+<ul>
+<li>使用预测的viewport坐标和实际用户的viewport坐标的大圈距离来量化。</li>
+</ul>
+</li>
+<li>视频质量。
+<ul>
+<li>viewport内部的tile质量（1～5）。</li>
+<li>tile在最高质量层之上花费的时间。</li>
+<li>根据用户视线的分布而提出的加权质量度量。</li>
+</ul>
+</li>
+</ol>
+<h2 id="度量参数">度量参数</h2>
+<ol>
+<li>分块策略</li>
+<li>带宽</li>
+<li>延迟</li>
+<li>viewport预测</li>
+<li>HTTP版本</li>
+<li>持久化的连接数量</li>
+</ol>
+]]></description>
+</item><item>
     <title>沉浸式推流中应用层的优化</title>
     <link>https://ayamir.github.io/posts/note10/</link>
     <pubDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</pubDate>
@@ -1478,94 +1509,6 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
 </ul>
 <p>利用多路径网络的特点和优先级特性可以为360度tile视频推流提供更高的推流性能。</p>
 <p>提出的所有自适应策略都是通用的，目标是标准的视频交付，并没有对360度视频内容做出特别的考虑。</p>
-]]></description>
-</item><item>
-    <title>360度流媒体面临的挑战、机遇和解决方案</title>
-    <link>https://ayamir.github.io/posts/note1/</link>
-    <pubDate>Wed, 20 Oct 2021 20:08:38 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/note1/</guid>
-    <description><![CDATA[<h2 id="360度流媒体视频框架">360度流媒体视频框架</h2>
-<h3 id="视频采集和拼接">视频采集和拼接</h3>
-<p>使用不同的360度视频采集相机可以将视频内容存储为3D的球形内容</p>
-<h3 id="使用不同的投影策略实现降维">使用不同的投影策略实现降维</h3>
-<p>策略主要分为2种：视角独立型和视角依赖型</p>
-<h4 id="视角独立型">视角独立型</h4>
-<p>整个3D的视频内容被按照统一的质量投影到2D平面上</p>
-<p>主要包括等距长方形投影和立方贴图投影</p>
-<h5 id="等距长方形投影erp">等距长方形投影(ERP)</h5>
-<p>使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上</p>
-<p>视角范围：左180度～右180度、上90度～下90度</p>
-<p>缺点：</p>
-<ul>
-<li>极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽</li>
-<li>由于图像失真导致压缩效率不足</li>
-</ul>
-<h5 id="立方贴图投影cmp">立方贴图投影(CMP)</h5>
-<p>六面立方体组合用于将球体的像素映射到立方体上的相关像素</p>
-<p>在游戏中被广泛应用</p>
-<p>优点：</p>
-<ul>
-<li>节省空间，相比于等距长方形投影视频体积能减少25%</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>只能渲染有限的用户视野</li>
-</ul>
-<h4 id="视角依赖型">视角依赖型</h4>
-<p>视角内的内容比之外的内容有更高保真度的表示</p>
-<p>主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影</p>
-<h5 id="金字塔投影">金字塔投影</h5>
-<p>球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向</p>
-<p>优点：</p>
-<ul>
-<li>节省空间，降低80%的视频体积</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>用户以120度旋转视角时，视频的质量会像旋转180度一样急速下降</li>
-</ul>
-<h5 id="截断方形金字塔投影">截断方形金字塔投影</h5>
-<p>大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔</p>
-<p>优点：</p>
-<ul>
-<li>减少了边缘数据，提高了高码率视频的推流性能</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>使边缘更加锐利</li>
-</ul>
-<h5 id="偏移立方贴图投影">偏移立方贴图投影</h5>
-<p>与原始的立方贴图投影类似，球体的像素点被投影到立方体的6个面上</p>
-<p>优点：</p>
-<ul>
-<li>视角方向的内容会有更高的质量，提供平滑的视频质量变化</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>存储开销很大</li>
-</ul>
-<h3 id="编码视频内容">编码视频内容</h3>
-<p>目前主要的编码方式有AVC/H.264和HEVC/H.265。</p>
-<h4 id="h264">H.264</h4>
-<p>使用16x16的宏块结构对帧编码。</p>
-<p>因为使用了编码器的动作预测的特性，编码的数据大小得到减少。</p>
-<h4 id="h265">H.265</h4>
-<p>相比于同质量的H.264编码方式，H.265编码减少了50%的比特率。</p>
-<p>H.265支持tiling特性来实现高效视频推流。</p>
-<p>每个tile在物理上被分割然后在普通的流中拼接，并且使用一个解码器来解码。</p>
-<h4 id="vvc">VVC</h4>
-<p>相比于H.265，下一代标准VVC有望提高30%的压缩效率。</p>
-<h3 id="分包和传输">分包和传输</h3>
-<h4 id="分包">分包</h4>
-<p>使用DASH协议分包。</p>
-<h4 id="传输">传输</h4>
-<p>依赖于雾计算和边缘计算等技术可以缩短分发中心和客户端之间的距离进而实现快速响应和低缓冲时间。</p>
-<h3 id="渲染和展示">渲染和展示</h3>
-<h4 id="客户端处理">客户端处理</h4>
-<p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
-<h4 id="云端处理">云端处理</h4>
-<p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
 ]]></description>
 </item></channel>
 </rss>
