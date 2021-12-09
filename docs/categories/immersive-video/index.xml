@@ -11,8 +11,9 @@
     <author>作者</author>
     <guid>https://ayamir.github.io/posts/note-for-dante/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>链接：https://dl.acm.org/doi/10.1145/3232565.3234686</p>
-<p>level：SIGCOMM 18</p>
+<p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
+<p>Level: SIGCOMM 18</p>
+<p>Keyword: UDP+FOV-aware+FEC</p>
 <h2 id="工作范围">工作范围</h2>
 <p></p>
 <h2 id="目标">目标</h2>
@@ -68,7 +69,7 @@ $$</p>
 <li>关于$d_{i, j}(p, r)$ ：因为是分段函数，所以其值会因为r和p的大小关系而急剧改变。
 利用背包问题的思想可以将其规约成NP完全问题：
 将每个tile看作是一个物品，共有m*n个。
-<em>如果$r_{i, j} &lt; \frac{1}{1-p}$ 则表示不把第&lt;i,j&gt;和物品放入背包；否则就是将其放入背包。</em>
+<strong>如果$r_{i, j} &lt; \frac{1}{1-p}$ ，则表示不把第&lt;i,j&gt;和物品放入背包；否则就是将其放入背包。</strong>
 公式1可以转化为：最大化所有物品二元变量的线性组合；
 公式2可以转化为：二元变量的另一个线性组合必须低于阈值约束。
 因此整个问题就能被完全转化为0-1背包问题</li>

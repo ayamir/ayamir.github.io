@@ -3,8 +3,8 @@ title: "Note for Dante"
 date: 2021-12-08T22:14:15+08:00
 draft: false
 math: true
-keywords: ["Immersive Video", "传输层优化", "启发式算法"]
-tags: ["Immersive Video"]
+keywords: ["Immersive Video",]
+tags: ["Immersive Video", "UDP", "Heuristic"]
 categories: ["Immersive Video"]
 ---
 
@@ -12,9 +12,11 @@ categories: ["Immersive Video"]
 
 ## 论文概况
 
-链接：https://dl.acm.org/doi/10.1145/3232565.3234686
+Link: https://dl.acm.org/doi/10.1145/3232565.3234686
 
-level：SIGCOMM 18
+Level: SIGCOMM 18
+
+Keyword: UDP+FOV-aware+FEC
 
 ## 工作范围
 
@@ -74,7 +76,7 @@ level：SIGCOMM 18
 1. 关于$d_{i, j}(p, r)$ ：因为是分段函数，所以其值会因为r和p的大小关系而急剧改变。
    利用背包问题的思想可以将其规约成NP完全问题：
    将每个tile看作是一个物品，共有m\*n个。
-   *如果$r_{i, j} < \frac{1}{1-p}$ 则表示不把第<i,j>和物品放入背包；否则就是将其放入背包。*
+   **如果$r_{i, j} < \frac{1}{1-p}$ ，则表示不把第<i,j>和物品放入背包；否则就是将其放入背包。**
    公式1可以转化为：最大化所有物品二元变量的线性组合；
    公式2可以转化为：二元变量的另一个线性组合必须低于阈值约束。
    因此整个问题就能被完全转化为0-1背包问题
