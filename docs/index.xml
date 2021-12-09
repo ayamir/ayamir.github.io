@@ -4,9 +4,337 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Note for 360ProbDASH</title>
+    <link>https://ayamir.github.io/posts/note-for-360probdash/</link>
+    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note-for-360probdash/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link: <a href="https://dl.acm.org/doi/10.1145/3123266.3123291" target="_blank" rel="noopener noreffer">360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming</a></p>
+<p>Level: ACM MM 17</p>
+<p>Keyword:</p>
+<p>Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation</p>
+<h2 id="工作范围与目标">工作范围与目标</h2>
+<p>应用层-&gt;基于tile-&gt;viewport预测的可能性模型+预期质量的最大化</p>
+<ul>
+<li>
+<p>针对小buffer提出了<code>target-buffer-based rate control</code>算法来避免重缓冲事件（避免卡顿）</p>
+</li>
+<li>
+<p>提出viewport预测的可能性模型计算tile被看到的可能性（避免边缘效应）</p>
+</li>
+<li>
+<p>形式化QoE-driven优化问题：</p>
+<p>在传输率受限的情况下最小化viewport内的质量失真和空间质量变化（获取受限状态下最好的视频质量）</p>
+</li>
+</ul>
+<h2 id="问题建模">问题建模</h2>
+<ol>
+<li>
+<p>形式化参数</p>
+<p>$M*N$个tile，M指tile序列的序号，N指不同的码率等级</p>
+<p>$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）</p>
+<p>$\Phi(X)$指质量失真，$\Psi(X)$指质量变化</p>
+</li>
+<li>
+<p>目标</p>
+<p>找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&lt;i, j&gt;$个tile被选中；$x_{i, j} = 0$则是未选中。
+$$
+\underset{X}{min}\ \Phi(X) + \eta \cdot \Psi(X) \
+s.t. \sum_{i=1}^{N}\sum_{j=1}^{M}x_{i, j}\cdot r_{i, j} \le R, \
+\sum_{j=1}^{M}x_{i, j} \le 1, x_{i, j} \in {0, 1}, \forall i.
+$$
+整个公式即为前所述的问题的形式化表达的公式化结果。</p>
+</li>
+<li>
+<p>模型细节</p>
+<ol>
+<li>
+<p>$\Phi(X)$和$\Psi(X)$的计算=&gt;通过考虑球面到平面的映射</p>
+<p>通过计算球面上点的Mean Squared Error来得到S-PSNR进而评估质量：$d_{i, j}$来表示第${&lt;i, j&gt;}$个段的MSE</p>
+<p>
+$$
+\phi_i = \frac{\pi}{2} - h_i \cdot \frac{\pi}{H}, \Delta\phi = \Delta h \cdot \frac{\pi}{H}, \
+\theta_i = w_i \cdot \frac{2\pi}{W}, \ \Delta\theta = \Delta w \cdot \frac{2\pi}{W},
+$$
+$H$和$W$分别指按照ERP格式投影之后的视频高度和宽度</p>
+<p>第$i$个tile的空间面积用$s_i$表示：
+$$
+s_i\ =\ \iint_{\Omega_i}Rd\phi Rcos\phi d\theta \
+=\Delta\theta R^2[sin(\phi_i + \Delta\phi) - sin\phi_i],
+$$
+$R$指球的半径（$R = W/2\pi$），所以整体的球面质量失真$D_{i, j}$可以计算出来：
+$$
+D_{i, j} = d_{i, j} \cdot s_i,
+$$
+结合每个tile被看到的概率$p_i$可以得出$\Phi(X)$和$\Psi(X)$
+$$
+\Phi(X)=\frac{\sum_{i=1}^N\sum_{j=1}^MD_{i, j}\cdot x_{i,j}\cdot p_i}{\sum_{i=1}^N\sum_{j=1}^Mx_{i,j}\cdot s_i},\
+\Psi(X) = \frac{\sum_{i=1}^N\sum_{j=1}^Mx_{i, j}\cdot p_i \cdot\ (D_{i,j}-s_{i} \cdot \Phi(X))^2}{\sum_{i=1}^N\sum_{j=1}^Mx_{i,j}\cdot s_i}.
+$$</p>
+</li>
+<li>
+<p>Viewport的可能性模型</p>
+<ol>
+<li>
+<p>方向预测=&gt;<strong>线性回归模型</strong></p>
+<p>将用户的欧拉角看作是$yaw(\alpha)$，$pitch(\beta)$和$rool(\gamma)$，应用线性回归做预测
+$$
+\begin{cases}
+\hat{\alpha}(t_0 + \delta) = m_{\alpha}\delta+\alpha(t_0),\
+\hat{\beta}(t_0 + \delta) = m_{\beta}\delta+\beta(t_0),\
+\hat{\gamma}(t_0 + \delta) = m_{\gamma}\delta+\gamma(t_0).
+\end{cases}
+$$</p>
+</li>
+<li>
+<p>预测错误的分布=&gt;<strong>高斯分布</strong>，根据公式均值和标准差都能从统计信息中计算出来</p>
+<p>收集5名志愿者的头部移动轨迹并投影到3个方向上绘制成图，实验结果为预测错误呈现高斯分布（样本数可能不够？）</p>
+<p>
+$$
+\begin{cases}
+P_{yaw}(\alpha) = \frac{1}{\sigma_{\alpha}\sqrt{2\pi}}exp{-\frac{[\alpha-(\hat{\alpha}+\mu_{\alpha})]^2}{2\sigma_{\alpha}^2}},\
+P_{pitch}(\beta) = \frac{1}{\sigma_{\beta}\sqrt{2\pi}}exp{-\frac{[\beta-(\hat{\beta}+\mu_{\beta})]^2}{2\sigma_{\beta}^2}},\
+P_{roll}(\gamma) = \frac{1}{\sigma_{\gamma}\sqrt{2\pi}}exp{-\frac{[\gamma-(\hat{\gamma}+\mu_{\gamma})]^2}{2\sigma_{\gamma}^2}}.
+\end{cases}
+$$
+3个方向各自<strong>独立</strong>，因此最终的预测错误$P_E(\alpha,\beta,\gamma)$可以表示为：
+$$
+P_E(\alpha, \beta, \gamma) = P_{yaw}(\alpha)P_{pitch}(\beta)P_{roll}(\gamma).
+$$</p>
+</li>
+<li>
+<p>球面上点被看到的可能性</p>
+<p>球面坐标为$(\phi, \theta)$点的可能性表示为$P_s(\phi, \theta)$</p>
+<p>因为一个点可能在多个不同的viewport里面，所以定义按照用户方向从点$(\phi, \theta)$出发能看到的点集$L(\phi, theta)$</p>
+<p>因此空间点$s$被看到的可能性可以表示为：
+$$
+P_s(\phi, \theta) = \frac{1}{|L(\phi, \theta)|}\sum_{(\alpha, \beta, \gamma) \in L(\phi, \theta)}P_E(\alpha, \beta, \gamma),
+$$</p>
+</li>
+<li>
+<p>球面上tile被看到的可能性</p>
+<p>tile内各个点被看到的可能性的<strong>均值</strong>即为tile被看到的可能性（可否使用其他方式？）
+$$
+p_i = \frac{1}{|U_i|} \sum_{(\phi, \theta) \in U_i} P_s(\phi, \theta).
+$$
+$U_i$表示tile内的空间点集</p>
+</li>
+</ol>
+</li>
+<li>
+<p><code>Target-Buffer-based</code> Rate Control</p>
+<p>因为长期的头部移动预测会产生较高的预测错误，所以不能采用大缓冲区（没有cite来证明这一点）</p>
+<p></p>
+<p>将处于相同时刻的段集合成一个块存储在缓冲区中。</p>
+<p>在自适应的第k步，定义$d_k$作为此时的buffer占用情况（等到第k个块被下载完毕）
+$$
+b_k = b_{k-1} - \frac{R_k \cdot T}{C_k} + T
+$$
+$C_k$表示平均带宽，$R_k$表示总计的码率</p>
+<p>为了避免重新缓冲设定目标buffer占用$B_{target}$，并使buffer占用保持在$B_{target}$（$b_k = B_{target}$）</p>
+<p>因此总计的码率需要满足：
+$$
+R_k = \frac{C_k}{T} \cdot (b_{k-1} - B_{target} + T),
+$$
+这里的$C_k$表示可以从历史的段下载信息中估计出来的带宽</p>
+<p>设定$R$的下界$R_{min}$之后（没有说明为何需要设定下界），公式12可以修正为如下：
+$$
+R_k = max{\frac{C_k}{T} \cdot (b_{k-1} - B_{target} + T), R_{min}}.
+$$</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现">实现</h2>
+<h3 id="服务端">服务端</h3>
+<ol>
+<li>
+<p>视频裁剪器</p>
+<p>将视频帧切割成tile</p>
+</li>
+<li>
+<p>编码器</p>
+<p>对tile进行划分并将其编码成多种码率的段</p>
+</li>
+<li>
+<p>MPD产生器</p>
+<p>添加<strong>SRD特性</strong>来表示段之间的空间关系</p>
+<p>添加经度和<strong>纬度</strong>属性来表示</p>
+<p>添加<strong>质量失真</strong>和<strong>尺寸</strong>属性</p>
+</li>
+<li>
+<p>Apache HTTP服务器</p>
+<p>存储视频段和mpd文件，向客户端推流</p>
+</li>
+</ol>
+<h3 id="客户端">客户端</h3>
+<ol>
+<li>
+<p>基础：dash.js</p>
+</li>
+<li>
+<p>额外的模块</p>
+<ul>
+<li>
+<p><code>QoE-driver Optimizer</code>
+$$
+Output = HTTP\ GET请求中的最优段
+$$</p>
+<p>$$
+Input = Output\ of\
+\begin{cases}
+Target\ buffer\ based\ Rate\ Controller\
+Viewport\ Probabilistic\ Model\
+QR\ Map
+\end{cases}
+$$</p>
+</li>
+<li>
+<p><code>Target-buffer-based Rate Controller</code>
+$$
+Output = 总计的传输码率，按照公式13计算而来
+$$</p>
+<p>$$
+Input = Output\ of\ {Bandwidth\ Estimation\ module
+$$</p>
+</li>
+<li>
+<p><code>Viewport Probabilistic Model</code>
+$$
+Output = 每个tile被看到的可能性，按照公式10计算而来
+$$</p>
+<p>$$
+Input = Output\ of\
+\begin{cases}
+Orientation\ Prediction\ module\
+SRD\ information
+\end{cases}
+$$</p>
+</li>
+<li>
+<p><code>QR Map</code>QR=&gt;Quality-Rate
+$$
+Output = 所有段的QR映射
+$$</p>
+<p>$$
+Input = MPD中的属性
+$$</p>
+</li>
+<li>
+<p><code>Bandwidth Estimation</code>（没有展开研究，因为不是关键？）
+$$
+Output = 前3秒带宽估计的平均值
+$$</p>
+<p>$$
+Input = 下载段过程中的吞吐量变化
+$$</p>
+<p>可以通过<code>onProgess()</code>的回调函数<code>XMLHttpRequest API</code>获取</p>
+</li>
+<li>
+<p><code>Orientation Prediction</code>
+$$
+Output = 用户方向信息的预测结果（yaw, pitch, roll）
+$$</p>
+<p>$$
+Input = Web\ API中获取的DeviceOrientation信息，使用线性回归做预测
+$$</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="评估">评估</h2>
+<ul>
+<li>
+<p>整体设定</p>
+<ol>
+<li>将用户头部移动轨迹编码进播放器来模拟用户头部移动</li>
+<li>积极操控网络状况来观察不同方案对网络波动的反应</li>
+</ol>
+</li>
+<li>
+<p>详细设定</p>
+<ul>
+<li>
+<p>服务端</p>
+<ol>
+<li>
+<p>视频选择</p>
+<p>2880x1440分辨率、时长3分钟、投影格式ERP</p>
+</li>
+<li>
+<p>切分设置</p>
+<p>每个块长1s（$T=1$）、每个块被分成6x12个tile（$N=72$）</p>
+<p>每个段的码率设置为${20, 50, 100, 200, 300}$，单位kpbs</p>
+</li>
+<li>
+<p>视频编码</p>
+<p><a href="http://www.videolan.org/developers/x264.html" target="_blank" rel="noopener noreffer">开源编码器x264</a></p>
+</li>
+<li>
+<p>视频分包</p>
+<p><a href="https://gpac.wp.mines-telecom.fr/mp4box/" target="_blank" rel="noopener noreffer">MP4Box</a></p>
+</li>
+<li>
+<p>注意事项</p>
+<p>每个段的确切尺寸可能与其码率不同，尤其对于长度较短的块。</p>
+<p>为了避免这影响到码率自适应，将段的确切尺寸也写入MPD文件中</p>
+</li>
+</ol>
+</li>
+<li>
+<p>客户端</p>
+<ol>
+<li>
+<p>缓冲区设定（经过实验得出的参数）</p>
+<p>$B_{max}=3s$，$B_{target}=2.5s$，$R_{min}=200kbps$，$权重\eta=0.0015$</p>
+</li>
+</ol>
+</li>
+<li>
+<p>高斯分布设定</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Yaw</th>
+<th style="text-align:center">Pitch</th>
+<th style="text-align:center">Roll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\mu_{\alpha}=-0.54,\ \sigma_{\alpha}=7.03$</td>
+<td style="text-align:center">$\mu_{\beta}=0.18,\ \sigma_{\beta}=2.55$</td>
+<td style="text-align:center">$\mu_{\gamma}=2.16,\ \sigma_{\gamma}=0.15$</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p>比较对象</p>
+<ul>
+<li>ERP：原始视频格式</li>
+<li>Tile：只请求用户当前viewport的tile，不使用viewport预测，作为baseline</li>
+<li>Tile-LR：使用线性回归做预测，每个tile的码率被平均分配</li>
+</ul>
+</li>
+<li>
+<p>性能指标</p>
+<ul>
+<li>卡顿率：卡顿时间占播放总时长的比例</li>
+<li>Viewport PSNR：直接反应Viewport内的视频质量</li>
+<li>空间质量差异：Viewport内质量的协方差</li>
+<li>Viewport偏差：空白区域在Viewport中的比例</li>
+</ul>
+</li>
+</ul>
+]]></description>
+</item><item>
     <title>Note for Dante</title>
     <link>https://ayamir.github.io/posts/note-for-dante/</link>
     <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate>
@@ -1025,138 +1353,6 @@ $$</p>
 <li>确定多个用户可能的需求来公平地分配可用的网络资源。</li>
 <li>分析跨用户的行为来精确传输要求的子帧到终端用户。</li>
 <li>由于侧信道攻击，保护VR帧传输到多个终端用户。</li>
-</ol>
-]]></description>
-</item><item>
-    <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>https://ayamir.github.io/posts/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/iterator/</guid>
-    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
-<ol>
-<li>
-<p>所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。</p>
-</li>
-<li>
-<p><code>string</code>虽然不是容器，但是支持很多容器的操作。</p>
-</li>
-<li>
-<p>容器不为空时：<code>begin()</code>返回的是容器中第一个元素的位置；<code>end()</code>返回的是容器中最后一个元素的<strong>后一个位置</strong>。</p>
-<p>容器为空时：<code>begin()</code>和<code>end()</code>返回的都是最后一个元素的<strong>后一个位置</strong>。</p>
-</li>
-<li>
-<p>任何可能改变容器大小的操作都会使容器的迭代器失效。</p>
-</li>
-</ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>
-<p>和指针类似的是，迭代器支持对对象的间接访问。</p>
-</li>
-<li>
-<p>和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如<code>begin()</code>, <code>end()</code>。</p>
-</li>
-<li>
-<p>所有迭代器都支持的运算：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">运算符</th>
-<th style="text-align:center">例子</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">*</td>
-<td style="text-align:center"><code>*iter</code></td>
-<td style="text-align:center">返回迭代器<code>iter</code>指向元素的<strong>引用</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">-&gt;</td>
-<td style="text-align:center"><code>iter-&gt;mem</code></td>
-<td style="text-align:center">解引用<code>iter</code>并获取该元素名为<code>mem</code>的成员，即<code>(*iter).mem</code></td>
-</tr>
-<tr>
-<td style="text-align:center">++</td>
-<td style="text-align:center"><code>++iter</code></td>
-<td style="text-align:center">令<code>iter</code>指向当前元素的后一个元素</td>
-</tr>
-<tr>
-<td style="text-align:center">&ndash;</td>
-<td style="text-align:center"><code>--iter</code></td>
-<td style="text-align:center">令<code>iter</code>指向当前元素的前一个元素</td>
-</tr>
-<tr>
-<td style="text-align:center">==</td>
-<td style="text-align:center"><code>iter1 == iter2</code></td>
-<td style="text-align:center">如果两个迭代器指向相同的元素返回<code>true</code>，否则返回<code>false</code></td>
-</tr>
-<tr>
-<td style="text-align:center">!=</td>
-<td style="text-align:center"><code>iter1 != iter2</code></td>
-<td style="text-align:center">上面例子的反面</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>迭代器的类型有两种：<code>iterator</code>和<code>const_iterator</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
-</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">iterator</span> <span class="n">its</span><span class="p">;</span>               <span class="c1">// 可用于读写string对象中的元素
-</span><span class="c1"></span>
-<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">citv</span><span class="p">;</span>   <span class="c1">// 只能读取元素
-</span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">cits</span><span class="p">;</span>        <span class="c1">// 只能读取元素
-</span></code></pre></div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
-<p>C++11中引入了<code>cbegin()</code>和<code>cend()</code>来专门返回<code>const_iterator</code>。</p>
-</li>
-<li>
-<p>认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。</p>
-</li>
-<li>
-<p><code>vector</code>和<code>string</code>的迭代器支持的<strong>额外的</strong>运算：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">运算</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>iter + n</code></td>
-<td style="text-align:center">运算得到一个新迭代器，指向当前元素的后n个元素的位置</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>iter - n</code></td>
-<td style="text-align:center">运算得到一个新迭代器，指向当前元素的前n个元素的位置</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>iter += n</code></td>
-<td style="text-align:center">运算得到的新迭代器赋值给<code>iter</code></td>
-</tr>
-<tr>
-<td style="text-align:center"><code>iter -= n</code></td>
-<td style="text-align:center">同上</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>iter1 - iter2</code></td>
-<td style="text-align:center">两个迭代器之间的距离，可正可负</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
-<td style="text-align:center">同两类型的下标运算符中的数字的关系，位置靠前的较小</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>一般不在意迭代器的类型，因此使用<code>auto</code>来标注。</li>
-<li>循环结束的判断条件习惯使用迭代器和<code>!=</code>，这样可以不用在意容器类型。</li>
-<li>凡是使用了迭代器的循环体中都不能有改变容器大小的操作如<code>push_back()</code>。</li>
 </ol>
 ]]></description>
 </item></channel>
