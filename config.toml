@@ -209,14 +209,20 @@ SourceMap = true
       faIcon = "fas fa-map-marker-alt"
       desc = "Beijing"
     [[params.about.parameter]]
-      language = "UI/UX"
-      level = "80"
-    [[params.about.parameter]]
-      language = "HTML"
+      language = "Java"
       level = "70"
+    [[params.about.parameter]]
+      language = "C++"
+      level = "60"
     [[params.about.parameter]]
       language = "Go"
       level = "60"
+    [[params.about.parameter]]
+      language = "Rust"
+      level = "30"
+    [[params.about.parameter]]
+      language = "Javascript"
+      level = "30"
 
 
 # Hugo 解析文档的配置
