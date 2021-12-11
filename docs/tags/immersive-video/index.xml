@@ -4,7 +4,340 @@
         <link>https://ayamir.github.io/tags/immersive-video/</link>
         <description>Immersive-Video - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for Dante</title>
+    <link>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</link>
+    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Level：IEEE Transaction on multimedia 21</p>
+<p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
+<h2 id="系统架构">系统架构</h2>
+<ul>
+<li>服务端
+<ol>
+<li>将原始视频转码为有不同比特率的多个版本。</li>
+<li>转码后的视频被划分成多个tile。</li>
+<li>传输协议使用MPEG-DASH。</li>
+</ol>
+</li>
+<li>客户端
+<ol>
+<li>评估器
+<ul>
+<li>任务：获取 QoE、FOV预测、传输效率、网络带宽</li>
+<li>组成：
+<ul>
+<li>QoE评估器：评估当前FOV质量=&gt;Q和重缓冲频率=&gt;F（近似为Q+F=QoE）</li>
+<li>FOV预测器：基于历史FOV信息预测短期未来的FOV=&gt;P</li>
+<li>根据下载和播放日志：计算传输效率=&gt;E并估计带宽=&gt;B</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>控制器
+<ul>
+<li>任务：控制传输过程中的推流</li>
+<li>目标：保证QoE在可接受的范围之内、最大化传输效率</li>
+<li>详细：基于FOV预测将tile划分成3种类型：FOV、OOS、Base</li>
+<li>输入：Q、F、E、B（QoE+传输效率和带宽）</li>
+<li>过程：Rainbow-DQN</li>
+<li>输出：决定每个tile流的码率和缓冲区大小（作为下载器的输入）</li>
+</ul>
+</li>
+<li>下载器
+<ul>
+<li>输入：tile码率和缓冲区大小</li>
+<li>过程：基于HTTP/2进行并行下载</li>
+<li>输出：下载好的tile</li>
+</ul>
+</li>
+<li>视频缓冲区
+<ul>
+<li>任务：解码、同步、存储下载好的tile等待渲染器消耗，大小供控制器调节</li>
+<li>随着FOV的切换缓冲区内容可能被循环利用</li>
+</ul>
+</li>
+<li>全景渲染器
+<ul>
+<li>任务：将同步好的tile拼接，tile质量：FOV&gt;OOS&gt;Base</li>
+<li>投影方式：ERP</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="控制器">控制器</h2>
+<h3 id="控制过程">控制过程</h3>
+<ol>
+<li>
+<p>设定QoE的可接受范围。</p>
+</li>
+<li>
+<p>将网络带宽和用户FOV设定为外部因素而非环境</p>
+<p>为什么：因为这两个因素变化太快，在面对不同传输条件时，直接作为环境会导致决策过程的不稳定性并且难以收敛。</p>
+</li>
+<li>
+<p>最优化的对象只是最大化累积的传输效率。</p>
+<p>为什么：简单</p>
+</li>
+</ol>
+<h3 id="tile聚合和决策">tile聚合和决策</h3>
+<ol>
+<li>
+<p>tile分类原则：</p>
+<ul>
+<li>
+<p>控制器无需为每个tile独立决定码率Q和缓冲区大小L</p>
+</li>
+<li>
+<p>FOV内的tile应该被分配相近的码率，FOV内的tile应该聚集成一组，OSS和Base同理</p>
+<p>为什么：避免相邻tile的锐利边界，只考虑3组而非所有tile降低了计算复杂性和决策延迟</p>
+<p>（能否实现独立的tile码率计算或更细粒度的划分值得调研？与内容感知的方案结合？）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>基于距离的tile分类实现方式：</p>
+<ul>
+<li>
+<p>使用评估器预测出的FOV坐标来分类FOV和OOS的tile</p>
+</li>
+<li>
+<p>tile出现在未来FOV的可能性由距离计算</p>
+<p>tile中心点坐标$(\omega_i, \mu_i)$、FOV坐标$(\hat{U}, \hat{V})$</p>
+<p>距离的变化区间内存在一个临界点，临界点之内的划分为FOV，之外的划分为OOS</p>
+<ul>
+<li>
+<p>度量距离的方式：
+$$
+\Delta Dis_U = min{|\omega_i - \hat{U}|, |1+\omega_i - \hat{U}|}
+$$</p>
+<p>（这里为何不直接使用$|\omega_i - \hat{U}|$？）
+$$
+Dis_i =
+\begin{cases}
+{\sqrt{{\Delta Dis_U}^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}  \
+{\Delta Dis_U + |\mu_i - \hat{V}|,\ Others}
+\end{cases}
+$$</p>
+</li>
+<li>
+<p>因为ERP的投影方式会在两级需要更多的tile，因此使用一个矩形来代表两极的FOV</p>
+<p>（可以深入调研ERP在两极处的处理方式）</p>
+</li>
+<li>
+<p>$Dis_i$使用曼哈顿距离来测量。临界点初始化为$2\cdot R$，并随着FOV中心和两极的垂直距离增长。</p>
+</li>
+<li>
+<p>FOV看作是半径为R的圆，使用欧式距离测量。临界点初始化为$R$</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>聚合tile的决策</p>
+<ul>
+<li>使用2个变量：$K$作为FOV和非FOV的tile的带宽分配比率；$Len$作为tile缓冲区的大小。
+<ul>
+<li>
+<p>$K$确定之后，分配给FOV内tile的带宽被均匀分配（可否非均匀分配）</p>
+<p>$K$不直接与网络状况相关因此可以保持控制的稳定性</p>
+</li>
+<li>
+<p>$Len$：所有传输的tile的缓冲区长度$l_i$都被设为$Len$  （文中并没有这样做的原因解释）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="基于drl的传输控制算法">基于DRL的传输控制算法</h3>
+<p>相关术语解释：<a href="https://www.jianshu.com/p/1dfd84cd2e69" target="_blank" rel="noopener noreffer">Rainbow DQN</a>、<a href="https://towardsdatascience.com/the-complete-reinforcement-learning-dictionary-e16230b7d24e" target="_blank" rel="noopener noreffer">RL Dictionary</a>、<a href="https://zhuanlan.zhihu.com/p/38358183" target="_blank" rel="noopener noreffer">PER</a>、<a href="https://zhuanlan.zhihu.com/p/34747205" target="_blank" rel="noopener noreffer">TD-Error</a></p>
+<ol>
+<li>
+<p>控制过程</p>
+<ol>
+<li>
+<p>首先调整buffer长度Len，并划分FOV与非FOV的带宽分配。</p>
+</li>
+<li>
+<p>等viewport预测完成之后，tile被分类为属于FOV和OOS的tile。</p>
+</li>
+<li>
+<p>FOV的带宽被平均分给其中每一个tile并决定FOV内tile的质量等级$q_i$。</p>
+<p>非FOV的带宽按照与FOV的距离分配，每超过一个距离单位$Dis_i$就降低一级质量$q_i$。</p>
+</li>
+<li>
+<p>最终的输出是请求序列，每个请求序列中包括质量等级$q_i$和预期的缓冲区大小$l_i$。</p>
+</li>
+<li>
+<p>根据输出做出调整之后，接收奖励反馈并不断完成自身更新。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>状态设计</p>
+<p>状态设计为4元组：$&lt;K, Len, F, E&gt;$，包括传输控制参数$K$，$Len$、QoE指标$F$和传输效率$E$。</p>
+<p>没有直接使用带宽$B$和viewport轨迹$V$，因为：</p>
+<ol>
+<li>随机性强与变化幅度较大带来的不稳定性（如何定义随机性强弱和变化幅度大小？）</li>
+<li>希望设计的模型有一定的通用性，可以与不同的网络情况和用户轨迹相兼容</li>
+</ol>
+</li>
+<li>
+<p>动作设计</p>
+<p>两种动作：调整$K$和$Len$（两者的连续变化区间被离散化，调整的每一步分别用$\Delta k$和$\Delta l$表示）</p>
+<p>调整的方式被形式化为二元组：$&lt;n_1, n_2&gt;$，$n_1$和$n_2$分别用于表示$K$和$Len$的调整</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">-n</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">K</td>
+<td style="text-align:center">减少n$\Delta k$</td>
+<td style="text-align:center">不变</td>
+<td style="text-align:center">增加n$\Delta k$</td>
+</tr>
+<tr>
+<td style="text-align:center">Len</td>
+<td style="text-align:center">减少n$\Delta l$</td>
+<td style="text-align:center">不变</td>
+<td style="text-align:center">增加n$\Delta l$</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>奖励函数
+因为QoE的各项指标权重难以确定，没有使用传统的基于加权的方式。</p>
+<p>设定了<strong>能接受的QoE范围</strong>和<strong>在此基础上最大化的传输效率</strong>作为最后的性能指标，形式化之后如下：
+$$
+Reward =
+\begin{cases}
+-INF,\ F \ge F^{max}\
+-INF,\ E \le E^{min}\
+E,\ Others
+\end{cases}
+$$</p>
+<p>$-INF$意味着终止当前episode；动作越能使系统满足高QoE的同时高效运行，得分越高；</p>
+<p>为了最大化传输效率，使用$E$作为奖励回报。</p>
+<p>FOV质量$Q$并没有参与到奖励函数中，因为：<strong>高Q意味着高性能，但是低Q不一定意味着低性能</strong>，详细解释如下：</p>
+<ul>
+<li>在带宽不足的情况下，低Q可能已经是这种条件下的满足性能的最好选择。</li>
+<li>高传输效率意味着传输了更多的FOV数据，也能满足高FOV质量的目标。</li>
+</ul>
+</li>
+<li>
+<p>模型设计
+基于Rainbow-DQN模型：</p>
+<ul>
+<li>
+<p>输入是5元组$&lt;K, Len, Q, F, E&gt;$。</p>
+</li>
+<li>
+<p>神经网络使用带有64的3隐层模型。</p>
+</li>
+<li>
+<p>为了提高鲁棒性，使用Dueling DQN的方式，将Q值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
+$$
+Q(s, a) = V(s) + A(s, a)
+$$</p>
+<p>$V(s)$表示系统处于状态$s$时的性能；$A(s,a)$表示系统处于状态$s$时动作$a$带来的性能；</p>
+</li>
+<li>
+<p>为了避免价值过高估计，使用Double DQN的方式，设计了两个独立的神经网络：评估网络和目标网络。</p>
+<p>评估网络用于动作选择；目标网络是评估网络从最后一个episode的拷贝用于动作评估。</p>
+</li>
+<li>
+<p>为了缓解神经网络的不稳定性（更快收敛），使用大小为$v$的回放池来按照时间序列保存客户端的经验。</p>
+<p>因为网络带宽和FOV轨迹在短期内存在特定的规律性，回放池中有相似状态和相似采样时间的样本更加重要，出现了优先级</p>
+<p>所以使用优先经验回放PER，而优先级使用时间查分误差TD-error定义
+$$
+\delta_i = r_{i+1} + \gamma Q(s_{i+1}, arg\underset{a}{max}Q(s_{i+1}, a; \theta_i); \theta_i^{'}) - Q(s_i, a_i; \theta_i)
+$$</p>
+<p>$r_i$是奖励；$\gamma$是折扣因子</p>
+</li>
+<li>
+<p>损失函数使用均方误差定义
+$$
+J = \frac{1}{v} \sum_{i=1}^{v} \omega_i(\delta_i)^2
+$$</p>
+<p>$\omega_i$是回放缓冲中第i个样本的重要性采样权重</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="实验验证">实验验证</h2>
+<ol>
+<li>
+<p>环境设定</p>
+<ul>
+<li>传输控制模块：基于<a href="https://tensorforce.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer">TensorForce</a>（配置教程：<a href="https://zhuanlan.zhihu.com/p/60241809" target="_blank" rel="noopener noreffer">用TensorForce快速搭建深度强化学习模型</a>）；开发工具集：<a href="https://gym.openai.com/" target="_blank" rel="noopener noreffer">OpenAI Gym</a></li>
+<li>数据来源：使用全景视频播放设备收集，加入高斯噪声来产生更多数据。</li>
+</ul>
+</li>
+<li>
+<p>结果分析</p>
+<ul>
+<li>
+<p>与其他DQN算法的对比——DQN、Double DQN、Dueling DQN</p>
+<ul>
+<li>
+<p>对比训练过程中每个episode中的最大累计奖励：$MAX_{reward}$</p>
+</li>
+<li>
+<p>对比模型收敛所需要的最少episode：$MIN_{episode}$<br>
+相同的带宽和FOV轨迹</p>
+</li>
+</ul>
+</li>
+<li>
+<p>与其他策略对比性能——高QoE和高传输效率</p>
+<ul>
+<li>随机控制策略：随机确定K和Len</li>
+<li>固定分配策略：固定K和Len的值</li>
+<li>只预测Viewport策略：使用LSTM做预测，不存在OSS与Base，所有带宽都用于FOV
+带宽和FOV轨迹的均值和方差相等</li>
+</ul>
+</li>
+<li>
+<p>与其他全景视频推流系统的对比</p>
+<ul>
+<li>
+<p>DashEntire360：使用Dash直接传送完整的360度视频，使用线性回归来估计带宽并动态调整视频比特率</p>
+</li>
+<li>
+<p>360ProbDash：在DashEntire360的基础上划分tile基于Dash传输，使用可能性模型为tile分配比特率</p>
+</li>
+<li>
+<p>DRL360：使用DRL来优化多项QoE指标</p>
+<p>实现三种系统、使用随机网络带宽和FOV轨迹。</p>
+<p>使用DRL360中提出的方式测量QoE：
+$$
+V_{QoE} = \eta_1 Q - \eta_2 F - \eta_3 A
+$$</p>
+<p>$A$是平均viewport时间变化，反映FOV质量Q的变化；</p>
+<p>$\eta_1, \eta_2, \eta_3$分别是3种QoE指标的非负加权，使用4种加权方式来训练模型并对比：$&lt;1, 1, 1&gt;$，$&lt;1, 0.25, 0.25&gt;$，$&lt;1, 4, 1&gt;$，$&lt;1,1,4&gt;$</p>
+</li>
+</ul>
+</li>
+<li>
+<p>在不同环境下的性能评估——带宽是否充足、FOV轨迹是否活跃（4种环境）</p>
+</li>
+</ul>
+</li>
+</ol>
+]]></description>
+</item><item>
     <title>Note for 360ProbDASH</title>
     <link>https://ayamir.github.io/posts/note-for-360probdash/</link>
     <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate>
@@ -1161,197 +1494,6 @@ $$</p>
 <p>相比于点播式流媒体，360度直播推流面临多个挑战，例如在事先不知情的情况下处理用户导航、视频的首次流式传输以及实时视频的转码。在多用户场景中，这些挑战更为棘手。</p>
 <p>关于处理多个用户的观看模式，可伸缩的多播可以用于在低带宽和高带宽网络上以接近于按需推流的质量等级。</p>
 <p>基于ROI的tile拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p>
-]]></description>
-</item><item>
-    <title>沉浸式流媒体网络问题的相关解决方案</title>
-    <link>https://ayamir.github.io/posts/note4/</link>
-    <pubDate>Sat, 30 Oct 2021 19:20:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/note4/</guid>
-    <description><![CDATA[<h1 id="概况">概况</h1>
-<p>现有的沉浸式流媒体应用都对带宽、QoS和计算需求有着高要求，这主要得益于5G网络。</p>
-<p>传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。</p>
-<p>边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。</p>
-<h1 id="解决方案">解决方案</h1>
-<h2 id="360度视频的边缘协助推流">360度视频的边缘协助推流</h2>
-<h3 id="背景">背景</h3>
-<p>主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。</p>
-<p>在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。</p>
-<h4 id="hous-work">Hou&rsquo;s work</h4>
-<p>提出边缘/云服务器渲染可以使计算更加轻便，可以让无线VR/AR体验可行并且便携。</p>
-<h4 id="zhangs-work">Zhang&rsquo;s work</h4>
-<p>为VR多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。</p>
-<p>进一步陈述了一种服务器选择算法，它基于QoS和玩家移动的影响确保所有VR玩家之间的公平性。</p>
-<h4 id="los-work">Lo&rsquo;s work</h4>
-<p>考虑了为360度视频渲染提供边缘协助的设备的异质性。</p>
-<ul>
-<li>边缘服务器将 HEVC tile流转码为viewport视频流并传输到多个客户端。</li>
-<li>最优化算法根据视频质量、HMD类型和带宽动态决定边缘节点服务哪个客户端。</li>
-</ul>
-<h4 id="边缘缓存策略">边缘缓存策略</h4>
-<h5 id="背景-1">背景</h5>
-<p>传统视频的缓冲方案并不能直接应用到360度视频上。</p>
-<p>为了在启用边缘缓存的网络中促进360度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。</p>
-<p>边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。</p>
-<h5 id="mahzais-work">Mahzai&rsquo;s work</h5>
-<p>基于其他用户的观看行为为360度视频的流行内容提出了一种缓存策略。</p>
-<ul>
-<li>与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。</li>
-</ul>
-<h5 id="papaioannous-work">Papaioannou&rsquo;s work</h5>
-<p>提出了基于tile分辨率和需求统计信息的缓存策略，用最少的错误，提高要求tile的和缓存tile这两种版本的viewport覆盖率。</p>
-<ul>
-<li>不同缓存和传输延迟的实验评估表明提高了缓存命中率，特别是对于分层编码的tile。</li>
-</ul>
-<h5 id="lius-work">Liu&rsquo;s work</h5>
-<p>背景：</p>
-<p>边缘缓存可以被在Evolved Packet Core处执行，因为packet大小很小所以这样可能会产生次优的性能。</p>
-<p>另一种替换的方式是在Radio Access Network处缓存数据。但这样由于数据隧道和分包会变得更加复杂。</p>
-<p>研究内容：</p>
-<p>为移动网络提出了一种同时使用RAN和EPC的基于tile的缓存方案，以此在视频流延迟的约束下节省传输带宽。</p>
-<ul>
-<li>为EPC和RAN的缓存节点分别被部署在Packet Data Network Gateway和eNodeBs。</li>
-<li>EPC中的内容控制实体负责为tile内容改善缓存利用率。</li>
-<li>这种联合的tile缓存设计能以优秀的可伸缩性为<a href="https://zh.wikipedia.org/wiki/%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF%E5%9B%9E%E5%82%B3" target="_blank" rel="noopener noreffer">回程网络</a>显著地减少带宽压力。</li>
-</ul>
-<h5 id="maniotiss-work">Maniotis&rsquo;s work</h5>
-<p>为了利用协作传输的机会，提出了一种在包含宏蜂窝基站(MBS)和多个小基站(SBS)的蜂窝网络中的tile级别的视频流行度感知缓存和传输方案。</p>
-<ul>
-<li>应用了一种高级的编码方式来创建灵活的tile编码结构，使在每个SBS中能协同缓存。</li>
-<li>这种协同允许在 SBS 只存储可能被观看的图块，而其他图块可以通过回程链路获取。</li>
-</ul>
-<h5 id="chens-work">Chen&rsquo;s work</h5>
-<p>为被捕获内容从<code>Drone base station</code>到小基站的联合缓存和分发提出了一种<code>echo-liquid</code>状态的 DRL 模型，使用高频毫米波通信技术。</p>
-<ul>
-<li>为了满足即时延迟的目标，基站可以从数据中缓存流行内容。</li>
-<li>但是，小基站的广泛部署实际上消耗了很多能源。</li>
-</ul>
-<h5 id="yangs-work">Yang&rsquo;s work</h5>
-<p>在计算资源受限制的MEC架构中，利用缓存和计算资源来降低对通信资源的要求。</p>
-<ul>
-<li>但是这种结构需要资源敏感的任务调度来平衡通信开销和延迟。</li>
-</ul>
-<h5 id="chakareskis-work">Chakareski&rsquo;s work</h5>
-<p>为<code>multi-cell</code>网络环境中的AR/VR应用探索了最前沿的缓存、计算和通信机制。</p>
-<ul>
-<li>提出的框架允许基站利用适当的计算和缓存资源来最大化总计的回报。</li>
-<li>只关注了缓存和渲染，没有考虑用户视角的感受以及处理事件。</li>
-</ul>
-<h5 id="suns-work">Sun&rsquo;s work</h5>
-<p>在内容到达终端之前，同时利用FoV(Field of View)缓存和必要的计算操作来节省通信带宽而不牺牲响应时间。</p>
-<ul>
-<li>对于同质的FoVs，联合缓存和计算框架执行关于缓存和后期处理的最优决策。</li>
-<li>对于异质的FoVs，应用凹凸表达式来得到有吸引力的结果。</li>
-</ul>
-<h5 id="rigazzis-work">Rigazzi&rsquo;s work</h5>
-<p>基于一个开源项目Fog05提出了一个三层(3C)解决方案来分发密集的任务（例如编解码和帧重建），穿越中心云层，受约束的雾层和边缘节点层。</p>
-<ul>
-<li>利用了系统可伸缩性、互操作性和360度视频推流服务的生命周期循环。</li>
-<li>实验性的评估表明在带宽、能源消耗、部署开销和终端复杂性方面取得了显著的减少。</li>
-</ul>
-<h5 id="elbambys-work">Elbamby&rsquo;s work</h5>
-<p>通过在延迟和可靠性的约束下，应用积极的计算和毫米波传输，为交互式的VR游戏提出了一个联合框架。</p>
-<ul>
-<li>对视频帧做预计算和存储来减少VR流量。</li>
-<li>评估表明这种联合机制可以减少多达30%的端到端延迟。</li>
-</ul>
-<h4 id="边缘计算的优势">边缘计算的优势</h4>
-<ol>
-<li>
-<p>减少延迟</p>
-<p>传统的云端节点距离用户较远，边缘计算使用户可以共享多个服务器池的协同计算资源。</p>
-</li>
-<li>
-<p>降低能耗</p>
-<p>根据网络架构和资源供应将计算卸载到分布式计算集群，能显著提高移动设备的性能。</p>
-</li>
-<li>
-<p>负载均衡</p>
-<p>边缘节点例如基站、小蜂窝和终端设备可以在用户端存储内容，降低了核心网的负载。</p>
-</li>
-</ol>
-<h4 id="现有利用边缘计算的解决方案">现有利用边缘计算的解决方案</h4>
-<p></p>
-<ul>
-<li>大多数任务卸载的MEC方案只致力于优化带宽、能源或延迟。</li>
-<li>发展中的方案同时致力于许多其他重要的目标：可靠性、可移动性、QoS、部署成本、安全性。</li>
-<li>利用带缓存的边缘计算的能力可以增强可移动性、位置感知能力、高效的数据分发、网络上下文理解和提供服务的安全性。</li>
-<li>层级化的边缘-云体系结构对于适应360度视频快速动态传输是必要的。</li>
-<li>相比于单静态层，多个动态缓存模型可以帮助管理唐突的viewport和网络变化来改善多用户的viewport命中率。</li>
-<li>无论环境怎样，主动缓存都可以通过采用预测机制来预取和缓存部分视频来提高感知质量。</li>
-</ul>
-<h2 id="360度视频的协同传输">360度视频的协同传输</h2>
-<h3 id="背景-2">背景</h3>
-<ul>
-<li>360度视频推流有较大的用户需求并且在逐渐增长。</li>
-<li>目前推流viewport之外的冗余信息会浪费重要的网络带宽。</li>
-<li>相同的360度视频内容，在带宽受限的网络之上被推流给多个用户时，码率的需求变得更难满足。</li>
-</ul>
-<p>几个方法应用了360度视频的协同传输，进而改善传输效率。</p>
-<h3 id="方案">方案</h3>
-<h4 id="ahmadis-work">Ahmadi&rsquo;s work</h4>
-<p>引入了基于DASH的加权tile方法来优化子用户组请求的tile编码性能。</p>
-<ul>
-<li>提出了多播流方案基于被用户看到的可能性对tile分配适当的权重。</li>
-<li>接着基于可用带宽和tile权重为每个子用户组选择tile的码率。</li>
-<li>实际上因为相邻tile的不同质量导致了空间质量变化，最终造成糟糕的推流体验。</li>
-<li>不必要的离散优化问题巨大，不能保证有积极的表现。</li>
-</ul>
-<h4 id="baos-work">Bao&rsquo;s work</h4>
-<p>基于动作预测和并发观看用户的信道条件提出了一种多播框架，来只分发可能被看到的360度视频块。</p>
-<ul>
-<li>没有在无线多播传输中考虑优化资源分配。</li>
-</ul>
-<h4 id="guos-work">Guo&rsquo;s work</h4>
-<p>为每个用户假设了一种随机动作模式和不稳定的信道条件，并且开发了多播机会来避免冗余数据传输。</p>
-<p>作者考虑了两个非凸的问题：</p>
-<ol>
-<li>在给定视频质量的约束下，最小化平均传输时间和能源消耗。</li>
-<li>在给定的传输时间和能源预算下，最大化每个用户的视频质量。</li>
-</ol>
-<h4 id="longs-work">Long&rsquo;s work</h4>
-<p>考虑了传输时间、视频质量的平滑性和能源限制，在单服务器多用户无线网络环境中优化多个用户的聚合效用。</p>
-<ul>
-<li>为了减少传输复杂性，作者准备了多种质量的tile，并为每组用户将tile划分到不相邻的子集中。</li>
-</ul>
-<h4 id="zhangs-work-1">Zhang&rsquo;s work</h4>
-<p>引入了一种使用SVC质量自适应方法的协同推流策略，来改善移动自组网环境中，观看360度内容的多个用户间的带宽共享。</p>
-<ul>
-<li>当遇到可用网络资源限制时，提出的启发性方式基于被看到的可能性和聚合的组级别偏好设置选择最优的tile子集。</li>
-</ul>
-<h4 id="kans-work">Kan&rsquo;s work</h4>
-<p>提出了一种服务端混合多播-单播协同推流方案来分发不同质量的360度视频到多个用户。</p>
-<ul>
-<li>基于用户的观看行为对其进行分簇，以此来轻松共享相同的视频内容。</li>
-<li>为每个tile联合选择传输模式和适当的码率来提高整体的QoE。</li>
-</ul>
-<h4 id="huang-and-zhangs-work">Huang and Zhang&rsquo;s work</h4>
-<p>设计了一种MIMO网络中的MAC调度方式。</p>
-<ul>
-<li>资源分配策略基于三个主要的函数
-<ol>
-<li>基于延迟的<code>Motion-To-Photon</code>(MTP)VR帧权重计算。</li>
-<li>基于最大<code>Aggregate Delay-Capacity Utility</code>（ADCU）的用户选择。</li>
-<li>用于平衡VR数据传输的极高需求的链路自适应方法。</li>
-</ol>
-</li>
-</ul>
-<h4 id="li-and-gaos-work">Li and Gao&rsquo;s work</h4>
-<p>提出了多用户VR框架，其中边缘云自适应地存储和重用冗余VR帧，以减少计算和传输负载。</p>
-<ul>
-<li>两级cache的设计：用户端的小型本地cache和边缘的大型中央cache。</li>
-<li>通过为所有用户产生背景视图和无论何时都重用帧，使得减少了内存需求。</li>
-<li>评估表明帧相关数据和计算负载分别减少了95%和90%。</li>
-</ul>
-<h4 id="总结">总结</h4>
-<p>对推流到多个临近用户的流行内容共享例如360度视频是一种自然的选择。</p>
-<p>然而非协作式的用户对带宽的竞争会快速使整个网络瘫痪。</p>
-<p>为了为多个用户获得改善的QoE，研究者从以下几个方面做了努力：</p>
-<ol>
-<li>确定多个用户可能的需求来公平地分配可用的网络资源。</li>
-<li>分析跨用户的行为来精确传输要求的子帧到终端用户。</li>
-<li>由于侧信道攻击，保护VR帧传输到多个终端用户。</li>
-</ol>
 ]]></description>
 </item></channel>
 </rss>
