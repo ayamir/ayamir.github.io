@@ -7,9 +7,7 @@
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><atom:link href="https://ayamir.github.io/tags/gnu/linux/" rel="self" type="application/rss+xml" /><item>
     <title>Linux权限相关命令解读</title>
     <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/linux-authority/</guid>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
@@ -198,5 +196,6 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <p></p>
 <p>上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
 ]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

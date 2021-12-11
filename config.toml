@@ -7,13 +7,13 @@ preserveTaxonomyNames = true
 enableRobotsTXT = true
 enableEmoji = true
 enableGitInfo = true
-theme = "LoveIt"
+theme = "FeelIt"
 defaultTheme = "auto"
 publishDir = "docs"
 
 [params]
   # LoveIt 主题版本
-version = "0.2.X"
+version = "1.0.X"
 description = "Welcome to Ayamir's blog."
 keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "Projects"]
 

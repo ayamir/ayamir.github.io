@@ -7,9 +7,7 @@
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><atom:link href="https://ayamir.github.io/categories/gnu/linux/" rel="self" type="application/rss+xml" /><item>
     <title>How to Fix GPGME Error on Archlinux</title>
     <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
 </code></pre></div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
@@ -20,12 +18,11 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
 </code></pre></div><p>Now you can update successfully!</p>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>Linux权限相关命令解读</title>
     <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/linux-authority/</guid>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
@@ -214,12 +211,11 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <p></p>
 <p>上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>Dns Settings on Archlinux</title>
     <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns设置">Arch Linux DNS设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>
@@ -272,5 +268,6 @@ nameserver 192.168.1.1
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo systemctl <span class="nb">enable</span> dnsmasq.service --now
 
 </code></pre></div>]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

@@ -7,9 +7,7 @@
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/archlinux/" rel="self" type="application/rss+xml" /><item>
     <title>How to Fix GPGME Error on Archlinux</title>
     <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
 </code></pre></div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
@@ -20,12 +18,11 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
 </code></pre></div><p>Now you can update successfully!</p>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>Dns Settings on Archlinux</title>
     <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns设置">Arch Linux DNS设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>
@@ -78,5 +75,6 @@ nameserver 192.168.1.1
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo systemctl <span class="nb">enable</span> dnsmasq.service --now
 
 </code></pre></div>]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

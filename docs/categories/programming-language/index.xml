@@ -7,9 +7,7 @@
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
     <link>https://ayamir.github.io/posts/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/iterator/</guid>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -136,12 +134,11 @@
 <li>凡是使用了迭代器的循环体中都不能有改变容器大小的操作如<code>push_back()</code>。</li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
     <link>https://ayamir.github.io/posts/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/vector/</guid>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -200,12 +197,11 @@
 <li>在循环体内部包含向<code>vector</code>对象添加元素的操作时，不应该使用<code>foreach</code>循环。</li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：标准库类型string</title>
     <link>https://ayamir.github.io/posts/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/string/</guid>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -297,12 +293,11 @@
 </code></pre></div></li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：类型推导</title>
     <link>https://ayamir.github.io/posts/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/auto/</guid>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -332,12 +327,11 @@
 <li><code>decltype</code>尽量不要使用。</li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：Const二三事</title>
     <link>https://ayamir.github.io/posts/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/const/</guid>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -466,12 +460,11 @@
 <li>如果认定变量是一个常量表达式，那就将其声明成<code>constexpr</code>类型。</li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：引用和指针</title>
     <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -613,12 +606,11 @@
 </li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>重学C&#43;&#43;：类型系统基础</title>
     <link>https://ayamir.github.io/posts/cpp-types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/cpp-types/</guid>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/cpp-types/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -779,12 +771,11 @@
 </li>
 </ol>
 ]]></description>
-</item><item>
+</item>
+<item>
     <title>Python selenium settings on microsoft-edge-dev</title>
     <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
-    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
     <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
 </code></pre></div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
@@ -809,5 +800,6 @@
 </code></pre></div><h2 id="launch-it">Launch it</h2>
 <p></p>
 ]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>
