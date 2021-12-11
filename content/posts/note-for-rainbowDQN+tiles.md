@@ -88,7 +88,8 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
         $$
         Dis_i = 
         \begin{cases}
-        {\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}  \\
+        {\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}
+        \\
         {\Delta Dis_U + |\mu_i - \hat{V}|,\ Others}
         \end{cases}
         $$
@@ -153,8 +154,10 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
     $$
     Reward = 
     \begin{cases}
-    -INF,\ F \ge F^{max}\\
-    -INF,\ E \le E^{min}\\
+    -INF,\ F \ge F^{max}
+    \\
+    -INF,\ E \le E^{min}
+    \\
     E,\ Others
     \end{cases}
     $$

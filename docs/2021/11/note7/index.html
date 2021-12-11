@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>自适应策略之viewport依赖型 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="自适应策略之viewport依赖型" />
+<meta property="og:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/2021/11/note7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-14T13:24:59+08:00" />
+<meta property="article:modified_time" content="2021-11-14T14:23:17+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="自适应策略之viewport依赖型"/>
+<meta name="twitter:description" content="概述 在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。 通常的实现方式 在服务端提供"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/2021/11/note7/" /><link rel="prev" href="https://ayamir.github.io/2021/11/note6/" /><link rel="next" href="https://ayamir.github.io/2021/11/note8/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "自适应策略之viewport依赖型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/2021\/11\/note7\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  601 ,
+        "url": "https:\/\/ayamir.github.io\/2021\/11\/note7\/","datePublished": "2021-11-14T13:24:59+08:00","dateModified": "2021-11-14T14:23:17+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">自适应策略之viewport依赖型</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-14">2021-11-14</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 601 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#通常的实现方式">通常的实现方式</a></li>
+        <li><a href="#自适应推流参数">自适应推流参数</a></li>
+        <li><a href="#参数计算公式">参数计算公式</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="概述">概述</h2>
+<p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
+<h2 id="通常的实现方式">通常的实现方式</h2>
+<p>在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证viewport的平滑转换。</p>
+<p>提出QER(Quality-focused Regios)的概念使viewport内部的视频分辨率高于viewport之外的视频分辨率。</p>
+<p>非对称的方式以不同的空间分辨率推流来节省带宽。</p>
+<ul>
+<li>在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。</li>
+<li>优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在viewport中生成。</li>
+<li>缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。</li>
+</ul>
+<h2 id="自适应推流参数">自适应推流参数</h2>
+<ol>
+<li>可用带宽和网络吞吐量</li>
+<li>Viewport预测的位置</li>
+<li>客户端播放器的可用缓冲</li>
+</ol>
+<h2 id="参数计算公式">参数计算公式</h2>
+<ul>
+<li>
+<p>第n个估计的Viewport：$V^e(n)$</p>
+<p>$V^e(n) = V_{fb}$</p>
+<p>$V_{fb}$是最新报告的viewport位置</p>
+</li>
+<li>
+<p>第n个估计的吞吐量：$T^e(n)$</p>
+<p>$T^e(n) = T_{fb}$</p>
+<p>$T_{fb}$是最新报告的吞吐量</p>
+</li>
+<li>
+<p>比特率：$R_{bits}$</p>
+<p>$R_{bits} = (1-\beta)T^e(n)$</p>
+<p>$\beta$是安全边缘</p>
+</li>
+<li>
+<p>第n个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$</p>
+<p>$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$</p>
+<p>$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$</p>
+<p>$w_k = \frac{A(t,k)}{A_{vp}}$</p>
+<p>$L=总帧数$</p>
+<p>$w_k$表示在第k个帧中与viewport所重叠的tile程度</p>
+<p>$A(t,k)$表示第k个帧中tile $t$ 重叠的区域</p>
+<p>$A_{vp}$表示viewport中总共的区域</p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive-Video</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2021-11-14</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/2021/11/note7/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/2021/11/note6/" class="prev" rel="prev" title="沉浸式流媒体现有标准"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/2021/11/note8/" class="next" rel="next" title="360度视频的音频处理">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.89.4">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>

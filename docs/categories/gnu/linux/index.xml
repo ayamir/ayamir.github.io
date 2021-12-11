@@ -6,44 +6,118 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><atom:link href="https://ayamir.github.io/categories/gnu/linux/" rel="self" type="application/rss+xml" /><item>
     <title>How to Fix GPGME Error on Archlinux</title>
-    <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
+    <link>https://ayamir.github.io/2021/06/how-to-fix-gpgme-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/06/how-to-fix-gpgme-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
-</code></pre></div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --init
-</code></pre></div><h2 id="populate-key">Populate key</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --populate
-</code></pre></div><h2 id="re-sync">Re sync</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
-</code></pre></div><p>Now you can update successfully!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo rm /var/lib/pacman/sync/*
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --init
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="populate-key">Populate key</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman-key --populate
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="re-sync">Re sync</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -Syyy
+</code></pre></td></tr></table>
+</div>
+</div><p>Now you can update successfully!</p>
 ]]></description>
 </item>
 <item>
     <title>Linux权限相关命令解读</title>
-    <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/linux-authority/</guid>
+    <link>https://ayamir.github.io/2021/03/linux-authority/</link>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/03/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
 <p>上图中的 Permission 字段下面的字母表示权限
 第一个字母表示 <strong>文件类型</strong> ：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">属性</td>
+<td class="org-left">文件类型</td>
+</tr>
+<tr>
+<td class="org-left">-</td>
+<td class="org-left">普通文件</td>
+</tr>
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">目录文件</td>
+</tr>
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">符号链接 符号链接文件剩余的属性都是 rwxrwxrwx，是伪属性值，符号链接指向的文件属性才是真正的文件属性</td>
+</tr>
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">字符设备文件 表示以字节流形式处理数据的设备，如 modem</td>
+</tr>
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">块设备文件 表示以数据块方式处理数据的设备，如硬盘驱动或光盘驱动</td>
+</tr>
+</tbody>
+</table>
 <p>剩下的 9 个位置上的字符称为 <strong>文件模式</strong> ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">属性</td>
+<td class="org-left">文件</td>
+<td class="org-left">目录</td>
+</tr>
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">允许打开和读取文件</td>
+<td class="org-left">如果设置了执行权限，允许列出目录下的内容</td>
+</tr>
+<tr>
+<td class="org-left">w</td>
+<td class="org-left">允许写入或截断文件，但是不允许重命名或删除文件</td>
+<td class="org-left">如果设置了执行权限，那么允许目录中的文件被创建、被删除和被重命名</td>
+</tr>
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">允许把文件当作程序一样来执行</td>
+<td class="org-left">允许进入目录</td>
+</tr>
+</tbody>
+</table>
 <h2 id="id显示用户身份标识">id：显示用户身份标识</h2>
 <p>一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权
 用户之上是群组，一个群组可以由多个用户组成
@@ -59,42 +133,132 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <ol>
 <li>
 <p>八进制表示法</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-right" />
+<col  class="org-right" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">八进制</td>
+<td class="org-right">二进制</td>
+<td class="org-left">文件模式</td>
+</tr>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">000</td>
+<td class="org-left">---</td>
+</tr>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">001</td>
+<td class="org-left">&##x2013;x</td>
+</tr>
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">010</td>
+<td class="org-left">-w-</td>
+</tr>
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">011</td>
+<td class="org-left">-wx</td>
+</tr>
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">100</td>
+<td class="org-left">r--</td>
+</tr>
+<tr>
+<td class="org-right">5</td>
+<td class="org-right">101</td>
+<td class="org-left">r-x</td>
+</tr>
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">110</td>
+<td class="org-left">rw-</td>
+</tr>
+<tr>
+<td class="org-right">7</td>
+<td class="org-right">111</td>
+<td class="org-left">rwx</td>
+</tr>
+</tbody>
+</table>
 <p>常用的模式有 7,6,5,4,0</p>
 </li>
 <li>
 <p>符号表示法</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">符号</td>
+<td class="org-left">含义</td>
+</tr>
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">user：表示文件或目录的所有者</td>
+</tr>
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">group：文件所属群组</td>
+</tr>
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">others：表示其他用户</td>
+</tr>
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">all：u+g+o</td>
+</tr>
+</tbody>
+</table>
 <p>如果没有指定字符默认使用 all
 ’+’表示添加一种权限
 ’-’表示删除一种权限
 例如：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">符号</td>
+<td class="org-left">含义</td>
+</tr>
+<tr>
+<td class="org-left">u+x</td>
+<td class="org-left">所有者+可执行</td>
+</tr>
+<tr>
+<td class="org-left">u-x</td>
+<td class="org-left">所有者-可执行</td>
+</tr>
+<tr>
+<td class="org-left">+x</td>
+<td class="org-left">所有用户+可执行</td>
+</tr>
+<tr>
+<td class="org-left">o-rw</td>
+<td class="org-left">其他用户-读写</td>
+</tr>
+<tr>
+<td class="org-left">go=rw</td>
+<td class="org-left">群组用户和其他用户权限更改为读，写</td>
+</tr>
+<tr>
+<td class="org-left">u+x,go=rx</td>
+<td class="org-left">所有者+可执行，群组用户和其他用户权限更改为读，可执行</td>
+</tr>
+</tbody>
+</table>
 <p>’-R’=’&amp;##x2013;recursive’表示递归设置</p>
 </li>
 </ol>
@@ -108,14 +272,38 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </code></pre>
 <p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">原始文件模式</td>
+<td class="org-left">---</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+</tr>
+<tr>
+<td class="org-left">掩码</td>
+<td class="org-left">000</td>
+<td class="org-left">000</td>
+<td class="org-left">000</td>
+<td class="org-left">010</td>
+</tr>
+<tr>
+<td class="org-left">结果</td>
+<td class="org-left">---</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+<td class="org-left">r--</td>
+</tr>
+</tbody>
+</table>
 <p>掩码中 1 对应位处的权限会被取消，0则不受影响
 所以会有这样的结果：</p>
 <p></p>
@@ -190,13 +378,34 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <pre><code>chown [owner][:[group]] file ...
 </code></pre>
 <p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">参数</td>
+<td class="org-left">结果</td>
+</tr>
+<tr>
+<td class="org-left">bob</td>
+<td class="org-left">文件所有者=&gt;bob</td>
+</tr>
+<tr>
+<td class="org-left">bob:users</td>
+<td class="org-left">文件所有者=&gt;bob 文件所属群组=&gt;users</td>
+</tr>
+<tr>
+<td class="org-left">:admins</td>
+<td class="org-left">文件所属群组=&gt;admins</td>
+</tr>
+<tr>
+<td class="org-left">bob:</td>
+<td class="org-left">文件所有者=&gt;bob 文件所属群组=&gt;bob 登录系统时的组</td>
+</tr>
+</tbody>
+</table>
 <p></p>
 <p>图中使用 root 用户在/home/ayamir 目录下创建了一个 foo.txt 文件，最后将此文件的所有者和所属组都改为了 ayamir（rg 是<a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener noreffer">ripgrep</a>）</p>
 <h2 id="chgrp更改文件所属群组">chgrp：更改文件所属群组</h2>
@@ -214,17 +423,58 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </item>
 <item>
     <title>Dns Settings on Archlinux</title>
-    <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
+    <link>https://ayamir.github.io/2021/01/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/01/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns设置">Arch Linux DNS设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -S dnsmasq
-</code></pre></div><ol start="2">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo pacman -S dnsmasq
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
 <li>配置<code>/etc/resolv.conf</code>中的域名代理服务器</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># Tencent</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># Tencent</span>
 nameserver 119.29.29.29
 nameserver 182.254.118.118
 
@@ -254,20 +504,44 @@ nameserver 8.20.247.20
 
 <span class="c1"># Generated by NetworkManager</span>
 nameserver 192.168.1.1
-</code></pre></div><ol start="3">
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
 <li>防止<code>/etc/resolv.conf</code>被修改</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo chattr +i /etc/resolv.conf
-</code></pre></div><ol start="4">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo chattr +i /etc/resolv.conf
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
 <li>减少主机名查找时间</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo <span class="nb">echo</span> <span class="s2">&#34;options timeout:1&#34;</span> &gt; /etc/resolv.conf.tail
-</code></pre></div><ol start="5">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo <span class="nb">echo</span> <span class="s2">&#34;options timeout:1&#34;</span> &gt; /etc/resolv.conf.tail
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
 <li>启动<code>dnsmasq</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo systemctl <span class="nb">enable</span> dnsmasq.service --now
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">sudo systemctl <span class="nb">enable</span> dnsmasq.service --now
 
-</code></pre></div>]]></description>
+</code></pre></td></tr></table>
+</div>
+</div>]]></description>
 </item>
 </channel>
 </rss>

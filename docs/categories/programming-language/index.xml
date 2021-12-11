@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>https://ayamir.github.io/posts/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/iterator/</guid>
+    <link>https://ayamir.github.io/2021/10/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -78,12 +78,23 @@
 </li>
 <li>
 <p>迭代器的类型有两种：<code>iterator</code>和<code>const_iterator</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
 </span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">iterator</span> <span class="n">its</span><span class="p">;</span>               <span class="c1">// 可用于读写string对象中的元素
 </span><span class="c1"></span>
 <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">citv</span><span class="p">;</span>   <span class="c1">// 只能读取元素
 </span><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">cits</span><span class="p">;</span>        <span class="c1">// 只能读取元素
-</span></code></pre></div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
 <p>C++11中引入了<code>cbegin()</code>和<code>cend()</code>来专门返回<code>const_iterator</code>。</p>
 </li>
 <li>
@@ -137,8 +148,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>https://ayamir.github.io/posts/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/vector/</guid>
+    <link>https://ayamir.github.io/2021/10/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -146,14 +157,27 @@
 </li>
 <li>
 <p>使用<code>()</code>和<code>{}</code>对<code>vector</code>执行初始化含义不同。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
 
 <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>    <span class="c1">// 存储1个int对象，值为10
 </span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>    <span class="c1">// 存储10个int对象，值为0
 </span><span class="c1"></span>
 <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 存储10个int对象，值都是1
 </span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v4</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span> <span class="c1">// 存储2个int对象，值分别是10和1
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
 <ol>
@@ -162,21 +186,41 @@
 </li>
 <li>
 <p>如果<code>{}</code>中的内容无法用<code>{}</code>默认的初始化含义做出解释，则会按照<code>()</code>的初始化含义去解释<code>{}</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
 
 <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="s">&#34;hi&#34;</span><span class="p">};</span>      <span class="c1">// 存储1个值为hi的string对象
 </span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>        <span class="c1">// 存储10个值为空的string对象
 </span><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;hi&#34;</span><span class="p">};</span>  <span class="c1">// 存储10个值为hi的string对象
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 </li>
 <li>
 <p>与<code>string</code>相同，<code>vector</code>也有<code>size_type</code>作为其<code>size()</code>的返回值类型。</p>
 <p>但是使用时必须首先指定<code>vector</code>由哪个类型定义。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
 </span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 错误
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>只有<code>vector</code>内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。</p>
 </li>
@@ -200,8 +244,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>https://ayamir.github.io/posts/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/string/</guid>
+    <link>https://ayamir.github.io/2021/10/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -214,11 +258,21 @@
 </li>
 <li>
 <p><code>+</code>两边至少有一端需要是<code>string</code>对象，不允许两个字符串字面量单独相加。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
 <span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
 <span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span><span class="p">;</span>   <span class="c1">// 正确，从左到右运算时能保证至少一段是string对象
 </span><span class="c1"></span><span class="n">string</span> <span class="n">c</span> <span class="o">=</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>   <span class="c1">// 错误，从左到右运算时第一个+左右都是字符串字面量
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <h2 id="必须要理解的点">必须要理解的点</h2>
 <ol>
@@ -260,7 +314,26 @@
 </li>
 <li>
 <p>处理<code>string</code>对象中每一个字符时，使用<code>foreach</code>语句。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="cp">#include</span> <span class="cpf">&lt;cctype&gt;</span><span class="cp">
 </span><span class="cp"></span>
 <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
@@ -275,29 +348,51 @@
     <span class="n">c</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</code></pre></div></li>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>处理<code>string</code>对象中特定字符时使用<code>[]</code>（下标运算符）或者迭代器。</p>
 <p>使用<code>[]</code>访问字符之前检查<code>string</code>对象是否为空。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
     <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></li>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p><code>string</code>对象下标使用<code>string::size_type</code>作为类型而非<code>int</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
 
 <span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span>
 <span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">index_of_space</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">);</span>
-</code></pre></div></li>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 ]]></description>
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>https://ayamir.github.io/posts/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/auto/</guid>
+    <link>https://ayamir.github.io/2021/10/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -330,8 +425,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：Const二三事</title>
-    <link>https://ayamir.github.io/posts/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/const/</guid>
+    <link>https://ayamir.github.io/2021/10/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -339,7 +434,19 @@
 </li>
 <li>
 <p>允许为一个常量引用绑定非常量的对象、字面量和表达式。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 正确
 </span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>      <span class="c1">// 正确
 </span><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 正确
@@ -347,49 +454,100 @@
 </span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r5</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
 <span class="n">r5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 正确
 </span><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>                 <span class="c1">// 错误
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>指向常量的指针和常量指针：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
 
 <span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">cur_err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">err_numb</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mut_pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
-</code></pre></div><p>从声明语句的变量符号开始，自右向左看：</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>从声明语句的变量符号开始，自右向左看：</p>
 <p><code>cur_err</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
 <p><code>mut_pi_pointer</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
 <p><code>pi_pointer</code>首先是一个不可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
 </li>
 <li>
 <p>当<code>typedef</code>遇到<code>const</code>时容易出现错误理解：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
 <span class="k">const</span> <span class="n">pstring</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">const</span> <span class="n">pstring</span> <span class="o">*</span><span class="n">ps</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div><p><code>pstring</code>是<code>char *</code>的别名，即指向<code>char</code>的指针。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>pstring</code>是<code>char *</code>的别名，即指向<code>char</code>的指针。</p>
 <p><code>const</code>修饰的是<code>pstring</code>，因此<code>cstr</code>是：初始化值为<code>nullptr</code>的<strong>不可变指针</strong>。</p>
 <p>错误理解会用<code>char *</code>替换掉<code>pstring</code>，即：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div><p>这样从<code>cstr</code>开始自右向左读的话，<code>cstr</code>就会被理解成：指向<strong>字符常量</strong>的<strong>可变指针</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样从<code>cstr</code>开始自右向左读的话，<code>cstr</code>就会被理解成：指向<strong>字符常量</strong>的<strong>可变指针</strong>。</p>
 </li>
 <li>
 <p><code>constexpr</code>属于顶层<code>const</code>，因此<code>constexpr</code>修饰指针意味着指针本身不可变。</p>
 </li>
 <li>
 <p><code>auto</code>默认会去除顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cr</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>
 <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>       <span class="c1">// b是一个初始化值为0的可变int对象 
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cr</span><span class="p">;</span>       <span class="c1">// c同b
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>       <span class="c1">// d是一个初始化为指向可变int类对象i的可变指针对象
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>      <span class="c1">// e是一个初始化为指向不可变int类对象ci的可变指针对象
 </span><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span> <span class="c1">// f是一个初始化值为0的不可变int对象
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p><code>decltype</code>不会去除顶层<code>const</code>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// x的类型是const int
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <h2 id="必须要理解的点">必须要理解的点</h2>
 <ol>
@@ -463,19 +621,31 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：引用和指针</title>
-    <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
+    <link>https://ayamir.github.io/2021/10/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
 <p><code>&amp;</code>和<code>*</code>在不同的上下文里面其含义并不相同，因此<strong>完全可以当成不同的符号看待</strong>。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
 <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>    <span class="c1">// &amp;在类型名后出现，是声明的一部分，表明r是一个引用
 </span><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>        <span class="c1">// *在类型名后出现，是声明的一部分，表明p是一个指针
 </span><span class="c1"></span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>        <span class="c1">// &amp;在表达式中出现，是取地址符
 </span><span class="c1"></span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">43</span><span class="p">;</span>       <span class="c1">// *在表达式中出现，是解引用符
 </span><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// &amp;是声明的一部分，*是解引用符
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>指针可以用<code>0</code>进行初始化成空指针，但是不可以用<code>0</code>赋值。</p>
 </li>
@@ -558,13 +728,25 @@
 </li>
 <li>
 <p>可以实现指针的引用。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
 <span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>         <span class="c1">// p是int型指针
 </span><span class="c1"></span><span class="kt">int</span> <span class="o">*&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>    <span class="c1">// r是指针p的引用，从r开始自右向左读，&amp;表明r是一个引用，引用的是指针，指针指向的类型是int
 </span><span class="c1"></span>
 <span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>         <span class="c1">// r是p的别名，即给p赋值为i的地址，即令p指向i
 </span><span class="c1"></span><span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>         <span class="c1">// r是p的别名，对r解引用即对p解引用，即将p所指向的地址处变量的值赋值为0
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 </li>
 <li>
@@ -609,8 +791,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：类型系统基础</title>
-    <link>https://ayamir.github.io/posts/cpp-types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/cpp-types/</guid>
+    <link>https://ayamir.github.io/2021/10/cpp-types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/cpp-types/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -649,7 +831,25 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span><span class="cp"></span>
 <span class="kt">int</span> <span class="nf">default_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// 输出必定是0
@@ -663,7 +863,9 @@
     <span class="c1">// 输出是随机值
 </span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">default_initialize</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
 <span class="p">}</span>
-</code></pre></div></li>
+</code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>如果在函数体内部试图初始化一个<code>extern</code>标记的变量会引发错误。</p>
 </li>
@@ -718,10 +920,19 @@
 </tbody>
 </table>
 <p>用<code>extern</code>标记<strong>未初始化</strong>的变量来表明只对变量作声明：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
 </span><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>             <span class="c1">//声明并且定义
 </span><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//声明并且定义
-</span></code></pre></div><p>Q：为什么会有声明和定义这两个概念？</p>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Q：为什么会有声明和定义这两个概念？</p>
 <p>A：因为C++支持<em>分离式编译</em>机制，这允许程序被分割成若干个文件，每个文件可以被独立编译。如果要在多个文件中使用同一个变量，就必须要将声明和定义分离。变量的定义必须且只能出现在一个文件中，其他用到这个变量的文件必须对其进行声明，且绝对不能进行重复定义。</p>
 </li>
 <li>
@@ -752,17 +963,38 @@
 </li>
 <li>
 <p>C++11中引入了<strong>列表初始化</strong>，例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// 传统的初始化方式
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="c1">// 传统的初始化方式
 </span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="kt">int</span> <span class="nf">units_sold</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="c1">// 现代的初始化方式
 </span><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
 <span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</code></pre></div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="n">pi</span><span class="p">},</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="n">pi</span><span class="p">};</span>   <span class="c1">// 错误：没有执行类型转换，因为可能丢失信息
 </span><span class="c1"></span><span class="kt">int</span> <span class="nf">a</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span>     <span class="c1">// 正确：执行了隐式类型转化，丢失了信息
-</span></code></pre></div></li>
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>对每个内置类型的变量都执行<strong>显式默认初始化</strong>以防止undefined行为。</p>
 </li>
@@ -774,17 +1006,41 @@
 </item>
 <item>
     <title>Python selenium settings on microsoft-edge-dev</title>
-    <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
-    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <link>https://ayamir.github.io/2021/03/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/03/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
     <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
-</code></pre></div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
+</code></pre></td></tr></table>
+</div>
+</div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
 <h2 id="get-corresponding-webdriver">Get Corresponding WebDriver</h2>
 <p>Find the corresponding version at <a href="https://msedgewebdriverstorage.z22.web.core.windows.net/" target="_blank" rel="noopener noreffer">msedgewebdriverstorage</a> and download the zip.</p>
 <p>Extract it to you path like <code>/usr/local/bin</code> or <code>$HOME/.local/bin</code>.</p>
 <h2 id="write-code">Write Code</h2>
 <p>Following is a example.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
 
 <span class="n">options</span> <span class="o">=</span> <span class="n">EdgeOptions</span><span class="p">()</span>
 <span class="n">options</span><span class="o">.</span><span class="n">use_chromium</span> <span class="o">=</span> <span class="kc">True</span>
@@ -797,7 +1053,9 @@
 <span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;http://localhost:8000&#34;</span><span class="p">)</span>
 
 <span class="k">assert</span> <span class="s2">&#34;Django&#34;</span> <span class="ow">in</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span>
-</code></pre></div><h2 id="launch-it">Launch it</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="launch-it">Launch it</h2>
 <p></p>
 ]]></description>
 </item>

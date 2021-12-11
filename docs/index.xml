@@ -8,8 +8,8 @@
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>Note for RainbowDQN and Multitype Tiles</title>
-    <link>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</link>
-    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</guid>
+    <link>https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/</link>
+    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Level：IEEE Transaction on multimedia 21</p>
 <p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
@@ -118,7 +118,8 @@ $$</p>
 $$
 Dis_i =
 \begin{cases}
-{\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}  \
+{\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}
+\
 {\Delta Dis_U + |\mu_i - \hat{V}|,\ Others}
 \end{cases}
 $$</p>
@@ -223,8 +224,10 @@ $$</p>
 $$
 Reward =
 \begin{cases}
--INF,\ F \ge F^{max}\
--INF,\ E \le E^{min}\
+-INF,\ F \ge F^{max}
+\
+-INF,\ E \le E^{min}
+\
 E,\ Others
 \end{cases}
 $$</p>
@@ -340,8 +343,8 @@ $$</p>
 </item>
 <item>
     <title>Note for 360ProbDASH</title>
-    <link>https://ayamir.github.io/posts/note-for-360probdash/</link>
-    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-360probdash/</guid>
+    <link>https://ayamir.github.io/2021/12/note-for-360probdash/</link>
+    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-360probdash/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3123266.3123291" target="_blank" rel="noopener noreffer">360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming</a></p>
 <p>Level: ACM MM 17</p>
@@ -667,8 +670,8 @@ $$</p>
 </item>
 <item>
     <title>Note for Dante</title>
-    <link>https://ayamir.github.io/posts/note-for-dante/</link>
-    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-dante/</guid>
+    <link>https://ayamir.github.io/2021/12/note-for-dante/</link>
+    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-dante/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
 <p>Level: SIGCOMM 18</p>
@@ -763,8 +766,8 @@ $$</p>
 </item>
 <item>
     <title>沉浸式流媒体传输的实际度量</title>
-    <link>https://ayamir.github.io/posts/note11/</link>
-    <pubDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note11/</guid>
+    <link>https://ayamir.github.io/2021/11/note11/</link>
+    <pubDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note11/</guid>
     <description><![CDATA[<h2 id="度量指标">度量指标</h2>
 <ol>
 <li>viewport预测精度。
@@ -793,8 +796,8 @@ $$</p>
 </item>
 <item>
     <title>沉浸式推流中应用层的优化</title>
-    <link>https://ayamir.github.io/posts/note10/</link>
-    <pubDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note10/</guid>
+    <link>https://ayamir.github.io/2021/11/note10/</link>
+    <pubDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note10/</guid>
     <description><![CDATA[<h2 id="背景">背景</h2>
 <p>大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需要1个GET请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。</p>
 <p>在基于VR的HAS方案中，播放1条视频片段就需要取得多种资源：1次GET请求需要同时请求基础的tile层和每个空间视频tile。使用4x4的tile方案时，客户端需要发起不少于17次GET请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。</p>
@@ -812,8 +815,8 @@ $$</p>
 </item>
 <item>
     <title>沉浸式流媒体面临的挑战和启示</title>
-    <link>https://ayamir.github.io/posts/note9/</link>
-    <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note9/</guid>
+    <link>https://ayamir.github.io/2021/11/note9/</link>
+    <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note9/</guid>
     <description><![CDATA[<h2 id="最终的目标">最终的目标</h2>
 <p>主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。</p>
 <h2 id="具体的任务">具体的任务</h2>
@@ -859,8 +862,8 @@ $$</p>
 </item>
 <item>
     <title>360度视频的音频处理</title>
-    <link>https://ayamir.github.io/posts/note8/</link>
-    <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note8/</guid>
+    <link>https://ayamir.github.io/2021/11/note8/</link>
+    <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note8/</guid>
     <description><![CDATA[<h2 id="背景">背景</h2>
 <p>空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。</p>
 <p>360度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。</p>
@@ -916,8 +919,8 @@ $$</p>
 </item>
 <item>
     <title>自适应策略之viewport依赖型</title>
-    <link>https://ayamir.github.io/posts/note7/</link>
-    <pubDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note7/</guid>
+    <link>https://ayamir.github.io/2021/11/note7/</link>
+    <pubDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note7/</guid>
     <description><![CDATA[<h2 id="概述">概述</h2>
 <p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
 <h2 id="通常的实现方式">通常的实现方式</h2>
@@ -967,8 +970,8 @@ $$</p>
 </item>
 <item>
     <title>沉浸式流媒体现有标准</title>
-    <link>https://ayamir.github.io/posts/note6/</link>
-    <pubDate>Thu, 11 Nov 2021 20:08:03 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note6/</guid>
+    <link>https://ayamir.github.io/2021/11/note6/</link>
+    <pubDate>Thu, 11 Nov 2021 20:08:03 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note6/</guid>
     <description><![CDATA[<h2 id="omafomnidirectional-media-format">OMAF(Omnidirectional Media Format)</h2>
 <p><code>OMAF</code>是第1个国际化的沉浸式媒体格式，描述了对360度视频进行编码、演示、消费的方法。</p>
 <p><code>OMAF</code>与与现有格式兼容，包括编码（例如<code>HEVC</code>），文件格式（例如<code>ISOBMFF</code>），交付信号（例如<code>DASH</code>，<code>MMT</code>）。</p>
@@ -1012,8 +1015,8 @@ $$</p>
 </item>
 <item>
     <title>自适应360度视频推流挑战</title>
-    <link>https://ayamir.github.io/posts/note5/</link>
-    <pubDate>Thu, 04 Nov 2021 11:01:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note5/</guid>
+    <link>https://ayamir.github.io/2021/11/note5/</link>
+    <pubDate>Thu, 04 Nov 2021 11:01:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note5/</guid>
     <description><![CDATA[<h1 id="背景">背景</h1>
 <p>用户使用头戴设备比使用传统显示器观看360度视频内容时的满意度对于扰乱更加敏感。</p>
 <p>沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。</p>

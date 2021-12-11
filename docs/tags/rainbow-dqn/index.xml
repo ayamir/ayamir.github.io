@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/rainbow-dqn/" rel="self" type="application/rss+xml" /><item>
     <title>Note for RainbowDQN and Multitype Tiles</title>
-    <link>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</link>
-    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-rainbowdqn&#43;tiles/</guid>
+    <link>https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/</link>
+    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Level：IEEE Transaction on multimedia 21</p>
 <p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
@@ -116,7 +116,8 @@ $$</p>
 $$
 Dis_i =
 \begin{cases}
-{\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}  \
+{\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}
+\
 {\Delta Dis_U + |\mu_i - \hat{V}|,\ Others}
 \end{cases}
 $$</p>
@@ -221,8 +222,10 @@ $$</p>
 $$
 Reward =
 \begin{cases}
--INF,\ F \ge F^{max}\
--INF,\ E \le E^{min}\
+-INF,\ F \ge F^{max}
+\
+-INF,\ E \le E^{min}
+\
 E,\ Others
 \end{cases}
 $$</p>
