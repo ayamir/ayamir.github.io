@@ -62,33 +62,6 @@ SourceMap = true
   dateFormat = "01-02"
   rss = 20
 
-[params.about]
-    enable = true
-    param = true
-    paramTitle = "个人信息"
-    description = "Blog mainly about Immersive Video, Coding Tech and GNU/Linux."
-    [[params.about.status]]
-      faIcon = "fas fa-building"
-      title = "School"
-      desc = "BUPT"
-    [[params.about.status]]
-      faIcon = "fas fa-briefcase fa-fw"
-      title = "Career"
-      desc = "Postgraduate"
-    [[params.about.status]]
-      title = "Place"
-      faIcon = "fas fa-map-marker-alt"
-      desc = "Beijing"
-    [[params.about.parameter]]
-      language = "UI/UX"
-      level = "80"
-    [[params.about.parameter]]
-      language = "HTML"
-      level = "70"
-    [[params.about.parameter]]
-      language = "Go"
-      level = "60"
-
 [params.page]
     hiddenFromHomePage = false
     hiddenFromSearch = false
@@ -209,6 +182,42 @@ SourceMap = true
     url = "/categories/"
     title = ""
     weight = 3
+  [[menu.main]]
+    identifier = "about"
+    pre = ""
+    post = ""
+    name = "关于"
+    url = "/about/"
+    title = ""
+    weight = 4
+
+[params.about]
+    enable = true
+    param = true
+    paramTitle = "个人信息"
+    description = "Blog mainly about Immersive Video, Coding Tech and GNU/Linux."
+    [[params.about.status]]
+      faIcon = "fas fa-building"
+      title = "School"
+      desc = "BUPT"
+    [[params.about.status]]
+      faIcon = "fas fa-briefcase fa-fw"
+      title = "Career"
+      desc = "Postgraduate"
+    [[params.about.status]]
+      title = "Place"
+      faIcon = "fas fa-map-marker-alt"
+      desc = "Beijing"
+    [[params.about.parameter]]
+      language = "UI/UX"
+      level = "80"
+    [[params.about.parameter]]
+      language = "HTML"
+      level = "70"
+    [[params.about.parameter]]
+      language = "Go"
+      level = "60"
+
 
 # Hugo 解析文档的配置
 [markup]
