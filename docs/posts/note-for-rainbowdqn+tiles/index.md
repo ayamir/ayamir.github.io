@@ -1,4 +1,4 @@
-# Note for Dante
+# Note for RainbowDQN and Multitype Tiles
 
 
 ## 论文概况

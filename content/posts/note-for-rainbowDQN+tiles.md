@@ -1,5 +1,5 @@
 ---
-title: "Note for Dante"
+title: "Note for RainbowDQN and Multitype Tiles"
 date: 2021-12-11T16:14:15+08:00
 draft: false
 math: true
