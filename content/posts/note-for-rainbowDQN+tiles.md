@@ -69,7 +69,117 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
 
 ### FOV表示和预测
 
-1. 
+1. 3D虚拟相机用于渲染视频，处于全景视频球面上的某条轨道，其坐标可以表示为$(\theta, \phi)$，可以直接从系统中获取。
+
+   相机始终朝向球的中心，所以用户的FOV中心坐标$(\theta^{'}, \phi^{'})$可以用$(\theta, \phi)$表示：
+   $$
+   \begin{cases}
+   \theta^{'} = (\theta + \pi)\ mod\ 2\pi,\ 0 \le \theta \le 2\pi
+   \\
+   \phi^{'} = \pi - \phi,\ 0 \le \phi \le \pi
+   \end{cases}
+   $$
+
+2. 2D网格中tile坐标$(u, v)$可以通过球面坐标使用ERP投影获得
+   $$
+   \begin{cases}
+   u = \frac{\theta^{'}}{2\pi} \cdot W, 0 \le u \le W.
+   \\
+   v = \frac{\phi^{'}}{\pi} \cdot H, 0 \le v \le H.
+   \end{cases}
+   $$
+   $W$和$H$分别表示使用ERP投影得到的矩形宽度和高度
+
+3. 短期的FOV预测基于目前和历史的FOV信息。
+
+   使用$(U_t, V_t)$表示$t$时刻的FOV中心位置；$U_{t1:t2}$和$V_{t1:t2}$分别表示从$t1$到$t2$过程中$U$和$V$的序列；
+   $$
+   \begin{cases}
+   \hat{U}_{t+T_f} = f_U (U_{t-T_p:t}).
+   \\
+   \hat{V}_{t+T_f} = f_V (V_{t-T_p:t}).
+   \end{cases}
+   $$
+   $T_p$是过去记录的滑动窗口；$T_f$是短期的预测窗口；$f_U$和$f_V$分别对应$U$和$V$方向上的映射函数；
+
+   因为是时间序列回归模型，所以映射函数使用LSTM。
+
+### QoE评估
+
+QoE由3个部分组成：平均FOV质量$Q$、重缓冲频率$F$与FOV内tile的质量变化（因为平均分配所以不考虑）。
+
+1. FOV质量$Q$
+
+   第$t$次的FOV质量评估表示为$Q_t$：
+   $$
+   Q_t = \frac{\beta Q_{t-1} + (1-\beta) \frac{1}{k} \cdot \sum_{j=1}^{k} max\{q_j, q_b\}}{1 - \beta^t}
+   $$
+   $q_j$表示第$j$条FOV tile流的质量；$k$表示FOV内tile的数量；
+
+   为了避免评估结果的大幅波动，使用了EWMA来光滑结果。
+
+   当第$j$条tile流因为缓冲区不足不能成功播放时，$q_j = q_{Base}$（这表明了Base tile在提高QoE中的作用）。
+
+2. 重缓冲频率$F$
+
+   在基于tile的传输中，每条流都属于一个缓冲区。所以当FOV中tile的缓冲区处于饥饿状态时，重缓冲就会发生。
+
+   重缓冲频率描述了FOV内的tile流在一段时间内的重新缓冲频率。
+
+   第$t$次重缓冲频率的评估表示为$F_t$：
+   $$
+   F_t = \frac{\beta F_{t-\tau} + (1-\beta) \frac{f_t}{\tau}}{1 - \beta^{\tau}}
+   $$
+   $f_t$表示播放失败的次数；$\tau$表示一段时间；
+
+### 传输效率评估
+
+第$t$次传输效率评估表示为$E_t$，$E_t$通过传输的FOV内tile占总tile的比率来计算：
+$$
+E_t = \frac{\beta E_{t-1} + (1-\beta) \frac{total^{FOV}}{total^{ALL}}}{1 - \beta^t}
+$$
+$total^{FOV}$表示FOV内tile的数据量；$total^{ALL}$表示tile的总共数据量；
+
+效率计算并不在传输过程中完成，因为需要获取哪些tile在FOV中的信息，效率评估滞后于播放过程。
+
+### 问题形式化
+
+传输控制的任务：确定所有tile流的质量等级$\chi$和缓冲区大小$\psi$。
+$$
+\chi = <q_1, q_2, ..., q_N>
+\\
+\psi = <l_1, l_2, ..., l_N>
+\\
+<Q, F, E> = \xi (B, V, \chi, \psi)
+$$
+$\chi$和$\psi$与带宽$B$和Viewport轨迹$V$一起作用于系统$\xi$，最终影响FOV质量$Q$，重缓冲频率$F$和传输效率$E$。
+
+进一步，将目标形式化为获得每条tile流的$q_i$和$l_i$通过限制QoE满足可接受的范围、在此基础上最大化传输效率：
+$$
+\underset{\chi, \psi}{argmax} \sum_{t=0}^{+\infty} E_t,
+$$
+
+$$
+s.t.:\ 0 \le q_i \le M,
+$$
+
+$$
+0 \le l_i \le L,
+$$
+
+$$
+Q^{min} \le Q_t \le M,
+$$
+
+$$
+0 \le F_t \le F^{max}.
+$$
+
+$q_i$和$l_i$分别受限于质量版本数$M$和最大缓冲区大小$L$；
+
+$Q_t$受限于最低QoE标准$Q^{min}$；
+
+$F_t$受限于最大能忍受的重缓冲频率$F^{max}$。
 
 ## 系统架构
 

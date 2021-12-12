@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-12-11T16:14:15+08:00" />
-<meta property="article:modified_time" content="2021-12-12T10:09:40+08:00" />
+<meta property="article:modified_time" content="2021-12-12T17:11:40+08:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Note for RainbowDQN and Multitype Tiles"/>
@@ -26,8 +26,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/2021\/12\/note-for-rainbowdqn-tiles\/"
-        },"genre": "posts","keywords": "Immersive Video, DRL, Rainbow-DQN","wordcount":  4243 ,
-        "url": "https:\/\/ayamir.github.io\/2021\/12\/note-for-rainbowdqn-tiles\/","datePublished": "2021-12-11T16:14:15+08:00","dateModified": "2021-12-12T10:09:40+08:00","publisher": {
+        },"genre": "posts","keywords": "Immersive Video, DRL, Rainbow-DQN","wordcount":  5589 ,
+        "url": "https:\/\/ayamir.github.io\/2021\/12\/note-for-rainbowdqn-tiles\/","datePublished": "2021-12-11T16:14:15+08:00","dateModified": "2021-12-12T17:11:40+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -101,8 +101,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for RainbowDQN and Multitype Tiles</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-11">2021-12-11</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4243 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-11">2021-12-11</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5589 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -120,6 +120,9 @@
             <li><a href="#模型">模型</a></li>
             <li><a href="#带宽评估">带宽评估</a></li>
             <li><a href="#fov表示和预测">FOV表示和预测</a></li>
+            <li><a href="#qoe评估">QoE评估</a></li>
+            <li><a href="#传输效率评估">传输效率评估</a></li>
+            <li><a href="#问题形式化-1">问题形式化</a></li>
           </ul>
         </li>
         <li><a href="#系统架构">系统架构</a>
@@ -217,8 +220,102 @@ $t$较小的时候，分母会放大$B_t$；$t$较大时，分母趋近于1，�
 </ol>
 <h3 id="fov表示和预测">FOV表示和预测</h3>
 <ol>
-<li></li>
+<li>
+<p>3D虚拟相机用于渲染视频，处于全景视频球面上的某条轨道，其坐标可以表示为$(\theta, \phi)$，可以直接从系统中获取。</p>
+<p>相机始终朝向球的中心，所以用户的FOV中心坐标$(\theta^{'}, \phi^{'})$可以用$(\theta, \phi)$表示：
+$$
+\begin{cases}
+\theta^{'} = (\theta + \pi)\ mod\ 2\pi,\ 0 \le \theta \le 2\pi
+\
+\phi^{'} = \pi - \phi,\ 0 \le \phi \le \pi
+\end{cases}
+$$</p>
+</li>
+<li>
+<p>2D网格中tile坐标$(u, v)$可以通过球面坐标使用ERP投影获得
+$$
+\begin{cases}
+u = \frac{\theta^{'}}{2\pi} \cdot W, 0 \le u \le W.
+\
+v = \frac{\phi^{'}}{\pi} \cdot H, 0 \le v \le H.
+\end{cases}
+$$
+$W$和$H$分别表示使用ERP投影得到的矩形宽度和高度</p>
+</li>
+<li>
+<p>短期的FOV预测基于目前和历史的FOV信息。</p>
+<p>使用$(U_t, V_t)$表示$t$时刻的FOV中心位置；$U_{t1:t2}$和$V_{t1:t2}$分别表示从$t1$到$t2$过程中$U$和$V$的序列；
+$$
+\begin{cases}
+\hat{U}<em>{t+T_f} = f_U (U</em>{t-T_p:t}).
+\
+\hat{V}<em>{t+T_f} = f_V (V</em>{t-T_p:t}).
+\end{cases}
+$$
+$T_p$是过去记录的滑动窗口；$T_f$是短期的预测窗口；$f_U$和$f_V$分别对应$U$和$V$方向上的映射函数；</p>
+<p>因为是时间序列回归模型，所以映射函数使用LSTM。</p>
+</li>
 </ol>
+<h3 id="qoe评估">QoE评估</h3>
+<p>QoE由3个部分组成：平均FOV质量$Q$、重缓冲频率$F$与FOV内tile的质量变化（因为平均分配所以不考虑）。</p>
+<ol>
+<li>
+<p>FOV质量$Q$</p>
+<p>第$t$次的FOV质量评估表示为$Q_t$：
+$$
+Q_t = \frac{\beta Q_{t-1} + (1-\beta) \frac{1}{k} \cdot \sum_{j=1}^{k} max{q_j, q_b}}{1 - \beta^t}
+$$
+$q_j$表示第$j$条FOV tile流的质量；$k$表示FOV内tile的数量；</p>
+<p>为了避免评估结果的大幅波动，使用了EWMA来光滑结果。</p>
+<p>当第$j$条tile流因为缓冲区不足不能成功播放时，$q_j = q_{Base}$（这表明了Base tile在提高QoE中的作用）。</p>
+</li>
+<li>
+<p>重缓冲频率$F$</p>
+<p>在基于tile的传输中，每条流都属于一个缓冲区。所以当FOV中tile的缓冲区处于饥饿状态时，重缓冲就会发生。</p>
+<p>重缓冲频率描述了FOV内的tile流在一段时间内的重新缓冲频率。</p>
+<p>第$t$次重缓冲频率的评估表示为$F_t$：
+$$
+F_t = \frac{\beta F_{t-\tau} + (1-\beta) \frac{f_t}{\tau}}{1 - \beta^{\tau}}
+$$
+$f_t$表示播放失败的次数；$\tau$表示一段时间；</p>
+</li>
+</ol>
+<h3 id="传输效率评估">传输效率评估</h3>
+<p>第$t$次传输效率评估表示为$E_t$，$E_t$通过传输的FOV内tile占总tile的比率来计算：
+$$
+E_t = \frac{\beta E_{t-1} + (1-\beta) \frac{total^{FOV}}{total^{ALL}}}{1 - \beta^t}
+$$
+$total^{FOV}$表示FOV内tile的数据量；$total^{ALL}$表示tile的总共数据量；</p>
+<p>效率计算并不在传输过程中完成，因为需要获取哪些tile在FOV中的信息，效率评估滞后于播放过程。</p>
+<h3 id="问题形式化-1">问题形式化</h3>
+<p>传输控制的任务：确定所有tile流的质量等级$\chi$和缓冲区大小$\psi$。
+$$
+\chi = &lt;q_1, q_2, &hellip;, q_N&gt;
+\
+\psi = &lt;l_1, l_2, &hellip;, l_N&gt;
+\
+&lt;Q, F, E&gt; = \xi (B, V, \chi, \psi)
+$$
+$\chi$和$\psi$与带宽$B$和Viewport轨迹$V$一起作用于系统$\xi$，最终影响FOV质量$Q$，重缓冲频率$F$和传输效率$E$。</p>
+<p>进一步，将目标形式化为获得每条tile流的$q_i$和$l_i$通过限制QoE满足可接受的范围、在此基础上最大化传输效率：
+$$
+\underset{\chi, \psi}{argmax} \sum_{t=0}^{+\infty} E_t,
+$$</p>
+<p>$$
+s.t.:\ 0 \le q_i \le M,
+$$</p>
+<p>$$
+0 \le l_i \le L,
+$$</p>
+<p>$$
+Q^{min} \le Q_t \le M,
+$$</p>
+<p>$$
+0 \le F_t \le F^{max}.
+$$</p>
+<p>$q_i$和$l_i$分别受限于质量版本数$M$和最大缓冲区大小$L$；</p>
+<p>$Q_t$受限于最低QoE标准$Q^{min}$；</p>
+<p>$F_t$受限于最大能忍受的重缓冲频率$F^{max}$。</p>
 <h2 id="系统架构">系统架构</h2>
 <h3 id="服务端">服务端</h3>
 <ol>
