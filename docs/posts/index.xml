@@ -11,18 +11,83 @@
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Level：IEEE Transaction on multimedia 21</p>
 <p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
+<h2 id="问题形式化">问题形式化</h2>
+<h3 id="模型">模型</h3>
+<ol>
+<li>
+<p>原始视频用网格划分成$N$块tile，每个tile都被转码成$M$个不同的质量等级$q_i$。</p>
+</li>
+<li>
+<p>基于传输控制模块得出的结果，播放器请求$t_i$个tile的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。</p>
+</li>
+<li>
+<p>用户Viewport的信息用$V$表示，可以确定FOV的中心。</p>
+</li>
+<li>
+<p>根据$V$可以将tile划分成3种类型：FOV、OOS、Base。</p>
+</li>
+<li>
+<p>FOV中的tile被分配更高的码率；</p>
+<p>OOS按照与$V$的距离逐步降低质量等级$q_i$；</p>
+<p>Base总是使用低质量等级$q_{Base}$但使用完整的分辨率。</p>
+</li>
+<li>
+<p>传输的tile在同步完成之后交给渲染器渲染。</p>
+</li>
+<li>
+<p>播放器根据各项指标计算可以评估播放性能：</p>
+<p>$&lt;V, B, Q, F, E&gt;$：viewport信息$V$，网络带宽$B$，FOV质量$Q$，重缓冲频率$F$，传输效率$E$。</p>
+</li>
+<li>
+<p>传输控制模块用于确定每个tile的质量等级$q_i$和缓冲区大小$l_i$。</p>
+</li>
+<li>
+<p>传输控制模块优化的最终目标是获取最大的性能：
+$$
+performance = E_{max},\ QoE \in accept\ range
+$$</p>
+</li>
+</ol>
+<h3 id="带宽评估">带宽评估</h3>
+<ol>
+<li>
+<p>收集每个tile的下载日志来评估带宽。</p>
+</li>
+<li>
+<p>使用<a href="https://zhuanlan.zhihu.com/p/32335746" target="_blank" rel="noopener noreffer">指数加权移动平均算法EWMA</a>使评估结果光滑，来应对网络波动。</p>
+</li>
+<li>
+<p>第$t$次评估结果使用$B_t$表示，用下式计算：
+$$
+B_t = \beta B_{t-1} + (1-\beta)b_t
+$$
+$b_t$是B的第$t$次测量值；$\beta$是EWMA的加权系数。</p>
+</li>
+<li>
+<p>$t=0$时，$B_0$被初始化为0；所以在初始的$t$比较小的时候，$B_t$与理想值相比就很小。</p>
+<p>这种影响会随着$t$增大而减少。</p>
+</li>
+<li>
+<p>为了优化启动过程，对公式做出修改：
+$$
+B_t = \frac{\beta B_{t-1} + (1-\beta)b_t}{1 - \beta^t}
+$$
+$t$较小的时候，分母会放大$B_t$；$t$较大时，分母趋近于1，影响随之消失。</p>
+</li>
+</ol>
+<h3 id="fov表示和预测">FOV表示和预测</h3>
+<ol>
+<li></li>
+</ol>
 <h2 id="系统架构">系统架构</h2>
-<ul>
-<li>服务端
+<h3 id="服务端">服务端</h3>
 <ol>
 <li>将原始视频转码为有不同比特率的多个版本。</li>
 <li>转码后的视频被划分成多个tile。</li>
 <li>传输协议使用MPEG-DASH。</li>
 </ol>
-</li>
-<li>客户端
-<ol>
-<li>评估器
+<h3 id="客户端">客户端</h3>
+<h4 id="评估器">评估器</h4>
 <ul>
 <li>任务：获取 QoE、FOV预测、传输效率、网络带宽</li>
 <li>组成：
@@ -33,8 +98,7 @@
 </ul>
 </li>
 </ul>
-</li>
-<li>控制器
+<h4 id="控制器">控制器</h4>
 <ul>
 <li>任务：控制传输过程中的推流</li>
 <li>目标：保证QoE在可接受的范围之内、最大化传输效率</li>
@@ -43,30 +107,23 @@
 <li>过程：Rainbow-DQN</li>
 <li>输出：决定每个tile流的码率和缓冲区大小（作为下载器的输入）</li>
 </ul>
-</li>
-<li>下载器
+<h4 id="下载器">下载器</h4>
 <ul>
 <li>输入：tile码率和缓冲区大小</li>
 <li>过程：基于HTTP/2进行并行下载</li>
 <li>输出：下载好的tile</li>
 </ul>
-</li>
-<li>视频缓冲区
+<h4 id="视频缓冲区">视频缓冲区</h4>
 <ul>
 <li>任务：解码、同步、存储下载好的tile等待渲染器消耗，大小供控制器调节</li>
 <li>随着FOV的切换缓冲区内容可能被循环利用</li>
 </ul>
-</li>
-<li>全景渲染器
+<h4 id="全景渲染器">全景渲染器</h4>
 <ul>
 <li>任务：将同步好的tile拼接，tile质量：FOV&gt;OOS&gt;Base</li>
 <li>投影方式：ERP</li>
 </ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="控制器">控制器</h2>
+<h2 id="控制器-1">控制器</h2>
 <h3 id="控制过程">控制过程</h3>
 <ol>
 <li>
