@@ -209,14 +209,11 @@ SourceMap = true
       faIcon = "fas fa-map-marker-alt"
       desc = "Beijing"
     [[params.about.parameter]]
-      language = "Java"
-      level = "70"
-    [[params.about.parameter]]
-      language = "C++"
-      level = "60"
-    [[params.about.parameter]]
       language = "Go"
       level = "60"
+    [[params.about.parameter]]
+      language = "C++"
+      level = "40"
     [[params.about.parameter]]
       language = "Rust"
       level = "30"
