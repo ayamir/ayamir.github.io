@@ -181,7 +181,7 @@ $$</p>
 </li>
 <li>
 <p>状态设计</p>
-<p>状态设计为4元组：$&lt;K, Len, F, E&gt;$，包括传输控制参数$K$，$Len$、QoE指标$F$和传输效率$E$。</p>
+<p>状态设计为5元组：$&lt;K, Len, Q, F, E&gt;$（传输控制参数$K$，$Len$、QoE指标：FOV质量Q和重缓冲频率$F$、传输效率$E$）</p>
 <p>没有直接使用带宽$B$和viewport轨迹$V$，因为：</p>
 <ol>
 <li>随机性强与变化幅度较大带来的不稳定性（如何定义随机性强弱和变化幅度大小？）</li>
@@ -218,9 +218,9 @@ $$</p>
 </table>
 </li>
 <li>
-<p>奖励函数
-因为QoE的各项指标权重难以确定，没有使用传统的基于加权的方式。</p>
-<p>设定了<strong>能接受的QoE范围</strong>和<strong>在此基础上最大化的传输效率</strong>作为最后的性能指标，形式化之后如下：
+<p>奖励函数</p>
+<p>因为QoE的各项指标权重难以确定，没有使用传统的基于加权的方式。</p>
+<p>设定了<strong>能接受的QoE范围</strong>和<strong>在此基础上最大化的传输效率</strong>作为最后的<strong>性能</strong>指标，形式化之后如下：
 $$
 Reward =
 \begin{cases}
@@ -247,10 +247,10 @@ $$</p>
 <p>输入是5元组$&lt;K, Len, Q, F, E&gt;$。</p>
 </li>
 <li>
-<p>神经网络使用带有64的3隐层模型。</p>
+<p>神经网络使用64维的3隐层模型。</p>
 </li>
 <li>
-<p>为了提高鲁棒性，使用Dueling DQN的方式，将Q值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
+<p>为了提高鲁棒性，神经网络的第3层使用Dueling DQN的方式，将Q值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
 $$
 Q(s, a) = V(s) + A(s, a)
 $$</p>
@@ -284,8 +284,13 @@ $$</p>
 <li>
 <p>环境设定</p>
 <ul>
-<li>传输控制模块：基于<a href="https://tensorforce.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer">TensorForce</a>（配置教程：<a href="https://zhuanlan.zhihu.com/p/60241809" target="_blank" rel="noopener noreffer">用TensorForce快速搭建深度强化学习模型</a>）；开发工具集：<a href="https://gym.openai.com/" target="_blank" rel="noopener noreffer">OpenAI Gym</a></li>
-<li>数据来源：使用全景视频播放设备收集，加入高斯噪声来产生更多数据。</li>
+<li>
+<p>传输控制模块：基于<a href="https://tensorforce.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer">TensorForce</a>（配置教程：<a href="https://zhuanlan.zhihu.com/p/60241809" target="_blank" rel="noopener noreffer">用TensorForce快速搭建深度强化学习模型</a>）；</p>
+<p>开发工具集：<a href="https://gym.openai.com/" target="_blank" rel="noopener noreffer">OpenAI Gym</a></p>
+</li>
+<li>
+<p>数据来源：使用全景视频播放设备收集，加入高斯噪声来产生更多数据。</p>
+</li>
 </ul>
 </li>
 <li>
@@ -298,18 +303,24 @@ $$</p>
 <p>对比训练过程中每个episode中的最大累计奖励：$MAX_{reward}$</p>
 </li>
 <li>
-<p>对比模型收敛所需要的最少episode：$MIN_{episode}$<br>
-相同的带宽和FOV轨迹</p>
+<p>对比模型收敛所需要的最少episode：$MIN_{episode}$</p>
+<p>相同的带宽和FOV轨迹</p>
 </li>
 </ul>
 </li>
 <li>
 <p>与其他策略对比性能——高QoE和高传输效率</p>
 <ul>
-<li>随机控制策略：随机确定K和Len</li>
-<li>固定分配策略：固定K和Len的值</li>
-<li>只预测Viewport策略：使用LSTM做预测，不存在OSS与Base，所有带宽都用于FOV
-带宽和FOV轨迹的均值和方差相等</li>
+<li>
+<p>随机控制策略：随机确定K和Len</p>
+</li>
+<li>
+<p>固定分配策略：固定K和Len的值</p>
+</li>
+<li>
+<p>只预测Viewport策略：使用LSTM做预测，不存在OSS与Base，所有带宽都用于FOV</p>
+<p>带宽和FOV轨迹的均值和方差相等</p>
+</li>
 </ul>
 </li>
 <li>
@@ -328,8 +339,9 @@ $$</p>
 $$
 V_{QoE} = \eta_1 Q - \eta_2 F - \eta_3 A
 $$</p>
-<p>$A$是平均viewport时间变化，反映FOV质量Q的变化；</p>
-<p>$\eta_1, \eta_2, \eta_3$分别是3种QoE指标的非负加权，使用4种加权方式来训练模型并对比：$&lt;1, 1, 1&gt;$，$&lt;1, 0.25, 0.25&gt;$，$&lt;1, 4, 1&gt;$，$&lt;1,1,4&gt;$</p>
+<p>$A$是viewport随时间的平均变化，反映FOV质量Q的变化；</p>
+<p>$\eta_1, \eta_2, \eta_3$分别是3种QoE指标的非负加权，使用4种加权方式来训练模型并对比：</p>
+<p>$&lt;1, 1, 1&gt;$，$&lt;1, 0.25, 0.25&gt;$，$&lt;1, 4, 1&gt;$，$&lt;1,1,4&gt;$</p>
 </li>
 </ul>
 </li>

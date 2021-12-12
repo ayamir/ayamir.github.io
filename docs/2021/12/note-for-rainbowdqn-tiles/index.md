@@ -122,7 +122,7 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
     
 2. 状态设计
    
-    状态设计为4元组：$<K, Len, F, E>$，包括传输控制参数$K$，$Len$、QoE指标$F$和传输效率$E$。
+    状态设计为5元组：$<K, Len, Q, F, E>$（传输控制参数$K$，$Len$、QoE指标：FOV质量Q和重缓冲频率$F$、传输效率$E$）
     
     没有直接使用带宽$B$和viewport轨迹$V$，因为：
     
@@ -141,9 +141,10 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
     | Len | 减少n$\Delta l$   | 不变 | 增加n$\Delta l$   |
     
 4. 奖励函数
+    
     因为QoE的各项指标权重难以确定，没有使用传统的基于加权的方式。
     
-    设定了**能接受的QoE范围**和**在此基础上最大化的传输效率**作为最后的性能指标，形式化之后如下：
+    设定了**能接受的QoE范围**和**在此基础上最大化的传输效率**作为最后的**性能**指标，形式化之后如下：
     $$
     Reward = 
     \begin{cases}
@@ -168,9 +169,9 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
     基于Rainbow-DQN模型：
     * 输入是5元组$<K, Len, Q, F, E>$。
     
-    * 神经网络使用带有64的3隐层模型。
+    * 神经网络使用64维的3隐层模型。
     
-    * 为了提高鲁棒性，使用Dueling DQN的方式，将Q值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
+    * 为了提高鲁棒性，神经网络的第3层使用Dueling DQN的方式，将Q值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
       $$
       Q(s, a) = V(s) + A(s, a)
       $$
@@ -202,7 +203,10 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
 ## 实验验证
 
 1. 环境设定
-    * 传输控制模块：基于[TensorForce](https://tensorforce.readthedocs.io/en/latest/)（配置教程：[用TensorForce快速搭建深度强化学习模型](https://zhuanlan.zhihu.com/p/60241809)）；开发工具集：[OpenAI Gym](https://gym.openai.com/)
+    * 传输控制模块：基于[TensorForce](https://tensorforce.readthedocs.io/en/latest/)（配置教程：[用TensorForce快速搭建深度强化学习模型](https://zhuanlan.zhihu.com/p/60241809)）；
+    
+      开发工具集：[OpenAI Gym](https://gym.openai.com/)
+    
     * 数据来源：使用全景视频播放设备收集，加入高斯噪声来产生更多数据。
     
 2. 结果分析
@@ -210,12 +214,16 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
       * 对比训练过程中每个episode中的最大累计奖励：$MAX_{reward}$
 
       * 对比模型收敛所需要的最少episode：$MIN_{episode}$  
+      
         相同的带宽和FOV轨迹
       
     * 与其他策略对比性能——高QoE和高传输效率
       * 随机控制策略：随机确定K和Len
+      
       * 固定分配策略：固定K和Len的值
+      
       * 只预测Viewport策略：使用LSTM做预测，不存在OSS与Base，所有带宽都用于FOV
+      
         带宽和FOV轨迹的均值和方差相等
       
     * 与其他全景视频推流系统的对比
@@ -232,9 +240,11 @@ Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
         V_{QoE} = \eta_1 Q - \eta_2 F - \eta_3 A
         $$
         
-        $A$是平均viewport时间变化，反映FOV质量Q的变化；
+        $A$是viewport随时间的平均变化，反映FOV质量Q的变化；
         
-        $\eta_1, \eta_2, \eta_3$分别是3种QoE指标的非负加权，使用4种加权方式来训练模型并对比：$<1, 1, 1>$，$<1, 0.25, 0.25>$，$<1, 4, 1>$，$<1,1,4>$
+        $\eta_1, \eta_2, \eta_3$分别是3种QoE指标的非负加权，使用4种加权方式来训练模型并对比：
+        
+        $<1, 1, 1>$，$<1, 0.25, 0.25>$，$<1, 4, 1>$，$<1,1,4>$
       
     * 在不同环境下的性能评估——带宽是否充足、FOV轨迹是否活跃（4种环境）
 
