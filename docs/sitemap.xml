@@ -2,15 +2,18 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://ayamir.github.io/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/common-sense/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/multimedia/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/2021/12/mm-base/</loc><lastmod>2021-12-13T10:03:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/drl/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/immersive-video/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/categories/immersive-video/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/2021/12/note-for-rainbowdqn-tiles/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/posts/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/rainbow-dqn/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/2021/12/note-for-360probdash/</loc><lastmod>2021-12-09T20:34:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/heuristic/</loc><lastmod>2021-12-09T10:14:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/2021/12/note-for-dante/</loc><lastmod>2021-12-09T10:14:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
