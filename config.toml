@@ -212,6 +212,9 @@ SourceMap = true
       language = "Go"
       level = "60"
     [[params.about.parameter]]
+      language = "Python"
+      level = "40"
+    [[params.about.parameter]]
       language = "C++"
       level = "40"
     [[params.about.parameter]]
