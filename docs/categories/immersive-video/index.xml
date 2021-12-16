@@ -4,12 +4,23 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for RnnQoE</title>
+    <link>https://ayamir.github.io/2021/12/note-for-rnnqoe/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-rnnqoe/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
+View Generation and Dynamic Tile Selection</a></p>
+<p>Level：ICCC 2021</p>
+<p>Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection</p>
+]]></description>
+</item>
+<item>
     <title>Note for OpTile</title>
     <link>https://ayamir.github.io/2021/12/note-for-optile/</link>
     <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-optile/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：https://dl.acm.org/doi/10.1145/3123266.3123339</p>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339" target="_blank" rel="noopener noreffer">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
 <p>Level：ACM MM 17</p>
 <p>Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size</p>
 <h2 id="背景知识">背景知识</h2>
@@ -172,11 +183,7 @@ $$</p>
 <p>对于$2 \times 2$的矩形片段，其$A$有 4 行 9 列，例子如下：</p>
 <p></p>
 <p>因此最终的问题可以形式化为一个整数线性程序：</p>
-<p>$$
-maximize:\ (-c^{(stor)} - \alpha c^{(view)})^{\top}x,<br>
-\
-subjecct\ to:\ Ax = 1,\ x_i \in {0, 1}\ \forall i
-$$</p>
+<p></p>
 <ul>
 <li>
 <p>$c^{(stor)}$</p>

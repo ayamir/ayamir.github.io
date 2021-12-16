@@ -3,7 +3,7 @@
 
 ## 论文概况
 
-Link：https://dl.acm.org/doi/10.1145/3123266.3123339
+Link：[OpTile: Toward Optimal Tiling in 360-degree Video Streaming](https://dl.acm.org/doi/10.1145/3123266.3123339)
 
 Level：ACM MM 17
 
@@ -168,14 +168,10 @@ $$
 
   因此最终的问题可以形式化为一个整数线性程序：
 
-  $$
-  maximize:\ (-c^{(stor)} - \alpha c^{(view)})^{\top}x,\
-  \\
-  subjecct\ to:\ Ax = 1,\ x_i \in \{0, 1\}\ \forall i
-  $$
-
+  ![image-20211216212347330](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216212347330.png)
+  
   - $c^{(stor)}$
-
+  
     可以理解为存储一段$\Delta t$时间长的片段的子矩形的存储开销；
 
   - $c^{(view)}$

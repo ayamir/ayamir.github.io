@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "home.min.css",
-	"sourceRoot": "/home/ayamir/git/ayamir.github.io",
+	"sourceRoot": "/home/ayamir/ayamir.github.io",
 	"sources": [
 		"themes/FeelIt/assets/css/home.scss",
 		"themes/FeelIt/assets/css/_core/_modern-normalize.scss",

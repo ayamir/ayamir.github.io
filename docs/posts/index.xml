@@ -4,12 +4,23 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for RnnQoE</title>
+    <link>https://ayamir.github.io/2021/12/note-for-rnnqoe/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-rnnqoe/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
+View Generation and Dynamic Tile Selection</a></p>
+<p>Level：ICCC 2021</p>
+<p>Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection</p>
+]]></description>
+</item>
+<item>
     <title>Note for OpTile</title>
     <link>https://ayamir.github.io/2021/12/note-for-optile/</link>
     <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-optile/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：https://dl.acm.org/doi/10.1145/3123266.3123339</p>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339" target="_blank" rel="noopener noreffer">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
 <p>Level：ACM MM 17</p>
 <p>Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size</p>
 <h2 id="背景知识">背景知识</h2>
@@ -172,11 +183,7 @@ $$</p>
 <p>对于$2 \times 2$的矩形片段，其$A$有 4 行 9 列，例子如下：</p>
 <p></p>
 <p>因此最终的问题可以形式化为一个整数线性程序：</p>
-<p>$$
-maximize:\ (-c^{(stor)} - \alpha c^{(view)})^{\top}x,<br>
-\
-subjecct\ to:\ Ax = 1,\ x_i \in {0, 1}\ \forall i
-$$</p>
+<p></p>
 <ul>
 <li>
 <p>$c^{(stor)}$</p>
@@ -1541,57 +1548,6 @@ $$</p>
 <p>高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。</p>
 <h2 id="总结">总结</h2>
 <p></p>
-]]></description>
-</item>
-<item>
-    <title>自适应策略之viewport依赖型</title>
-    <link>https://ayamir.github.io/2021/11/note7/</link>
-    <pubDate>Sun, 14 Nov 2021 13:24:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note7/</guid>
-    <description><![CDATA[<h2 id="概述">概述</h2>
-<p>在360度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。</p>
-<h2 id="通常的实现方式">通常的实现方式</h2>
-<p>在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证viewport的平滑转换。</p>
-<p>提出QER(Quality-focused Regios)的概念使viewport内部的视频分辨率高于viewport之外的视频分辨率。</p>
-<p>非对称的方式以不同的空间分辨率推流来节省带宽。</p>
-<ul>
-<li>在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。</li>
-<li>优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在viewport中生成。</li>
-<li>缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。</li>
-</ul>
-<h2 id="自适应推流参数">自适应推流参数</h2>
-<ol>
-<li>可用带宽和网络吞吐量</li>
-<li>Viewport预测的位置</li>
-<li>客户端播放器的可用缓冲</li>
-</ol>
-<h2 id="参数计算公式">参数计算公式</h2>
-<ul>
-<li>
-<p>第n个估计的Viewport：$V^e(n)$</p>
-<p>$V^e(n) = V_{fb}$</p>
-<p>$V_{fb}$是最新报告的viewport位置</p>
-</li>
-<li>
-<p>第n个估计的吞吐量：$T^e(n)$</p>
-<p>$T^e(n) = T_{fb}$</p>
-<p>$T_{fb}$是最新报告的吞吐量</p>
-</li>
-<li>
-<p>比特率：$R_{bits}$</p>
-<p>$R_{bits} = (1-\beta)T^e(n)$</p>
-<p>$\beta$是安全边缘</p>
-</li>
-<li>
-<p>第n个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$</p>
-<p>$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$</p>
-<p>$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$</p>
-<p>$w_k = \frac{A(t,k)}{A_{vp}}$</p>
-<p>$L=总帧数$</p>
-<p>$w_k$表示在第k个帧中与viewport所重叠的tile程度</p>
-<p>$A(t,k)$表示第k个帧中tile $t$ 重叠的区域</p>
-<p>$A_{vp}$表示viewport中总共的区域</p>
-</li>
-</ul>
 ]]></description>
 </item>
 </channel>
