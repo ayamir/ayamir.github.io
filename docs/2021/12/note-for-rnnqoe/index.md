@@ -18,7 +18,7 @@ Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic til
 
 接着将片段在空间上均匀划分成$M \times N$个tile，FOV由被用户看到的tile所确定。
 
-使用ERP投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\textdegree, 180\textdegree], \theta_i \in (-90\textdegree, 90\textdegree]$来表示用户在第$i$个片段中的视点坐标。
+使用ERP投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\degree, 180\degree], \theta_i \in (-90\degree, 90\degree]$来表示用户在第$i$个片段中的视点坐标。
 
 播放过程中记录用户头部运动的轨迹，积累的数据可以用于FOV预测。
 

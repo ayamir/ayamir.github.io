@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/2021\/12\/note-for-rnnqoe\/"
-        },"genre": "posts","keywords": "Immersive Video, RNN, Trajectory-based predict, Dynamic tile selection","wordcount":  3736 ,
+        },"genre": "posts","keywords": "Immersive Video, RNN, Trajectory-based predict, Dynamic tile selection","wordcount":  3732 ,
         "url": "https:\/\/ayamir.github.io\/2021\/12\/note-for-rnnqoe\/","datePublished": "2021-12-16T19:53:10+08:00","dateModified": "2021-12-19T12:21:52+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -101,7 +101,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for RnnQoE</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-16">2021-12-16</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3736 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-16">2021-12-16</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3732 字</span>&nbsp;
                     <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
             </div>
             
@@ -141,7 +141,7 @@ View Generation and Dynamic Tile Selection</a></p>
 <h3 id="视频划分">视频划分</h3>
 <p>先将视频划分成片段：$\Iota = {1, 2, &hellip;, I}$表示片段数为$I$的片段集合。</p>
 <p>接着将片段在空间上均匀划分成$M \times N$个tile，FOV由被用户看到的tile所确定。</p>
-<p>使用ERP投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\textdegree, 180\textdegree], \theta_i \in (-90\textdegree, 90\textdegree]$来表示用户在第$i$个片段中的视点坐标。</p>
+<p>使用ERP投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\degree, 180\degree], \theta_i \in (-90\degree, 90\degree]$来表示用户在第$i$个片段中的视点坐标。</p>
 <p>播放过程中记录用户头部运动的轨迹，积累的数据可以用于FOV预测。</p>
 <p>跨用户之间的FOV轨迹可以用于提高预测精度。</p>
 <h3 id="qoe模型">QoE模型</h3>
