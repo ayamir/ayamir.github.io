@@ -4,7 +4,207 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for TBRA</title>
+    <link>https://ayamir.github.io/2021/12/note-for-tbra/</link>
+    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-tbra/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
+<p>Level：ACM MM 21</p>
+<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
+<h2 id="创新点">创新点</h2>
+<h3 id="背景">背景</h3>
+<p>现有的固定的tile划分方式严重依赖viewport预测的精度，然而viewport预测的准确率往往变化极大，这导致基于tile的策略实际效果并不一定能实现其设计初衷：保证QoE的同时减少带宽浪费。</p>
+<p>考虑同样的viewport预测结果与不同的tile划分方式组合的结果：</p>
+<p></p>
+<p>从上图可以看到：</p>
+<ul>
+<li>如果采用$6 \times 6$的分块方式，就会浪费26，32两个tile的带宽，同时15，16，17作为本应在实际viewport中的tile并没有分配最高的优先级去请求。</li>
+<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的viewport有所出入，但是得益于tile分块较大，所有应该被请求的tile都得到了最高的优先级，用户的QoE得到了保证。</li>
+</ul>
+<p>另一方面，基于tile的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/" target="_blank" rel="noopener noreffer">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
+<h3 id="创新">创新</h3>
+<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的viewport预测性能和受限的移动设备的解码能力。</p>
+<h3 id="论文组织">论文组织</h3>
+<ol>
+<li>首先使用现实世界的轨迹分析了典型的viewport预测算法并确定了其性能的不确定性。</li>
+<li>接着讨论了不同的分块策略在tile选择和解码效率上的影响。</li>
+<li>自适应的分块策略可以适应viewport预测的错误，并能保证tile选择的质量。</li>
+<li>为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。</li>
+<li>形式化了优化模型，讨论了自适应算法的细节。</li>
+<li>评估证明了方案的优越性。</li>
+</ol>
+<h2 id="motivation">Motivation</h2>
+<h3 id="分块策略对tile选择的影响">分块策略对tile选择的影响</h3>
+<p>实现4种轻量的viewport预测算法：线性回归LR、岭回归RR、支持向量回归、长短期记忆LSTM。</p>
+<p>设置历史窗口大小为2s，预测窗口大小为1s；viewport的宽度和高度分别为100°和90°。</p>
+<p>默认的分块策略为$6 \times 6$；头部移动数据集来自<a href="https://dl.acm.org/doi/10.1145/3204949.3208139" target="_blank" rel="noopener noreffer">公开数据集</a>。</p>
+<h4 id="viewport预测的不准确性">viewport预测的不准确性</h4>
+<p>研究表明，用户的头部运动主要发生在水平方向而较少发生在垂直方向，所以只分析水平方向的预测。</p>
+<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的viewport预测采样。</p>
+<p>视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。</p>
+<ul>
+<li>
+<p>改变采样频率会直接影响viewport预测的精度，频率越低，精度越低。</p>
+</li>
+<li>
+<p>相机运动的viewport预测错误率比相机静止的明显更高。</p>
+</li>
+</ul>
+<h4 id="通过分块容忍预测错误">通过分块容忍预测错误</h4>
+<p>因为不管tile的哪个部分被包含在预测的viewport中，只要包含一部分就会请求整个tile，所以增大每个tile的尺寸能吸收预测错误。</p>
+<p>实验验证：</p>
+<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持tile选择结果的相同质量。</p>
+<p>用$F_1$分数来表示tile选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
+<p>实验结果表明更大的tile尺寸更能容忍预测错误。</p>
+<h3 id="分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</h3>
+<p>虽然当前的移动设备硬件性能发展迅速，但是实时的高码率高分辨率全景视频的解码任务还是充满挑战。</p>
+<p>分块对于编码的影响：</p>
+<ul>
+<li>tile越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
+</ul>
+<p>直接影响解码复杂性的因素：</p>
+<ul>
+<li>tile的数量。</li>
+<li>视频的分辨率。</li>
+<li>用于解码的资源。</li>
+</ul>
+<p>固定其中1个因素改变另外2个因素来检查其对解码的影响：</p>
+<p></p>
+<p>根据对图的观察可以得出这3个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
+<p>分别用$F_n(x), F_r(x), F_c(x)$表示tile数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
+<p>将这3个比值作为3个乘子建立分析模型：
+$$
+D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
+$$
+上式表示计算整体的解码时间，其中tile数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
+<p>这个模型将用于帮助做出分块和码率适应的决策。</p>
+<p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
+<h2 id="tbra的设计">TBRA的设计</h2>
+<ul>
+<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示360°视频分块方式的集合；</li>
+<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中tile的数量；</li>
+<li>当 $i &lt; j$ 时，假设 $|s_i| &lt; |s_j|$；</li>
+<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的tile $j$，$i \le 块的数量, j \le |s|$；</li>
+<li>目标是确定分块方式$s$，并为每个tile确定其码率$b_{i, j}$；</li>
+</ul>
+<h3 id="分块自适应">分块自适应</h3>
+<h4 id="自适应的概念">自适应的概念</h4>
+<p>分块尺寸大小会导致viewport容错率和传输效率的变化。</p>
+<ul>
+<li>分块尺寸小，极端情况下每个像素点作为一个tile，viewport容错率最小，但是传输效率达到100%；</li>
+<li>分块尺寸大，极端情况下整个视频帧作为一个tile，viewport容错率最大，但是传输效率最小；</li>
+</ul>
+<p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
+<h4 id="分块选择">分块选择</h4>
+<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去n秒中方向 $d$ 的预测错误平均值；
+$$
+\overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
+$$
+预测区域的扩展被进一步用于tile选择，受过去预测精度的动态影响。</p>
+<p>下一步检查不同分块方式，进而找到QoE和传输效率之间的折中。</p>
+<p>对于每个分块方式，比较基于扩展的预测区域的tile选择的质量。使用2个比值作为QoE和传输效率的度量：
+$$
+Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p>$$
+Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p></p>
+<p>这2个比值的tradeoff可以在上图中清晰地看出。</p>
+<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
+$$
+Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
+$$
+$\phi_i$ 是viewport $i$ 的中心纬度坐标，它表明随着viewport的垂直移动，浪费率的权重会发生变化。（因为投影方式是ERP）</p>
+<p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
+<h3 id="码率自适应">码率自适应</h3>
+<h4 id="视频质量">视频质量</h4>
+<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于tile是否在预测的viewport中。</p>
+<p>$q(b_{i, j})$ 是tile比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
+<p>第 $i$ 个视频块的质量等级可以定义为：</p>
+<p>$$
+Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
+$$</p>
+<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers" target="_blank" rel="noopener noreffer">主观视频质量模型</a>：
+$$
+subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
+$$
+$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时viewport的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
+<h4 id="质量变化">质量变化</h4>
+<p>连续视频块之间的强烈质量变化会损害QoE，定义质量变化作为响铃两个视频块之间质量的变化：
+$$
+Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
+$$</p>
+<h4 id="重缓冲时间">重缓冲时间</h4>
+<p>参数设置：</p>
+<ul>
+<li>$C_i$ 表示下载视频块 $i$ 的预计吞吐量；</li>
+<li>$B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；</li>
+<li>$B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；</li>
+<li>下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；</li>
+<li>每个视频块的长度为 $L$ ；</li>
+</ul>
+<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：
+$$
+B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
+$$
+下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
+<p>$$
+Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
+$$</p>
+<p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
+<p>第二部分 $t_{miss}$ 表示下载缺失的tile所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的tile）。</p>
+<h4 id="优化目标">优化目标</h4>
+<p>第 $i$ 个视频块的整体优化目标可以定义为前述3个指标的加权和：
+$$
+Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
+$$
+各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
+<p>传统意义上使用所有视频块的平均QoE作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
+<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">基于MPC的框架</a>，在有限的范围内优化多个视频块的QoE，最终的目标函数可以形式化为：
+$$
+\underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
+$$
+因为短期内的viewport预测性能和网络状况可以很容易得到，QoE优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
+<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行QoE优化，直到最后一个窗口。</p>
+<p>使用基于MPC的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
+<h4 id="高效求解">高效求解</h4>
+<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE优化可以通过详尽搜索定期解决。</p>
+<p>但是因为优化过程需要高频调用，所以对于大的搜索空间还是充满挑战。</p>
+<p>为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：</p>
+<ul>
+<li>
+<p>解码时间需要被约束；</p>
+<p>解码时间应该短于回放长度。</p>
+<p>给定移动设备上可用的计算资源，可以得到支持的最大解码线程数。</p>
+<p>基于解码时间的分析模型，由于解码复杂度和分辨率的单调性，可以找到设备能够限定时间内解码的最大质量水平，这会将码率选择限制在有界搜索空间内。</p>
+</li>
+<li>
+<p>码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；</p>
+<p>不会主动耗尽缓冲区，无需让其处理吞吐量的波动。</p>
+</li>
+<li>
+<p>码率选择应该考虑tile的分类；</p>
+<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} &gt; w_{i, j'}$ 。</p>
+</li>
+<li>
+<p>属于相同类别的tile比特率选择应该是同一个等级；</p>
+<p>这使码率自适应在tile类的级别上执行而非单个tile的级别，大大减小了搜索空间的规模。</p>
+</li>
+<li>
+<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的tile应该有相同的结果。</p>
+</li>
+</ul>
+<h3 id="tbra-workflow">TBRA workflow</h3>
+<p></p>
+<p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
+<p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
+<p>观察到tile自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
+<p>基于MPC的优化workflow还可以有效地解决码率自适应问题。</p>
+]]></description>
+</item>
+<item>
     <title>Note for Content Motion Viewport Prediction</title>
     <link>https://ayamir.github.io/2021/12/note-for-content-motion-viewport-prediction/</link>
     <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-content-motion-viewport-prediction/</guid>
@@ -1914,53 +2114,6 @@ $$</p>
 <p>并且，服务端push特性可以应用在基于tile的VR视频推流中，客户端可以向服务器同时请求一条视频片段的所有tile。</p>
 <p>服务端可以使用特制的请求处理器，允许客户端为每个tile定义一系列质量等级。</p>
 <p>因此可以将应用的启发式自适应的速率的决定传达给服务器，这允许客户端以期望的质量级别取得所有图块。</p>
-]]></description>
-</item>
-<item>
-    <title>沉浸式流媒体面临的挑战和启示</title>
-    <link>https://ayamir.github.io/2021/11/note9/</link>
-    <pubDate>Sun, 14 Nov 2021 19:06:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note9/</guid>
-    <description><![CDATA[<h2 id="最终的目标">最终的目标</h2>
-<p>主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。</p>
-<h2 id="具体的任务">具体的任务</h2>
-<ol>
-<li>
-<p>从360度视频的采集到显示的过程中，引入了好几种失真。</p>
-<p>应该重点增加新的拼接、投影和分包方式以减少噪音。</p>
-</li>
-<li>
-<p>除了捕获和使用360度视频来表示真实世界和实际交互内容之外，环境中还包括3D对象。</p>
-<p>3D对象的合并对于真实的视图而言是一个挑战。</p>
-</li>
-<li>
-<p>因为在推流会话中，用户的头部移动高度可变，所以固定的tiling方案可能会导致非最优的viewport质量。</p>
-<p>推流框架中的tile数量应该被动态选择，进而提高推流质量。</p>
-</li>
-<li>
-<p>自适应的机制应该足够智能来根据环境因素精确地做出适应。</p>
-<p>应该制定基于深度强化学习的策略，来给360度视频帧中不同区域的tile分配合适的比特率。</p>
-</li>
-<li>
-<p>用户在360度视频中的自由导航很容易让其感觉忧虑自己错过了什么重要的东西。</p>
-<p>在360度视频中导航的时候，需要支持自然的可见角度方向。</p>
-<p>丰富的环境应配备新颖的定向机制，以支持360度视频，同时降低认知负荷，以克服此问题。</p>
-</li>
-<li>
-<p>真实的导航依赖viewport预测机制。</p>
-<p>现代的预测方式应该使用时空图像特性以及用户的位置信息，采用合适的编解码器卷积LSTM结构来减少长期预测误差。</p>
-</li>
-<li>
-<p>沉浸式的场景随着用户的交互应该发生变化。</p>
-<p>由于用户与场景的交互而产生的新挑战是通过编码和传输透视图创建的。</p>
-<p>因此预测用户的行为来实现对交互内容的高效编码和推流非常关键。</p>
-</li>
-<li>
-<p>对360度视频的质量获取方法和度量手段需要进一步研究。</p>
-</li>
-<li>
-<p>360度视频中特殊的音效需要引起注意。</p>
-</li>
-</ol>
 ]]></description>
 </item>
 </channel>
