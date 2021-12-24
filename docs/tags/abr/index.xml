@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>DASH - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/dash/</link>
-        <description>DASH - 标签 - Ayamir&#39;s Blog</description>
+        <title>ABR - 标签 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/tags/abr/</link>
+        <description>ABR - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/dash/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/abr/" rel="self" type="application/rss+xml" /><item>
     <title>Note for MPC</title>
     <link>https://ayamir.github.io/2021/12/note-for-mpc/</link>
     <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-mpc/</guid>
