@@ -1,0 +1,39 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>DASH - 标签 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/tags/dash/</link>
+        <description>DASH - 标签 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/dash/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for MPC</title>
+    <link>https://ayamir.github.io/2021/12/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-mpc/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
+<p>Level：ACM SIGCOMM 15</p>
+<p>Keywords：Model Predictive Control，ABR，DASH</p>
+<h2 id="motivation">Motivation</h2>
+<p>关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。</p>
+<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的MPC算法，并且预测误差很低，那么MPC方案可以优于传统的基于速率和基于缓冲区的策略。</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>播放器端为QoE需要考虑的问题：
+<ol>
+<li>最小化冲缓冲事件发生的次数；</li>
+<li>在吞吐量限制下尽可能传输码率较高的视频；</li>
+<li>最小化播放器开始播放花费的时间（启动时间）；</li>
+<li>保持播放过程平滑，尽可能避免大幅度的码率变化；</li>
+</ol>
+</li>
+<li>这些目标相互冲突的原因：
+<ol>
+<li>最小化重缓冲次数和启动时间会导致只选择最低码率的视频；</li>
+<li>尽可能选择高码率的视频会导致很多的重缓冲事件；</li>
+<li>保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突；</li>
+</ol>
+</li>
+</ul>
+]]></description>
+</item>
+</channel>
+</rss>

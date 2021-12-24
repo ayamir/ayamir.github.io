@@ -4,7 +4,38 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for MPC</title>
+    <link>https://ayamir.github.io/2021/12/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-mpc/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
+<p>Level：ACM SIGCOMM 15</p>
+<p>Keywords：Model Predictive Control，ABR，DASH</p>
+<h2 id="motivation">Motivation</h2>
+<p>关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。</p>
+<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的MPC算法，并且预测误差很低，那么MPC方案可以优于传统的基于速率和基于缓冲区的策略。</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>播放器端为QoE需要考虑的问题：
+<ol>
+<li>最小化冲缓冲事件发生的次数；</li>
+<li>在吞吐量限制下尽可能传输码率较高的视频；</li>
+<li>最小化播放器开始播放花费的时间（启动时间）；</li>
+<li>保持播放过程平滑，尽可能避免大幅度的码率变化；</li>
+</ol>
+</li>
+<li>这些目标相互冲突的原因：
+<ol>
+<li>最小化重缓冲次数和启动时间会导致只选择最低码率的视频；</li>
+<li>尽可能选择高码率的视频会导致很多的重缓冲事件；</li>
+<li>保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突；</li>
+</ol>
+</li>
+</ul>
+]]></description>
+</item>
+<item>
     <title>Note for TBRA</title>
     <link>https://ayamir.github.io/2021/12/note-for-tbra/</link>
     <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-tbra/</guid>
@@ -2095,25 +2126,6 @@ $$</p>
 <li>HTTP版本</li>
 <li>持久化的连接数量</li>
 </ol>
-]]></description>
-</item>
-<item>
-    <title>沉浸式推流中应用层的优化</title>
-    <link>https://ayamir.github.io/2021/11/note10/</link>
-    <pubDate>Mon, 15 Nov 2021 10:13:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/11/note10/</guid>
-    <description><![CDATA[<h2 id="背景">背景</h2>
-<p>大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需要1个GET请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。</p>
-<p>在基于VR的HAS方案中，播放1条视频片段就需要取得多种资源：1次GET请求需要同时请求基础的tile层和每个空间视频tile。使用4x4的tile方案时，客户端需要发起不少于17次GET请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。</p>
-<h2 id="解决方案">解决方案</h2>
-<h3 id="使用多条持久的tcp连接">使用多条持久的TCP连接</h3>
-<p>大多数的现代浏览器都支持同时建立并维持多达6条TCP连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。</p>
-<p>类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的tile。</p>
-<h3 id="使用http2协议的服务端push特性">使用HTTP/2协议的服务端push特性</h3>
-<p>HTTP/2协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。</p>
-<p>服务端直接push短视频片段可以减少视频的启动时间和端到端延迟。</p>
-<p>并且，服务端push特性可以应用在基于tile的VR视频推流中，客户端可以向服务器同时请求一条视频片段的所有tile。</p>
-<p>服务端可以使用特制的请求处理器，允许客户端为每个tile定义一系列质量等级。</p>
-<p>因此可以将应用的启发式自适应的速率的决定传达给服务器，这允许客户端以期望的质量级别取得所有图块。</p>
 ]]></description>
 </item>
 </channel>
