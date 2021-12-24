@@ -3,7 +3,7 @@ title: "Note for OpTile"
 date: 2021-12-13T16:19:02+08:00
 draft: false
 keywords: ["Immersive Video"]
-tags: ["Immersive Video", "Tile-based", "Dynamic tile"]
+tags: ["Immersive Video", "Content-based division", "Dynamic tiling"]
 categories: ["Immersive Video"]
 ---
 

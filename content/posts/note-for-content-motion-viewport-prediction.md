@@ -3,8 +3,8 @@ title: "Note for Content Motion Viewport Prediction"
 date: 2021-12-20T10:47:18+08:00
 draft: false
 math: true
-keywords: ["Immersive Video", "Content motion", "Viewport prediction", "Live video"]
-tags: ["Immersive Video", "Content motion", "Viewport prediction", "Live video"]
+keywords: ["Content motion", "Viewport prediction", "Live video"]
+tags: ["Immersive Video", "Content-based predict", "Live video"]
 categories: ["Immersive Video"]
 ---
 

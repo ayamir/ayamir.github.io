@@ -3,8 +3,8 @@ title: "Note for TBRA"
 date: 2021-12-21T10:11:23+08:00
 draft: false
 math: true
-keywords: ["Immersive Video", "Tile-based", "Mobile"]
-tags: ["Tile-based", "Dynamic tile", "TBRA", "Mobile"]
+keywords: ["Adaptive tiling and bitrate", "Tile-based", "Mobile"]
+tags: ["Immersive Video", "Dynamic tiling", "Mobile device", "MPC"]
 categories: ["Immersive Video"]
 ---
 

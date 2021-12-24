@@ -4,7 +4,7 @@ date: 2021-12-23T10:39:32+08:00
 draft: false
 math: true
 keywords: ["DASH", "Control-Theoretic"]
-tags: ["DASH"]
+tags: ["DASH", "MPC"]
 categories: ["Immersive Video"]
 ---
 

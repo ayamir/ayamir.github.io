@@ -3,8 +3,8 @@ title: "Note for 360ProbDASH"
 date: 2021-12-09T10:20:15+08:00
 draft: false
 math: true
-keywords: ["Immersive Video"]
-tags: ["Immersive Video"]
+keywords: ["Trajectory-based predict", "Probabilistic Model"]
+tags: ["Immersive Video", "Trajectory-based predict", "Probabilistic Model"]
 categories: ["Immersive Video"]
 ---
 
