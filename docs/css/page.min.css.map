@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "page.min.css",
-	"sourceRoot": "/home/ayamir/ayamir.github.io",
+	"sourceRoot": "/home/ayamir/git/ayamir.github.io",
 	"sources": [
 		"themes/FeelIt/assets/css/page.scss",
 		"themes/FeelIt/assets/css/_variables.scss",

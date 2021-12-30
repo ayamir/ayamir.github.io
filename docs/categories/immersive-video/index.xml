@@ -4,7 +4,47 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for GPAC</title>
+    <link>https://ayamir.github.io/2021/12/note-for-gpac/</link>
+    <pubDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-gpac/</guid>
+    <description><![CDATA[<h2 id="dash客户端自适应逻辑">Dash客户端自适应逻辑</h2>
+<ol>
+<li><em>tile priority setup</em>：根据定义的规则对tile进行优先级排名。</li>
+<li><em>rate allocation</em>：收集网络吞吐量信息和tile码率信息，使用确定的tile优先级排名为其分配码率，努力最大化视频质量。</li>
+<li><em>rate adaption</em>：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。</li>
+</ol>
+<h3 id="tile-priority-setup">tile priority setup</h3>
+<ol>
+<li>
+<p>Dash客户端加载带有SRD信息的MPD文件时，首先确定使用SRD描述的tile集合。</p>
+</li>
+<li>
+<p>确定tile之间的编码依赖（尤其是使用HEVC编码的tile时）</p>
+</li>
+<li>
+<p>为每个独立的tile向媒体渲染器请求一个视频对象，并向其通知tile的SRD信息。</p>
+</li>
+<li>
+<p>渲染器根据需要的显示大小调整SRD信息之后，执行视频对象的最终布局。</p>
+</li>
+<li>
+<p>一旦tile集合被确定，客户端向每个tile分配优先级。（每次码率自适应执行的时候都需要分配tile优先级）</p>
+<p></p>
+</li>
+</ol>
+<h3 id="rate-allocation">Rate allocation</h3>
+<ol>
+<li>首先需要估计可用带宽（tile场景和非tile场景的估计不同）</li>
+<li>在一个视频段播放过程中，客户端需要去下载多个段（并行-HTTP/2）</li>
+<li>带宽可以在下载单个段或多个段的平均指标中估计出来。</li>
+<li>一旦带宽估计完成，码率分配将tile根据其优先级进行分类。</li>
+<li>一开始所有的tile都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的tile的码率。</li>
+<li>一旦每个tile的码率分配完成，将为目标带宽等于所选比特率的每个tile调用常规速率自适应算法</li>
+</ol>
+]]></description>
+</item>
+<item>
     <title>Note for MPC</title>
     <link>https://ayamir.github.io/2021/12/note-for-mpc/</link>
     <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-mpc/</guid>
@@ -3699,157 +3739,6 @@ $C_k$：第k个块的可用带宽，$B_k$：第k个块的可用缓冲区大小</
 <p>主流方案是使用客户端处理，但是由于会处理不属于用户视角范围内的视频内容，所以会造成计算资源的浪费。</p>
 <h4 id="云端处理">云端处理</h4>
 <p>另一种方案是使用云端处理，只有用户视角内的视频内容会被传输到客户端，没有更多的带宽和客户端硬件资源要求。</p>
-]]></description>
-</item>
-<item>
-    <title>Immersive Video OMAF-Sample Deploy</title>
-    <link>https://ayamir.github.io/2021/10/immersive-video-deploy/</link>
-    <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/10/immersive-video-deploy/</guid>
-    <description><![CDATA[<p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
-<h2 id="server-端搭建">Server 端搭建</h2>
-<h3 id="修改-dockerfile">修改 Dockerfile</h3>
-<ol>
-<li>
-<p>手动设置 wget 和 git 的 http_proxy</p>
-</li>
-<li>
-<p><a href="https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-13.noarch.rpm" target="_blank" rel="noopener noreffer">旧 package 目录</a> not found，修改为<a href="https://rpmfind.net/linux/epel/7/aarch64/Packages/e/epel-release-7-12.noarch.rpm" target="_blank" rel="noopener noreffer">新 package 目录</a></p>
-</li>
-<li>
-<p>因为找不到 glog 库因此加入软链接操作</p>
-</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="重新编译内核">重新编译内核</h3>
-<p>运行脚本时显示 libnuma 错误因此推断与 numa 设置有关</p>
-<p>执行<code>numactl -H</code>显示只有一个 node，报错输出显示需要至少两个 numa 节点</p>
-<p>查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数</p>
-<ol>
-<li>手动下载 Linux 内核源代码到<code>/usr/src/</code>目录</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz
-</code></pre></td></tr></table>
-</div>
-</div><ol start="2">
-<li>解压</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">tar xpvf linux-5.11.1.tar.gz
-</code></pre></td></tr></table>
-</div>
-</div><ol start="3">
-<li>复制现有内核配置</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> linux-5.11.1 <span class="o">&amp;&amp;</span> cp -v /boot/config-<span class="k">$(</span>uname -r<span class="k">)</span> .config
-</code></pre></td></tr></table>
-</div>
-</div><ol start="4">
-<li>安装必要的包</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev
-</code></pre></td></tr></table>
-</div>
-</div><ol start="5">
-<li>进入内核配置界面</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make menuconfig
-</code></pre></td></tr></table>
-</div>
-</div><p></p>
-<ol start="6">
-<li>按下<code>/</code>键分别查询<code>CONFIG_NUMA</code>和<code>CONFIG_NUMA_EMU</code>位置</li>
-</ol>
-<p></p>
-<ol start="7">
-<li>手动勾选对应选项之后保存退出</li>
-</ol>
-<p></p>
-<ol start="8">
-<li>重新编译并等待安装结束</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo make -j <span class="k">$(</span>nproc<span class="k">)</span> <span class="o">&amp;&amp;</span> sudo make modules_install <span class="o">&amp;&amp;</span> sudo make install
-</code></pre></td></tr></table>
-</div>
-</div><ol start="9">
-<li>修改<code>grub</code>启动参数加入 fake numa 配置</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo vim /etc/default/grub
-</code></pre></td></tr></table>
-</div>
-</div><p>找到对应行并修改为</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&#34;numa=fake=2&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p></p>
-<ol start="10">
-<li>更新<code>grub</code>并重启</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo update-grub <span class="o">&amp;&amp;</span> sudo reboot
-</code></pre></td></tr></table>
-</div>
-</div><ol start="11">
-<li>执行<code>numactl -H</code>检查 numa 节点数目为 2</li>
-</ol>
-<p></p>
-<ol start="12">
-<li>重新执行脚本如图说明一切正常</li>
-</ol>
-<p></p>
-<h2 id="client-端搭建">Client 端搭建</h2>
-<p>需要 Ubuntu18.04 环境，虚拟机中安装之后按照 README 命令，执行脚本一切正常</p>
-<p></p>
 ]]></description>
 </item>
 </channel>
