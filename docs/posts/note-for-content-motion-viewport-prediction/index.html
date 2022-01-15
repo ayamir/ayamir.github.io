@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Note for Content Motion Viewport Prediction - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for Content Motion Viewport Prediction" />
+<meta property="og:description" content="论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019 Keywords：View" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-20T10:47:18+08:00" />
+<meta property="article:modified_time" content="2021-12-24T15:27:12+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Note for Content Motion Viewport Prediction"/>
+<meta name="twitter:description" content="论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019 Keywords：View"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/" /><link rel="prev" href="https://ayamir.github.io/posts/note-for-rnnqoe/" /><link rel="next" href="https://ayamir.github.io/posts/note-for-tbra/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Note for Content Motion Viewport Prediction",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/note-for-content-motion-viewport-prediction\/"
+        },"genre": "posts","keywords": "Immersive Video, Content-based predict, Live video","wordcount":  3687 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note-for-content-motion-viewport-prediction\/","datePublished": "2021-12-20T10:47:18+08:00","dateModified": "2021-12-24T15:27:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for Content Motion Viewport Prediction</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-20">2021-12-20</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3687 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#论文概况">论文概况</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#全景直播推流的预备知识">全景直播推流的预备知识</a>
+          <ul>
+            <li><a href="#vr推流直播">VR推流直播</a></li>
+            <li><a href="#用户头部移动的模式">用户头部移动的模式</a></li>
+          </ul>
+        </li>
+        <li><a href="#系统架构">系统架构</a>
+          <ul>
+            <li><a href="#理论创新">理论创新</a></li>
+            <li><a href="#具体实施">具体实施</a></li>
+          </ul>
+        </li>
+        <li><a href="#形式化">形式化</a>
+          <ul>
+            <li><a href="#基于运动轨迹的viewport预测">基于运动轨迹的viewport预测</a></li>
+            <li><a href="#基于用户反馈的错误恢复">基于用户反馈的错误恢复</a></li>
+            <li><a href="#动态viewport更新">动态viewport更新</a></li>
+          </ul>
+        </li>
+        <li><a href="#预测步骤">预测步骤</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
+<p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>
+<p>Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model</p>
+<h2 id="workflow">Workflow</h2>
+<ul>
+<li>Tracking：VR motion追踪算法：应用了高斯混合模型来检测物体的运动。</li>
+<li>Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户viewport来自动更正潜在的预测错误。</li>
+<li>Update：viewport动态更新算法：动态调整预测的viewport大小去覆盖感兴趣的潜在viewport，同时尽可能保证最低的带宽消耗。</li>
+<li>Evaluation：经验用户/视频评估：构建VR viewport预测方法原型，使用经验360°视频和代表性的头部移动数据集评估。</li>
+</ul>
+<h2 id="全景直播推流的预备知识">全景直播推流的预备知识</h2>
+<h3 id="vr推流直播">VR推流直播</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220152453073.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220152453073.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220152453073.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220152453073.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220152453073.png"
+        title="image-20211220152453073" /></p>
+<p>相比于传统的2D视频推流的特别之处：</p>
+<ul>
+<li>VR系统是交互式的，viewport的选择权在客户端；</li>
+<li>呈现给用户的最终视图是整个视频的一部分；</li>
+</ul>
+<h3 id="用户头部移动的模式">用户头部移动的模式</h3>
+<p>在大量的360°视频观看过程中，用户主要的头部移动模式有4种，使用$i-j\ move$来表示；</p>
+<p>其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。</p>
+<ul>
+<li>$1-1\ move$：单个物体以单一方向移动；</li>
+<li>$1-n\ move$：单个物体以多个方向移动；</li>
+<li>$m-n\ move$：多个物体以多个方向移动；</li>
+<li>$Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport切换随机；</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220154440374.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220154440374.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220154440374.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220154440374.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220154440374.png"
+        title="image-20211220154440374" /></p>
+<p>现有的直播VR推流中的viewport预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。</p>
+<p>本方案的目标是提出对4种模式都有效的预测策略。</p>
+<h2 id="系统架构">系统架构</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220155438697.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220155438697.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220155438697.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220155438697.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220155438697.png"
+        title="image-20211220155438697" /></p>
+<h3 id="理论创新">理论创新</h3>
+<ul>
+<li>
+<p>核心功能模块：</p>
+<ol>
+<li>
+<p>motion detection：区分运动物体与静止的背景。</p>
+</li>
+<li>
+<p>feature selection：选择代表性的特征并对运动物体做追踪。</p>
+<p>这两个模块使系统能识别用户可能感兴趣的viewport。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>使用贝叶斯方法分析用户观看行为并形式化用户的兴趣模型。</p>
+<ol>
+<li>
+<p>使用错误恢复机制来使当预测错误被检测到时的预测viewport去适应实际的viewport，尽管不能消除预测错误但是能避免在此基础上进一步的预测错误。</p>
+</li>
+<li>
+<p>使用动态viewport更新算法来产生大小可变的viewport，通过同时考虑跟踪到的viewport轨迹和用户当前的速度（矢量）。</p>
+<p>这样，即使用户的运动模式很复杂也能有更高的概率去覆盖潜在的视图。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="具体实施">具体实施</h3>
+<ul>
+<li>
+<p>虽然提出的运动追踪和错误处理机制是计算密集型的任务，但是这些组件都部署在video packager中，运行在服务端。</p>
+</li>
+<li>
+<p>将生成VR视图的工作负载移动到服务端，进一步减少了客户端的计算开销以及网络开销。</p>
+</li>
+</ul>
+<h2 id="形式化">形式化</h2>
+<h3 id="基于运动轨迹的viewport预测">基于运动轨迹的viewport预测</h3>
+<p>使用<a href="https://ieeexplore.ieee.org/document/1333992" target="_blank" rel="noopener noreffer">GMM</a>完成运动检测，使用<a href="https://ieeexplore.ieee.org/document/323794" target="_blank" rel="noopener noreffer">Shi-Tomasi algorithm</a>解决运动轨迹跟踪问题。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220165231195.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220165231195.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220165231195.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220165231195.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220165231195.png"
+        title="image-20211220165231195" /></p>
+<ol>
+<li>
+<p>运动检测</p>
+<p>GMM前景提取</p>
+</li>
+<li>
+<p>特征选取与过滤</p>
+<p>采用 Shi-Tomasi algorithm 从视频中检测代表性的特征，直接检测得到的代表性特征数量较多而难以追踪。</p>
+<p>采用两种过滤的方法来减少要追踪的特征数量。</p>
+<ul>
+<li>
+<p>比较当前帧和前一帧的特征，只保留其共有的部分。</p>
+</li>
+<li>
+<p>采用第1步中运动检测的方式，只保留运动的部分。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>viewport生成</p>
+<p>经过选择和过滤之后的特征通常分布在不能被单一用户视图所覆盖的广阔区域中。</p>
+<p>在整个360°视频中可能存在多个运动的物体，即$m-n\ move$。</p>
+<p>提出一种系统的方式来产生用户最可能跟随观看的viewport。</p>
+<p>直觉是用户更可能将大部分注意力放在两种类型的物体上：</p>
+<ul>
+<li>离用户更近的物体。</li>
+<li>就物理形状而言更“重要”的物体。</li>
+</ul>
+<p>这两种类型的物体大多包含最密集和最大量的特征，因此通过所有特征的重心来计算预测用户视图的中心。</p>
+<p>对于剩余的特征列表：$\vec{F} = [f_1, f_2, f_3, &hellip;, f_k]$，其中$f_i(i = 1 &hellip; k)$表示特征$f_i = &lt;f^{(x)}_i, f^{(y)}_i&gt;$的像素点坐标，则预测出的viewport中心坐标可以计算出来：
+$$
+l_x = \frac{1}{k} \sum^k_{i=1} f^{(x)}_i;\ l_y = \frac{1}{k} \sum^k_{i=1} f^{(y)}_i.
+$$
+考虑到即使预测的viewport中包含用户观看的物体，预测得到的viewport也可能会与实际的viewport存在差异。</p>
+<p>所以预测的viewport可能比实际的viewport要大，所以使用缩放因子$S_c$来产生预测的viewport。</p>
+<p>给出用户viewport的大小$S_{user}$，预测的viewport可以通过$S_{pre} = S_c \cdot S_{user}$计算出来。</p>
+</li>
+</ol>
+<h3 id="基于用户反馈的错误恢复">基于用户反馈的错误恢复</h3>
+<p>video packager可以通过HMD和web服务器通过反向路径从用户处检索用户实际视图的反馈信息。</p>
+<p>基于反馈的错误恢复机制在以下两种场景中表现良好：</p>
+<ol>
+<li>
+<p>没有运动的物体</p>
+<p>如果没有检测到运动的物体，则用户很可能是在观看静止的物体，这会导致基于运动目标的viewport预测失败。</p>
+<p>在这种场景中，可以认为视频内容已经不再是决定用户viewport的因素，而只取决于用户自身的行为。</p>
+<p>因此采用基于速度的方式来预测viewport。（这样的决策可以在运动检测模块没有检测到运动物体时就做出）</p>
+<p>一旦从反馈路径上得到用户信息，可以产生用户viewport位置向量：$\vec{L} = [l_1, l_2, l_3, &hellip;, l_M]$，其中$l_i$表示第$i$个帧中用户viewport的位置，$M$表示视频播放缓冲区中的帧数。那么可以计算viewport速度：
+$$
+\vec{V} = \frac{\vec{(l_2 - l_1)} + \vec{(l_3 - l_2)} &hellip;.(l_M - l_{M-1})}{M-1} = \frac{(\vec{l_M - l_1})}{M-1}
+$$
+下一帧的预测位置$L_{M=1}$也可以计算出来：
+$$
+l_{M+1} = l_M + \vec{V}
+$$</p>
+</li>
+<li>
+<p>预测视图与实际视图的不匹配</p>
+<p>一旦运动追踪策略检测到用户实际的视图和预测的视图不同，就会触发恢复机制去追踪用户实际在看着的物体。</p>
+<p>可以使用运动追踪方式确定用户实际观察的物体的速度。</p>
+<p>给出前一帧匹配的特征$\vec{FA} = [fA_1, fA_2, fA_3, &hellip;, fA_p]$和当前帧的特征$\vec{FB} = [fB_1, fB_2, fB_3, &hellip;, fB_p]$，可以计算出速度：
+$$
+V_x = \frac{1}{p} (\sum^p_{i=1} fB^{(x)}_i - \sum^p_{i=1}fA^{(x)}_i),\
+V_y = \frac{1}{p} (\sum^p_{i=1} fB^{(y)}_i - \sum^p_{i=1}fA^{(y)}_i),
+$$
+假设预测的viewpoint是$(l_x, l_y)$，修改之后的viewpoint是$(l_x + V_x,\ l_y + V_y)$。</p>
+</li>
+</ol>
+<h3 id="动态viewport更新">动态viewport更新</h3>
+<p>前述的错误恢复机制发生在viewport预测错误出现之后，任务是避免未来更多的错误。</p>
+<p>动态的viewport更新则努力避免viewport预测错误。</p>
+<p>关键思想是扩大预测的viewport大小，以高概率去覆盖$m-n\ move$和$arbitrary\ move$下所有潜在的运动目标；更重要的是动态调整视图的大小去获得更高效的带宽利用率。</p>
+<ul>
+<li>
+<p>对于一个360°全景视频，将360°的帧均分为$N = n \times n$个网格，每个网格看作是一个tile，预测的viewport即为$N$个tile的子集。</p>
+</li>
+<li>
+<p>使用贝叶斯方法分析用户的观看行为，每个tile分配一个独立的贝叶斯模型，所以每个tile可以独立更新。</p>
+</li>
+<li>
+<p>设$X$表示用户viewport，$Y$表示静态内容，$Z$表示运动物体。</p>
+</li>
+<li>
+<p>未来的用户viewport可以以条件概率计算为$P(X|Y,\ Z)$，$Y$与$Z$相互独立。</p>
+</li>
+<li>
+<p>用户的viewport可以通过反馈信息得出$P(X)$；用户观看静态特征可以表示为$P(X|Y)$；用户观看动态特征可以表示为$P(X|Z)$。</p>
+</li>
+<li>
+<p>$P(X|Y, Z)$可以计算为：
+$$
+P(X|Y, Z) = \frac{P(Y|X) \cdot P(Z|X) \cdot P(X)}{P(Y, Z)}
+$$</p>
+</li>
+<li>
+<p>只要用户开始观看，对于tile $T_i$，就能得到其先验概率$P(Y_i|X_i)$和$P(Z_i|X_i)$，进而根据贝叶斯模型计算出$P(X|Y, Z)$。</p>
+</li>
+</ul>
+<p>为每个tile定义两种属性：</p>
+<ol>
+<li>当前状态：表示此tile是否属于预测的viewport（属于标记为$PREDICTED$，不属于标记为$NONPREDICTED$）。</li>
+<li>生存期：表示此tile会在view port中存在多长时间（例如定义3种等级：$ZERO$，$MEDIUM$，$HIGH$，实际的定义划分可以根据具体的用户和视频设定）。</li>
+</ol>
+<h2 id="预测步骤">预测步骤</h2>
+<p>按照形式化中提出的3步，分为系统初始化、帧级别的更新、缓冲区级别的更新。</p>
+<ol>
+<li>
+<p>系统初始化</p>
+<p>初始化阶段中，view更新算法将所有的$N$个tile标注为$PREDICTED$，并将生存期设置为$MEDIUM$，即系统向用户发送完整的一帧作为自举。</p>
+<p>这样设定的原因在于：当用户第一次启动视频会话时，允许“环视”类型的移动，这可能会覆盖360°帧的任意viewport。</p>
+</li>
+<li>
+<p>帧级别的更新</p>
+<p>给定一帧，应用修改后的motion追踪算法在运动区域中选择特征，而不使用特征的密度做进一步的过滤。</p>
+<p>使用有多个tile的多个视图来覆盖一个放大的区域，该区域包含作为预测viewport的移动对象上的所有特征，这样就能适应$m-n\ move$中的用户行为。</p>
+<p>设计帧级别的算法标记选择的tile作为$PREDICTED$并设置其生存期为$HIGH$（直觉上讲运动中的物体或用户所感兴趣的静态特征会更以长时间保留在viewport之中）。</p>
+</li>
+<li>
+<p>缓冲区级别的更新</p>
+<p>以缓冲区长度为间隔检索用户的实际视图，基于此可以对tile的两种属性做出调整。</p>
+<ol>
+<li>对于与用户实际视图重叠的tile，设置为$PREDICTED$和$HIGH$。</li>
+<li>对于用户实际视图没有出现但出现在预测的视图中的tile，生存期减1，如果生存期减为$ZERO$，就重设其状态为$NONPREDICTED$，将其从预测的viewport中移除。</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png"
+        title="image-20211220221933915" /></p>
+</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive-Video</a>
+                </span><span><a href="/tags/content-based-predict/">Content-based predict</a>
+                </span><span><a href="/tags/live-video/">Live video</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2021-12-24</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/note-for-content-motion-viewport-prediction/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/note-for-rnnqoe/" class="prev" rel="prev" title="Note for RnnQoE"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/note-for-tbra/" class="next" rel="next" title="Note for TBRA">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>

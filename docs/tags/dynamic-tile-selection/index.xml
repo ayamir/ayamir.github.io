@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/dynamic-tile-selection/" rel="self" type="application/rss+xml" /><item>
     <title>Note for RnnQoE</title>
-    <link>https://ayamir.github.io/note-for-rnnqoe/</link>
-    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-rnnqoe/</guid>
+    <link>https://ayamir.github.io/posts/note-for-rnnqoe/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-rnnqoe/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
 View Generation and Dynamic Tile Selection</a></p>

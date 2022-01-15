@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/archlinux/" rel="self" type="application/rss+xml" /><item>
     <title>How to Fix GPGME Error on Archlinux</title>
-    <link>https://ayamir.github.io/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/how-to-fix-gpgme-error/</guid>
+    <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -49,8 +49,8 @@
 </item>
 <item>
     <title>Dns Settings on Archlinux</title>
-    <link>https://ayamir.github.io/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/dns-settings-on-archlinux/</guid>
+    <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns设置">Arch Linux DNS设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>

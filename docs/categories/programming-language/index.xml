@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/programming-language/" rel="self" type="application/rss+xml" /><item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>https://ayamir.github.io/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/iterator/</guid>
+    <link>https://ayamir.github.io/posts/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -148,8 +148,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>https://ayamir.github.io/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/vector/</guid>
+    <link>https://ayamir.github.io/posts/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -244,8 +244,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>https://ayamir.github.io/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/string/</guid>
+    <link>https://ayamir.github.io/posts/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -391,8 +391,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>https://ayamir.github.io/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/auto/</guid>
+    <link>https://ayamir.github.io/posts/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -425,8 +425,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：Const二三事</title>
-    <link>https://ayamir.github.io/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/const/</guid>
+    <link>https://ayamir.github.io/posts/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -621,8 +621,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：引用和指针</title>
-    <link>https://ayamir.github.io/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/reference-and-pointer/</guid>
+    <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -791,8 +791,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：类型系统基础</title>
-    <link>https://ayamir.github.io/cpp-types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/cpp-types/</guid>
+    <link>https://ayamir.github.io/posts/cpp-types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/cpp-types/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1006,8 +1006,8 @@
 </item>
 <item>
     <title>Python selenium settings on microsoft-edge-dev</title>
-    <link>https://ayamir.github.io/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
-    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
     <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

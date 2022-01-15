@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/drl/" rel="self" type="application/rss+xml" /><item>
     <title>Note for RainbowDQN and Multitype Tiles</title>
-    <link>https://ayamir.github.io/note-for-rainbowdqn-tiles/</link>
-    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-rainbowdqn-tiles/</guid>
+    <link>https://ayamir.github.io/posts/note-for-rainbowdqn-tiles/</link>
+    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-rainbowdqn-tiles/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Level：IEEE Transaction on multimedia 21</p>
 <p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
