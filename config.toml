@@ -256,7 +256,7 @@ SourceMap = true
   priority = 0.5
 
 [Permalinks]
-  posts = "/:filename"
+  posts = "posts/:filename"
 
 [privacy]
   [privacy.googleAnalytics]
