@@ -8,8 +8,8 @@
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>Note for 360SRL</title>
-    <link>https://ayamir.github.io/2022/01/note-for-360srl/</link>
-    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2022/01/note-for-360srl/</guid>
+    <link>https://ayamir.github.io/note-for-360srl/</link>
+    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-360srl/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/8784927" target="_blank" rel="noopener noreffer">360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming</a></p>
 <p>Level：ICME 2019</p>
@@ -121,8 +121,8 @@ $$
 </item>
 <item>
     <title>Summary for VP</title>
-    <link>https://ayamir.github.io/2022/01/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2022/01/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="vp-在传输中所处的作用">VP 在传输中所处的作用</h2>
 <p>基于 tile 的全景视频传输方式之所以热门，就是因其可以通过只传输用户 FoV 内的分块而大幅减少观看过程中消耗的带宽。</p>
 <p>所以对用户 FoV 的预测是首先要处理的因素，如果 VP 精度很高，那么所有的带宽都可以用很高的码率去传输 FoV 内的分块。</p>
@@ -209,8 +209,8 @@ $$
 </item>
 <item>
     <title>Note for Content Assisted Prediction</title>
-    <link>https://ayamir.github.io/2022/01/note-for-content-assisted-prediction/</link>
-    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2022/01/note-for-content-assisted-prediction/</guid>
+    <link>https://ayamir.github.io/note-for-content-assisted-prediction/</link>
+    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-content-assisted-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming" target="_blank" rel="noopener noreffer">Content Assisted Viewport Prediction for Panoramic Video Streaming</a></p>
 <p>Level：IEEE CVPR 2019 CV4ARVR</p>
@@ -270,8 +270,8 @@ $$
 </item>
 <item>
     <title>Note for GPAC</title>
-    <link>https://ayamir.github.io/2021/12/note-for-gpac/</link>
-    <pubDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-gpac/</guid>
+    <link>https://ayamir.github.io/note-for-gpac/</link>
+    <pubDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-gpac/</guid>
     <description><![CDATA[<h2 id="dash客户端自适应逻辑">Dash客户端自适应逻辑</h2>
 <ol>
 <li><em>tile priority setup</em>：根据定义的规则对tile进行优先级排名。</li>
@@ -310,8 +310,8 @@ $$
 </item>
 <item>
     <title>Note for MPC</title>
-    <link>https://ayamir.github.io/2021/12/note-for-mpc/</link>
-    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-mpc/</guid>
+    <link>https://ayamir.github.io/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-mpc/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
 <p>Level：ACM SIGCOMM 15</p>
@@ -480,8 +480,8 @@ $$</p>
 </item>
 <item>
     <title>Note for TBRA</title>
-    <link>https://ayamir.github.io/2021/12/note-for-tbra/</link>
-    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-tbra/</guid>
+    <link>https://ayamir.github.io/note-for-tbra/</link>
+    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-tbra/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
 <p>Level：ACM MM 21</p>
@@ -680,8 +680,8 @@ $$
 </item>
 <item>
     <title>Note for Content Motion Viewport Prediction</title>
-    <link>https://ayamir.github.io/2021/12/note-for-content-motion-viewport-prediction/</link>
-    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-content-motion-viewport-prediction/</guid>
+    <link>https://ayamir.github.io/note-for-content-motion-viewport-prediction/</link>
+    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-content-motion-viewport-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
 <p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>
@@ -886,8 +886,8 @@ $$</p>
 </item>
 <item>
     <title>Note for RnnQoE</title>
-    <link>https://ayamir.github.io/2021/12/note-for-rnnqoe/</link>
-    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-rnnqoe/</guid>
+    <link>https://ayamir.github.io/note-for-rnnqoe/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-rnnqoe/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
 View Generation and Dynamic Tile Selection</a></p>
@@ -1161,8 +1161,8 @@ $$</p>
 </item>
 <item>
     <title>Note for OpTile</title>
-    <link>https://ayamir.github.io/2021/12/note-for-optile/</link>
-    <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-optile/</guid>
+    <link>https://ayamir.github.io/note-for-optile/</link>
+    <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-optile/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339" target="_blank" rel="noopener noreffer">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
 <p>Level：ACM MM 17</p>
@@ -1503,8 +1503,8 @@ $n$表示$t$中基本子矩形的数量。</p>
 </item>
 <item>
     <title>多媒体基础知识</title>
-    <link>https://ayamir.github.io/2021/12/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/mm-base/</guid>
+    <link>https://ayamir.github.io/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/mm-base/</guid>
     <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
 <p></p>
 <h2 id="解协议">解协议</h2>

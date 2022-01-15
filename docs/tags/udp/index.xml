@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/udp/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Dante</title>
-    <link>https://ayamir.github.io/2021/12/note-for-dante/</link>
-    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2021/12/note-for-dante/</guid>
+    <link>https://ayamir.github.io/note-for-dante/</link>
+    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/note-for-dante/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
 <p>Level: SIGCOMM 18</p>

@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/viewport-predict/" rel="self" type="application/rss+xml" /><item>
     <title>Summary for VP</title>
-    <link>https://ayamir.github.io/2022/01/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/2022/01/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="vp-在传输中所处的作用">VP 在传输中所处的作用</h2>
 <p>基于 tile 的全景视频传输方式之所以热门，就是因其可以通过只传输用户 FoV 内的分块而大幅减少观看过程中消耗的带宽。</p>
 <p>所以对用户 FoV 的预测是首先要处理的因素，如果 VP 精度很高，那么所有的带宽都可以用很高的码率去传输 FoV 内的分块。</p>

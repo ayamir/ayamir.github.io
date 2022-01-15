@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Note for TBRA - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for TBRA" />
+<meta property="og:description" content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming Level：ACM MM 21 Keywords：Adaptive tiling and bitrate，Mobile streaming 创新" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/note-for-tbra/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-21T10:11:23+08:00" />
+<meta property="article:modified_time" content="2021-12-24T15:27:12+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Note for TBRA"/>
+<meta name="twitter:description" content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming Level：ACM MM 21 Keywords：Adaptive tiling and bitrate，Mobile streaming 创新"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/note-for-tbra/" /><link rel="prev" href="https://ayamir.github.io/note-for-content-motion-viewport-prediction/" /><link rel="next" href="https://ayamir.github.io/note-for-mpc/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Note for TBRA",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/note-for-tbra\/"
+        },"genre": "posts","keywords": "Immersive Video, Dynamic tiling, Mobile device, MPC","wordcount":  3971 ,
+        "url": "https:\/\/ayamir.github.io\/note-for-tbra\/","datePublished": "2021-12-21T10:11:23+08:00","dateModified": "2021-12-24T15:27:12+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for TBRA</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-21">2021-12-21</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3971 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#论文概况">论文概况</a></li>
+        <li><a href="#创新点">创新点</a>
+          <ul>
+            <li><a href="#背景">背景</a></li>
+            <li><a href="#创新">创新</a></li>
+            <li><a href="#论文组织">论文组织</a></li>
+          </ul>
+        </li>
+        <li><a href="#motivation">Motivation</a>
+          <ul>
+            <li><a href="#分块策略对tile选择的影响">分块策略对tile选择的影响</a>
+              <ul>
+                <li><a href="#viewport预测的不准确性">viewport预测的不准确性</a></li>
+                <li><a href="#通过分块容忍预测错误">通过分块容忍预测错误</a></li>
+              </ul>
+            </li>
+            <li><a href="#分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</a></li>
+          </ul>
+        </li>
+        <li><a href="#tbra的设计">TBRA的设计</a>
+          <ul>
+            <li><a href="#分块自适应">分块自适应</a>
+              <ul>
+                <li><a href="#自适应的概念">自适应的概念</a></li>
+                <li><a href="#分块选择">分块选择</a></li>
+              </ul>
+            </li>
+            <li><a href="#码率自适应">码率自适应</a>
+              <ul>
+                <li><a href="#视频质量">视频质量</a></li>
+                <li><a href="#质量变化">质量变化</a></li>
+                <li><a href="#重缓冲时间">重缓冲时间</a></li>
+                <li><a href="#优化目标">优化目标</a></li>
+                <li><a href="#高效求解">高效求解</a></li>
+              </ul>
+            </li>
+            <li><a href="#tbra-workflow">TBRA workflow</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
+<p>Level：ACM MM 21</p>
+<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
+<h2 id="创新点">创新点</h2>
+<h3 id="背景">背景</h3>
+<p>现有的固定的tile划分方式严重依赖viewport预测的精度，然而viewport预测的准确率往往变化极大，这导致基于tile的策略实际效果并不一定能实现其设计初衷：保证QoE的同时减少带宽浪费。</p>
+<p>考虑同样的viewport预测结果与不同的tile划分方式组合的结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png"
+        title="Different tiling scheme with the same prediction" /></p>
+<p>从上图可以看到：</p>
+<ul>
+<li>如果采用$6 \times 6$的分块方式，就会浪费26，32两个tile的带宽，同时15，16，17作为本应在实际viewport中的tile并没有分配最高的优先级去请求。</li>
+<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的viewport有所出入，但是得益于tile分块较大，所有应该被请求的tile都得到了最高的优先级，用户的QoE得到了保证。</li>
+</ul>
+<p>另一方面，基于tile的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/" target="_blank" rel="noopener noreffer">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
+<h3 id="创新">创新</h3>
+<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的viewport预测性能和受限的移动设备的解码能力。</p>
+<h3 id="论文组织">论文组织</h3>
+<ol>
+<li>首先使用现实世界的轨迹分析了典型的viewport预测算法并确定了其性能的不确定性。</li>
+<li>接着讨论了不同的分块策略在tile选择和解码效率上的影响。</li>
+<li>自适应的分块策略可以适应viewport预测的错误，并能保证tile选择的质量。</li>
+<li>为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。</li>
+<li>形式化了优化模型，讨论了自适应算法的细节。</li>
+<li>评估证明了方案的优越性。</li>
+</ol>
+<h2 id="motivation">Motivation</h2>
+<h3 id="分块策略对tile选择的影响">分块策略对tile选择的影响</h3>
+<p>实现4种轻量的viewport预测算法：线性回归LR、岭回归RR、支持向量回归、长短期记忆LSTM。</p>
+<p>设置历史窗口大小为2s，预测窗口大小为1s；viewport的宽度和高度分别为100°和90°。</p>
+<p>默认的分块策略为$6 \times 6$；头部移动数据集来自<a href="https://dl.acm.org/doi/10.1145/3204949.3208139" target="_blank" rel="noopener noreffer">公开数据集</a>。</p>
+<h4 id="viewport预测的不准确性">viewport预测的不准确性</h4>
+<p>研究表明，用户的头部运动主要发生在水平方向而较少发生在垂直方向，所以只分析水平方向的预测。</p>
+<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的viewport预测采样。</p>
+<p>视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。</p>
+<ul>
+<li>
+<p>改变采样频率会直接影响viewport预测的精度，频率越低，精度越低。</p>
+</li>
+<li>
+<p>相机运动的viewport预测错误率比相机静止的明显更高。</p>
+</li>
+</ul>
+<h4 id="通过分块容忍预测错误">通过分块容忍预测错误</h4>
+<p>因为不管tile的哪个部分被包含在预测的viewport中，只要包含一部分就会请求整个tile，所以增大每个tile的尺寸能吸收预测错误。</p>
+<p>实验验证：</p>
+<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持tile选择结果的相同质量。</p>
+<p>用$F_1$分数来表示tile选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
+<p>实验结果表明更大的tile尺寸更能容忍预测错误。</p>
+<h3 id="分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</h3>
+<p>虽然当前的移动设备硬件性能发展迅速，但是实时的高码率高分辨率全景视频的解码任务还是充满挑战。</p>
+<p>分块对于编码的影响：</p>
+<ul>
+<li>tile越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
+</ul>
+<p>直接影响解码复杂性的因素：</p>
+<ul>
+<li>tile的数量。</li>
+<li>视频的分辨率。</li>
+<li>用于解码的资源。</li>
+</ul>
+<p>固定其中1个因素改变另外2个因素来检查其对解码的影响：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png"
+        title="image-20211221170105101" /></p>
+<p>根据对图的观察可以得出这3个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
+<p>分别用$F_n(x), F_r(x), F_c(x)$表示tile数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
+<p>将这3个比值作为3个乘子建立分析模型：
+$$
+D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
+$$
+上式表示计算整体的解码时间，其中tile数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
+<p>这个模型将用于帮助做出分块和码率适应的决策。</p>
+<p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
+<h2 id="tbra的设计">TBRA的设计</h2>
+<ul>
+<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示360°视频分块方式的集合；</li>
+<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中tile的数量；</li>
+<li>当 $i &lt; j$ 时，假设 $|s_i| &lt; |s_j|$；</li>
+<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的tile $j$，$i \le 块的数量, j \le |s|$；</li>
+<li>目标是确定分块方式$s$，并为每个tile确定其码率$b_{i, j}$；</li>
+</ul>
+<h3 id="分块自适应">分块自适应</h3>
+<h4 id="自适应的概念">自适应的概念</h4>
+<p>分块尺寸大小会导致viewport容错率和传输效率的变化。</p>
+<ul>
+<li>分块尺寸小，极端情况下每个像素点作为一个tile，viewport容错率最小，但是传输效率达到100%；</li>
+<li>分块尺寸大，极端情况下整个视频帧作为一个tile，viewport容错率最大，但是传输效率最小；</li>
+</ul>
+<p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
+<h4 id="分块选择">分块选择</h4>
+<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去n秒中方向 $d$ 的预测错误平均值；
+$$
+\overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
+$$
+预测区域的扩展被进一步用于tile选择，受过去预测精度的动态影响。</p>
+<p>下一步检查不同分块方式，进而找到QoE和传输效率之间的折中。</p>
+<p>对于每个分块方式，比较基于扩展的预测区域的tile选择的质量。使用2个比值作为QoE和传输效率的度量：
+$$
+Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p>$$
+Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png"
+        title="image-20211222105900626" /></p>
+<p>这2个比值的tradeoff可以在上图中清晰地看出。</p>
+<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
+$$
+Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
+$$
+$\phi_i$ 是viewport $i$ 的中心纬度坐标，它表明随着viewport的垂直移动，浪费率的权重会发生变化。（因为投影方式是ERP）</p>
+<p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
+<h3 id="码率自适应">码率自适应</h3>
+<h4 id="视频质量">视频质量</h4>
+<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于tile是否在预测的viewport中。</p>
+<p>$q(b_{i, j})$ 是tile比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
+<p>第 $i$ 个视频块的质量等级可以定义为：</p>
+<p>$$
+Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
+$$</p>
+<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers" target="_blank" rel="noopener noreffer">主观视频质量模型</a>：
+$$
+subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
+$$
+$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时viewport的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
+<h4 id="质量变化">质量变化</h4>
+<p>连续视频块之间的强烈质量变化会损害QoE，定义质量变化作为响铃两个视频块之间质量的变化：
+$$
+Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
+$$</p>
+<h4 id="重缓冲时间">重缓冲时间</h4>
+<p>参数设置：</p>
+<ul>
+<li>$C_i$ 表示下载视频块 $i$ 的预计吞吐量；</li>
+<li>$B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；</li>
+<li>$B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；</li>
+<li>下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；</li>
+<li>每个视频块的长度为 $L$ ；</li>
+</ul>
+<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：
+$$
+B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
+$$
+下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
+<p>$$
+Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
+$$</p>
+<p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
+<p>第二部分 $t_{miss}$ 表示下载缺失的tile所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的tile）。</p>
+<h4 id="优化目标">优化目标</h4>
+<p>第 $i$ 个视频块的整体优化目标可以定义为前述3个指标的加权和：
+$$
+Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
+$$
+各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
+<p>传统意义上使用所有视频块的平均QoE作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
+<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">基于MPC的框架</a>，在有限的范围内优化多个视频块的QoE，最终的目标函数可以形式化为：
+$$
+\underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
+$$
+因为短期内的viewport预测性能和网络状况可以很容易得到，QoE优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
+<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行QoE优化，直到最后一个窗口。</p>
+<p>使用基于MPC的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
+<h4 id="高效求解">高效求解</h4>
+<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE优化可以通过详尽搜索定期解决。</p>
+<p>但是因为优化过程需要高频调用，所以对于大的搜索空间还是充满挑战。</p>
+<p>为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：</p>
+<ul>
+<li>
+<p>解码时间需要被约束；</p>
+<p>解码时间应该短于回放长度。</p>
+<p>给定移动设备上可用的计算资源，可以得到支持的最大解码线程数。</p>
+<p>基于解码时间的分析模型，由于解码复杂度和分辨率的单调性，可以找到设备能够限定时间内解码的最大质量水平，这会将码率选择限制在有界搜索空间内。</p>
+</li>
+<li>
+<p>码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；</p>
+<p>不会主动耗尽缓冲区，无需让其处理吞吐量的波动。</p>
+</li>
+<li>
+<p>码率选择应该考虑tile的分类；</p>
+<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} &gt; w_{i, j'}$ 。</p>
+</li>
+<li>
+<p>属于相同类别的tile比特率选择应该是同一个等级；</p>
+<p>这使码率自适应在tile类的级别上执行而非单个tile的级别，大大减小了搜索空间的规模。</p>
+</li>
+<li>
+<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的tile应该有相同的结果。</p>
+</li>
+</ul>
+<h3 id="tbra-workflow">TBRA workflow</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png"
+        title="tbra workflow" /></p>
+<p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
+<p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
+<p>观察到tile自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
+<p>基于MPC的优化workflow还可以有效地解决码率自适应问题。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive-Video</a>
+                </span><span><a href="/tags/dynamic-tiling/">Dynamic tiling</a>
+                </span><span><a href="/tags/mobile-device/">Mobile device</a>
+                </span><span><a href="/tags/mpc/">MPC</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2021-12-24</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/note-for-tbra/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/note-for-content-motion-viewport-prediction/" class="prev" rel="prev" title="Note for Content Motion Viewport Prediction"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/note-for-mpc/" class="next" rel="next" title="Note for MPC">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>
