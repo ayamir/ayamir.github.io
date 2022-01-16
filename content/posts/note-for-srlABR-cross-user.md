@@ -62,31 +62,31 @@ $$
 
    接着使用相同的`LTSM`编码其他用户的观看轨迹：
    $$
-   f^{i}_{t+1} = h(l^i_1, l^i_2, ..., l^i_{t+1}), i \in \lbrace 1, ..., M \rbrace
+   f^{i}\_{t+1} = h(l^i_1, l^i_2, ..., l^i_{t+1}), i \in \lbrace 1, ..., M \rbrace
    $$
    
 2. 注意力模块从其他用户的视点轨迹中提取与 $p^{th}$ 用户相关的信息
 
    首先推导出 $p^{th}$ 用户和其他用户之间的相关系数：
    $$
-   s^{pi}_{t+1} = z(f^{i}_{t+1}, l^{p}_{t+1}), i \in \lbrace 1, ..., M \rbrace \cup \lbrace p \rbrace;
+   s^{pi}\_{t+1} = z(f^{i}\_{t+1}, l^{p}\_{t+1}), i \in \lbrace 1, ..., M \rbrace \cup \lbrace p \rbrace;
    $$
    $s^{th}_{t+1}$ 表示 $p^{th}$ 用户和 $i^{th}$ 用户之间的相似性；$z()$ 由内积运算建模（还可用其他方式建模比如多个FC层）；
 
    接着将相关系数规范化：
    $$
-   {\alpha}^{pi}_{t+1} = \frac{e^{s^{pi}_{t+1}}}{\sum_{i \in \lbrace 1,... M \rbrace \cup {\lbrace p \rbrace}^{e^{s^{pi}_{t+1}}}}}
+   {\alpha}^{pi}\_{t+1} = \frac{e^{s^{pi}\_{t+1}}}{\sum_{i \in \lbrace 1,... M \rbrace \cup {\lbrace p \rbrace}^{e^{s^{pi}\_{t+1}}}}}
    $$
    最后得到融合特征：
    $$
-   g^{p}_{t+1} = \sum_{i \in {\lbrace 1,...M \rbrace \cup \lbrace p \rbrace}} {\alpha}^{pi}_{t+1} \cdot f^{i}_{t+1}
+   g^{p}\_{t+1} = \sum_{i \in {\lbrace 1,...M \rbrace \cup \lbrace p \rbrace}} {\alpha}^{pi}\_{t+1} \cdot f^{i}_{t+1}
    $$
    融合特征被最后用于VP。
    
 3. VP模块预测 ${(t+1)}^{th}$ 帧的视点位置
    
    $$
-   \hat{l}^{p}_{t+1} = r(g^{p}_{t+1})
+   \hat{l}^{p}\_{t+1} = r(g^{p}_{t+1})
    $$
    函数 $r(\cdot)$ 由一层FC建模。值得注意的是，对应于未来 T 帧的视点是以滚动方式预测的。
 
@@ -122,7 +122,7 @@ $Q_t$ 表示 $t^{th}$ 段的QoE分数，与以下几个方面有关：
 
 + VIewport Quality：
   $$
-  Q^1_t = \sum^{N}_{i=1} \sum^{M}_{j=1} x_{i,j} \cdot p_i \cdot r_{i,j}
+  Q^1_t = \sum^{N}\_{i=1} \sum^{M}\_{j=1} x_{i,j} \cdot p_i \cdot r_{i,j}
   $$
   $p_i$ 表示 $i^{th}$ 分块的规范化观看概率； $r_{i,j}$ 记录块 $(i, j)$ 的码率；
 
