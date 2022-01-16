@@ -4,7 +4,142 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for srlABR Cross User</title>
+    <link>https://ayamir.github.io/posts/note-for-srlabr-cross-user/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-srlabr-cross-user/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
+<p>Level：IEEE Transactions on Broadcasting 2021</p>
+<p>Keywords：Cross-user vp, Sequetial RL ABR</p>
+<h2 id="主要工作">主要工作</h2>
+<ul>
+<li>使用跨用户注意力网络<code>CUAN</code>来做VP；</li>
+<li>使用<code>360SRL</code>来做ABR</li>
+<li>将上面两者集成到了推流框架中；</li>
+</ul>
+<h2 id="vp">VP</h2>
+<h3 id="motivation">Motivation</h3>
+<p>形式化VP问题如下：</p>
+<p>给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；</p>
+<p>同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；</p>
+<p>目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &hellip;, t+T$ ；</p>
+<p>最终可以用数学公式表达为：
+$$
+\underset{F}{min} \sum^{t+T}_{k = t+1} {\parallel l^p_k - \hat{l}^p_k \parallel}_1
+$$</p>
+<p>现有的用<code>KNN</code>做的跨用户预测基于LR的模型，而LR的模型很容易产生偏差，所以为了增强<code>KNN</code>的性能，同时考虑单用户的历史视点轨迹和跨用户的视点轨迹。</p>
+<ul>
+<li>提出一种注意力机制来自动提取来自其他用户视口的有用信息；</li>
+<li>对于与当前用户有相似偏好的用户轨迹信息给与更多的注意；</li>
+<li>相似性通过基于过去时间段内其他用户的轨迹计算出来；</li>
+</ul>
+<h3 id="design">Design</h3>
+<p></p>
+<ol>
+<li>
+<p>轨迹编码器模块从用户的历史视点位置提取时间特征；</p>
+<p>使用<code>LSTM</code>来编码用户的观看路径；</p>
+<p>为了预测 ${(t+1)}^{th}$ 帧的视点位置，首先向<code>LSTM</code>输入 $p^{th}$ 用户的历史视点坐标：
+$$
+f^{p}_{t+1} = h(l^p_1, l^p_2, &hellip;, l^p_t)
+$$
+$h(\cdot)$ 是<code>LSTM</code>的输入输出函数；</p>
+<p>接着使用相同的<code>LTSM</code>编码其他用户的观看轨迹：
+$$
+f^{i}<em>{t+1} = h(l^i_1, l^i_2, &hellip;, l^i</em>{t+1}), i \in \lbrace 1, &hellip;, M \rbrace
+$$</p>
+</li>
+<li>
+<p>注意力模块从其他用户的视点轨迹中提取与 $p^{th}$ 用户相关的信息</p>
+<p>首先推导出 $p^{th}$ 用户和其他用户之间的相关系数：
+$$
+s^{pi}<em>{t+1} = z(f^{i}</em>{t+1}, l^{p}<em>{t+1}), i \in \lbrace 1, &hellip;, M \rbrace \cup \lbrace p \rbrace;
+$$
+$s^{th}</em>{t+1}$ 表示 $p^{th}$ 用户和 $i^{th}$ 用户之间的相似性；$z()$ 由内积运算建模（还可用其他方式建模比如多个FC层）；</p>
+<p>接着将相关系数规范化：
+$$
+{\alpha}^{pi}<em>{t+1} = \frac{e^{s^{pi}</em>{t+1}}}{\sum_{i \in \lbrace 1,&hellip; M \rbrace \cup {\lbrace p \rbrace}^{e^{s^{pi}<em>{t+1}}}}}
+$$
+最后得到融合特征：
+$$
+g^{p}</em>{t+1} = \sum_{i \in {\lbrace 1,&hellip;M \rbrace \cup \lbrace p \rbrace}} {\alpha}^{pi}<em>{t+1} \cdot f^{i}</em>{t+1}
+$$
+融合特征被最后用于VP。</p>
+</li>
+<li>
+<p>VP模块预测 ${(t+1)}^{th}$ 帧的视点位置</p>
+<p>$$
+\hat{l}^{p}<em>{t+1} = r(g^{p}</em>{t+1})
+$$
+函数 $r(\cdot)$ 由一层FC建模。值得注意的是，对应于未来 T 帧的视点是以滚动方式预测的。</p>
+</li>
+</ol>
+<h3 id="loss">Loss</h3>
+<p>损失函数定义为预测的视点位置和实际视点位置之间的所有绝对差异的总和：
+$$
+L = \sum^{t+T}_{i=t} {|\hat{l}^p_i - l^p_i|}_1
+$$</p>
+<h3 id="details">Details</h3>
+<ul>
+<li>使用<code>PyTorch</code>实现；</li>
+<li>函数 $h(\cdot)$ 由两个堆叠的<code>LSTM</code>层组成，两者都有32个神经元；</li>
+<li>函数 $r(\cdot)$ 包含一个带有32个神经元的FC层，接着是<code>Tanh</code>函数；</li>
+<li>历史视点和未来视点的长度设定为1秒和5秒；</li>
+<li>每次迭代从数据集中随机产生2048个样本；</li>
+<li>所有训练变量的优化函数采用<code>Adam</code>；</li>
+<li>$\beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 10^{-8}$；</li>
+<li>$learning\ rate = 10^{-3}, training\ epoch = 50$；</li>
+</ul>
+<h2 id="abr">ABR</h2>
+<h3 id="formulation">Formulation</h3>
+<p>全景视频被切分成 $m$ 个长度为 $T$ 秒的视频片段，每个视频片段空间上划分成 $N$ 个分块，分别以 $M$ 个不同的码率等级编码。因此对于每段有 $N \times M$ 个可选的编码块。</p>
+<p>ABR的目标是为每个片段找到最优的码率集 $X = \lbrace x_{i, j} \rbrace \in Z^{N \times M}$ （ $x_{i, j} = 1$ 意味着为 $i^{th}$ 块选择 $j^{th}$ 的码率等级）：
+$$
+\underset{X}{max} \sum^{m}_{t=1} Q_t
+$$
+$Q_t$ 表示 $t^{th}$ 段的QoE分数，与以下几个方面有关：</p>
+<ul>
+<li>
+<p>VIewport Quality：
+$$
+Q^1_t = \sum^{N}<em>{i=1} \sum^{M}</em>{j=1} x_{i,j} \cdot p_i \cdot r_{i,j}
+$$
+$p_i$ 表示 $i^{th}$ 分块的规范化观看概率； $r_{i,j}$ 记录块 $(i, j)$ 的码率；</p>
+</li>
+<li>
+<p>Viewport Temporal Variation：
+$$
+Q^2_t = |Q^1_t - Q^{1}_{t-1}|
+$$</p>
+</li>
+<li>
+<p>Viewport Spatial Variation：
+$$
+Q^3_t = \frac{1}{2} \sum^{N}_{i=1} \sum_{u \in U_i} p_i \cdot p_u \sum^{M}_{j=1} |x_{i,j} \cdot r_{i,j} - x_{u,j} \cdot r_{u,j}|
+$$
+$U_i$ 表示 $i^{th}$ 个分块的1跳邻居中的tile索引<a href="https://ieeexplore.ieee.org/document/8486606" target="_blank" rel="noopener noreffer">[1]</a>；</p>
+</li>
+<li>
+<p>Rebuffering：
+$$
+Q^4_t = max(\frac{\sum^{N}_{i=1} \sum^{M}_{j=1} x_{i,j} \cdot r_{i,j} \cdot T}{\xi_t} - b_{t-1}, 0)
+$$
+$\xi_t$ 表示网络吞吐量； $b_{t-1}$ 表示播放器的缓冲区占用率；</p>
+<p>最终的QoE可以由上面的指标定义：
+$$
+Q_t = Q^1_t - \eta_1 \cdot Q^2_t - \eta_2 \cdot Q^3_t - \eta_3 \cdot Q^4_t
+$$
+$\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
+</li>
+</ul>
+<h3 id="sequential-rl-based-abr">Sequential RL-Based ABR</h3>
+<p>假设基于tile的全景推流ABR过程也是MDP。</p>
+<p></p>
+<p>细节在<a href="https://ayamir.github.io/posts/note-for-360srl/" target="_blank" rel="noopener noreffer">360SRL</a>中已经说明清楚。</p>
+]]></description>
+</item>
+<item>
     <title>Note for 360SRL</title>
     <link>https://ayamir.github.io/posts/note-for-360srl/</link>
     <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-360srl/</guid>
@@ -1497,125 +1632,6 @@ $n$表示$t$中基本子矩形的数量。</p>
 <p><strong>因为固定分块的方案没有考虑视频内容的特性与用户的观看行为。</strong></p>
 </li>
 </ul>
-]]></description>
-</item>
-<item>
-    <title>多媒体基础知识</title>
-    <link>https://ayamir.github.io/posts/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/mm-base/</guid>
-    <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
-<p></p>
-<h2 id="解协议">解协议</h2>
-<p>将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。</p>
-<p>音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如DASH、HLS将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。</p>
-<p>同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）</p>
-<p>解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如MP4，FLV等。</p>
-<h2 id="封装格式">封装格式</h2>
-<p>封装格式如AVI、MPEG、Real Video将音频和视频组合打包成一个完整的文件.</p>
-<p>封装格式不会影响视频的画质，影响画质的是视频的编码格式。</p>
-<p>解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。</p>
-<p>比如FLV或TS格式数据，解封装之后得到H.264-AVC编码的视频码流和AAC编码的音频码流。</p>
-<h2 id="编码">编码</h2>
-<p>视频的本质是一帧又一帧的图片。</p>
-<p>所以对于一部每秒30帧，90分钟，分辨率为1920x1080，24位的真彩色的视频，在压缩之前的大小$S$满足：
-$$
-一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte)
-\
-总帧数n = 90 * 60 * 30 = 162000
-\
-总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB)
-$$
-因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。</p>
-<p>视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC</p>
-<p>音频编码方式：MP3，AAC</p>
-<p>压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。</p>
-<h2 id="解码">解码</h2>
-<p>解码就是解压缩过程。</p>
-<p>解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如PCM数据）和视频像素数据（如YUV420，RGB数据）。</p>
-<h2 id="音视频同步">音视频同步</h2>
-<p>根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。</p>
-<h1 id="视频质量指标">视频质量指标</h1>
-<h2 id="分辨率">分辨率</h2>
-<ul>
-<li>
-<p>分辨率指的是视频图像在一个单位尺寸内的精密度。</p>
-</li>
-<li>
-<p>将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。</p>
-</li>
-<li>
-<p>视频的分辨率从数值上描述了像素点的个数，如1920x1080：视频在水平方向有1920个像素，垂直方向有1080个像素。</p>
-</li>
-<li>
-<p>常见的描述方式：</p>
-<ul>
-<li>1080P：指视频有<strong>1080行</strong>像素，P=&gt;Progressive（逐行扫描）</li>
-<li>2K：指视频有<strong>2000列</strong>像素</li>
-<li>MP：像素总数，指像素的行数P与列数K乘积的结果（百万像素）</li>
-<li>1080P的分辨率为1920x1080=2073600，所以1080P通常也称为200万像素分辨率</li>
-</ul>
-</li>
-<li>
-<p>通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰</p>
-</li>
-<li>
-<p>参考链接：</p>
-<ul>
-<li><a href="https://www.reneelab.com.cn/m/2k-4k-video-resolution.html" target="_blank" rel="noopener noreffer">科普：视频分辨率是什么？</a></li>
-<li><a href="https://www.zhihu.com/question/24205632/answer/648608086" target="_blank" rel="noopener noreffer">「1080p」和「2k、4k」的关系与差别在哪里？</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="视频帧率">视频帧率</h2>
-<ul>
-<li>
-<p>帧率的单位FPS(Frame Per Second)或Hz，即每秒多少帧，决定视频画面的流畅程度。</p>
-</li>
-<li>
-<p>低帧率会导致播放卡顿，镜头移动不顺畅，并伴随画面模糊的主观体验；</p>
-<p>帧率过高则会造成眩晕的感觉。</p>
-</li>
-<li>
-<p>不同帧率的视频在支持不同帧率的设备上播放：</p>
-<ol>
-<li>
-<p>若设备最高支持60fps，则播放120fps视频的时候，设备会每隔一帧删除一帧，被删除的帧即成为无效帧。</p>
-<p>所以高帧率的视频在低帧率设备上播放时会导致播放卡顿。</p>
-</li>
-<li>
-<p>若设备最高支持120fps，则播放60fps视频的时候，设备会每隔一帧复制一帧，来填补空缺的帧位置。</p>
-<p>但是效果和在60fps上的设备播放一样，不能提升播放流畅度。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>关于显卡对帧率的影像：</p>
-<ol>
-<li>显示器帧率低而显卡输出帧率高时，会导致<a href="https://zh.wikipedia.org/wiki/%E7%95%AB%E9%9D%A2%E6%92%95%E8%A3%82" target="_blank" rel="noopener noreffer">画面撕裂</a>：显示器同时将两帧或几帧显示在同一个画面上</li>
-<li>显示器帧率高而显卡输出帧率低时，同视频帧率高显示器帧率低的情况。</li>
-</ol>
-</li>
-</ul>
-<h2 id="视频码率">视频码率</h2>
-<ul>
-<li>
-<p>码率的概念出现在视频编码之后，因为压缩之后的视频已经成为二进制数据，所以使用码率的称呼。</p>
-</li>
-<li>
-<p>码率的单位是bps(bit per second)，即每秒多少比特。</p>
-</li>
-<li>
-<p>与视频质量的关系：</p>
-<ol>
-<li>
-<p>分辨率不变的情况下，码率越大，压缩比越好，画面质量越清晰。</p>
-<p>码率越高，精度越高，处理出的文件就越接近压缩前的原始状态，每一帧的图像质量越高，画质越清晰，当然对播放设备的解码能力要求也越高。</p>
-<p>压缩比越小，视频体积越大，越接近源文件。</p>
-</li>
-</ol>
-</li>
-</ul>
-<p></p>
 ]]></description>
 </item>
 </channel>
