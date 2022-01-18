@@ -180,7 +180,7 @@
     {
         "title": "Note for 360SRL",
         "uri": "posts/note-for-360srl",
-        "content": "Link 360SRL  Sequential Reinforcement Learning Approach ABR Tile Based 360 Video Streaming Level ICME 2019 Keywords ABR RL Sequential decision      MDP   N              1     N                                          T               N          M                        N  times M                                      a0       ai       a N 1     in  lbrace 0       N 1  rbrace  ai  in  lbrace 0       M 1  rbrace        q i  ai      w i  ai            a  th _i     i  th                       p_i  in  0  1       i  th                ABR               i  th                    s_t                      u  i   st     lbrace Th  Ci  p 0 i 1   q 0 i 1   bt  pi  Si  Q_ t 1   rbrace   Th        m                C_i  in R M       i  th                 p 0 i 1      q 0 i 1  a  0 i 1 _ t                      i 1            b_t           p_i     i  th                Si          i 1              Si    sum  i 1  h 0  C h  a h_t      Q_ t 1              N                                     f u i st   a i_t              a it  in  lbrace 0       M 1  rbrace        u s_t  i                              q  avg  t            q  s v  t            q  t v  t          T rt     q  avg  t    frac 1   sum  N 1   i 0  pi   cdot  sum  N 1   i 0  pi  cdot q i  a_i        q  s v  t    frac 1   sum  N 1   i 0  p i   cdot  sum  N 1   i 0  p i  cdot  q i  ai    q  avg _t        q  t v  t    q  avg  t 1    q  avg t        T rt   max  lbrace Tt   b_ t 1   0  rbrace       Rt   w1  cdot q  avg t   w2  cdot q  s v t   w3  cdot q  t v t   w4  cdot T r_t           DQN                   Q st  at   theta         theta                  pi st   theta     underset  theta  argmax  Q st  a_t   theta     DQN                             L  theta    E yt   Q st  a_t   theta         yt   r st  at     gamma Q s t 1    pi s_ t 1     theta       theta          theta                      r  cdot                5    R_t      gamma  in  0  1                     double DQN         7         yt   r st  at     gamma Q s t 1     pi  s_ t 1    theta     theta           6   8      i  th                l it   Q target    Q u i st   a i_t   theta    forall  in  0     N 1         Q_ target          Q target    rt     gamma  u  cdot Q u 0 s t 1     pi u 0 s_ t 1    0     theta          gamma u       gamma b       Top MDP   Bottom MDP                gamma _b   1        9   10                                  a it     rt                         a it                    l it           r i_ extra        l it   r i extra    Q target    Q u i st   a it   theta    forall  in  0     N 1        r i_ extra     begin cases  0  p_i   P       a it  pi  le P  end cases                    P            P                 a i_t                           l  avg  t    frac 1  N   sum  N 1  i 0  l i_t                            alpha       theta  larr  theta    alpha  triangledown l  avg _t                      360SRL                                    4       128     1        4            1  times m     1  times M     1  times N     1  times M      4       128                               1024     256                        M                     Leaky ReLU",
+        "content": "Link 360SRL  Sequential Reinforcement Learning Approach ABR Tile Based 360 Video Streaming Level ICME 2019 Keywords ABR RL Sequential decision      MDP   N              1     N                                          T               N          M                        N  times M                                      a0       ai       a N 1     in  lbrace 0       N 1  rbrace  ai  in  lbrace 0       M 1  rbrace        q i  ai      w i  ai            a  th _i     i  th                       p_i  in  0  1       i  th                ABR               i  th                    s_t                      u  i   st     lbrace Th  Ci  p 0 i 1   q 0 i 1   bt  pi  Si  Q_ t 1   rbrace   Th        m                C_i  in R M       i  th                 p 0 i 1      q 0 i 1  a  0 i 1 _ t                      i 1            b_t           p_i     i  th                Si          i 1              Si    sum  i 1   h 0  C h  a h_t      Q_ t 1              N                                     f u i st   a i_t              a it  in  lbrace 0       M 1  rbrace        u s_t  i                              q  avg  t            q  s v  t            q  t v  t          T rt     q  avg  t    frac 1   sum  N 1   i 0  pi   cdot  sum  N 1   i 0  pi  cdot q i  a_i        q  s v  t    frac 1   sum  N 1   i 0  p i   cdot  sum  N 1   i 0  p i  cdot  q i  ai    q  avg _t        q  t v  t    q  avg  t 1    q  avg t        T rt   max  lbrace Tt   b_ t 1   0  rbrace       Rt   w1  cdot q  avg t   w2  cdot q  s v t   w3  cdot q  t v t   w4  cdot T r_t           DQN                   Q st  at   theta         theta                  pi st   theta     underset  theta  argmax  Q st  a_t   theta     DQN                             L  theta    E yt   Q st  a_t   theta         yt   r st  at     gamma Q s t 1    pi s_ t 1     theta       theta          theta                      r  cdot                5    R_t      gamma  in  0  1                     double DQN         7         yt   r st  at     gamma Q s t 1     pi  s_ t 1    theta     theta           6   8      i  th                l it   Q target    Q u i st   a i_t   theta    forall  in  0     N 1         Q_ target          Q target    rt     gamma  u  cdot Q u 0 s t 1     pi u 0 s_ t 1    0     theta          gamma u       gamma b       Top MDP   Bottom MDP                gamma _b   1        9   10                                  a it     rt                         a it                    l it           r i_ extra        l it   r i extra    Q target    Q u i st   a it   theta    forall  in  0     N 1        r i_ extra     begin cases  0  p_i   P       a it  pi  le P  end cases                    P            P                 a i_t                           l  avg  t    frac 1  N   sum  N 1  i 0  l i_t                            alpha       theta  larr  theta    alpha  triangledown l  avg _t                      360SRL                                    4       128     1        4            1  times m     1  times M     1  times N     1  times M      4       128                               1024     256                        M                     Leaky ReLU",
         "objectID": "posts/note-for-360srl",
         "date": "2022-01-13T04:08:36.000Z",
         "draft": false,
@@ -356,6 +356,28 @@
             "RNN",
             "Trajectory-based predict",
             "Dynamic tile selection"
+        ],
+        "categories": [
+            "Immersive Video"
+        ]
+    },
+    {
+        "title": "Note for srlABR Cross User",
+        "uri": "posts/note-for-srlABR-cross-user",
+        "content": "Link Sequential Reinforced 360 Degree Video Adaptive Streaming Cross User Attentive Network Level IEEE Transactions Broadcasting 2021 Keywords Cross user vp  Sequetial RL ABR                CUAN  VP    360SRL  ABR                 VP Motivation    VP          p  th        1 t              L  p  1 t     lbrace l p1  l p2       l pt  rbrace       l pt    xt  yt   xt  in   180  180   y_t  in   90  90                     L  1 M _ 1 t T      M                       T            L p_i    t 1       t T                      underset F  min   sum  t T  k   t 1    parallel l pk    hat l  pk  parallel 1        KNN         LR     LR                 KNN                                                                                                                Design                            LSTM                    t 1    th             LSTM    p  th                 f  p  t 1    h l p1  l p2       l pt      h  cdot    LSTM                LTSM                f  i   t 1    h l i1  l i2       l i t 1     in  lbrace 1       M  rbrace                         p  th                  p  th                      s  pi   t 1    z f  i   t 1   l  p  _ t 1     in  lbrace 1       M  rbrace  cup  lbrace p  rbrace      s  th _ t 1       p  th        i  th             z                         FC                     alpha   pi   t 1     frac e  s  pi   t 1     sum i  in  lbrace 1     M  rbrace  cup   lbrace p  rbrace   e  s  pi   t 1                      g  p   t 1     sum i  in   lbrace 1    M  rbrace  cup  lbrace p  rbrace     alpha   pi   t 1   cdot f  i  t 1              VP  VP        t 1    th              hat l   p   t 1    r g  p  t 1          r  cdot      FC                T                Loss                                       L    sum  t T  i t     hat l  pi   l pi  1    Details   PyTorch        h  cdot         LSTM        32          r  cdot         32     FC     Tanh                   1  5                2048                  Adam    beta1   0 9   beta2   0 999   epsilon   10   8     learning  rate   10   3   training  epoch   50   ABR Formulation           m        T                       N           M                      N  times M           ABR                   X    lbrace x i  j   rbrace  in Z  N  times M      x i  j    1        i  th        j  th               underset X  max   sum  m  t 1  Qt     Q_t      t  th     QoE              VIewport Quality     Q 1t    sum  N   i 1   sum  M   j 1  x i j   cdot pi  cdot r i j      pi      i  th                r i j         i  j        Viewport Temporal Variation     Q 2t    Q 1t   Q  1 _ t 1      Viewport Spatial Variation     Q 3t    frac 1  2   sum  N   i 1   sum u  in Ui  pi  cdot pu  sum  M   j 1   x i j   cdot r i j    x u j   cdot r_ u j       U_i      i  th       1     tile   1   Rebuffering     Q 4t   max  frac  sum  N   i 1   sum  M   j 1  x i j   cdot r i j   cdot T   xit    b_ t 1   0       xit            b t 1                    QoE               Qt   Q 1t    eta1  cdot Q 2t    eta2  cdot Q 3t    eta3  cdot Q 4t      eta_                       Sequential RL Based ABR     tile     ABR    MDP     360SRL",
+        "objectID": "posts/note-for-srlABR-cross-user",
+        "date": "2022-01-15T10:46:02.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "Cross-user vp",
+            "RL",
+            "ABR"
+        ],
+        "tags": [
+            "Cross-user vp",
+            "ABR",
+            "Immersive Video"
         ],
         "categories": [
             "Immersive Video"
@@ -650,6 +672,26 @@
         ],
         "categories": [
             "Viewport predict"
+        ]
+    },
+    {
+        "title": "Summary for VR and Panoramic Video",
+        "uri": "posts/summary-for-vr-and-panoramic-video",
+        "content": "VR 360                         AR Argmented Reality  MR Mixed Reality                                                       HMD                                                                             3DoF             3                                                                                                            VR VR                        HMD                         HMD                           VR    6DoF                                     VR                 Beat Saber                                                       AR MR AR                                               MR                                                 AR                                         Pok mon GO   AR mode           Pok mon           MR                         2D              3D                               Meta   Workrooms                                                       VR                                                                      VR                                                                             VR AR MR                               360                    VR   AR MR                        HMD                                    VR          AR MR",
+        "objectID": "posts/summary-for-vr-and-panoramic-video",
+        "date": "2022-01-17T09:02:51.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "VR",
+            "Panoramic Video"
+        ],
+        "tags": [
+            "VR",
+            "Panoramic Video"
+        ],
+        "categories": [
+            "Immersive Video"
         ]
     },
     {
