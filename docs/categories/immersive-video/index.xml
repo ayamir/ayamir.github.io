@@ -4,7 +4,166 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for Popularity Aware 360-Degree Video Streaming</title>
+    <link>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/abstract/document/9488856/" target="_blank" rel="noopener noreffer">Popularity-Aware 360-Degree Video Streaming</a></p>
+<p>Level：IEEE INFOCOM 2021</p>
+<p>Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization</p>
+<h2 id="motivation">Motivation</h2>
+<p>将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见<a href="https://ayamir.github.io/posts/note-for-optile/" target="_blank" rel="noopener noreffer">Optile</a>）</p>
+<p>而分块时根据用户的ROI来确定不同的大小，并在客户端预取，这可以节省带宽。</p>
+<p>用户的ROI推断利用跨用户的偏好来确定，即所谓的<code>Popularity-Aware</code>。</p>
+<h2 id="model-and-formulation">Model and Formulation</h2>
+<h3 id="video-model">Video Model</h3>
+<p>视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。</p>
+<p>除了常规的分块之外， $M$ 个宏块也被建构出来。</p>
+<p>每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。</p>
+<p>整个推流过程可以看作是一系列连续的下载任务。</p>
+<p>客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。</p>
+<p>用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。</p>
+<h3 id="qoe-model">QoE Model</h3>
+<p>$$
+Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k)
+$$</p>
+<p>$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；</p>
+<ul>
+<li>
+<p>平均质量：
+$$
+Q_0(V_k) = q(\overline{V_k})
+$$
+$\overline{V_k}$ 表示<code>FoV</code>内的平均视频质量； $q(\cdot)$ 表示视频质量和用户实际感知质量之间的映射函数；</p>
+</li>
+<li>
+<p>质量变化：两个连续段之间的质量差异和<code>FoV</code>内不同空间位置tile的质量差异会导致用户不适。
+$$
+I_v(V_k) = |Q_0(V_k) - Q_0(V_{k-1})| + \widehat{V_k}
+$$
+$|Q_0(V_k) - Q_0(V_{k-1})|$ 表示连续段间的<code>FoV</code>内时间质量差异； $\widehat{V_k}$ 表示一个视频段的<code>FoV</code>内空间质量差异；</p>
+</li>
+<li>
+<p>缓冲：
+$$
+L_r(V_k) = {(\frac{S(V_k)}{R} - L, 0)}_+
+$$
+$S(V_k)$ 表示段数据量大小； $R$ 表示下载吞吐量； ${(x)}_+ = max \lbrace x, 0 \rbrace$ ；</p>
+</li>
+</ul>
+<h3 id="formulation">Formulation</h3>
+<p>用 ${\beta}^v_m ({\beta}^v_c)$ 表示对应的宏块或常规块是否被下载：</p>
+<p>${\beta}^v_m = 1$ 表示下载编码的质量等级为 $v$ 的宏块，消耗的带宽为 $B^v_m$ ，反之 $ {\beta}^v_m = 0$ 表示不下载；</p>
+<p>${\beta}^v_c = 1$ 表示下载编码的质量等级为 $v$ 的常规块，消耗的带宽为 $B^v_c$，反之 ${\beta}^v_m = 0$ 表示不下载；</p>
+<p>客户端应该优先下载覆盖用户<code>FoV</code> 的宏块，如果没有这样的宏块则去下载对应的常规块的集合。</p>
+<p>优化目标：
+$$
+max\ Q(\lbrace v | {\forall}_{m, v} {\beta}^v_m = 1 \rbrace) + Q(\lbrace v | {\forall}_{c, v} {\beta}^v_c = 1 \rbrace)
+$$
+同时需要满足以下3个约束：
+$$
+\sum^{M}_{m=1} \sum^{V}_{v=1} {\beta}^v_m + 1(\sum^{C}_{c=1} \sum^{V}_{v=1} {\beta}^v_c) = 1
+$$</p>
+<p>$$
+\sum^{V}_{v=1} {\beta}^v_c \le 1,\ for\ c = 1, &hellip;, C
+$$</p>
+<p>$$
+\sum^{M}_{m=1} \sum^{V}_{v=1} {\beta}^v_m B^v_m + \sum^{C}_{c=1} \sum^{V}_{v=1} {\beta}^v_c B^v_c \le R \cdot L
+$$</p>
+<p>$Q(\cdot)$ 是公式1中定义的质量； $R$ 是网络带宽； $1(x) = 1 \iff x &gt; 0$ ；$1(x) = 0 \iff x \le 0$ ；</p>
+<p>约束1强制为观看区域下载宏块或常规块的集合，只下载宏块的一个质量版本；</p>
+<p>约束2规定只下载常规块的一个质量版本；</p>
+<p>约束3保证视频数据可以在开始播放之前被完全下载；</p>
+<p>给出用户的观看区域之后，候选的宏块或对应的常规块集合也可以求出。</p>
+<p>将<code>QoE</code>最大化的问题分解成两个子问题：</p>
+<ul>
+<li>确定宏块的质量等级；</li>
+<li>确定常规块的质量等级；</li>
+</ul>
+<p>最后的解取这两种方案能取得更大<code>QoE</code>的那种。</p>
+<p>如果<code>QoE</code>模型不考虑常规块之间的质量差异，则整体的<code>QoE</code>等价于下载的常规块的平均质量等级。</p>
+<p>确定常规块质量等级的问题则可以简化为：
+$$
+max\ \sum_{c \in C} \sum^{V}_{v=1} Q({\beta}^v_c v)
+$$
+需要满足以下2个约束：
+$$
+\sum^{V}_{v=1} {\beta}^v_c = 1,\ for\ c \in C
+$$</p>
+<p>$$
+\sum_{c \in C} \sum^{V}_{v=1} {\beta}^v_c B^v_c \le R \cdot L
+$$</p>
+<p>$C$ 表示覆盖观看区域的常规块集合。</p>
+<p>简化之后的子问题可以通过对多项选择背包问题的简化，证明为是<code>NP-hard</code>问题，基于此提出启发式算法。</p>
+<h2 id="基于宏块的流行性感知推流">基于宏块的流行性感知推流</h2>
+<h3 id="基于观看区域确定宏块">基于观看区域确定宏块</h3>
+<p>不同用户对相同视频的观看有着相似的ROI，其视野中心是相近的，因此首先确定其视野中心并聚类到一起。</p>
+<p>不能直接应用的知名聚类算法：</p>
+<ul>
+<li>需要事先确定簇（即宏块）数量的算法（事先并不能确定需要多少宏块）：<code>K-means</code></li>
+<li>簇会越聚越大的算法（这样会失去节约带宽的优点）：<code>DBSCAN</code></li>
+</ul>
+<p>提出的算法用2个参数 $\lambda$ 和 $\gamma$ 来保证彼此相近的两个视野中心被归入同一簇，同时基于簇的宏块不至于太大。</p>
+<ul>
+<li>被归入同一簇的视野中心之间的距离应该小于等于 $\lambda$；</li>
+<li>同一个簇的任意两个视野中心之间的距离应该小于等于 $\gamma$；</li>
+</ul>
+<p>为了确定这两个参数，还需要考虑常规块的大小带来的影响。</p>
+<p>算法描述：</p>
+<p>给出用 $P$ 表示的点集，其中每个点表示一个用户的视野中心位置；</p>
+<p>用 $N_p = \lbrace q | q \in P \land q \neq p \land dist(p, q) \le \lambda \rbrace$ 来表示与点 $p$ 之间欧式距离小于 $\lambda$ 的点集（即为临近点集）；</p>
+<ol>
+<li>初始化拥有最多临近点的点所在的簇，例如： $p = {argmax}_{p \in P} |N_p|$；</li>
+<li>添加临近簇内任何点的点到簇中，扩张过程直到找不到符合条件的点位置；</li>
+<li>检查簇中任意两个点之间的距离是否大于 $\gamma$ ，如果存在这种情况就使用<code>K-means</code>算法将这个簇分成两个子簇；</li>
+<li>从 $P$ 中移除簇中的点；</li>
+<li>重复1-4的过程直到 $P = \empty$；</li>
+</ol>
+<p></p>
+<h3 id="宏块优化">宏块优化</h3>
+<p>通过简单地覆盖簇中用户的所有观看区域来为每个簇建构宏块可能会导致建构出不必要的大宏块，因此需要确定恰当的宏块大小。</p>
+<ul>
+<li>
+<p>首先需要确定哪些用户的观看区域应该被用于构建宏块，这样用户下载宏块时的带宽使用率小于下载一组常规块时的带宽使用率：$B_m$ 和 $B_c$ 分别表示覆盖相同观看区域的宏块和常规块的数据量大小。</p>
+</li>
+<li>
+<p>为了解决用户头部运动的随机性，宏块应该在覆盖用户观看区域之外加上一些边界区域。边界区域可以基于用户观看中心的变化来确定，变化通过在推流观看过程中以固定采样率记录。</p>
+<p>一个视频片段中 $x(y)$ 坐标的变化定义为 $x(y)$ 坐标的标准差。</p>
+<p></p>
+<p>实验发现：在一个视频片段中，用户的 $x(y)$ 坐标的变化很小。</p>
+<p>分别用 $A_x$ 和 $A_y$ 表示 $x$ 和 $y$ 方向上的变化，构建的宏块应该覆盖用户的观看区域，并为 $x(y)$ 方向加上 $\frac{A_x}{2}(\frac{A_y}{2})$ 的边缘区域。</p>
+</li>
+</ul>
+<p>宏块构造问题的形式化：</p>
+<p>为每个用户 $i$ 引入二元变量 ${\alpha}_i$ ，${\alpha}_i = 1$ 表示此用户的观看区域用于构建宏块，反之则没有；</p>
+<p>实际应用中即为：如果 ${\alpha}_i = 1$ ，则用户 $i$ 可以下载宏块；否则用户只能下载对应的常规块集合。</p>
+<p>问题的目标是：在下载宏块或相同质量等级的常规块集合时，最小化所有用户的总带宽使用量。
+$$
+\underset{\lbrace {\alpha}_i \rbrace}{min}\ \sum^{N_j}_{i=1} {\alpha}_i B_m + (1-{\alpha}_i) B_c
+$$
+$N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用所有 ${\alpha}_i = 1$ 的用户观看区域构建宏块；</p>
+<p>尽管暴力枚举法可以完成最优求解，但是其时间复杂度为 $O(2^{N_j})$ ，为了减少实际建构宏块的时间，提出一种类似于<a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener noreffer">随机采样一致性算法</a>的迭代算法，每次迭代中，所做工作如下：</p>
+<ol>
+<li>随机选取用户观察区域的子集。</li>
+<li>编码宏块，用 $B_m$ 表示构建的宏块的带宽使用量。</li>
+<li>检查建构的宏块是否覆盖用户 $i \in \lbrace 1, &hellip;N_j \rbrace$ ，是则${\alpha}_i = 1$；否则 ${\alpha}_i = 0$。</li>
+<li>检查总共的带宽使用量是否比之前迭代的更小，是则用当前迭代建构的宏块更新最终的宏块；否则继续迭代。</li>
+</ol>
+<p>为了避免预测失败时用户看到空白区域，在下载观看区域的高质量宏块或常规块集合之外，也以最低质量下载其余的常规块。</p>
+<h3 id="流行性感知推流">流行性感知推流</h3>
+<p>服务端基于多个用户的历史观看信息建构宏块，同时也使用常规块的划分方案编码视频。</p>
+<p>客户端在推流过程中选择恰当块（宏块或常规块集）的恰当的质量等级来最大化用户的<code>QoE</code>。</p>
+<p>流行性感知的推流算法首先为每个视频段预测用户的观看区域，之后预取相应的宏块或常规块集。</p>
+<ul>
+<li>使用<a href="https://towardsdatascience.com/ridge-regression-for-better-usage-2f19b3a202db" target="_blank" rel="noopener noreffer">岭回归</a>做VP，输入用户在一系列历史帧中的观看区域中心坐标，输出未来帧中用户的观看区域位置。</li>
+<li>基于预测的观看区域，算法确定是否存在覆盖预测区域及其边缘区域的宏块，是则搜索并下载满足条件的最高质量的宏块；否则下载相应区域的常规块集。</li>
+</ul>
+<p></p>
+<p>选择常规块集时首先为所有要选择的块确定满足贷款限制的最高质量等级，分配完之后如果还有剩余的带宽，算法会根据常规块与视野中心距离的远近程度提高一个质量等级，越近越优先提高。同时考虑到空间质量差异会降低<code>QoE</code>，所以提高质量的行为只有在超过半数的常规块满足条件时才会执行。</p>
+]]></description>
+</item>
+<item>
     <title>Summary for VR and Panoramic Video</title>
     <link>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</link>
     <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</guid>
@@ -2764,483 +2923,6 @@ $$</p>
 <p>用户的头部可以以任意方向移动：上下、左右、前后</p>
 <h2 id="6dof">6DoF</h2>
 <p>不只用户的头部，用户的身体也是自由的。同时支持方向与位置的自由。</p>
-]]></description>
-</item>
-<item>
-    <title>自适应360度视频推流挑战</title>
-    <link>https://ayamir.github.io/posts/note5/</link>
-    <pubDate>Thu, 04 Nov 2021 11:01:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note5/</guid>
-    <description><![CDATA[<h1 id="背景">背景</h1>
-<p>用户使用头戴设备比使用传统显示器观看360度视频内容时的满意度对于扰乱更加敏感。</p>
-<p>沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。</p>
-<p>目前主要面临的挑战有以下4个：</p>
-<p></p>
-<h2 id="viewport预测">Viewport预测</h2>
-<h3 id="背景-1">背景</h3>
-<p>HMD的本质特征是快速响应用户头部的移动。当用户改变viewport时HMD处理交互并检测相关的viewport来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport预测在优化的360度视频推流中非常必要。配备有位置传感器的可穿戴HMD允许客户端更新其视角方向相应的视角场景。</p>
-<h3 id="分类">分类</h3>
-<ul>
-<li><em>内容不可知</em>的方式基于历史信息对viewport进行预测。</li>
-<li><em>内容感知</em>的方式需要视频内容信息来预测未来的viewport。</li>
-</ul>
-<h3 id="内容不可知方式">内容不可知方式</h3>
-<h4 id="分类-1">分类</h4>
-<ul>
-<li>平均线性回归LR</li>
-<li>航位推算DR</li>
-<li>聚类</li>
-<li>机器学习ML</li>
-<li>编解码器体系结构</li>
-</ul>
-<h4 id="现有成果">现有成果</h4>
-<h5 id="qians-worklr">Qian&rsquo;s work——LR</h5>
-<p>使用平均线性回归和加权线性回归模型来做viewport预测，之后对与预测区域重叠的tile进行整体推流。</p>
-<ul>
-<li>当预测后0.5s、1s、2s加权线性回归表现更好</li>
-</ul>
-<h5 id="petrangelis-worklr">Petrangeli&rsquo;s work——LR</h5>
-<p>将被划分成tile的等矩形的帧分成3个区域：viewport区、相邻区、其他区。</p>
-<p>结合观察者头部的移动，将可变比特率分配给可见和不可见区域。</p>
-<p>作者利用最近（100毫秒）用户观看历史的线性外推来预测未来的注视点。</p>
-<h5 id="mavlankar-and-girods-work运动向量">Mavlankar and Girod&rsquo;s work——运动向量</h5>
-<p>使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。</p>
-<h5 id="la-fuentes-work运动向量">La Fuente&rsquo;s work——运动向量</h5>
-<p>考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个tile上。</p>
-<p>当进行进一步的预测时（超过2s），这种方式限制了预测的精度。</p>
-<p>如果视频tile被基于错误的预测而被请求，用户的实际viewport可能会被没有请求因而没有内容的黑色tile所覆盖。</p>
-<h5 id="bans-workknnlr">Ban&rsquo;s work——KNN+LR</h5>
-<p>使用KNN算法利用跨用户观看历史，使用LR模型利用户个体化的行为。</p>
-<p>就视角预测的准确率而言，分别取得了20%和48%的绝对和相对改进。</p>
-<h5 id="lius-workcluster">Liu&rsquo;s work——cluster</h5>
-<p>提出了使用数据融合方法，通过考虑几个特征来估计未来视角位置。特征例如：用户的参与度、用户观看同一视频的行为、单个用户观看多个视频的行为、最终用户设备、移动性水平。</p>
-<h5 id="petrangelis-workcluster">Petrangeli&rsquo;s work——cluster</h5>
-<p>基于车辆轨迹预测的概念，考虑了类似的轨迹形成一个簇来预测未来的viewport。</p>
-<p>结果表明这种方法为更长的视野提高了精确度。</p>
-<p>检查了来自三个欧拉角的不同轨迹，这样做可能导致性能不足。</p>
-<h5 id="rossis-workcluster">Rossi&rsquo;s work——cluster</h5>
-<p>提出了一种聚类的方法，基于球形空间中有意义的viewport重叠来确认用户的簇。</p>
-<p>基于Bron-Kerbosch（BK）算法的聚类算法能够识别大量用户，这些用户观看的是相同的60%的3s长球形视频块。</p>
-<p>与基准相比，该方法为簇提供了可兼容且重要的几何viewport重叠。</p>
-<h5 id="jiangs-work">Jiang&rsquo;s work</h5>
-<p>背景：</p>
-<p>LR方法对于长期的预测视野会导致较差的预测精度。长短时记忆（LSTM）是一种递归神经网络（RNN）架构，适用于序列建模和模式开发。</p>
-<p>方法：</p>
-<p>为了在FoV预测中获取比LR方法更高的精确度，开发了一种使用带有128个神经元的LSTM模型的viewport预测方法。</p>
-<ul>
-<li>分析了360度数据集，观察到用户在水平方向头部有快速转向，但是在垂直方向几乎是稳定的。</li>
-<li>实验表明，这种方法同时考虑水平和垂直方向的头部移动时，比LR等方法产生了更少的预测错误。</li>
-</ul>
-<h5 id="baos-work">Bao&rsquo;s work</h5>
-<p>背景：</p>
-<p>对150个用户进行了16个视频剪辑的主观实验，并对其行为进行了分析。</p>
-<p>使用3个方向的欧拉角$\theta$, $\phi$, $\psi$来表示用户在3D空间中头部的移动，结果表明不同方向的动作有强自相关性和消极的互相关性。因此多个角度的预测可以分开进行。</p>
-<p>方法：</p>
-<p>开发两个独立的LSTM模型来分别预测$\theta$和$\phi$，之后将预测结果应用于目标区域流来有效利用可用网络资源。</p>
-<h5 id="hous-work">Hou&rsquo;s work</h5>
-<ul>
-<li>提出一种基于深度学习的视角产生方法来只对提前预测的360度视频和3自由度的VR应用的viewport tile进行抽取和推流。（使用了大规模的数据集来训练模型）</li>
-<li>使用包含多层感知器和LSTM模型来预测6自由度的VR环境中头部乃至身体的移动，预测的视野被预渲染来做到低延迟的VR体验。</li>
-</ul>
-<h5 id="heyses-work">Heyse&rsquo;s work</h5>
-<p>背景：</p>
-<p>在某些例子中，用户的移动在视频的不同部分中非常不稳定。这增加了机器学习方式的训练压力。</p>
-<p>方法：</p>
-<p>提出了一个基于RL模型的上下文代理，这个模型首先检测用户的显著移动，然后预测移动的方向。这种分层自学习执行器优于球形轨迹外推法（这种方法将用户运动建模为轨迹的一部分，而不是单位球体上的完整轨迹）</p>
-<h5 id="qians-work">Qian&rsquo;s work</h5>
-<p>提出了一种叫做Flare的算法来最小化实际viewport和预测viewport之间的不匹配。</p>
-<ul>
-<li>应用了一种ML方法来执行频繁的viewport预测，包括从130名用户收集的1300条头部运动轨迹的4个间隔。</li>
-<li>使用viewport轨迹预测，Flare可以将错误预测替换成最新预测。</li>
-</ul>
-<h5 id="yu-and-lius-work">Yu and Liu&rsquo;s work</h5>
-<p>背景：</p>
-<p>LSTM网络本身具有耗时的线性训练特性。编解码器的LSTM模型把训练过程并行化，相比于LR和LSTM本身而言，改善了预测精度。</p>
-<p>方法：</p>
-<p>使用基于注意力的LSTM编解码器网络体系结构来避免昂贵的递归并能更好地捕获viewport变化。</p>
-<ul>
-<li>提出的体系结构相比于传统的RNN，获得了更高的预测精度，更低的训练复杂度和更快的收敛。</li>
-</ul>
-<h5 id="jamalis-work">Jamali&rsquo;s work</h5>
-<p>提出使用LSTM编解码器网络来做长期的viewport预测（例如3.5s）。</p>
-<p>收集了低延迟异质网络上跨用户的方向反馈来调整高延迟网络上目标用户的预测性能。</p>
-<h3 id="内容感知方式">内容感知方式</h3>
-<h4 id="背景-2">背景</h4>
-<p>内容感知方式可以提高预测效率。</p>
-<h4 id="具体方法">具体方法</h4>
-<h5 id="aladaglis-work">Aladagli&rsquo;s work</h5>
-<p>提出了一个显著性驱动的模型来提高预测精度。</p>
-<ul>
-<li>没有考虑用户在360度视频中的视角行为。</li>
-<li>viewport预测错误可以通过理解用户对360度视频独特的可见注意力最小化。</li>
-</ul>
-<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
-<p>背景：</p>
-<p>大多数现存的方法把显著性图看作是360度显示中的位置信息来获得更好的预测结果。</p>
-<p>通用的显著性和位置信息体系结构基于固定预测模型。</p>
-<p>方法：</p>
-<p>提出了<code>PanoSalNet</code>来捕获用户在360度帧中独特的可见注意力来改善显著性检测的性能。</p>
-<ul>
-<li>同时使用HMD特性和显著性图的固定预测模型获得了可测量的结果。</li>
-</ul>
-<h5 id="xus-work">Xu&rsquo;s work</h5>
-<p>提出了两个DRL(Deep Reinforcement Learning)模型用于同时考虑运动轨迹和可见注意力特性的viewport预测网络。</p>
-<ul>
-<li>离线模型基于内容流行度检测每个帧里的显著性。</li>
-<li>在线模型基于从离线模型获得的显著性图和之前的viewport预测信息预测viewport方向和大小。</li>
-<li>这个网络只能预测30ms的下一个viewport位置。</li>
-</ul>
-<h5 id="xus-work-1">Xu&rsquo;s work</h5>
-<p>收集了大规模的被使用带有眼部轨迹跟踪的HMD的45个观测者观察的动态360度视频数据集，提出了基于历史扫描路径和图像特征预测注视位移的方法。</p>
-<ul>
-<li>在与当前注视点、viewport和整个图像相关的三个空间尺度上执行了显著性计算。</li>
-<li>可能的图像特性被通过向CNN喂图像和相应的显著性图，同时LSTM模型捕获历史信息来抽取出来。</li>
-<li>之后将LSTM和CNN特性耦合起来，用于下一次的用户注视信息预测。</li>
-</ul>
-<h5 id="fans-work">Fan&rsquo;s work</h5>
-<p>用户更容易被运动的物体吸引，因此除了显著性图之外，Fan等人也考虑了使用预训练  的CNN来估计用户未来注视点的内容运动图。</p>
-<ul>
-<li>由于可能存在多个运动，这让预测变得不可靠，因此运动贴图的开发还需要进一步的研究。</li>
-</ul>
-<h5 id="yangs-work">Yang&rsquo;s work</h5>
-<ul>
-<li>使用CNN模型基于历史观测角度信息预测了单viewport。</li>
-<li>接着考虑了一种使用内容不可知和内容感知方法如RNN和CFVT模型的融合层的viewport轨迹预测策略。</li>
-<li>融合模型使其同时支持更好地预测并且提高了大概40%的精度。</li>
-</ul>
-<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
-<p>将viewport轨迹转换为基于viewport的视觉注意图，然后对不同大小的tile进行推流以保证更高的编码效率。</p>
-<h5 id="lis-work">Li&rsquo;s work</h5>
-<p>现有的预测模型对未来的预测能力有限，Li等人提出了两种模型，分别用于viewport相关和基于tile的推流系统。</p>
-<ul>
-<li>第一个模型应用了基于用户轨迹的LSTM编解码网络体系结构。</li>
-<li>第二个模型应用了卷积LSTM编解码体系结构，使用序列的热图来预测用户的未来方向。</li>
-</ul>
-<h3 id="总结">总结</h3>
-<p>精确的方向预测使360度视频的客户端可以以高分辨率下载最相关的tile。</p>
-<p>当前采用显著性和位置信息的神经网络模型的性能比直接利用当前观察位置进行未来viewport位置估计的简单无运动的基线方法表现差。估计的显著性中的噪音等级限制了这些模型的预测精度。并且这些模型也引入了额外的计算复杂度。</p>
-<p>对于360度视频注意点的可靠预测和用户观看可能性与显著性图之间关系的理解，显著性模型必须被改善并通过训练大规模的数据集来适应，尤其是被配备了不同摄像机旋转的镜头所捕获的数据。</p>
-<p>另一方面，卷积LSTM编解码器和基于轨迹的预测方法适合长期预测，并能带来相当大的QoE改进，特别是在协作流媒体环境中。</p>
-<h2 id="qoe评估">QoE评估</h2>
-<h3 id="背景-3">背景</h3>
-<p>由于全方位视频非常普遍，因此，通过这种类型的视频分发来确定用户的特定质量方面是至关重要的。QoE在视频推流应用中扮演着重要角色。在传统视频推流中，QoE很大程度上被网络负载和分发性能所影响。现有的次优目标度量方法并不适用于全向视频，因为全向视频受网络状况和用户视角行为的影响很大。</p>
-<h3 id="主观质量评估">主观质量评估</h3>
-<p>主观质量评估是估计360度视频推流质量的现实并且可靠的方法。</p>
-<h4 id="upeniks-work">Upenik&rsquo;s work</h4>
-<p>用一台MergeVR HMD执行了主观测试来体验360度图像。</p>
-<ul>
-<li>实验数据包括主观分数、视角轨迹、在每个图像上花费的时间由软件上获得。</li>
-<li>视角方向信息被用于计算显著性图。</li>
-<li>但是这项研究没有考虑对360度视频的评估。</li>
-</ul>
-<h4 id="zhangs-work">Zhang&rsquo;s work</h4>
-<p>为了弥补360度视频和常规视频度量方式之间的性能差距，为全景视频提出了一种主观质量评估方法，称为<em>SAMPVIQ</em>。</p>
-<ul>
-<li>23位参与者被允许观看4个受损视频，整体视频质量体验的评分在0～5分之间。</li>
-<li>参与者之间存在较大的评分差异。</li>
-</ul>
-<h4 id="xus-work-2">Xu&rsquo;s work</h4>
-<p>提出两种主观测量方式：总体区分平均意见分数(O-DMOS)和矢量区分平均意见分数(V-DMOS)来获得360度视频的质量损失。</p>
-<ul>
-<li>类似于传统食品的DMOS度量方式，O-DMOS度量方式计算主观测试序列的总计区分分数。</li>
-</ul>
-<h4 id="schatzs-work">Schatz&rsquo;s work</h4>
-<p>研究了使用HMD观看360度内容时停顿事件的影响。</p>
-<ul>
-<li>沉浸式内容的主观质量评估并非不重要，可能导致比实际推荐更多的开放性问题。</li>
-<li>通常来讲人们的期望于传统的HAS相似，即如果可能的话，根本没有停顿。</li>
-</ul>
-<h4 id="可用的开源工具">可用的开源工具</h4>
-<p>AVTrack360，OpenTrack和360player能捕获用户观看360度视频的头部轨迹。</p>
-<p>VRate是一个在VR环境中提供主观问卷调查的基于Unity的工具。</p>
-<p>安卓应用*<a href="https://github.com/zerepolbap/miro360" target="_blank" rel="noopener noreffer">MIRO360</a>*，支持未来VR主观测试的指南开发。</p>
-<h4 id="cybersickness"><code>Cybersickness</code></h4>
-<p><code>Cybersickness</code>是一种获得高QoE的潜在障碍，它能引起疲劳、恶心、不适和呕吐。</p>
-<h5 id="singlas-work">Singla&rsquo;s work</h5>
-<p>使用受限的带宽和分辨率，在不同的延迟情况下进行了两个主观实验。</p>
-<ul>
-<li>开发了主观测试平台、测试方法和指标来评估viewport自适应360度视频推流中的视频感知等级和<code>Cybersickness</code>。</li>
-<li>基于tile的推流在带宽受限的情况下表现很好。</li>
-<li>47ms的延迟实际上不影响感知质量。</li>
-</ul>
-<h5 id="trans-work">Tran&rsquo;s work</h5>
-<p>考虑了几个影响因子例如内容的空间复杂性，数量参数，分辨率特性和渲染模型来评估cybersickness，质量，可用性和用户的存在。</p>
-<ul>
-<li>VR环境中快速移动的内容很容易引发cybersickness。</li>
-<li>由于高可用性和存在性，用户的cybersickness也可能加剧。</li>
-</ul>
-<h5 id="singlas-work-1">Singla&rsquo;s work</h5>
-<p>评估了28名受试者在Oculus Rift和HTC Vive头戴式电脑上观看6个全高清和超高清分辨率YouTube视频时的观看不适感。</p>
-<ul>
-<li>HMD的类型轻微地影响感知质量。</li>
-<li>分辨率和内容类型强烈影响个人体验。</li>
-<li>女性用户感到<code>cybersickness</code>的人数更多。</li>
-</ul>
-<h4 id="空间存在感">空间存在感</h4>
-<p>空间存在感能增强沉浸感。</p>
-<h5 id="zous-work">Zou&rsquo;s work</h5>
-<p>方法：</p>
-<p>提出了一个主观框架来测量25名受试者的空间存在感。</p>
-<ul>
-<li>提出的框架包括三层，从上到下分别为：空间存在层、感知层、科技影响层。</li>
-<li>心理上的空间存在感形成了空间存在层。</li>
-<li>感知层以视频真实感、音频真实感和交互元素为特征。</li>
-<li>科技影响层由几个模块组成，这些模块与感知层相连，以反映传感器的真实性。</li>
-</ul>
-<h5 id="huponts-work">Hupont&rsquo;s work</h5>
-<p>应用通用感知的原则来研究在Oculus HMD和传统2D显示器上玩游戏的用户的空间存在感。</p>
-<ul>
-<li>与2D显示器相比，3D虚拟现实主义显示出更高的惊奇、沉浸感、存在感、可用性和兴奋感。</li>
-</ul>
-<h4 id="生理特征度量">生理特征度量</h4>
-<h5 id="salgados-work">Salgado&rsquo;s work</h5>
-<p>方法：</p>
-<p>捕获多种多样的生理度量，例如心率HR，皮肤电活性EDA、皮肤温度、心电图信号ECG、呼吸速率、血压BVP、脑电图信号EEG来评价沉浸式模拟器的质量。</p>
-<h5 id="egans-work">Egan&rsquo;s work</h5>
-<p>基于HR和EDA信号评估VR和非VR渲染模式质量分数。</p>
-<ul>
-<li>相比于HR，EDA对质量分数有强烈的影响。</li>
-</ul>
-<h4 id="技术因素感知">技术因素感知</h4>
-<p>不同的技术和感知特征，如失真、清晰度、色彩、对比度、闪烁等，用于评估感知视频质量。</p>
-<h5 id="fremereys-work">Fremerey&rsquo;s work</h5>
-<p>确定了可视质量强烈地依赖于应用的运动插值（MI）算法和视频特征，例如相机旋转和物体的运动。</p>
-<p>在一项主观实验中，12位视频专家回顾了使用FFmpeg混合、FFmpeg MCI（运动补偿插值）和butterflow插值到90 fps的四个视频序列。作者发现，与其他算法相比，MCI在QoE方面提供了极好的改进。</p>
-<h4 id="总结-1">总结</h4>
-<p>主观测试与人眼直接相关，并揭示了360度视频质量评估的不同方面的影响。</p>
-<p>在这些方面中，空间存在感和由佩戴VR头戴设备观看360度视频导致的<em>cybersickness</em>极为重要，因为这些效果并不在传统的2D视频观看中出现。</p>
-<p>主观评估需要综合的手工努力并因此昂贵耗时并易于出错，相对而言，客观评估更易于管理和可行。</p>
-<h3 id="客观质量评估">客观质量评估</h3>
-<p>由于类似的编码结构和2D平面投影格式，对360度内容应用客观质量评估很自然。</p>
-<h4 id="计算psnr">计算PSNR</h4>
-<p>现有投影方式中的采样密度在每个像素位置并不均匀。</p>
-<h5 id="yus-work">Yu&rsquo;s work</h5>
-<p>为基于球形的PSNR计算引入S-PSNR和L-PSNR。</p>
-<ul>
-<li>S-PSNR通过对球面上所有位置的像素点做同等加权来计算PSNR。</li>
-<li>利用插值算法，S-PSNR可以完成对支持多种投影模式的360度视频的客观质量评估。</li>
-<li>L-PSNR通过基于纬度和访问频率的像素点加权测量PSNR。</li>
-<li>L-PSNR可以测量viewport的平均PSNR而无需特定的头部运动轨迹。</li>
-</ul>
-<h5 id="zakharchenkos-work">Zakharchenko&rsquo;s work</h5>
-<p>提出了一种Craster Parabolic Projection-PSNR (CPP-PSNR) 度量方式来比较多种投影方案，通过不改变空间分辨率和不计算实际像素位置的PSNR，将像素重新映射成CPP投影。</p>
-<ul>
-<li>CPP投影方式可能使视频分辨率大幅下降。</li>
-</ul>
-<h5 id="suns-work">Sun&rsquo;s work</h5>
-<p>提出了一种叫做weighted-to-spherically-uniform PSNR (WS-PSNR)的质量度量方式，以此来测量原始和受损内容之间的质量变化。</p>
-<ul>
-<li>根据像素在球面上的位置考虑权重。</li>
-</ul>
-<h4 id="计算ssim">计算SSIM</h4>
-<p>SSIM是另一种质量评估指标，它通过三个因素反映图像失真，包括亮度、对比度和结构。</p>
-<h5 id="chens-work">Chen&rsquo;s work</h5>
-<p>为2D和360度视频分析了SSIM结果，引入了球型结构的相似性度量（S-SSIM）来计算原始和受损的360度视频之间的相似性。</p>
-<ul>
-<li>在S-SSIM中，使用重投影来计算两个提取的viewport之间的相似性。</li>
-</ul>
-<h5 id="zhous-work">Zhou&rsquo;s work</h5>
-<p>考虑相似性的权重提出了WS-SSIM来测量投影区域中窗口的相似性。</p>
-<ul>
-<li>性能评估表明，与其他质量评估指标相比，WS-SSIM更接近人类感知。</li>
-</ul>
-<h5 id="van-der-hoofts-work">Van der Hooft&rsquo;s work</h5>
-<p>提出了<em>ProbGaze</em>度量方式，基于tile的空间尺寸和viewport中的注视点。</p>
-<ul>
-<li>考虑外围tile的权重来提供合适的质量测量。</li>
-<li>相比于基于中心和基于平均的PSNR和SSIM度量方式，<em>ProbGaze</em>能估计当用户突然改变viewport位置时的视频质量变化。</li>
-</ul>
-<h5 id="xus-work-3">Xu&rsquo;s work</h5>
-<p>引入了两种客观质量评估度量手段：基于内容感知的PSNR和非内容感知的PSNR，用于编码360度视频。</p>
-<ul>
-<li>第一种方式基于空间全景内容对像素失真进行加权。</li>
-<li>第二种方式考虑人类偏好的统计数据来估计质量损失。</li>
-</ul>
-<h4 id="基于psnr和ssim方式的改进">基于PSNR和SSIM方式的改进</h4>
-<p>尽管各种基于PSNR和SSIM的方式被广阔地应用到了360度视频的质量评估中，但这些方式都没有真正地捕获到感知质量，特别是当HMD被用于观看视频时。因此需要为360度内容特别设计一种优化的质量度量方式。</p>
-<h5 id="upeniks-work-1">Upenik&rsquo;s work</h5>
-<p>考虑了一场使用4张高质量360度全景图像来让45名受试者在不同的编码设定下评估和比较客观质量度量方式性能的主观实验。</p>
-<ul>
-<li>现有的客观度量方式和主观感知到的质量相关性较低。</li>
-</ul>
-<h5 id="trans-work-1">Tran&rsquo;s work</h5>
-<p>论证主观度量和客观度量之间相关性较高，但是使用的数据集较小。</p>
-<h4 id="基于ml的方式">基于ML的方式</h4>
-<p>基于ML的方式可以弥补客观评估和主观评估之间的差距。</p>
-<h5 id="da-costa-filhos-work">Da Costa Filho&rsquo;s work</h5>
-<p>提出了一个有两个阶段的模型。</p>
-<ul>
-<li>首先自适应VR视频的播放性能由机器学习算法所确定。</li>
-<li>之后模型利用估计的度量手段如视频质量、质量变化、卡顿时间和启动延迟来确定用户的QoE。</li>
-</ul>
-<h5 id="lis-work-1">Li&rsquo;s work</h5>
-<p>引入了基于DRL的质量获取模型，在一次推流会话中同时考虑头部和眼部的移动。</p>
-<ul>
-<li>360度视频被分割成几个补丁。</li>
-<li>低观看概率的补丁被消除。</li>
-<li>参考和受损视频序列都被输入到深度学习可执行文件中，以计算补丁的质量分数。</li>
-<li>之后分数被加权并加到一起得到最终的分数。</li>
-</ul>
-<h5 id="yangs-work-1">Yang&rsquo;s work</h5>
-<p>考虑了多质量等级的特性和融合模型。</p>
-<ul>
-<li>质量特性用<code>region of interest(ROI)</code>图来计算，其中包括像素点等级、区域等级、对象等级和赤道偏差。</li>
-<li>混合模型由后向传播的神经网络构造而成，这个神经网络组合了多种质量特性来获取整体的质量评分。</li>
-</ul>
-<h3 id="总结-2">总结</h3>
-<p>精确的QoE获取是优化360度视频推流服务中重要的因素，也是自适应分发方案中基础的一环。</p>
-<p>单独考虑VR中的可视质量对完整的QoE框架而言并不足够。</p>
-<p>为能获得学界的认可，找到其他因素的影响也很必要，例如<code>cybersickness</code>，生理症状，用户的不适感，HMD的重量和可用性，VR音频，viewport降级率，网络特性（延迟，抖动，带宽等），内容特性（相机动作，帧率，编码，投影等），推流特性（viewport偏差，播放缓冲区，时空质量变化等）。</p>
-<h2 id="低延迟推流">低延迟推流</h2>
-<h3 id="背景-4">背景</h3>
-<p>360度全景视频推流过程中的延迟由几部分组成：传感器延迟、云/边处理延迟、网络延迟、请求开销、缓冲延迟、渲染延迟和反馈延迟。</p>
-<p>低延迟的要求对于云VR游戏、沉浸式临场感和视频会议等更为严格。</p>
-<p>要求极低的终端处理延迟、快速的云/边计算和极低的网络延迟来确保对用户头部移动做出反馈。</p>
-<p>现代HMD可以做到使传感器延迟降低到用户无法感知的程度。</p>
-<p>传输延迟已经由5G移动和无线通信技术大幅减少。</p>
-<p>但是，对于减少处理、缓冲和渲染延迟的工作也是必要的。</p>
-<p>许多沉浸式应用的目标是MTP的延迟少于20ms，理想情况是小于15ms。</p>
-<h3 id="减少启动时间">减少启动时间</h3>
-<h4 id="减少初始化请求的数据量">减少初始化请求的数据量</h4>
-<p>通常来讲，较小的视频segment能减少启动和下载时间。</p>
-<h5 id="van-der-hoofts-work-1">Van der Hooft&rsquo;s work</h5>
-<p>考虑了新闻相关内容的推流，使用的技术有：</p>
-<ol>
-<li>服务端编码</li>
-<li>服务端的用户分析</li>
-<li>服务器推送策略</li>
-<li>客户端积极存储视频数据</li>
-</ol>
-<p>取得的效果：</p>
-<ul>
-<li>降低了启动时间</li>
-<li>允许不同网络设定下的快速内容切换</li>
-<li>较长的响应时间降低了性能</li>
-</ul>
-<h5 id="nguyens-work-1">Nguyen&rsquo;s work</h5>
-<p>基于viewport依赖的自适应策略分析了自适应间隔延迟和缓冲延迟的影响。</p>
-<ul>
-<li>使用服务端比特率计算策略来最小化响应延迟的影响。</li>
-<li>根据客户端的响应估计可用的网络吞吐量和未来的viewport位置。</li>
-<li>服务端的决策引擎推流合适的tile来满足延迟限制。</li>
-</ul>
-<p>取得的效果：</p>
-<ul>
-<li>对于viewport依赖型推流方案而言，较少的自适应和缓冲延迟不可避免。</li>
-</ul>
-<h3 id="降低由tile分块带来的网络负载">降低由tile分块带来的网络负载</h3>
-<p>在HTTP/1.1中，在空间上将视频帧分成矩形tile会增加网络负载，因为每个tile会产生独立的网络请求。</p>
-<p>请求爆炸的问题导致了较长的响应延迟，但是可以通过使用HTTP/2的服务器推送特性解决。这个特型使服务器能使用一条HTTP请求复用多条消息。</p>
-<h5 id="weis-work">Wei&rsquo;s work</h5>
-<p>利用HTTP/2协议来促进低延迟的HTTP自适应推流。</p>
-<ul>
-<li>提出的服务端推送的策略使用一条请求同时发送几个segment避免多个GET请求。</li>
-</ul>
-<h5 id="petrangelis-work">Petrangeli&rsquo;s work</h5>
-<p>结合特定请求参数与HTTP/2的服务端推送特性来促进360度视频推流。</p>
-<ul>
-<li>客户端为一个segment发送一条call，服务器使用FCFS策略传送k个tile。</li>
-<li>利用HTTP/2的优先级特性可以使高优先级的tile以紧急的优先级被获取，进而改善网络环境中的高往返时间的性能。</li>
-</ul>
-<h5 id="xus-work-4">Xu&rsquo;s work</h5>
-<p>为360度内容采用了<code>k-push</code>策略：将k个tile推送到客户端，组成一个单独的时间段。</p>
-<ul>
-<li>提出的方法与QoE感知的比特率自适应算法一起，在不同的RTT设定下，提高了20%的视频质量，减少了30%的网络传输延迟。</li>
-</ul>
-<h5 id="yahias-work">Yahia&rsquo;s work</h5>
-<p>使用HTTP/2的优先级和多路复用功能，在两个连续的viewport预测之间，即在交付相同片段之前和期间，组织紧急视频块的受控自适应传输。</p>
-<h5 id="yens-work">Yen&rsquo;s work</h5>
-<p>开发了一种支持QUIC的体系结构来利用流优先级和多路复用的特性来实现360度视频的安全和低优先级的传输。</p>
-<ul>
-<li>当viewport变化发生时，QUIC能让常规的tile以低优先级推流，viewport内的tile以高优先级推流，都通过一条QUIC连接来降低viewport tile的缺失率。</li>
-<li>作者说测试表明基于QUIC的自适应360度推流比HTTP/1.1和HTTP/2的方案表现更好。</li>
-</ul>
-<h3 id="使用移动边缘计算降低延迟">使用移动边缘计算降低延迟</h3>
-<h5 id="mangiantes-work">Mangiante&rsquo;s work</h5>
-<p>提出了利用基于边缘处理的viewport渲染方案来减少延迟，同时利用终端设备上的电源和计算负载。</p>
-<ul>
-<li>但是作者没有给出有效的算法或是建立一个实践执行平台。</li>
-</ul>
-<h5 id="lius-work">Liu&rsquo;s work</h5>
-<p>采用远端渲染技术，通过为不受约束的VR系统获取高刷新率来隐藏网络延迟。</p>
-<ul>
-<li>采用60GHz的无线链路支持的高端GPU，来加快计算速度和4K渲染，减少显示延迟。</li>
-<li>尽管提供了高质量和低延迟的推流，但是使用了昂贵的带宽连接，这通常并不能获得。</li>
-</ul>
-<h5 id="viitanens-work">Viitanen&rsquo;s work</h5>
-<p>引入了端到端的VR游戏系统。通过执行边缘渲染来降低延迟，能源和计算开销。</p>
-<ul>
-<li>为1080p 30fps的视频格式实现了端到端的低延迟（30ms）的系统。</li>
-<li>前提是有充足的带宽资源、终端设备需要性能强劲的游戏本。</li>
-</ul>
-<h5 id="shis-work">Shi&rsquo;s work</h5>
-<p>考虑了不重视viewport预测的高质量360度视频渲染。</p>
-<ul>
-<li>提出的MEC-VR系统采用了一个远端服务器通过使用一个自适应裁剪过滤器来动态适应viewport覆盖率，这个过滤器按照观测到的系统延迟增加viewport之外的区域。</li>
-<li>基于viewport覆盖率的延迟调整允许客户端容纳和补偿突然的头部移动。</li>
-</ul>
-<h3 id="共享vr环境中的延迟处理">共享VR环境中的延迟处理</h3>
-<p>共享VR环境中用户的延迟取决于用户的位置和边缘资源的分发。</p>
-<h5 id="parks-work">Park&rsquo;s work</h5>
-<p>通过考虑多个用户和边缘服务器之间的双向通信，提出了一种使用线性蜂窝拓扑中的带宽分配策略，以最小化端到端系统延迟。确定了推流延迟强烈地依赖于：</p>
-<ul>
-<li>边缘服务器的处理性能</li>
-<li>多个交互用户之间的物理和虚拟空间</li>
-</ul>
-<h5 id="perfectos-work">Perfecto&rsquo;s work</h5>
-<p>集成了深度神经网络和毫米波多播传输技术来降低协同VR环境中的延迟。</p>
-<ul>
-<li>神经网络模型估计了用户即将来临的viewport。</li>
-<li>用户被基于预测的相关性和位置分组，以此来优化正确的viewport许可。</li>
-<li>执行积极的多播资源调度来最小化延迟和拥塞。</li>
-</ul>
-<h3 id="总结-3">总结</h3>
-<p>在单用户和多用户的环境中，边缘辅助的解决方式对于控制延迟而言占主要地位。</p>
-<p>此外还有服务端的viewport计算、服务端push机制和远程渲染机制都能用于低延迟的控制。</p>
-<p>现有的4G网络足以支持早期的自适应沉浸式多媒体，正在成长的5G网络更能满足沉浸式内容的需求。</p>
-<h2 id="360度直播推流">360度直播推流</h2>
-<h3 id="背景-5">背景</h3>
-<p>传统的广播电视频道是直播推流的流行来源。现在私人的360度直播视频在各个社交媒体上也有大幅增长。</p>
-<p>因为视频生产者和消费者之间在云端的转码操作，360度视频推流是更为延迟敏感的应用。</p>
-<p>现有的处理设备在诸如转码、渲染等实时处理任务上受到了限制。</p>
-<h4 id="内容分发">内容分发</h4>
-<h5 id="hus-work">Hu&rsquo;s work</h5>
-<p>提出了一套基于云端的直播推流系统，叫做<code>MELiveOV</code>，它使高分辨率的全向内容的处理任务以毛细管分布的方式分发到多个支持5G的云端服务器。</p>
-<ul>
-<li>端到端的直播推流系统包括内容创作模块、传输模块和viewport预测模块。</li>
-<li>移动边缘辅助的推流设计减少了50%的带宽需求。</li>
-</ul>
-<h5 id="griwodzs-work">Griwodz&rsquo;s work</h5>
-<p>为360度直播推流开发了优化FoV的原型，结合了RTP和基于DASH的<code>pull-patching</code>来传送两种质量等级的360度视频给华为IPTV机顶盒和Gear VR头戴设备。</p>
-<ul>
-<li>作者通过在单个H.265硬件解码器上多路复用多个解码器来实现集体解码器的想法，以此减少切换时间。</li>
-</ul>
-<h4 id="视频转码">视频转码</h4>
-<h5 id="lius-work-1">Liu&rsquo;s work</h5>
-<p>研究表明只转码viewport区域有潜力大幅减少高性能转码的计算需求。</p>
-<h5 id="baigs-work">Baig&rsquo;s work</h5>
-<p>开发了快速编码方案来分发直播的4K视频到消费端设备。</p>
-<ul>
-<li>采用了分层视频编码的方式来在高度动态且不可预测的WiGig和WiFi链路上分发质量可变的块。</li>
-</ul>
-<h5 id="les-work">Le&rsquo;s work</h5>
-<p>使用RTSP网络控制协议为CCTV的360度直播推流提出了实时转码和加密系统。</p>
-<ul>
-<li>转码方式基于ARIA加密库，Intel媒体SDK和FFmpeg库。</li>
-<li>系统可以管理并行的转码操作，实现高速的转码性能。</li>
-</ul>
-<h4 id="内容拼接缝合">内容拼接缝合</h4>
-<p>相比于其他因素如捕获、转码、解码、渲染，内容拼接在决定整体上的推流质量时扮演至关重要的角色。</p>
-<h5 id="chens-work-1">Chen&rsquo;s work</h5>
-<p>提出了一种内容驱动的拼接方式，这种方式将360度帧的语义信息的不同类型看作事件，以此来优化拼接时间预算。</p>
-<ul>
-<li>基于VR帧中的语义信息，tile执行器模块选择合适的tile设计。</li>
-<li>拼接器模块然后执行基于tile的拼接，这样，基于可用资源，事件tile有更高的拼接质量。</li>
-<li>评估表明系统通过实现89.4%的时间预算，很好地适应了不同的事件和时间限制。</li>
-</ul>
-<h3 id="总结-4">总结</h3>
-<p>相比于点播式流媒体，360度直播推流面临多个挑战，例如在事先不知情的情况下处理用户导航、视频的首次流式传输以及实时视频的转码。在多用户场景中，这些挑战更为棘手。</p>
-<p>关于处理多个用户的观看模式，可伸缩的多播可以用于在低带宽和高带宽网络上以接近于按需推流的质量等级。</p>
-<p>基于ROI的tile拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p>
 ]]></description>
 </item>
 </channel>

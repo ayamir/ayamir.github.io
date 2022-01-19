@@ -2,14 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://ayamir.github.io/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/immersive-video/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/panoramic-video/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/posts/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/vr/</loc><lastmod>2022-01-17T17:02:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/dynamic-tiling/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/heuristic/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/immersive-video/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/</loc><lastmod>2022-01-18T16:07:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/panoramic-video/</loc><lastmod>2022-01-18T13:01:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</loc><lastmod>2022-01-18T13:01:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/vr/</loc><lastmod>2022-01-18T13:01:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/abr/</loc><lastmod>2022-01-16T19:30:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/cross-user-vp/</loc><lastmod>2022-01-16T19:30:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/immersive-video/</loc><lastmod>2022-01-16T19:30:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -25,7 +28,6 @@
             <loc>https://ayamir.github.io/posts/note-for-gpac/</loc><lastmod>2021-12-30T16:19:48&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://ayamir.github.io/tags/mpc/</loc><lastmod>2021-12-24T21:02:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://ayamir.github.io/posts/note-for-mpc/</loc><lastmod>2021-12-24T21:02:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://ayamir.github.io/tags/dynamic-tiling/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://ayamir.github.io/tags/mobile-device/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://ayamir.github.io/posts/note-for-tbra/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://ayamir.github.io/tags/live-video/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
@@ -43,7 +45,6 @@
             <loc>https://ayamir.github.io/tags/rainbow-dqn/</loc><lastmod>2021-12-12T18:31:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/posts/note-for-360probdash/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://ayamir.github.io/tags/probabilistic-model/</loc><lastmod>2021-12-24T15:27:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://ayamir.github.io/tags/heuristic/</loc><lastmod>2021-12-09T10:14:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/posts/note-for-dante/</loc><lastmod>2021-12-09T10:14:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/tags/udp/</loc><lastmod>2021-12-09T10:14:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/posts/note11/</loc><lastmod>2021-11-22T16:04:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
