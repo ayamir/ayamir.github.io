@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Note for Content Based Vp for Live Streaming (2) - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for Content Based Vp for Live Streaming (2)" />
+<meta property="og:description" content="LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-25T11:59:24+08:00" />
+<meta property="article:modified_time" content="2022-01-25T11:59:24+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Note for Content Based Vp for Live Streaming (2)"/>
+<meta name="twitter:description" content="LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/" /><link rel="prev" href="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Note for Content Based Vp for Live Streaming (2)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-2\/"
+        },"genre": "posts","keywords": "Content-based predict","wordcount":  4654 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-2\/","datePublished": "2022-01-25T11:59:24+08:00","dateModified": "2022-01-25T11:59:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for Content Based Vp for Live Streaming (2)</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-25">2022-01-25</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4654 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#liveobj">LiveObj</a>
+      <ul>
+        <li><a href="#用户观看行为分析">用户观看行为分析</a></li>
+        <li><a href="#methods">Methods</a>
+          <ul>
+            <li><a href="#basic-method">Basic method</a></li>
+            <li><a href="#over-cover-method">Over-Cover method</a></li>
+            <li><a href="#summary-for-intuitive-methods">Summary for intuitive methods</a></li>
+          </ul>
+        </li>
+        <li><a href="#liveobj-method">LiveObj Method</a>
+          <ul>
+            <li><a href="#object-detection-and-tracking">Object Detection and Tracking</a></li>
+            <li><a href="#user-view-estimation">User View Estimation</a></li>
+            <li><a href="#rl-based-modeling">RL-based Modeling</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#liveroi">LiveROI</a>
+      <ul>
+        <li><a href="#用户对视频内容的偏好">用户对视频内容的偏好</a></li>
+        <li><a href="#liveroi-method">LiveROI Method</a>
+          <ul>
+            <li><a href="#workflow">Workflow</a></li>
+            <li><a href="#cnn-model">CNN Model</a></li>
+            <li><a href="#nlp-model">NLP Model</a></li>
+          </ul>
+        </li>
+        <li><a href="#用户模型与预测">用户模型与预测</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="liveobj">LiveObj</h1>
+<p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
+<ol>
+<li>模型需要花很长时间从一次预测错误中恢复；</li>
+<li>在初始化的阶段预测率成功率很低；</li>
+</ol>
+<p>为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。</p>
+<p><strong>基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。</strong></p>
+<h2 id="用户观看行为分析">用户观看行为分析</h2>
+<p>在直播推流中，不能通过分析其他用户的行为模式来得到特定用户的<code>ROI</code>，因此只能直接从视频内容本身入手。</p>
+<p>通过对视频内容从空间和时间两个维度的分析得出结论：用户的<code>ROI</code>与物体的大小无关，而是很大程度上依赖于物体在视频中的语义，即用户倾向于观看有意义的事物。</p>
+<p>这一结论可以给出推断<code>FoV</code>的直觉：基于检测视频中有意义的物体。</p>
+<h2 id="methods">Methods</h2>
+<p>首先提出两种直观的通过分析视频内容的视点预测方法，进一步总结这些方法的局限性，并逐步切换到对<code>LiveObj</code>的讨论。</p>
+<h3 id="basic-method">Basic method</h3>
+<p><em>Basic</em>方法检测视频中所有的对象并使用其中心作为预测的中心。</p>
+<p>给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, &hellip;, o_k]$ ，其中每个 $o_i(i = 1, &hellip;, k)$ 表示物体的中心坐标： $o_i = &lt;o^{(x)}_i, o^{(y)}_i&gt;$ 。</p>
+<p>最终的预测中心点坐标可以计算出来：
+$$
+C_x = \frac{1}{k} \sum^{k}_{i=1} o^{(x)}_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i
+$$</p>
+<h3 id="over-cover-method">Over-Cover method</h3>
+<p>受<code>LiveMotion</code>方法的启发，其创建了不规则的预测<code>FoV</code>来覆盖更多的潜在的区域，<em>Over-Cover</em>的方式预测的<code>FoV</code>会覆盖所有包含物体的区域。</p>
+<p>采用<code>YOLOv3</code>来处理帧并检测物体，接着每个检测到的对象生成与该对象共享相同中心的预测子视图，所有子视图的聚合形成最终的预测视口。</p>
+<h3 id="summary-for-intuitive-methods">Summary for intuitive methods</h3>
+<p><em>Basic</em>方式可能会在多个物体的场景中无法正确选择目标；</p>
+<p><em>Over-Cover</em>方式覆盖所有可能的目标来满足较高的精度，但会导致更高的带宽使用量；</p>
+<p><em>Velocity</em>方式能很快的适应用户偏好的变化，但是预测精度在长期预测的情况下会显著下降；</p>
+<h2 id="liveobj-method">LiveObj Method</h2>
+<p><em>Over-Cover</em>方法将所有检测到的目标合并到预测的<code>FoV</code>中而导致冗余问题，而用户一次只能观看其中的几个。</p>
+<p>为了解决这个问题，提出基于用户的反馈选择最吸引人的目标，例如用户当前的<code>FoV</code>来形成预测的<code>FoV</code>。</p>
+<p>基于这种想法而提出<code>LiveObj</code>，一种基于轨迹的VP方式，通过从<em>Over-Cover</em>方法的结果中过滤掉用户更小可能性看到的目标来缩小最终的<code>FoV</code>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png"
+        title="image-20220129213505720" /></p>
+<ul>
+<li><em>Object Detection</em>：处理视频帧并检测目标；</li>
+<li><em>User View Estimation</em>：分析用户反馈并用<em>Velocity</em>的方式估计<code>FoV</code>；</li>
+<li><em>Object tracking</em>：追踪用户观看的目标；</li>
+<li><em>RL-based modeling</em>：接受估计出的<code>FoV</code>和被追踪的目标，最终更新每个分块的状态（选中或未选中）</li>
+</ul>
+<h3 id="object-detection-and-tracking">Object Detection and Tracking</h3>
+<ol>
+<li>
+<p>Detection：<code>YOLOv3</code>；</p>
+</li>
+<li>
+<p>Tracking：追踪的基本假设是用户会在接下来的一段时间内接着观看当前看着的目标。追踪任务在直播推流的运行时完成。因此每隔几秒收集用户反馈，并进一步推断用户之前正在观看的目标，然后据此更新追踪目标。</p>
+<p>追踪算法：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png"
+        title="image-20220129235056068" /></p>
+</li>
+</ol>
+<h3 id="user-view-estimation">User View Estimation</h3>
+<p>分析用户的反馈处于两个目的：</p>
+<ol>
+<li>估计未来的用户的<code>FoV</code>；</li>
+<li>校准当前用户<code>FoV</code>以及要跟踪的对象；</li>
+</ol>
+<p>给出用户反馈（即过去片段中实际的<code>FoV</code>），首先更新用户<code>FoV</code>并分析用户的行为模式，并根据此模式计算出下一帧中的预期用户速度。然后识别更新后的<code>FoV</code>中的对象，这些对象确定为<code>ROI</code>，对象追踪步骤将这些更新用于未来的片段来提高预测精度。</p>
+<h3 id="rl-based-modeling">RL-based Modeling</h3>
+<p>因为预测的误差和用户实际<code>FoV</code>的变化，可能会导致追踪的目标从<code>FoV</code>中消失，而这会使整个预测算法完全失效。所以提出一个基于RL的模型来为每个分块建立用户行为模型，旨在最小化预测误差。</p>
+<p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
+<p>将上面的观察形式化为一个策略学习过程 $M$：
+$$
+M = &lt;S, A, P_{s, a, s'}, R&gt;
+$$
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+<p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
+$$
+v = E[Q_{s, a} | S_t = s]
+$$</p>
+<p>$$
+Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+$$</p>
+<p>其中：$\gamma$ 是奖励参数。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
+<p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
+<ol>
+<li>预测同时基于当前的输入（目标追踪和<code>FoV</code>估计的结果）和历史状态（分块是否被选择）；</li>
+<li>奖励基于用户的反馈在线生成，并且会在整个推流会话中变化，而不是预先设定好的奖励矩阵 $R$ ；</li>
+<li>由于直播推流中内容的不可提前获取性， $Q$ 表必须在每次预测中更新；</li>
+</ol>
+<p>特别的，为每个分块都创建一个 $Q$ 表，对于每个 $Q$ 表有4种类型：</p>
+<ul>
+<li><em>object only</em>;</li>
+<li><em>object and viewport</em>;</li>
+<li><em>viewport only</em>;</li>
+<li><em>no objects or viewport</em>;</li>
+</ul>
+<p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
+<p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
+<p>对每个表的奖励基于用户是否看到了分块而更新。</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png"
+        title="image-20220130004348378" /></p>
+<h1 id="liveroi">LiveROI</h1>
+<p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
+<p>使用<code>3D-CNN</code>等预先训练的模型来分析每个分块上的视频内容，以完成动作识别。同时基于<code>NLP</code>技术，使用轻量级用户模型将用户偏好映射到不同的视频内容。</p>
+<h2 id="用户对视频内容的偏好">用户对视频内容的偏好</h2>
+<p>最基本的研究问题是：找到直播视频内容中的有效特征和信号或用户的行为，这些与用户的未来的<code>FoV</code>有强相关关系，因此可以将其作为预测因子。</p>
+<p>通过对两个固定主题的视频的实验可以得出：</p>
+<ol>
+<li>用户花绝大多数的时间在视频中有意义的部分；</li>
+<li><code>ROI</code>在空间上只占整个帧很小的部分；</li>
+</ol>
+<h2 id="liveroi-method">LiveROI Method</h2>
+<p>融合视频内容感知和用户偏好反馈（即以用户头部运动轨迹的形式）来预测实时VR视频流中的<code>FoV</code>。</p>
+<p>主要想法是使用CV算法去理解每个分块的内容，除此之外，采用实时的用户反馈方便分块的选择。</p>
+<p>需要满足的条件是：所有分块上的视频处理开销应该保持较小，以避免视频冻结和累计的实时延迟。</p>
+<p>使用<code>3D-CNN</code>进行视频理解，重点是识别视频中隐含的有意义的动作，动作识别结果用于以自然语言的格式描述视频内容。这种3D-CNN模型可以在公共数据集上进行训练，因此具有通用性，以适应各种类型的动作和视频，这使得它可以用于实时VR流传输，因为在流传输会话之前没有关于视频内容的先验知识。</p>
+<p>但是具有有意义动作的区域可能不是用户最后会确定的<code>FoV</code>，尤其是在目标视频中存在多个有意义动作的情况下。</p>
+<p>为了解决这一问题，通过收集用户关于偏好视频内容的实时描述，进一步设计了基于“词/短语”的用户偏好模型。</p>
+<p>采用<strong>词语嵌入</strong>的方法，通过比较两个来源短语的语义相似度，确定最佳匹配区域作为预测<code>FoV</code>，以此来桥接动作识别结果和用户偏好模型。</p>
+<h3 id="workflow">Workflow</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png"
+        title="image-20220130203354647" /></p>
+<p><code>3D-CNN</code>的输入数据包含一批 $T$ 张图像，因此统一在一个视频片段中子采样 $T$ 帧。</p>
+<p>每个子采样的帧都划分成 $M \times N$ 个分块，VP问题定义为确定要包含在<code>FoV</code>中的分块。</p>
+<p>为了避免由于分块带来的潜在的信息损失（有意义的动作被划分成多个分块），每个用于动作识别的输入图像是从比原始分块边界更大的区域中所提取出来的，但是将共享与原始分块相同的中心。</p>
+<p><code>3D-CNN</code>模块的输出是动作识别结果，即结果矩阵。</p>
+<p>面对 $M \times N$ 个分块，为了满足性能要求，将每个分块的动作识别过程视为相互独立的过程，创建 $m \times n$ 个线程来实现并行识别，每个线程向结果矩阵输出对应分块的结果向量。</p>
+<p>在预测的最后一步，生成包含所有分块的预测分数的得分向量。进一步对所有的分数向量进行排序，并定位第 $M$ 个值，该值设定为选择分块进入预测<code>FoV</code>中的阈值。通过控制 $M$ 的大小可以控制预测的<code>FoV</code>的大小，分数向量中的分数表示用户对分块内容的感兴趣程度。</p>
+<p>为了计算分数向量，进一步设计用户向量，其中包含描述用户偏好的词或短语。考虑到推流过程中用户可能会改变兴趣，用户向量会基于用户实时轨迹更新。</p>
+<p>在给定用户向量和结果矩阵中的词或短语的情况下，考虑到非自然语言中的两个不同的词可能具有相近的含义，不直接进行词比较，而是使用词分析来计算其相关性。</p>
+<h3 id="cnn-model">CNN Model</h3>
+<p>采用<code>ECO lite</code>模型完成VR直播推流中的动作识别。所有来自同一视频片段的图像都被储存在一个缓冲帧集合中。</p>
+<p><code>ECO lite</code>模型为2D CNN提取特征图的任务收集工作帧集合（分别由前一视频片段和当前视频片段的缓冲帧集合的后半部分和前半部分组成），在下一个阶段，从每个片段获得的特征图被堆叠到更高的表示中，之后被送到之后的3D CNN中用于最终的动作预测。具体的识别过程中同样使用多线程并行处理，处理1帧图像是每次创建和分块数相同的线程，为每个分块都初始化一个<code>ECO lite</code>模型。</p>
+<p>显然预训练的模型不能为直播推流提供正确的推理结果，但是它可以看作是对视频内容的验证，即：给定一种类型的视频内容，其实其本身被误分类了，但在同一个模型之下它总是会被分类进在整个推流过程中都有相近分数的簇中。</p>
+<p>利用这个特性，基于动作识别模型提供的对视频内容的描述，进一步设计动态的用户模型来映射用户偏好到不同的视频内容上。</p>
+<h3 id="nlp-model">NLP Model</h3>
+<p>为了桥接动作识别和用户偏好向量，必须分析词/短语之间的相似性。</p>
+<p>然而现有的ML算法不能直接处理生数据，因为输入必须是数值。为了解决这个问题，采用单词嵌入技术，使用多种语言模型以数值向量的形式来表示单词，以此来确保有相近意义的词有相近密度的表示。</p>
+<p>具体处理时使用<a href="https://github.com/artetxem/phrase2vec" target="_blank" rel="noopener noreffer"><code>Phrase2Vec</code></a>作为NLP模块的模型（作为<code>Word2Vec</code>的扩展，能更好的分析两个短语之间的相似性）。</p>
+<h2 id="用户模型与预测">用户模型与预测</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png"
+        title="image-20220204004735080" /></p>
+<p>图5.3阐明了基于结果向量和用户向量的预测过程。由动作识别得出的结果向量，包括一个动作向量 $A$ 和一个权重向量 $W$ 。用户向量包括偏好向量 $P$ 和可能性向量 $L$ 。$A$ 和 $P$ 包含词和短语，描述了视频内容和用户偏好。 $W$ 和 $L$ 分别由表示神经网络对动作结果的置信度和用户对视频内容的参考可能性的值组成。</p>
+<p>假设每帧25个分块，CNN模块的输出结果是25个 $A$ 向量和25个 $W$ 向量；对与用户偏好，只使用1个 $P$ 向量和1个 $L$ 向量。</p>
+<p>最终的分数向量 $S$ 计算为每个 $A$ 和 唯一的 $P$ 之间的相关性。结果也受相应的 $W$ 和 $L$ 的影响而调整。</p>
+<p>假设余弦相似性函数为 $\rho$ ，那么 $A$ 和 $P$ 中的每个 $a_i$ 和 $p_i$ 的计算可以表示为：
+$$
+{\rho}_i (a_i, p_i) = Phrase2Vec(a_i, p_i)
+$$
+设定每个向量中包含5个元素，分数向量 $S$ 计算为：
+$$
+S = L \cdot W \cdot \sum {\rho} (A, P)
+$$
+对应于25个分块，最终的分数向量中包含25个元素。 $s_k$ 表示 $k_{th}$ 分块的分数值，详细算法：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png"
+        title="image-20220204004335458" /></p>
+<p>分数向量更新完毕之后就可以获得每个分块内容和用户偏好之间的相关性，用帧上每个分块的亮度来做可视化：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png"
+        title="image-20220204004856763" /></p>
+<p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
+<p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/content-based-predict/">Content-based predict</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-01-25</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/note-for-content-based-vp-for-live-streaming-2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/note-for-content-based-vp-for-live-streaming-1/" class="prev" rel="prev" title="Content Based VP for Live Streaming (1)"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>

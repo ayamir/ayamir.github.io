@@ -4,9 +4,247 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Note for Content Based Vp for Live Streaming (2)</title>
+    <link>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</guid>
+    <description><![CDATA[<h1 id="liveobj">LiveObj</h1>
+<p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
+<ol>
+<li>模型需要花很长时间从一次预测错误中恢复；</li>
+<li>在初始化的阶段预测率成功率很低；</li>
+</ol>
+<p>为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。</p>
+<p><strong>基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。</strong></p>
+<h2 id="用户观看行为分析">用户观看行为分析</h2>
+<p>在直播推流中，不能通过分析其他用户的行为模式来得到特定用户的<code>ROI</code>，因此只能直接从视频内容本身入手。</p>
+<p>通过对视频内容从空间和时间两个维度的分析得出结论：用户的<code>ROI</code>与物体的大小无关，而是很大程度上依赖于物体在视频中的语义，即用户倾向于观看有意义的事物。</p>
+<p>这一结论可以给出推断<code>FoV</code>的直觉：基于检测视频中有意义的物体。</p>
+<h2 id="methods">Methods</h2>
+<p>首先提出两种直观的通过分析视频内容的视点预测方法，进一步总结这些方法的局限性，并逐步切换到对<code>LiveObj</code>的讨论。</p>
+<h3 id="basic-method">Basic method</h3>
+<p><em>Basic</em>方法检测视频中所有的对象并使用其中心作为预测的中心。</p>
+<p>给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, &hellip;, o_k]$ ，其中每个 $o_i(i = 1, &hellip;, k)$ 表示物体的中心坐标： $o_i = &lt;o^{(x)}_i, o^{(y)}_i&gt;$ 。</p>
+<p>最终的预测中心点坐标可以计算出来：
+$$
+C_x = \frac{1}{k} \sum^{k}_{i=1} o^{(x)}_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i
+$$</p>
+<h3 id="over-cover-method">Over-Cover method</h3>
+<p>受<code>LiveMotion</code>方法的启发，其创建了不规则的预测<code>FoV</code>来覆盖更多的潜在的区域，<em>Over-Cover</em>的方式预测的<code>FoV</code>会覆盖所有包含物体的区域。</p>
+<p>采用<code>YOLOv3</code>来处理帧并检测物体，接着每个检测到的对象生成与该对象共享相同中心的预测子视图，所有子视图的聚合形成最终的预测视口。</p>
+<h3 id="summary-for-intuitive-methods">Summary for intuitive methods</h3>
+<p><em>Basic</em>方式可能会在多个物体的场景中无法正确选择目标；</p>
+<p><em>Over-Cover</em>方式覆盖所有可能的目标来满足较高的精度，但会导致更高的带宽使用量；</p>
+<p><em>Velocity</em>方式能很快的适应用户偏好的变化，但是预测精度在长期预测的情况下会显著下降；</p>
+<h2 id="liveobj-method">LiveObj Method</h2>
+<p><em>Over-Cover</em>方法将所有检测到的目标合并到预测的<code>FoV</code>中而导致冗余问题，而用户一次只能观看其中的几个。</p>
+<p>为了解决这个问题，提出基于用户的反馈选择最吸引人的目标，例如用户当前的<code>FoV</code>来形成预测的<code>FoV</code>。</p>
+<p>基于这种想法而提出<code>LiveObj</code>，一种基于轨迹的VP方式，通过从<em>Over-Cover</em>方法的结果中过滤掉用户更小可能性看到的目标来缩小最终的<code>FoV</code>。</p>
+<p></p>
+<ul>
+<li><em>Object Detection</em>：处理视频帧并检测目标；</li>
+<li><em>User View Estimation</em>：分析用户反馈并用<em>Velocity</em>的方式估计<code>FoV</code>；</li>
+<li><em>Object tracking</em>：追踪用户观看的目标；</li>
+<li><em>RL-based modeling</em>：接受估计出的<code>FoV</code>和被追踪的目标，最终更新每个分块的状态（选中或未选中）</li>
+</ul>
+<h3 id="object-detection-and-tracking">Object Detection and Tracking</h3>
+<ol>
+<li>
+<p>Detection：<code>YOLOv3</code>；</p>
+</li>
+<li>
+<p>Tracking：追踪的基本假设是用户会在接下来的一段时间内接着观看当前看着的目标。追踪任务在直播推流的运行时完成。因此每隔几秒收集用户反馈，并进一步推断用户之前正在观看的目标，然后据此更新追踪目标。</p>
+<p>追踪算法：</p>
+<p></p>
+</li>
+</ol>
+<h3 id="user-view-estimation">User View Estimation</h3>
+<p>分析用户的反馈处于两个目的：</p>
+<ol>
+<li>估计未来的用户的<code>FoV</code>；</li>
+<li>校准当前用户<code>FoV</code>以及要跟踪的对象；</li>
+</ol>
+<p>给出用户反馈（即过去片段中实际的<code>FoV</code>），首先更新用户<code>FoV</code>并分析用户的行为模式，并根据此模式计算出下一帧中的预期用户速度。然后识别更新后的<code>FoV</code>中的对象，这些对象确定为<code>ROI</code>，对象追踪步骤将这些更新用于未来的片段来提高预测精度。</p>
+<h3 id="rl-based-modeling">RL-based Modeling</h3>
+<p>因为预测的误差和用户实际<code>FoV</code>的变化，可能会导致追踪的目标从<code>FoV</code>中消失，而这会使整个预测算法完全失效。所以提出一个基于RL的模型来为每个分块建立用户行为模型，旨在最小化预测误差。</p>
+<p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
+<p>将上面的观察形式化为一个策略学习过程 $M$：
+$$
+M = &lt;S, A, P_{s, a, s'}, R&gt;
+$$
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+<p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
+$$
+v = E[Q_{s, a} | S_t = s]
+$$</p>
+<p>$$
+Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+$$</p>
+<p>其中：$\gamma$ 是奖励参数。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
+<p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
+<ol>
+<li>预测同时基于当前的输入（目标追踪和<code>FoV</code>估计的结果）和历史状态（分块是否被选择）；</li>
+<li>奖励基于用户的反馈在线生成，并且会在整个推流会话中变化，而不是预先设定好的奖励矩阵 $R$ ；</li>
+<li>由于直播推流中内容的不可提前获取性， $Q$ 表必须在每次预测中更新；</li>
+</ol>
+<p>特别的，为每个分块都创建一个 $Q$ 表，对于每个 $Q$ 表有4种类型：</p>
+<ul>
+<li><em>object only</em>;</li>
+<li><em>object and viewport</em>;</li>
+<li><em>viewport only</em>;</li>
+<li><em>no objects or viewport</em>;</li>
+</ul>
+<p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
+<p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
+<p>对每个表的奖励基于用户是否看到了分块而更新。</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p></p>
+<h1 id="liveroi">LiveROI</h1>
+<p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
+<p>使用<code>3D-CNN</code>等预先训练的模型来分析每个分块上的视频内容，以完成动作识别。同时基于<code>NLP</code>技术，使用轻量级用户模型将用户偏好映射到不同的视频内容。</p>
+<h2 id="用户对视频内容的偏好">用户对视频内容的偏好</h2>
+<p>最基本的研究问题是：找到直播视频内容中的有效特征和信号或用户的行为，这些与用户的未来的<code>FoV</code>有强相关关系，因此可以将其作为预测因子。</p>
+<p>通过对两个固定主题的视频的实验可以得出：</p>
+<ol>
+<li>用户花绝大多数的时间在视频中有意义的部分；</li>
+<li><code>ROI</code>在空间上只占整个帧很小的部分；</li>
+</ol>
+<h2 id="liveroi-method">LiveROI Method</h2>
+<p>融合视频内容感知和用户偏好反馈（即以用户头部运动轨迹的形式）来预测实时VR视频流中的<code>FoV</code>。</p>
+<p>主要想法是使用CV算法去理解每个分块的内容，除此之外，采用实时的用户反馈方便分块的选择。</p>
+<p>需要满足的条件是：所有分块上的视频处理开销应该保持较小，以避免视频冻结和累计的实时延迟。</p>
+<p>使用<code>3D-CNN</code>进行视频理解，重点是识别视频中隐含的有意义的动作，动作识别结果用于以自然语言的格式描述视频内容。这种3D-CNN模型可以在公共数据集上进行训练，因此具有通用性，以适应各种类型的动作和视频，这使得它可以用于实时VR流传输，因为在流传输会话之前没有关于视频内容的先验知识。</p>
+<p>但是具有有意义动作的区域可能不是用户最后会确定的<code>FoV</code>，尤其是在目标视频中存在多个有意义动作的情况下。</p>
+<p>为了解决这一问题，通过收集用户关于偏好视频内容的实时描述，进一步设计了基于“词/短语”的用户偏好模型。</p>
+<p>采用<strong>词语嵌入</strong>的方法，通过比较两个来源短语的语义相似度，确定最佳匹配区域作为预测<code>FoV</code>，以此来桥接动作识别结果和用户偏好模型。</p>
+<h3 id="workflow">Workflow</h3>
+<p></p>
+<p><code>3D-CNN</code>的输入数据包含一批 $T$ 张图像，因此统一在一个视频片段中子采样 $T$ 帧。</p>
+<p>每个子采样的帧都划分成 $M \times N$ 个分块，VP问题定义为确定要包含在<code>FoV</code>中的分块。</p>
+<p>为了避免由于分块带来的潜在的信息损失（有意义的动作被划分成多个分块），每个用于动作识别的输入图像是从比原始分块边界更大的区域中所提取出来的，但是将共享与原始分块相同的中心。</p>
+<p><code>3D-CNN</code>模块的输出是动作识别结果，即结果矩阵。</p>
+<p>面对 $M \times N$ 个分块，为了满足性能要求，将每个分块的动作识别过程视为相互独立的过程，创建 $m \times n$ 个线程来实现并行识别，每个线程向结果矩阵输出对应分块的结果向量。</p>
+<p>在预测的最后一步，生成包含所有分块的预测分数的得分向量。进一步对所有的分数向量进行排序，并定位第 $M$ 个值，该值设定为选择分块进入预测<code>FoV</code>中的阈值。通过控制 $M$ 的大小可以控制预测的<code>FoV</code>的大小，分数向量中的分数表示用户对分块内容的感兴趣程度。</p>
+<p>为了计算分数向量，进一步设计用户向量，其中包含描述用户偏好的词或短语。考虑到推流过程中用户可能会改变兴趣，用户向量会基于用户实时轨迹更新。</p>
+<p>在给定用户向量和结果矩阵中的词或短语的情况下，考虑到非自然语言中的两个不同的词可能具有相近的含义，不直接进行词比较，而是使用词分析来计算其相关性。</p>
+<h3 id="cnn-model">CNN Model</h3>
+<p>采用<code>ECO lite</code>模型完成VR直播推流中的动作识别。所有来自同一视频片段的图像都被储存在一个缓冲帧集合中。</p>
+<p><code>ECO lite</code>模型为2D CNN提取特征图的任务收集工作帧集合（分别由前一视频片段和当前视频片段的缓冲帧集合的后半部分和前半部分组成），在下一个阶段，从每个片段获得的特征图被堆叠到更高的表示中，之后被送到之后的3D CNN中用于最终的动作预测。具体的识别过程中同样使用多线程并行处理，处理1帧图像是每次创建和分块数相同的线程，为每个分块都初始化一个<code>ECO lite</code>模型。</p>
+<p>显然预训练的模型不能为直播推流提供正确的推理结果，但是它可以看作是对视频内容的验证，即：给定一种类型的视频内容，其实其本身被误分类了，但在同一个模型之下它总是会被分类进在整个推流过程中都有相近分数的簇中。</p>
+<p>利用这个特性，基于动作识别模型提供的对视频内容的描述，进一步设计动态的用户模型来映射用户偏好到不同的视频内容上。</p>
+<h3 id="nlp-model">NLP Model</h3>
+<p>为了桥接动作识别和用户偏好向量，必须分析词/短语之间的相似性。</p>
+<p>然而现有的ML算法不能直接处理生数据，因为输入必须是数值。为了解决这个问题，采用单词嵌入技术，使用多种语言模型以数值向量的形式来表示单词，以此来确保有相近意义的词有相近密度的表示。</p>
+<p>具体处理时使用<a href="https://github.com/artetxem/phrase2vec" target="_blank" rel="noopener noreffer"><code>Phrase2Vec</code></a>作为NLP模块的模型（作为<code>Word2Vec</code>的扩展，能更好的分析两个短语之间的相似性）。</p>
+<h2 id="用户模型与预测">用户模型与预测</h2>
+<p></p>
+<p>图5.3阐明了基于结果向量和用户向量的预测过程。由动作识别得出的结果向量，包括一个动作向量 $A$ 和一个权重向量 $W$ 。用户向量包括偏好向量 $P$ 和可能性向量 $L$ 。$A$ 和 $P$ 包含词和短语，描述了视频内容和用户偏好。 $W$ 和 $L$ 分别由表示神经网络对动作结果的置信度和用户对视频内容的参考可能性的值组成。</p>
+<p>假设每帧25个分块，CNN模块的输出结果是25个 $A$ 向量和25个 $W$ 向量；对与用户偏好，只使用1个 $P$ 向量和1个 $L$ 向量。</p>
+<p>最终的分数向量 $S$ 计算为每个 $A$ 和 唯一的 $P$ 之间的相关性。结果也受相应的 $W$ 和 $L$ 的影响而调整。</p>
+<p>假设余弦相似性函数为 $\rho$ ，那么 $A$ 和 $P$ 中的每个 $a_i$ 和 $p_i$ 的计算可以表示为：
+$$
+{\rho}_i (a_i, p_i) = Phrase2Vec(a_i, p_i)
+$$
+设定每个向量中包含5个元素，分数向量 $S$ 计算为：
+$$
+S = L \cdot W \cdot \sum {\rho} (A, P)
+$$
+对应于25个分块，最终的分数向量中包含25个元素。 $s_k$ 表示 $k_{th}$ 分块的分数值，详细算法：</p>
+<p></p>
+<p>分数向量更新完毕之后就可以获得每个分块内容和用户偏好之间的相关性，用帧上每个分块的亮度来做可视化：</p>
+<p></p>
+<p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
+<p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+]]></description>
+</item>
+<item>
+    <title>Content Based VP for Live Streaming (1)</title>
+    <link>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/</link>
+    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/</guid>
+    <description><![CDATA[<h1 id="livemotion">LiveMotion</h1>
+<h2 id="motivation">Motivation</h2>
+<p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
+<p>将用户的<code>FoV</code>轨迹与视频内容中运动物体的轨迹结合到一起考虑：</p>
+<p></p>
+<p>细节可以参见：<a href="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/" target="_blank" rel="noopener noreffer">note-for-content-motion-viewport-prediction</a>.</p>
+<h1 id="livedeep">LiveDeep</h1>
+<p>受限于<code>Motion</code>识别算法，前面提出的<code>LiveMotion</code>只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。</p>
+<h2 id="method">Method</h2>
+<p><code>LiveDeep</code>处理问题的场景为：</p>
+<ol>
+<li>视频内容在线生成；</li>
+<li>没有历史用户数据；</li>
+<li>预测需要满足实时性的要求；</li>
+</ol>
+<p><code>LiveDeep</code>的设计原则：</p>
+<ol>
+<li><em>online</em>：在线训练在线预测；</li>
+<li><em>lifelong</em>：模型在整个视频播放会话中更新；</li>
+<li><em>real-time</em>：预测带来的处理延迟不能影响推流延迟；</li>
+</ol>
+<p><code>CNN</code>的设计：</p>
+<ol>
+<li>在推流会话的运行时收集并标注训练数据；</li>
+<li>以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练；</li>
+<li>子采样少部分的代表帧来运行VP以满足实时性的要求；</li>
+</ol>
+<h2 id="framework">Framework</h2>
+<p></p>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>分包器将视频按照DASH标准将视频分段，每个段作为训练模型和预测的单元；</li>
+<li>考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样；</li>
+<li>将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ；</li>
+<li>训练集来自于用户的实时反馈，根据实际<code>FoV</code>和预测<code>FoV</code>之间的差距来标注数据；</li>
+<li>用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与<code>CNN</code>模块采样的帧同步；</li>
+</ol>
+<h3 id="details">Details</h3>
+<ol>
+<li>在用于训练的图像还没有被标注之前并不能直接预测，所以CNN模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新CNN模型；</li>
+<li>LSTM模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据；</li>
+<li>对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧；</li>
+<li>为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）；</li>
+<li>取两个模块预测输出的共同的部分作为最终的预测结果；</li>
+</ol>
+<h2 id="cnn-module">CNN Module</h2>
+<p></p>
+<p>使用经典的CNN：VGG作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。</p>
+<h3 id="推理和视口生成">推理和视口生成</h3>
+<p>直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的<code>FoV</code>。</p>
+<p>实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。</p>
+<p>所以不直接使用CNN网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。</p>
+<h3 id="训练过程">训练过程</h3>
+<p>在传统的监督训练中，训练时间取决于可接受的最低损失值和epoch的值。为了满足实时性，<code>LiveDeep</code>采用较高的最低损失值和较低的最大epoch值。</p>
+<ul>
+<li>
+<p><em><strong>High acceptable loss value</strong></em>：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的CNN更高：设定为0.2。</p>
+</li>
+<li>
+<p><em><strong>The number of epochs</strong></em>：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。</p>
+</li>
+<li>
+<p><em><strong>The batch size</strong></em>：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。</p>
+</li>
+<li>
+<p><em><strong>Dynamic learning rate</strong></em>：</p>
+<p></p>
+</li>
+</ul>
+<h2 id="lstm-module">LSTM Module</h2>
+<p>单纯的<code>CNN</code>模型可能会导致对视频内容有强记忆性，而这会使模型在面对新视频内容时需要花较长的时间去接受用户偏好，即对于用户偏好的快速切换不能做出即时响应。而<code>LSTM</code>的模块用于弥补这一缺陷；</p>
+<p>采用与原始的<code>LSTM</code>模型相同的训练过程：先用收集的训练数据训练模型然后推断未来的数据。</p>
+<p>收集用户在过去的视频片段中的用户轨迹，包括从 $k$ 个子采样帧中的 $k$ 个采样点，因此作为训练数据，同时将每个采样点中每个帧的索引指定为时间戳。最终模型的输出是预测出的分块的索引。</p>
+<h2 id="混合模型">混合模型</h2>
+<p>将<code>CNN</code>模块得到的输出作为主要的结果，接着结合<code>LSTM</code>模块的输出结果作为最终的预测结果。</p>
+]]></description>
+</item>
+<item>
     <title>Note for Popularity Aware 360-Degree Video Streaming</title>
     <link>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</link>
     <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</guid>
@@ -820,412 +1058,6 @@ $$</p>
 <p>而这种方案就称为MPC。MPC的一般好处在于，MPC可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
 </li>
 </ul>
-]]></description>
-</item>
-<item>
-    <title>Note for TBRA</title>
-    <link>https://ayamir.github.io/posts/note-for-tbra/</link>
-    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-tbra/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
-<p>Level：ACM MM 21</p>
-<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
-<h2 id="创新点">创新点</h2>
-<h3 id="背景">背景</h3>
-<p>现有的固定的tile划分方式严重依赖viewport预测的精度，然而viewport预测的准确率往往变化极大，这导致基于tile的策略实际效果并不一定能实现其设计初衷：保证QoE的同时减少带宽浪费。</p>
-<p>考虑同样的viewport预测结果与不同的tile划分方式组合的结果：</p>
-<p></p>
-<p>从上图可以看到：</p>
-<ul>
-<li>如果采用$6 \times 6$的分块方式，就会浪费26，32两个tile的带宽，同时15，16，17作为本应在实际viewport中的tile并没有分配最高的优先级去请求。</li>
-<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的viewport有所出入，但是得益于tile分块较大，所有应该被请求的tile都得到了最高的优先级，用户的QoE得到了保证。</li>
-</ul>
-<p>另一方面，基于tile的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/" target="_blank" rel="noopener noreffer">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
-<h3 id="创新">创新</h3>
-<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的viewport预测性能和受限的移动设备的解码能力。</p>
-<h3 id="论文组织">论文组织</h3>
-<ol>
-<li>首先使用现实世界的轨迹分析了典型的viewport预测算法并确定了其性能的不确定性。</li>
-<li>接着讨论了不同的分块策略在tile选择和解码效率上的影响。</li>
-<li>自适应的分块策略可以适应viewport预测的错误，并能保证tile选择的质量。</li>
-<li>为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。</li>
-<li>形式化了优化模型，讨论了自适应算法的细节。</li>
-<li>评估证明了方案的优越性。</li>
-</ol>
-<h2 id="motivation">Motivation</h2>
-<h3 id="分块策略对tile选择的影响">分块策略对tile选择的影响</h3>
-<p>实现4种轻量的viewport预测算法：线性回归LR、岭回归RR、支持向量回归、长短期记忆LSTM。</p>
-<p>设置历史窗口大小为2s，预测窗口大小为1s；viewport的宽度和高度分别为100°和90°。</p>
-<p>默认的分块策略为$6 \times 6$；头部移动数据集来自<a href="https://dl.acm.org/doi/10.1145/3204949.3208139" target="_blank" rel="noopener noreffer">公开数据集</a>。</p>
-<h4 id="viewport预测的不准确性">viewport预测的不准确性</h4>
-<p>研究表明，用户的头部运动主要发生在水平方向而较少发生在垂直方向，所以只分析水平方向的预测。</p>
-<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的viewport预测采样。</p>
-<p>视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。</p>
-<ul>
-<li>
-<p>改变采样频率会直接影响viewport预测的精度，频率越低，精度越低。</p>
-</li>
-<li>
-<p>相机运动的viewport预测错误率比相机静止的明显更高。</p>
-</li>
-</ul>
-<h4 id="通过分块容忍预测错误">通过分块容忍预测错误</h4>
-<p>因为不管tile的哪个部分被包含在预测的viewport中，只要包含一部分就会请求整个tile，所以增大每个tile的尺寸能吸收预测错误。</p>
-<p>实验验证：</p>
-<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持tile选择结果的相同质量。</p>
-<p>用$F_1$分数来表示tile选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
-<p>实验结果表明更大的tile尺寸更能容忍预测错误。</p>
-<h3 id="分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</h3>
-<p>虽然当前的移动设备硬件性能发展迅速，但是实时的高码率高分辨率全景视频的解码任务还是充满挑战。</p>
-<p>分块对于编码的影响：</p>
-<ul>
-<li>tile越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
-</ul>
-<p>直接影响解码复杂性的因素：</p>
-<ul>
-<li>tile的数量。</li>
-<li>视频的分辨率。</li>
-<li>用于解码的资源。</li>
-</ul>
-<p>固定其中1个因素改变另外2个因素来检查其对解码的影响：</p>
-<p></p>
-<p>根据对图的观察可以得出这3个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
-<p>分别用$F_n(x), F_r(x), F_c(x)$表示tile数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
-<p>将这3个比值作为3个乘子建立分析模型：
-$$
-D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
-$$
-上式表示计算整体的解码时间，其中tile数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
-<p>这个模型将用于帮助做出分块和码率适应的决策。</p>
-<p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
-<h2 id="tbra的设计">TBRA的设计</h2>
-<ul>
-<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示360°视频分块方式的集合；</li>
-<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中tile的数量；</li>
-<li>当 $i &lt; j$ 时，假设 $|s_i| &lt; |s_j|$；</li>
-<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的tile $j$，$i \le 块的数量, j \le |s|$；</li>
-<li>目标是确定分块方式$s$，并为每个tile确定其码率$b_{i, j}$；</li>
-</ul>
-<h3 id="分块自适应">分块自适应</h3>
-<h4 id="自适应的概念">自适应的概念</h4>
-<p>分块尺寸大小会导致viewport容错率和传输效率的变化。</p>
-<ul>
-<li>分块尺寸小，极端情况下每个像素点作为一个tile，viewport容错率最小，但是传输效率达到100%；</li>
-<li>分块尺寸大，极端情况下整个视频帧作为一个tile，viewport容错率最大，但是传输效率最小；</li>
-</ul>
-<p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
-<h4 id="分块选择">分块选择</h4>
-<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去n秒中方向 $d$ 的预测错误平均值；
-$$
-\overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
-$$
-预测区域的扩展被进一步用于tile选择，受过去预测精度的动态影响。</p>
-<p>下一步检查不同分块方式，进而找到QoE和传输效率之间的折中。</p>
-<p>对于每个分块方式，比较基于扩展的预测区域的tile选择的质量。使用2个比值作为QoE和传输效率的度量：
-$$
-Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
-$$</p>
-<p>$$
-Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
-$$</p>
-<p></p>
-<p>这2个比值的tradeoff可以在上图中清晰地看出。</p>
-<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
-$$
-Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
-$$
-$\phi_i$ 是viewport $i$ 的中心纬度坐标，它表明随着viewport的垂直移动，浪费率的权重会发生变化。（因为投影方式是ERP）</p>
-<p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
-<h3 id="码率自适应">码率自适应</h3>
-<h4 id="视频质量">视频质量</h4>
-<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于tile是否在预测的viewport中。</p>
-<p>$q(b_{i, j})$ 是tile比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
-<p>第 $i$ 个视频块的质量等级可以定义为：</p>
-<p>$$
-Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
-$$</p>
-<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers" target="_blank" rel="noopener noreffer">主观视频质量模型</a>：
-$$
-subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
-$$
-$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时viewport的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
-<h4 id="质量变化">质量变化</h4>
-<p>连续视频块之间的强烈质量变化会损害QoE，定义质量变化作为响铃两个视频块之间质量的变化：
-$$
-Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
-$$</p>
-<h4 id="重缓冲时间">重缓冲时间</h4>
-<p>参数设置：</p>
-<ul>
-<li>$C_i$ 表示下载视频块 $i$ 的预计吞吐量；</li>
-<li>$B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；</li>
-<li>$B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；</li>
-<li>下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；</li>
-<li>每个视频块的长度为 $L$ ；</li>
-</ul>
-<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：
-$$
-B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
-$$
-下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
-<p>$$
-Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
-$$</p>
-<p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
-<p>第二部分 $t_{miss}$ 表示下载缺失的tile所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的tile）。</p>
-<h4 id="优化目标">优化目标</h4>
-<p>第 $i$ 个视频块的整体优化目标可以定义为前述3个指标的加权和：
-$$
-Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
-$$
-各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
-<p>传统意义上使用所有视频块的平均QoE作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
-<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">基于MPC的框架</a>，在有限的范围内优化多个视频块的QoE，最终的目标函数可以形式化为：
-$$
-\underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
-$$
-因为短期内的viewport预测性能和网络状况可以很容易得到，QoE优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
-<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行QoE优化，直到最后一个窗口。</p>
-<p>使用基于MPC的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
-<h4 id="高效求解">高效求解</h4>
-<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE优化可以通过详尽搜索定期解决。</p>
-<p>但是因为优化过程需要高频调用，所以对于大的搜索空间还是充满挑战。</p>
-<p>为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：</p>
-<ul>
-<li>
-<p>解码时间需要被约束；</p>
-<p>解码时间应该短于回放长度。</p>
-<p>给定移动设备上可用的计算资源，可以得到支持的最大解码线程数。</p>
-<p>基于解码时间的分析模型，由于解码复杂度和分辨率的单调性，可以找到设备能够限定时间内解码的最大质量水平，这会将码率选择限制在有界搜索空间内。</p>
-</li>
-<li>
-<p>码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；</p>
-<p>不会主动耗尽缓冲区，无需让其处理吞吐量的波动。</p>
-</li>
-<li>
-<p>码率选择应该考虑tile的分类；</p>
-<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} &gt; w_{i, j'}$ 。</p>
-</li>
-<li>
-<p>属于相同类别的tile比特率选择应该是同一个等级；</p>
-<p>这使码率自适应在tile类的级别上执行而非单个tile的级别，大大减小了搜索空间的规模。</p>
-</li>
-<li>
-<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的tile应该有相同的结果。</p>
-</li>
-</ul>
-<h3 id="tbra-workflow">TBRA workflow</h3>
-<p></p>
-<p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
-<p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
-<p>观察到tile自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
-<p>基于MPC的优化workflow还可以有效地解决码率自适应问题。</p>
-]]></description>
-</item>
-<item>
-    <title>Note for Content Motion Viewport Prediction</title>
-    <link>https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/</link>
-    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
-<p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>
-<p>Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model</p>
-<h2 id="workflow">Workflow</h2>
-<ul>
-<li>Tracking：VR motion追踪算法：应用了高斯混合模型来检测物体的运动。</li>
-<li>Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户viewport来自动更正潜在的预测错误。</li>
-<li>Update：viewport动态更新算法：动态调整预测的viewport大小去覆盖感兴趣的潜在viewport，同时尽可能保证最低的带宽消耗。</li>
-<li>Evaluation：经验用户/视频评估：构建VR viewport预测方法原型，使用经验360°视频和代表性的头部移动数据集评估。</li>
-</ul>
-<h2 id="全景直播推流的预备知识">全景直播推流的预备知识</h2>
-<h3 id="vr推流直播">VR推流直播</h3>
-<p></p>
-<p>相比于传统的2D视频推流的特别之处：</p>
-<ul>
-<li>VR系统是交互式的，viewport的选择权在客户端；</li>
-<li>呈现给用户的最终视图是整个视频的一部分；</li>
-</ul>
-<h3 id="用户头部移动的模式">用户头部移动的模式</h3>
-<p>在大量的360°视频观看过程中，用户主要的头部移动模式有4种，使用$i-j\ move$来表示；</p>
-<p>其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。</p>
-<ul>
-<li>$1-1\ move$：单个物体以单一方向移动；</li>
-<li>$1-n\ move$：单个物体以多个方向移动；</li>
-<li>$m-n\ move$：多个物体以多个方向移动；</li>
-<li>$Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport切换随机；</li>
-</ul>
-<p></p>
-<p>现有的直播VR推流中的viewport预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。</p>
-<p>本方案的目标是提出对4种模式都有效的预测策略。</p>
-<h2 id="系统架构">系统架构</h2>
-<p></p>
-<h3 id="理论创新">理论创新</h3>
-<ul>
-<li>
-<p>核心功能模块：</p>
-<ol>
-<li>
-<p>motion detection：区分运动物体与静止的背景。</p>
-</li>
-<li>
-<p>feature selection：选择代表性的特征并对运动物体做追踪。</p>
-<p>这两个模块使系统能识别用户可能感兴趣的viewport。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>使用贝叶斯方法分析用户观看行为并形式化用户的兴趣模型。</p>
-<ol>
-<li>
-<p>使用错误恢复机制来使当预测错误被检测到时的预测viewport去适应实际的viewport，尽管不能消除预测错误但是能避免在此基础上进一步的预测错误。</p>
-</li>
-<li>
-<p>使用动态viewport更新算法来产生大小可变的viewport，通过同时考虑跟踪到的viewport轨迹和用户当前的速度（矢量）。</p>
-<p>这样，即使用户的运动模式很复杂也能有更高的概率去覆盖潜在的视图。</p>
-</li>
-</ol>
-</li>
-</ul>
-<h3 id="具体实施">具体实施</h3>
-<ul>
-<li>
-<p>虽然提出的运动追踪和错误处理机制是计算密集型的任务，但是这些组件都部署在video packager中，运行在服务端。</p>
-</li>
-<li>
-<p>将生成VR视图的工作负载移动到服务端，进一步减少了客户端的计算开销以及网络开销。</p>
-</li>
-</ul>
-<h2 id="形式化">形式化</h2>
-<h3 id="基于运动轨迹的viewport预测">基于运动轨迹的viewport预测</h3>
-<p>使用<a href="https://ieeexplore.ieee.org/document/1333992" target="_blank" rel="noopener noreffer">GMM</a>完成运动检测，使用<a href="https://ieeexplore.ieee.org/document/323794" target="_blank" rel="noopener noreffer">Shi-Tomasi algorithm</a>解决运动轨迹跟踪问题。</p>
-<p></p>
-<ol>
-<li>
-<p>运动检测</p>
-<p>GMM前景提取</p>
-</li>
-<li>
-<p>特征选取与过滤</p>
-<p>采用 Shi-Tomasi algorithm 从视频中检测代表性的特征，直接检测得到的代表性特征数量较多而难以追踪。</p>
-<p>采用两种过滤的方法来减少要追踪的特征数量。</p>
-<ul>
-<li>
-<p>比较当前帧和前一帧的特征，只保留其共有的部分。</p>
-</li>
-<li>
-<p>采用第1步中运动检测的方式，只保留运动的部分。</p>
-</li>
-</ul>
-</li>
-<li>
-<p>viewport生成</p>
-<p>经过选择和过滤之后的特征通常分布在不能被单一用户视图所覆盖的广阔区域中。</p>
-<p>在整个360°视频中可能存在多个运动的物体，即$m-n\ move$。</p>
-<p>提出一种系统的方式来产生用户最可能跟随观看的viewport。</p>
-<p>直觉是用户更可能将大部分注意力放在两种类型的物体上：</p>
-<ul>
-<li>离用户更近的物体。</li>
-<li>就物理形状而言更“重要”的物体。</li>
-</ul>
-<p>这两种类型的物体大多包含最密集和最大量的特征，因此通过所有特征的重心来计算预测用户视图的中心。</p>
-<p>对于剩余的特征列表：$\vec{F} = [f_1, f_2, f_3, &hellip;, f_k]$，其中$f_i(i = 1 &hellip; k)$表示特征$f_i = &lt;f^{(x)}_i, f^{(y)}_i&gt;$的像素点坐标，则预测出的viewport中心坐标可以计算出来：
-$$
-l_x = \frac{1}{k} \sum^k_{i=1} f^{(x)}_i;\ l_y = \frac{1}{k} \sum^k_{i=1} f^{(y)}_i.
-$$
-考虑到即使预测的viewport中包含用户观看的物体，预测得到的viewport也可能会与实际的viewport存在差异。</p>
-<p>所以预测的viewport可能比实际的viewport要大，所以使用缩放因子$S_c$来产生预测的viewport。</p>
-<p>给出用户viewport的大小$S_{user}$，预测的viewport可以通过$S_{pre} = S_c \cdot S_{user}$计算出来。</p>
-</li>
-</ol>
-<h3 id="基于用户反馈的错误恢复">基于用户反馈的错误恢复</h3>
-<p>video packager可以通过HMD和web服务器通过反向路径从用户处检索用户实际视图的反馈信息。</p>
-<p>基于反馈的错误恢复机制在以下两种场景中表现良好：</p>
-<ol>
-<li>
-<p>没有运动的物体</p>
-<p>如果没有检测到运动的物体，则用户很可能是在观看静止的物体，这会导致基于运动目标的viewport预测失败。</p>
-<p>在这种场景中，可以认为视频内容已经不再是决定用户viewport的因素，而只取决于用户自身的行为。</p>
-<p>因此采用基于速度的方式来预测viewport。（这样的决策可以在运动检测模块没有检测到运动物体时就做出）</p>
-<p>一旦从反馈路径上得到用户信息，可以产生用户viewport位置向量：$\vec{L} = [l_1, l_2, l_3, &hellip;, l_M]$，其中$l_i$表示第$i$个帧中用户viewport的位置，$M$表示视频播放缓冲区中的帧数。那么可以计算viewport速度：
-$$
-\vec{V} = \frac{\vec{(l_2 - l_1)} + \vec{(l_3 - l_2)} &hellip;.(l_M - l_{M-1})}{M-1} = \frac{(\vec{l_M - l_1})}{M-1}
-$$
-下一帧的预测位置$L_{M=1}$也可以计算出来：
-$$
-l_{M+1} = l_M + \vec{V}
-$$</p>
-</li>
-<li>
-<p>预测视图与实际视图的不匹配</p>
-<p>一旦运动追踪策略检测到用户实际的视图和预测的视图不同，就会触发恢复机制去追踪用户实际在看着的物体。</p>
-<p>可以使用运动追踪方式确定用户实际观察的物体的速度。</p>
-<p>给出前一帧匹配的特征$\vec{FA} = [fA_1, fA_2, fA_3, &hellip;, fA_p]$和当前帧的特征$\vec{FB} = [fB_1, fB_2, fB_3, &hellip;, fB_p]$，可以计算出速度：
-$$
-V_x = \frac{1}{p} (\sum^p_{i=1} fB^{(x)}_i - \sum^p_{i=1}fA^{(x)}_i),\
-V_y = \frac{1}{p} (\sum^p_{i=1} fB^{(y)}_i - \sum^p_{i=1}fA^{(y)}_i),
-$$
-假设预测的viewpoint是$(l_x, l_y)$，修改之后的viewpoint是$(l_x + V_x,\ l_y + V_y)$。</p>
-</li>
-</ol>
-<h3 id="动态viewport更新">动态viewport更新</h3>
-<p>前述的错误恢复机制发生在viewport预测错误出现之后，任务是避免未来更多的错误。</p>
-<p>动态的viewport更新则努力避免viewport预测错误。</p>
-<p>关键思想是扩大预测的viewport大小，以高概率去覆盖$m-n\ move$和$arbitrary\ move$下所有潜在的运动目标；更重要的是动态调整视图的大小去获得更高效的带宽利用率。</p>
-<ul>
-<li>
-<p>对于一个360°全景视频，将360°的帧均分为$N = n \times n$个网格，每个网格看作是一个tile，预测的viewport即为$N$个tile的子集。</p>
-</li>
-<li>
-<p>使用贝叶斯方法分析用户的观看行为，每个tile分配一个独立的贝叶斯模型，所以每个tile可以独立更新。</p>
-</li>
-<li>
-<p>设$X$表示用户viewport，$Y$表示静态内容，$Z$表示运动物体。</p>
-</li>
-<li>
-<p>未来的用户viewport可以以条件概率计算为$P(X|Y,\ Z)$，$Y$与$Z$相互独立。</p>
-</li>
-<li>
-<p>用户的viewport可以通过反馈信息得出$P(X)$；用户观看静态特征可以表示为$P(X|Y)$；用户观看动态特征可以表示为$P(X|Z)$。</p>
-</li>
-<li>
-<p>$P(X|Y, Z)$可以计算为：
-$$
-P(X|Y, Z) = \frac{P(Y|X) \cdot P(Z|X) \cdot P(X)}{P(Y, Z)}
-$$</p>
-</li>
-<li>
-<p>只要用户开始观看，对于tile $T_i$，就能得到其先验概率$P(Y_i|X_i)$和$P(Z_i|X_i)$，进而根据贝叶斯模型计算出$P(X|Y, Z)$。</p>
-</li>
-</ul>
-<p>为每个tile定义两种属性：</p>
-<ol>
-<li>当前状态：表示此tile是否属于预测的viewport（属于标记为$PREDICTED$，不属于标记为$NONPREDICTED$）。</li>
-<li>生存期：表示此tile会在view port中存在多长时间（例如定义3种等级：$ZERO$，$MEDIUM$，$HIGH$，实际的定义划分可以根据具体的用户和视频设定）。</li>
-</ol>
-<h2 id="预测步骤">预测步骤</h2>
-<p>按照形式化中提出的3步，分为系统初始化、帧级别的更新、缓冲区级别的更新。</p>
-<ol>
-<li>
-<p>系统初始化</p>
-<p>初始化阶段中，view更新算法将所有的$N$个tile标注为$PREDICTED$，并将生存期设置为$MEDIUM$，即系统向用户发送完整的一帧作为自举。</p>
-<p>这样设定的原因在于：当用户第一次启动视频会话时，允许“环视”类型的移动，这可能会覆盖360°帧的任意viewport。</p>
-</li>
-<li>
-<p>帧级别的更新</p>
-<p>给定一帧，应用修改后的motion追踪算法在运动区域中选择特征，而不使用特征的密度做进一步的过滤。</p>
-<p>使用有多个tile的多个视图来覆盖一个放大的区域，该区域包含作为预测viewport的移动对象上的所有特征，这样就能适应$m-n\ move$中的用户行为。</p>
-<p>设计帧级别的算法标记选择的tile作为$PREDICTED$并设置其生存期为$HIGH$（直觉上讲运动中的物体或用户所感兴趣的静态特征会更以长时间保留在viewport之中）。</p>
-</li>
-<li>
-<p>缓冲区级别的更新</p>
-<p>以缓冲区长度为间隔检索用户的实际视图，基于此可以对tile的两种属性做出调整。</p>
-<ol>
-<li>对于与用户实际视图重叠的tile，设置为$PREDICTED$和$HIGH$。</li>
-<li>对于用户实际视图没有出现但出现在预测的视图中的tile，生存期减1，如果生存期减为$ZERO$，就重设其状态为$NONPREDICTED$，将其从预测的viewport中移除。</li>
-</ol>
-<p></p>
-</li>
-</ol>
 ]]></description>
 </item>
 </channel>

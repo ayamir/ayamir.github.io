@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Content Based VP for Live Streaming (1) - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Content Based VP for Live Streaming (1)" />
+<meta property="og:description" content="LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。 将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑： 细节可以参见：note-for" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-22T18:03:09+08:00" />
+<meta property="article:modified_time" content="2022-01-22T18:03:09+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Content Based VP for Live Streaming (1)"/>
+<meta name="twitter:description" content="LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。 将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑： 细节可以参见：note-for"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/" /><link rel="prev" href="https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/" /><link rel="next" href="https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Content Based VP for Live Streaming (1)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-1\/"
+        },"genre": "posts","keywords": "Content-based predict","wordcount":  1556 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-1\/","datePublished": "2022-01-22T18:03:09+08:00","dateModified": "2022-01-22T18:03:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Content Based VP for Live Streaming (1)</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-22">2022-01-22</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1556 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#livemotion">LiveMotion</a>
+      <ul>
+        <li><a href="#motivation">Motivation</a></li>
+      </ul>
+    </li>
+    <li><a href="#livedeep">LiveDeep</a>
+      <ul>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#framework">Framework</a>
+          <ul>
+            <li><a href="#setup">Setup</a></li>
+            <li><a href="#details">Details</a></li>
+          </ul>
+        </li>
+        <li><a href="#cnn-module">CNN Module</a>
+          <ul>
+            <li><a href="#推理和视口生成">推理和视口生成</a></li>
+            <li><a href="#训练过程">训练过程</a></li>
+          </ul>
+        </li>
+        <li><a href="#lstm-module">LSTM Module</a></li>
+        <li><a href="#混合模型">混合模型</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="livemotion">LiveMotion</h1>
+<h2 id="motivation">Motivation</h2>
+<p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
+<p>将用户的<code>FoV</code>轨迹与视频内容中运动物体的轨迹结合到一起考虑：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png"
+        data-srcset="https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png, https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png 1.5x, https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png"
+        title="image-20220126222335930" /></p>
+<p>细节可以参见：<a href="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/" target="_blank" rel="noopener noreffer">note-for-content-motion-viewport-prediction</a>.</p>
+<h1 id="livedeep">LiveDeep</h1>
+<p>受限于<code>Motion</code>识别算法，前面提出的<code>LiveMotion</code>只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。</p>
+<h2 id="method">Method</h2>
+<p><code>LiveDeep</code>处理问题的场景为：</p>
+<ol>
+<li>视频内容在线生成；</li>
+<li>没有历史用户数据；</li>
+<li>预测需要满足实时性的要求；</li>
+</ol>
+<p><code>LiveDeep</code>的设计原则：</p>
+<ol>
+<li><em>online</em>：在线训练在线预测；</li>
+<li><em>lifelong</em>：模型在整个视频播放会话中更新；</li>
+<li><em>real-time</em>：预测带来的处理延迟不能影响推流延迟；</li>
+</ol>
+<p><code>CNN</code>的设计：</p>
+<ol>
+<li>在推流会话的运行时收集并标注训练数据；</li>
+<li>以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练；</li>
+<li>子采样少部分的代表帧来运行VP以满足实时性的要求；</li>
+</ol>
+<h2 id="framework">Framework</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png"
+        title="image-20220128232855576" /></p>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>分包器将视频按照DASH标准将视频分段，每个段作为训练模型和预测的单元；</li>
+<li>考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样；</li>
+<li>将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ；</li>
+<li>训练集来自于用户的实时反馈，根据实际<code>FoV</code>和预测<code>FoV</code>之间的差距来标注数据；</li>
+<li>用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与<code>CNN</code>模块采样的帧同步；</li>
+</ol>
+<h3 id="details">Details</h3>
+<ol>
+<li>在用于训练的图像还没有被标注之前并不能直接预测，所以CNN模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新CNN模型；</li>
+<li>LSTM模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据；</li>
+<li>对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧；</li>
+<li>为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）；</li>
+<li>取两个模块预测输出的共同的部分作为最终的预测结果；</li>
+</ol>
+<h2 id="cnn-module">CNN Module</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png"
+        title="image-20220128233356721" /></p>
+<p>使用经典的CNN：VGG作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。</p>
+<h3 id="推理和视口生成">推理和视口生成</h3>
+<p>直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的<code>FoV</code>。</p>
+<p>实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。</p>
+<p>所以不直接使用CNN网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。</p>
+<h3 id="训练过程">训练过程</h3>
+<p>在传统的监督训练中，训练时间取决于可接受的最低损失值和epoch的值。为了满足实时性，<code>LiveDeep</code>采用较高的最低损失值和较低的最大epoch值。</p>
+<ul>
+<li>
+<p><em><strong>High acceptable loss value</strong></em>：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的CNN更高：设定为0.2。</p>
+</li>
+<li>
+<p><em><strong>The number of epochs</strong></em>：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。</p>
+</li>
+<li>
+<p><em><strong>The batch size</strong></em>：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。</p>
+</li>
+<li>
+<p><em><strong>Dynamic learning rate</strong></em>：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png"
+        title="image-20220129001002629" /></p>
+</li>
+</ul>
+<h2 id="lstm-module">LSTM Module</h2>
+<p>单纯的<code>CNN</code>模型可能会导致对视频内容有强记忆性，而这会使模型在面对新视频内容时需要花较长的时间去接受用户偏好，即对于用户偏好的快速切换不能做出即时响应。而<code>LSTM</code>的模块用于弥补这一缺陷；</p>
+<p>采用与原始的<code>LSTM</code>模型相同的训练过程：先用收集的训练数据训练模型然后推断未来的数据。</p>
+<p>收集用户在过去的视频片段中的用户轨迹，包括从 $k$ 个子采样帧中的 $k$ 个采样点，因此作为训练数据，同时将每个采样点中每个帧的索引指定为时间戳。最终模型的输出是预测出的分块的索引。</p>
+<h2 id="混合模型">混合模型</h2>
+<p>将<code>CNN</code>模块得到的输出作为主要的结果，接着结合<code>LSTM</code>模块的输出结果作为最终的预测结果。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/content-based-predict/">Content-based predict</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-01-22</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/note-for-content-based-vp-for-live-streaming-1/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/note-for-popularity-aware-360-degree-video-streaming/" class="prev" rel="prev" title="Note for Popularity Aware 360-Degree Video Streaming"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/note-for-content-based-vp-for-live-streaming-2/" class="next" rel="next" title="Note for Content Based Vp for Live Streaming (2)">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>

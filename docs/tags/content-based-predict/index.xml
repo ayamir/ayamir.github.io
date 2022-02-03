@@ -4,7 +4,245 @@
         <link>https://ayamir.github.io/tags/content-based-predict/</link>
         <description>Content-based predict - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/content-based-predict/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/content-based-predict/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for Content Based Vp for Live Streaming (2)</title>
+    <link>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</guid>
+    <description><![CDATA[<h1 id="liveobj">LiveObj</h1>
+<p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
+<ol>
+<li>模型需要花很长时间从一次预测错误中恢复；</li>
+<li>在初始化的阶段预测率成功率很低；</li>
+</ol>
+<p>为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。</p>
+<p><strong>基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。</strong></p>
+<h2 id="用户观看行为分析">用户观看行为分析</h2>
+<p>在直播推流中，不能通过分析其他用户的行为模式来得到特定用户的<code>ROI</code>，因此只能直接从视频内容本身入手。</p>
+<p>通过对视频内容从空间和时间两个维度的分析得出结论：用户的<code>ROI</code>与物体的大小无关，而是很大程度上依赖于物体在视频中的语义，即用户倾向于观看有意义的事物。</p>
+<p>这一结论可以给出推断<code>FoV</code>的直觉：基于检测视频中有意义的物体。</p>
+<h2 id="methods">Methods</h2>
+<p>首先提出两种直观的通过分析视频内容的视点预测方法，进一步总结这些方法的局限性，并逐步切换到对<code>LiveObj</code>的讨论。</p>
+<h3 id="basic-method">Basic method</h3>
+<p><em>Basic</em>方法检测视频中所有的对象并使用其中心作为预测的中心。</p>
+<p>给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, &hellip;, o_k]$ ，其中每个 $o_i(i = 1, &hellip;, k)$ 表示物体的中心坐标： $o_i = &lt;o^{(x)}_i, o^{(y)}_i&gt;$ 。</p>
+<p>最终的预测中心点坐标可以计算出来：
+$$
+C_x = \frac{1}{k} \sum^{k}_{i=1} o^{(x)}_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i
+$$</p>
+<h3 id="over-cover-method">Over-Cover method</h3>
+<p>受<code>LiveMotion</code>方法的启发，其创建了不规则的预测<code>FoV</code>来覆盖更多的潜在的区域，<em>Over-Cover</em>的方式预测的<code>FoV</code>会覆盖所有包含物体的区域。</p>
+<p>采用<code>YOLOv3</code>来处理帧并检测物体，接着每个检测到的对象生成与该对象共享相同中心的预测子视图，所有子视图的聚合形成最终的预测视口。</p>
+<h3 id="summary-for-intuitive-methods">Summary for intuitive methods</h3>
+<p><em>Basic</em>方式可能会在多个物体的场景中无法正确选择目标；</p>
+<p><em>Over-Cover</em>方式覆盖所有可能的目标来满足较高的精度，但会导致更高的带宽使用量；</p>
+<p><em>Velocity</em>方式能很快的适应用户偏好的变化，但是预测精度在长期预测的情况下会显著下降；</p>
+<h2 id="liveobj-method">LiveObj Method</h2>
+<p><em>Over-Cover</em>方法将所有检测到的目标合并到预测的<code>FoV</code>中而导致冗余问题，而用户一次只能观看其中的几个。</p>
+<p>为了解决这个问题，提出基于用户的反馈选择最吸引人的目标，例如用户当前的<code>FoV</code>来形成预测的<code>FoV</code>。</p>
+<p>基于这种想法而提出<code>LiveObj</code>，一种基于轨迹的VP方式，通过从<em>Over-Cover</em>方法的结果中过滤掉用户更小可能性看到的目标来缩小最终的<code>FoV</code>。</p>
+<p></p>
+<ul>
+<li><em>Object Detection</em>：处理视频帧并检测目标；</li>
+<li><em>User View Estimation</em>：分析用户反馈并用<em>Velocity</em>的方式估计<code>FoV</code>；</li>
+<li><em>Object tracking</em>：追踪用户观看的目标；</li>
+<li><em>RL-based modeling</em>：接受估计出的<code>FoV</code>和被追踪的目标，最终更新每个分块的状态（选中或未选中）</li>
+</ul>
+<h3 id="object-detection-and-tracking">Object Detection and Tracking</h3>
+<ol>
+<li>
+<p>Detection：<code>YOLOv3</code>；</p>
+</li>
+<li>
+<p>Tracking：追踪的基本假设是用户会在接下来的一段时间内接着观看当前看着的目标。追踪任务在直播推流的运行时完成。因此每隔几秒收集用户反馈，并进一步推断用户之前正在观看的目标，然后据此更新追踪目标。</p>
+<p>追踪算法：</p>
+<p></p>
+</li>
+</ol>
+<h3 id="user-view-estimation">User View Estimation</h3>
+<p>分析用户的反馈处于两个目的：</p>
+<ol>
+<li>估计未来的用户的<code>FoV</code>；</li>
+<li>校准当前用户<code>FoV</code>以及要跟踪的对象；</li>
+</ol>
+<p>给出用户反馈（即过去片段中实际的<code>FoV</code>），首先更新用户<code>FoV</code>并分析用户的行为模式，并根据此模式计算出下一帧中的预期用户速度。然后识别更新后的<code>FoV</code>中的对象，这些对象确定为<code>ROI</code>，对象追踪步骤将这些更新用于未来的片段来提高预测精度。</p>
+<h3 id="rl-based-modeling">RL-based Modeling</h3>
+<p>因为预测的误差和用户实际<code>FoV</code>的变化，可能会导致追踪的目标从<code>FoV</code>中消失，而这会使整个预测算法完全失效。所以提出一个基于RL的模型来为每个分块建立用户行为模型，旨在最小化预测误差。</p>
+<p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
+<p>将上面的观察形式化为一个策略学习过程 $M$：
+$$
+M = &lt;S, A, P_{s, a, s'}, R&gt;
+$$
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+<p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
+$$
+v = E[Q_{s, a} | S_t = s]
+$$</p>
+<p>$$
+Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+$$</p>
+<p>其中：$\gamma$ 是奖励参数。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
+<p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
+<ol>
+<li>预测同时基于当前的输入（目标追踪和<code>FoV</code>估计的结果）和历史状态（分块是否被选择）；</li>
+<li>奖励基于用户的反馈在线生成，并且会在整个推流会话中变化，而不是预先设定好的奖励矩阵 $R$ ；</li>
+<li>由于直播推流中内容的不可提前获取性， $Q$ 表必须在每次预测中更新；</li>
+</ol>
+<p>特别的，为每个分块都创建一个 $Q$ 表，对于每个 $Q$ 表有4种类型：</p>
+<ul>
+<li><em>object only</em>;</li>
+<li><em>object and viewport</em>;</li>
+<li><em>viewport only</em>;</li>
+<li><em>no objects or viewport</em>;</li>
+</ul>
+<p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
+<p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
+<p>对每个表的奖励基于用户是否看到了分块而更新。</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p></p>
+<h1 id="liveroi">LiveROI</h1>
+<p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
+<p>使用<code>3D-CNN</code>等预先训练的模型来分析每个分块上的视频内容，以完成动作识别。同时基于<code>NLP</code>技术，使用轻量级用户模型将用户偏好映射到不同的视频内容。</p>
+<h2 id="用户对视频内容的偏好">用户对视频内容的偏好</h2>
+<p>最基本的研究问题是：找到直播视频内容中的有效特征和信号或用户的行为，这些与用户的未来的<code>FoV</code>有强相关关系，因此可以将其作为预测因子。</p>
+<p>通过对两个固定主题的视频的实验可以得出：</p>
+<ol>
+<li>用户花绝大多数的时间在视频中有意义的部分；</li>
+<li><code>ROI</code>在空间上只占整个帧很小的部分；</li>
+</ol>
+<h2 id="liveroi-method">LiveROI Method</h2>
+<p>融合视频内容感知和用户偏好反馈（即以用户头部运动轨迹的形式）来预测实时VR视频流中的<code>FoV</code>。</p>
+<p>主要想法是使用CV算法去理解每个分块的内容，除此之外，采用实时的用户反馈方便分块的选择。</p>
+<p>需要满足的条件是：所有分块上的视频处理开销应该保持较小，以避免视频冻结和累计的实时延迟。</p>
+<p>使用<code>3D-CNN</code>进行视频理解，重点是识别视频中隐含的有意义的动作，动作识别结果用于以自然语言的格式描述视频内容。这种3D-CNN模型可以在公共数据集上进行训练，因此具有通用性，以适应各种类型的动作和视频，这使得它可以用于实时VR流传输，因为在流传输会话之前没有关于视频内容的先验知识。</p>
+<p>但是具有有意义动作的区域可能不是用户最后会确定的<code>FoV</code>，尤其是在目标视频中存在多个有意义动作的情况下。</p>
+<p>为了解决这一问题，通过收集用户关于偏好视频内容的实时描述，进一步设计了基于“词/短语”的用户偏好模型。</p>
+<p>采用<strong>词语嵌入</strong>的方法，通过比较两个来源短语的语义相似度，确定最佳匹配区域作为预测<code>FoV</code>，以此来桥接动作识别结果和用户偏好模型。</p>
+<h3 id="workflow">Workflow</h3>
+<p></p>
+<p><code>3D-CNN</code>的输入数据包含一批 $T$ 张图像，因此统一在一个视频片段中子采样 $T$ 帧。</p>
+<p>每个子采样的帧都划分成 $M \times N$ 个分块，VP问题定义为确定要包含在<code>FoV</code>中的分块。</p>
+<p>为了避免由于分块带来的潜在的信息损失（有意义的动作被划分成多个分块），每个用于动作识别的输入图像是从比原始分块边界更大的区域中所提取出来的，但是将共享与原始分块相同的中心。</p>
+<p><code>3D-CNN</code>模块的输出是动作识别结果，即结果矩阵。</p>
+<p>面对 $M \times N$ 个分块，为了满足性能要求，将每个分块的动作识别过程视为相互独立的过程，创建 $m \times n$ 个线程来实现并行识别，每个线程向结果矩阵输出对应分块的结果向量。</p>
+<p>在预测的最后一步，生成包含所有分块的预测分数的得分向量。进一步对所有的分数向量进行排序，并定位第 $M$ 个值，该值设定为选择分块进入预测<code>FoV</code>中的阈值。通过控制 $M$ 的大小可以控制预测的<code>FoV</code>的大小，分数向量中的分数表示用户对分块内容的感兴趣程度。</p>
+<p>为了计算分数向量，进一步设计用户向量，其中包含描述用户偏好的词或短语。考虑到推流过程中用户可能会改变兴趣，用户向量会基于用户实时轨迹更新。</p>
+<p>在给定用户向量和结果矩阵中的词或短语的情况下，考虑到非自然语言中的两个不同的词可能具有相近的含义，不直接进行词比较，而是使用词分析来计算其相关性。</p>
+<h3 id="cnn-model">CNN Model</h3>
+<p>采用<code>ECO lite</code>模型完成VR直播推流中的动作识别。所有来自同一视频片段的图像都被储存在一个缓冲帧集合中。</p>
+<p><code>ECO lite</code>模型为2D CNN提取特征图的任务收集工作帧集合（分别由前一视频片段和当前视频片段的缓冲帧集合的后半部分和前半部分组成），在下一个阶段，从每个片段获得的特征图被堆叠到更高的表示中，之后被送到之后的3D CNN中用于最终的动作预测。具体的识别过程中同样使用多线程并行处理，处理1帧图像是每次创建和分块数相同的线程，为每个分块都初始化一个<code>ECO lite</code>模型。</p>
+<p>显然预训练的模型不能为直播推流提供正确的推理结果，但是它可以看作是对视频内容的验证，即：给定一种类型的视频内容，其实其本身被误分类了，但在同一个模型之下它总是会被分类进在整个推流过程中都有相近分数的簇中。</p>
+<p>利用这个特性，基于动作识别模型提供的对视频内容的描述，进一步设计动态的用户模型来映射用户偏好到不同的视频内容上。</p>
+<h3 id="nlp-model">NLP Model</h3>
+<p>为了桥接动作识别和用户偏好向量，必须分析词/短语之间的相似性。</p>
+<p>然而现有的ML算法不能直接处理生数据，因为输入必须是数值。为了解决这个问题，采用单词嵌入技术，使用多种语言模型以数值向量的形式来表示单词，以此来确保有相近意义的词有相近密度的表示。</p>
+<p>具体处理时使用<a href="https://github.com/artetxem/phrase2vec" target="_blank" rel="noopener noreffer"><code>Phrase2Vec</code></a>作为NLP模块的模型（作为<code>Word2Vec</code>的扩展，能更好的分析两个短语之间的相似性）。</p>
+<h2 id="用户模型与预测">用户模型与预测</h2>
+<p></p>
+<p>图5.3阐明了基于结果向量和用户向量的预测过程。由动作识别得出的结果向量，包括一个动作向量 $A$ 和一个权重向量 $W$ 。用户向量包括偏好向量 $P$ 和可能性向量 $L$ 。$A$ 和 $P$ 包含词和短语，描述了视频内容和用户偏好。 $W$ 和 $L$ 分别由表示神经网络对动作结果的置信度和用户对视频内容的参考可能性的值组成。</p>
+<p>假设每帧25个分块，CNN模块的输出结果是25个 $A$ 向量和25个 $W$ 向量；对与用户偏好，只使用1个 $P$ 向量和1个 $L$ 向量。</p>
+<p>最终的分数向量 $S$ 计算为每个 $A$ 和 唯一的 $P$ 之间的相关性。结果也受相应的 $W$ 和 $L$ 的影响而调整。</p>
+<p>假设余弦相似性函数为 $\rho$ ，那么 $A$ 和 $P$ 中的每个 $a_i$ 和 $p_i$ 的计算可以表示为：
+$$
+{\rho}_i (a_i, p_i) = Phrase2Vec(a_i, p_i)
+$$
+设定每个向量中包含5个元素，分数向量 $S$ 计算为：
+$$
+S = L \cdot W \cdot \sum {\rho} (A, P)
+$$
+对应于25个分块，最终的分数向量中包含25个元素。 $s_k$ 表示 $k_{th}$ 分块的分数值，详细算法：</p>
+<p></p>
+<p>分数向量更新完毕之后就可以获得每个分块内容和用户偏好之间的相关性，用帧上每个分块的亮度来做可视化：</p>
+<p></p>
+<p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
+<p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+]]></description>
+</item>
+<item>
+    <title>Content Based VP for Live Streaming (1)</title>
+    <link>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/</link>
+    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-1/</guid>
+    <description><![CDATA[<h1 id="livemotion">LiveMotion</h1>
+<h2 id="motivation">Motivation</h2>
+<p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
+<p>将用户的<code>FoV</code>轨迹与视频内容中运动物体的轨迹结合到一起考虑：</p>
+<p></p>
+<p>细节可以参见：<a href="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/" target="_blank" rel="noopener noreffer">note-for-content-motion-viewport-prediction</a>.</p>
+<h1 id="livedeep">LiveDeep</h1>
+<p>受限于<code>Motion</code>识别算法，前面提出的<code>LiveMotion</code>只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。</p>
+<h2 id="method">Method</h2>
+<p><code>LiveDeep</code>处理问题的场景为：</p>
+<ol>
+<li>视频内容在线生成；</li>
+<li>没有历史用户数据；</li>
+<li>预测需要满足实时性的要求；</li>
+</ol>
+<p><code>LiveDeep</code>的设计原则：</p>
+<ol>
+<li><em>online</em>：在线训练在线预测；</li>
+<li><em>lifelong</em>：模型在整个视频播放会话中更新；</li>
+<li><em>real-time</em>：预测带来的处理延迟不能影响推流延迟；</li>
+</ol>
+<p><code>CNN</code>的设计：</p>
+<ol>
+<li>在推流会话的运行时收集并标注训练数据；</li>
+<li>以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练；</li>
+<li>子采样少部分的代表帧来运行VP以满足实时性的要求；</li>
+</ol>
+<h2 id="framework">Framework</h2>
+<p></p>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>分包器将视频按照DASH标准将视频分段，每个段作为训练模型和预测的单元；</li>
+<li>考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样；</li>
+<li>将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ；</li>
+<li>训练集来自于用户的实时反馈，根据实际<code>FoV</code>和预测<code>FoV</code>之间的差距来标注数据；</li>
+<li>用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与<code>CNN</code>模块采样的帧同步；</li>
+</ol>
+<h3 id="details">Details</h3>
+<ol>
+<li>在用于训练的图像还没有被标注之前并不能直接预测，所以CNN模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新CNN模型；</li>
+<li>LSTM模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据；</li>
+<li>对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧；</li>
+<li>为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）；</li>
+<li>取两个模块预测输出的共同的部分作为最终的预测结果；</li>
+</ol>
+<h2 id="cnn-module">CNN Module</h2>
+<p></p>
+<p>使用经典的CNN：VGG作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。</p>
+<h3 id="推理和视口生成">推理和视口生成</h3>
+<p>直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的<code>FoV</code>。</p>
+<p>实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。</p>
+<p>所以不直接使用CNN网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。</p>
+<h3 id="训练过程">训练过程</h3>
+<p>在传统的监督训练中，训练时间取决于可接受的最低损失值和epoch的值。为了满足实时性，<code>LiveDeep</code>采用较高的最低损失值和较低的最大epoch值。</p>
+<ul>
+<li>
+<p><em><strong>High acceptable loss value</strong></em>：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的CNN更高：设定为0.2。</p>
+</li>
+<li>
+<p><em><strong>The number of epochs</strong></em>：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。</p>
+</li>
+<li>
+<p><em><strong>The batch size</strong></em>：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。</p>
+</li>
+<li>
+<p><em><strong>Dynamic learning rate</strong></em>：</p>
+<p></p>
+</li>
+</ul>
+<h2 id="lstm-module">LSTM Module</h2>
+<p>单纯的<code>CNN</code>模型可能会导致对视频内容有强记忆性，而这会使模型在面对新视频内容时需要花较长的时间去接受用户偏好，即对于用户偏好的快速切换不能做出即时响应。而<code>LSTM</code>的模块用于弥补这一缺陷；</p>
+<p>采用与原始的<code>LSTM</code>模型相同的训练过程：先用收集的训练数据训练模型然后推断未来的数据。</p>
+<p>收集用户在过去的视频片段中的用户轨迹，包括从 $k$ 个子采样帧中的 $k$ 个采样点，因此作为训练数据，同时将每个采样点中每个帧的索引指定为时间戳。最终模型的输出是预测出的分块的索引。</p>
+<h2 id="混合模型">混合模型</h2>
+<p>将<code>CNN</code>模块得到的输出作为主要的结果，接着结合<code>LSTM</code>模块的输出结果作为最终的预测结果。</p>
+]]></description>
+</item>
+<item>
     <title>Note for Content Assisted Prediction</title>
     <link>https://ayamir.github.io/posts/note-for-content-assisted-prediction/</link>
     <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-assisted-prediction/</guid>
