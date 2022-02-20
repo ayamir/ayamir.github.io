@@ -751,6 +751,26 @@
         ]
     },
     {
+        "title": "Use Jupyter Notebook in Conda Env",
+        "uri": "posts/use-jupyter-notebook-in-conda-env",
+        "content": "conda           keras tf 2 1 0  conda activate keras tf 2 1 0   ipykernel  pip3 install ipykernel   user  ipykernel      python3  m ipykernel install   user   name keras tf 2 1 0   notebook",
+        "objectID": "posts/use-jupyter-notebook-in-conda-env",
+        "date": "2022-02-15T09:19:26.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "Conda",
+            "Jupyter"
+        ],
+        "tags": [
+            "Conda",
+            "Jupyter"
+        ],
+        "categories": [
+            "Python"
+        ]
+    },
+    {
         "title": "重学C++：标准库类模板Vector",
         "uri": "posts/vector",
         "content": "vector             vector                          vector           using std  vector  vector v1 10        1 int     10 vector v2 10        10 int     0 vector v3 10  1        10 int      1 vector v4 10  1        2 int       10 1                   2                                                                               using std  vector  using std  string  vector v1  hi         1   hi string   vector v2 10        10     string   vector v3 10   hi         10   hi string    string   vector  size_type   size                     vector         std  vector  size_type a        std  vector  size_type a          vector                                          vector        push_back                         vector          vector                vector          vector        push_back        vector      empty    size                                string           vector                       vector                foreach",

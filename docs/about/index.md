@@ -14,4 +14,5 @@ Life is hard, so any rational person will give up if you don't have **Passion**.
 - 黄鸡的博客：[https://hyiker.com/](https://hyiker.com/)
 - z217 的博客：[https://z217blog.cn/](https://z217blog.cn/)
 - Tackoil 的博客：[https://tackoil.github.io/](https://tackoil.github.io/)
+- Leeshy 的博客: [https://leeshy-tech.github.io/](https://leeshy-tech.github.io/)
 
