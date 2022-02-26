@@ -3,7 +3,7 @@
 
 最近几天一直在用`WebXR`的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。
 
-首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（目前）
+首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用WebXR提供的API）
 
 ## 分块播放
 
@@ -171,4 +171,8 @@ function onXRFrame(time, frame) {
 首先从实际的实现上没法完成，因为每个视频在h5中本质是`<video>`元素，多个`<video>`元素并不能在`DOM`的基础上实现空间的复原，就算有办法做到，最后在与`layer`绑定时也必须是1个`<video>`元素而这1个`<video>`元素还需要实现各个部分的自适应码率变化，这完全是不可行的。
 
 测试的代码地址：[media-layer-sample](https://github.com/ayamir/tiled-vr-dash-platform/blob/main/client/eqrt-media-demo/media-layer-sample.html)
+
+进一步的解决办法是存在的：
+
+因为目前的`WebXR`不能够满足需求，所以需要深入`WebGL`的层面，手动设计一套将各个分块以等距长方投影的方式映射到球面上的逻辑，同时还要与`WebXR`上层的处理API相对应，任务工作量和难度还需要进一步评估。
 

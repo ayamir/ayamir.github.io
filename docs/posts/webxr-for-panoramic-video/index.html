@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/webxr-for-panoramic-video/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-02-25T11:04:23+08:00" />
-<meta property="article:modified_time" content="2022-02-25T11:04:23+08:00" />
+<meta property="article:modified_time" content="2022-02-25T13:39:24+08:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="WebXR for Panoramic Video"/>
@@ -17,7 +17,7 @@
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/webxr-for-panoramic-video/" /><link rel="prev" href="https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/webxr-for-panoramic-video/" /><link rel="prev" href="https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/" /><link rel="next" href="https://ayamir.github.io/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.25649a8cda1631811dce15d98f7f0a159608a238881ae0cc4c552fbea8a70373.css" integrity="sha256-JWSajNoWMYEdzhXZj38KFZYIojiIGuDMTFUvvqinA3M="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -26,8 +26,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/webxr-for-panoramic-video\/"
-        },"genre": "posts","keywords": "WebXR, Development","wordcount":  1886 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/webxr-for-panoramic-video\/","datePublished": "2022-02-25T11:04:23+08:00","dateModified": "2022-02-25T11:04:23+08:00","publisher": {
+        },"genre": "posts","keywords": "WebXR, Development","wordcount":  2015 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/webxr-for-panoramic-video\/","datePublished": "2022-02-25T11:04:23+08:00","dateModified": "2022-02-25T13:39:24+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -101,8 +101,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">WebXR for Panoramic Video</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/webxr/"><i class="far fa-folder fa-fw"></i>WebXR</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-25">2022-02-25</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1886 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-25">2022-02-25</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2015 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -122,7 +122,7 @@
   </ul>
 </nav></div>
                 </div><div class="content" id="content"><p>最近几天一直在用<code>WebXR</code>的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。</p>
-<p>首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（目前）</p>
+<p>首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用WebXR提供的API）</p>
 <h2 id="分块播放">分块播放</h2>
 <p>分块播放的本质是将一整块的全景视频从空间上划分成多个小块，各个小块在时间上与原视频的长度是相同的。</p>
 <p>在实际播放的时候需要将各个小块按照原有的空间顺序排列好之后播放，为了避免各个分块播放进度不同的问题，播放时还需要经过统一的时间同步。</p>
@@ -389,6 +389,8 @@
 <p>那么是否可以先将多个分块的视频从空间上拼接好，将最终拼接好的视频进行等距长方投影？</p>
 <p>首先从实际的实现上没法完成，因为每个视频在h5中本质是<code>&lt;video&gt;</code>元素，多个<code>&lt;video&gt;</code>元素并不能在<code>DOM</code>的基础上实现空间的复原，就算有办法做到，最后在与<code>layer</code>绑定时也必须是1个<code>&lt;video&gt;</code>元素而这1个<code>&lt;video&gt;</code>元素还需要实现各个部分的自适应码率变化，这完全是不可行的。</p>
 <p>测试的代码地址：<a href="https://github.com/ayamir/tiled-vr-dash-platform/blob/main/client/eqrt-media-demo/media-layer-sample.html" target="_blank" rel="noopener noreffer">media-layer-sample</a></p>
+<p>进一步的解决办法是存在的：</p>
+<p>因为目前的<code>WebXR</code>不能够满足需求，所以需要深入<code>WebGL</code>的层面，手动设计一套将各个分块以等距长方投影的方式映射到球面上的逻辑，同时还要与<code>WebXR</code>上层的处理API相对应，任务工作量和难度还需要进一步评估。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/webxr/">WebXR</a>
                 </span><span><a href="/tags/development/">Development</a>
@@ -397,7 +399,8 @@
             </div><div class="post-info-mod"><span>
                             <a class="link-to-markdown" href="/posts/webxr-for-panoramic-video/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/posts/use-jupyter-notebook-in-conda-env/" class="prev" rel="prev" title="Use Jupyter Notebook in Conda Env"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+        </div></div><div class="post-nav"><a href="/posts/use-jupyter-notebook-in-conda-env/" class="prev" rel="prev" title="Use Jupyter Notebook in Conda Env"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http/" class="next" rel="next" title="Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
