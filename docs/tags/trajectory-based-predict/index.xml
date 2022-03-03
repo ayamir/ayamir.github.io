@@ -117,9 +117,9 @@ $$</p>
 <p>$$
 x_j = cos\theta_jcos\phi_j,\ y_j = sin\theta_j,\ z_j = -cos\theta_jsin\phi_j
 $$</p>
-<p>则两个tile之间的半径距离$d_{j, j'}$可以表示为：</p>
+<p>则两个tile之间的半径距离$d_{j, j&rsquo;}$可以表示为：</p>
 <p>$$
-d_{j, j'} = arccos(x_j x_{j'} + y_j y_{j'} + z_j z_{j'})
+d_{j, j&rsquo;} = arccos(x_j x_{j&rsquo;} + y_j y_{j&rsquo;} + z_j z_{j&rsquo;})
 $$</p>
 <p>对于第$i$个片段，假设用户FOV中心的tile为$j^*$，那么第$j$个tile的权重可以计算出来：</p>
 <p>$$

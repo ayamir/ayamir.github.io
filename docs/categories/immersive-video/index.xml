@@ -70,19 +70,19 @@ $$</p>
 <p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
 <p>将上面的观察形式化为一个策略学习过程 $M$：
 $$
-M = &lt;S, A, P_{s, a, s'}, R&gt;
+M = &lt;S, A, P_{s, a, s&rsquo;}, R&gt;
 $$
-其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
-<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s&rsquo;}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s&rsquo;$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s&rsquo;}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
 <p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
 $$
 v = E[Q_{s, a} | S_t = s]
 $$</p>
 <p>$$
-Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+Q_{s, a} = R^a_s + \gamma \sum_{s&rsquo; \in S} P_{s, a, s&rsquo;} v
 $$</p>
 <p>其中：$\gamma$ 是奖励参数。</p>
-<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s&rsquo;}$ 找到最大的 $max(Q_{s, a})$。</p>
 <p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
 <p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
 <ol>
@@ -100,7 +100,7 @@ $$</p>
 <p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
 <p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
 <p>对每个表的奖励基于用户是否看到了分块而更新。</p>
-<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s&rsquo;))$；</p>
 <p></p>
 <h1 id="liveroi">LiveROI</h1>
 <p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
@@ -158,7 +158,7 @@ $$
 <p></p>
 <p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
 <p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
-<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A&rsquo;$ 来更新用户的偏好向量。</p>
 ]]></description>
 </item>
 <item>
@@ -647,14 +647,14 @@ $$
 L(\theta) = E[y_t - Q(s_t, a_t; \theta)]
 $$</p>
 <p>$$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}'); {\theta}')
+y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}&rsquo;); {\theta}&rsquo;)
 $$
-${\theta}'$ 表示固定且分离的目标网络的参数；</p>
+${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
 <p>$r(\cdot)$ 是即时奖励函数，即上面公式5中的 $R_t$ ；</p>
 <p>$\gamma \in [0, 1]$ 是折扣因子；</p>
 <p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式7被重写为：
 $$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}')
+y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}&rsquo;)
 $$
 利用公式6和公式8可以得出 $i^{th}$ 维的暂时损失函数：
 $$
@@ -662,7 +662,7 @@ l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
 $$
 其中 $Q_{target}$ 满足：</p>
 <p>$$
-Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}')
+Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}&rsquo;)
 $$</p>
 <p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
 <p>观察公式9和公式10可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
@@ -1152,7 +1152,7 @@ $$
 </li>
 <li>
 <p>码率选择应该考虑tile的分类；</p>
-<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} &gt; w_{i, j'}$ 。</p>
+<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j&rsquo;}, \forall w_{i, j} &gt; w_{i, j&rsquo;}$ 。</p>
 </li>
 <li>
 <p>属于相同类别的tile比特率选择应该是同一个等级；</p>
@@ -1428,9 +1428,9 @@ $$</p>
 <p>$$
 x_j = cos\theta_jcos\phi_j,\ y_j = sin\theta_j,\ z_j = -cos\theta_jsin\phi_j
 $$</p>
-<p>则两个tile之间的半径距离$d_{j, j'}$可以表示为：</p>
+<p>则两个tile之间的半径距离$d_{j, j&rsquo;}$可以表示为：</p>
 <p>$$
-d_{j, j'} = arccos(x_j x_{j'} + y_j y_{j'} + z_j z_{j'})
+d_{j, j&rsquo;} = arccos(x_j x_{j&rsquo;} + y_j y_{j&rsquo;} + z_j z_{j&rsquo;})
 $$</p>
 <p>对于第$i$个片段，假设用户FOV中心的tile为$j^*$，那么第$j$个tile的权重可以计算出来：</p>
 <p>$$
@@ -2068,12 +2068,12 @@ $t$较小的时候，分母会放大$B_t$；$t$较大时，分母趋近于1，�
 <ol>
 <li>
 <p>3D虚拟相机用于渲染视频，处于全景视频球面上的某条轨道，其坐标可以表示为$(\theta, \phi)$，可以直接从系统中获取。</p>
-<p>相机始终朝向球的中心，所以用户的FOV中心坐标$(\theta^{'}, \phi^{'})$可以用$(\theta, \phi)$表示：
+<p>相机始终朝向球的中心，所以用户的FOV中心坐标$(\theta^{&rsquo;}, \phi^{&rsquo;})$可以用$(\theta, \phi)$表示：
 $$
 \begin{cases}
-\theta^{'} = (\theta + \pi)\ mod\ 2\pi,\ 0 \le \theta \le 2\pi
+\theta^{&rsquo;} = (\theta + \pi)\ mod\ 2\pi,\ 0 \le \theta \le 2\pi
 \
-\phi^{'} = \pi - \phi,\ 0 \le \phi \le \pi
+\phi^{&rsquo;} = \pi - \phi,\ 0 \le \phi \le \pi
 \end{cases}
 $$</p>
 </li>
@@ -2081,9 +2081,9 @@ $$</p>
 <p>2D网格中tile坐标$(u, v)$可以通过球面坐标使用ERP投影获得
 $$
 \begin{cases}
-u = \frac{\theta^{'}}{2\pi} \cdot W, 0 \le u \le W.
+u = \frac{\theta^{&rsquo;}}{2\pi} \cdot W, 0 \le u \le W.
 \
-v = \frac{\phi^{'}}{\pi} \cdot H, 0 \le v \le H.
+v = \frac{\phi^{&rsquo;}}{\pi} \cdot H, 0 \le v \le H.
 \end{cases}
 $$
 $W$和$H$分别表示使用ERP投影得到的矩形宽度和高度</p>
@@ -2403,7 +2403,7 @@ $$</p>
 <p>因为网络带宽和FOV轨迹在短期内存在特定的规律性，回放池中有相似状态和相似采样时间的样本更加重要，出现了优先级</p>
 <p>所以使用优先经验回放PER，而优先级使用时间查分误差TD-error定义
 $$
-\delta_i = r_{i+1} + \gamma Q(s_{i+1}, arg\underset{a}{max}Q(s_{i+1}, a; \theta_i); \theta_i^{'}) - Q(s_i, a_i; \theta_i)
+\delta_i = r_{i+1} + \gamma Q(s_{i+1}, arg\underset{a}{max}Q(s_{i+1}, a; \theta_i); \theta_i^{&rsquo;}) - Q(s_i, a_i; \theta_i)
 $$</p>
 <p>$r_i$是奖励；$\gamma$是折扣因子</p>
 </li>

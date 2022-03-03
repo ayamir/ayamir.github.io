@@ -14,8 +14,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">microsoft-edge-dev --version
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">microsoft-edge-dev --version
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
 <h2 id="get-corresponding-webdriver">Get Corresponding WebDriver</h2>
@@ -40,20 +40,20 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
-
-<span class="n">options</span> <span class="o">=</span> <span class="n">EdgeOptions</span><span class="p">()</span>
-<span class="n">options</span><span class="o">.</span><span class="n">use_chromium</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">options</span><span class="o">.</span><span class="n">binary_location</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/usr/bin/microsoft-edge-dev&#34;</span>
-<span class="n">options</span><span class="o">.</span><span class="n">set_capability</span><span class="p">(</span><span class="s2">&#34;platform&#34;</span><span class="p">,</span> <span class="s2">&#34;LINUX&#34;</span><span class="p">)</span>
-
-<span class="n">webdriver_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/home/ayamir/.local/bin/msedgewebdriver&#34;</span>
-
-<span class="n">browser</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">executable_path</span><span class="o">=</span><span class="n">webdriver_path</span><span class="p">)</span>
-<span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;http://localhost:8000&#34;</span><span class="p">)</span>
-
-<span class="k">assert</span> <span class="s2">&#34;Django&#34;</span> <span class="ow">in</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">options</span> <span class="o">=</span> <span class="n">EdgeOptions</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">use_chromium</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">binary_location</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/usr/bin/microsoft-edge-dev&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">set_capability</span><span class="p">(</span><span class="s2">&#34;platform&#34;</span><span class="p">,</span> <span class="s2">&#34;LINUX&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">webdriver_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/home/ayamir/.local/bin/msedgewebdriver&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">browser</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">executable_path</span><span class="o">=</span><span class="n">webdriver_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;http://localhost:8000&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="s2">&#34;Django&#34;</span> <span class="ow">in</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="launch-it">Launch it</h2>
 <p></p>

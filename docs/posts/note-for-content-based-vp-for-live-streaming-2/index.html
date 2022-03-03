@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-2\/"
-        },"genre": "posts","keywords": "Content-based predict","wordcount":  4654 ,
+        },"genre": "posts","keywords": "Content-based predict","wordcount":  4660 ,
         "url": "https:\/\/ayamir.github.io\/posts\/note-for-content-based-vp-for-live-streaming-2\/","datePublished": "2022-01-25T11:59:24+08:00","dateModified": "2022-02-04T01:08:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
@@ -101,7 +101,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for Content Based Vp for Live Streaming (2)</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/immersive-video/"><i class="far fa-folder fa-fw"></i>Immersive-Video</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-25">2022-01-25</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4654 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-25">2022-01-25</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4660 字</span>&nbsp;
                     <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟</span>&nbsp;</div>
             </div>
             
@@ -222,19 +222,19 @@ $$</p>
 <p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
 <p>将上面的观察形式化为一个策略学习过程 $M$：
 $$
-M = &lt;S, A, P_{s, a, s'}, R&gt;
+M = &lt;S, A, P_{s, a, s&rsquo;}, R&gt;
 $$
-其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
-<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s&rsquo;}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s&rsquo;$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s&rsquo;}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
 <p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
 $$
 v = E[Q_{s, a} | S_t = s]
 $$</p>
 <p>$$
-Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+Q_{s, a} = R^a_s + \gamma \sum_{s&rsquo; \in S} P_{s, a, s&rsquo;} v
 $$</p>
 <p>其中：$\gamma$ 是奖励参数。</p>
-<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s&rsquo;}$ 找到最大的 $max(Q_{s, a})$。</p>
 <p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
 <p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
 <ol>
@@ -252,7 +252,7 @@ $$</p>
 <p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
 <p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
 <p>对每个表的奖励基于用户是否看到了分块而更新。</p>
-<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s&rsquo;))$；</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -345,7 +345,7 @@ $$
         title="image-20220204004856763" /></p>
 <p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
 <p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
-<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A&rsquo;$ 来更新用户的偏好向量。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/content-based-predict/">Content-based predict</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
@@ -357,7 +357,7 @@ $$
             <a href="/posts/use-jupyter-notebook-in-conda-env/" class="next" rel="next" title="Use Jupyter Notebook in Conda Env">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
 </div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.92.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.93.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>
@@ -380,4 +380,4 @@ if ('serviceWorker' in navigator) {
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
                 <i class="fas fa-chevron-up fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.f9741d31f0d6265088503afba4efa9bfb04fbcc5632e1ae6154605e53f51c5db.js" integrity="sha256-&#43;XQdMfDWJlCIUDr7pO&#43;pv7BPvMVjLhrmFUYF5T9Rxds="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.a588b4f6bb4cbe0ce918e5a9b0421eeae89f9f169e9b27c969db04547817d764.js" integrity="sha256-pYi09rtMvgzpGOWpsEIe6uifnxaemyfJadsEVHgX12Q="></script></body></html>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.b956a22da9a0d901262abd05682c504f83cb461b4494ea022edbdf4a36d5e088.js" integrity="sha256-uVaiLamg2QEmKr0FaCxQT4PLRhtElOoCLtvfSjbV4Ig="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.e3cf17cec3867a0cf5860cc48b1f7f2c1716cffe24730e67e8eca9cde52f9cd4.js" integrity="sha256-488XzsOGegz1hgzEix9/LBcWz/4kcw5n6OypzeUvnNQ="></script></body></html>

@@ -186,7 +186,7 @@ $$
 </li>
 <li>
 <p>码率选择应该考虑tile的分类；</p>
-<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} &gt; w_{i, j'}$ 。</p>
+<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j&rsquo;}, \forall w_{i, j} &gt; w_{i, j&rsquo;}$ 。</p>
 </li>
 <li>
 <p>属于相同类别的tile比特率选择应该是同一个等级；</p>

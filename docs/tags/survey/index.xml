@@ -86,7 +86,7 @@
 </ul>
 <h3 id="mdp-based">MDP-Based</h3>
 <p>The video streaming process is formulated as a finite MDP to be able to make adaptation decisions under fluctuating network conditions.</p>
-<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients' decentralized ON-OFF patterns.</p>
+<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients&rsquo; decentralized ON-OFF patterns.</p>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/6774598" target="_blank" rel="noopener noreffer">Real-time best-action search algorithm over multiple access networks</a> uses both Bluetooth and WiFi links to simultaneously download video segments. However, this scheme shows limitations during user mobility which negatively affect QoE.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7305810" target="_blank" rel="noopener noreffer">Optimizing in Vehicular environment</a> introduces a three-variant of RL-based algorithms which take advantage of the historical bandwidth samples to build an accurate bandwidth estimation model.</li>
@@ -100,7 +100,7 @@
 <p>Server-based schemes use a bitrate shaping method at the server side and do not require any cooperation from the client. The switching between the bitrates is implicitly controlled by the bitrate shaper. The client still makes its own decisions, but the decisions are more or less determined by the shaping method on the server.</p>
 <ul>
 <li><a href="https://dl.acm.org/doi/10.1145/2155555.2155557" target="_blank" rel="noopener noreffer">Traffic shaping</a> analyzes instability and unfairness issues in the presence of multiple HAS players competing for the available bandwidth. This method can be deployed at a home gateway to improve fairness, stability and convergence delay, and to eliminate the OFF periods during the steady states.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients' statuses and helps them share knowledge about their statues.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients&rsquo; statuses and helps them share knowledge about their statues.</li>
 <li><a href="https://dl.acm.org/doi/10.1145/1943552.1943573" target="_blank" rel="noopener noreffer">Quality Adaptation Controller</a> aims to control the size of the server sending buffer in order to adjust and select the most appropriate bitrate level for each DASH player. It maintains the playback buffer occupancy of each player as stable as possible and to match bitrate level decisions with the available bandwidth.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7983147/" target="_blank" rel="noopener noreffer">Multi-Source Stream system</a>: the client fetches the segments from multi-source stream servers.</li>
 </ul>

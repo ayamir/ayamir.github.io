@@ -86,7 +86,7 @@
 </ul>
 <h3 id="mdp-based">MDP-Based</h3>
 <p>The video streaming process is formulated as a finite MDP to be able to make adaptation decisions under fluctuating network conditions.</p>
-<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients' decentralized ON-OFF patterns.</p>
+<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients&rsquo; decentralized ON-OFF patterns.</p>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/6774598" target="_blank" rel="noopener noreffer">Real-time best-action search algorithm over multiple access networks</a> uses both Bluetooth and WiFi links to simultaneously download video segments. However, this scheme shows limitations during user mobility which negatively affect QoE.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7305810" target="_blank" rel="noopener noreffer">Optimizing in Vehicular environment</a> introduces a three-variant of RL-based algorithms which take advantage of the historical bandwidth samples to build an accurate bandwidth estimation model.</li>
@@ -100,7 +100,7 @@
 <p>Server-based schemes use a bitrate shaping method at the server side and do not require any cooperation from the client. The switching between the bitrates is implicitly controlled by the bitrate shaper. The client still makes its own decisions, but the decisions are more or less determined by the shaping method on the server.</p>
 <ul>
 <li><a href="https://dl.acm.org/doi/10.1145/2155555.2155557" target="_blank" rel="noopener noreffer">Traffic shaping</a> analyzes instability and unfairness issues in the presence of multiple HAS players competing for the available bandwidth. This method can be deployed at a home gateway to improve fairness, stability and convergence delay, and to eliminate the OFF periods during the steady states.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients' statuses and helps them share knowledge about their statues.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients&rsquo; statuses and helps them share knowledge about their statues.</li>
 <li><a href="https://dl.acm.org/doi/10.1145/1943552.1943573" target="_blank" rel="noopener noreffer">Quality Adaptation Controller</a> aims to control the size of the server sending buffer in order to adjust and select the most appropriate bitrate level for each DASH player. It maintains the playback buffer occupancy of each player as stable as possible and to match bitrate level decisions with the available bandwidth.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7983147/" target="_blank" rel="noopener noreffer">Multi-Source Stream system</a>: the client fetches the segments from multi-source stream servers.</li>
 </ul>
@@ -433,14 +433,14 @@ $$
 L(\theta) = E[y_t - Q(s_t, a_t; \theta)]
 $$</p>
 <p>$$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}'); {\theta}')
+y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}&rsquo;); {\theta}&rsquo;)
 $$
-${\theta}'$ 表示固定且分离的目标网络的参数；</p>
+${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
 <p>$r(\cdot)$ 是即时奖励函数，即上面公式5中的 $R_t$ ；</p>
 <p>$\gamma \in [0, 1]$ 是折扣因子；</p>
 <p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式7被重写为：
 $$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}')
+y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}&rsquo;)
 $$
 利用公式6和公式8可以得出 $i^{th}$ 维的暂时损失函数：
 $$
@@ -448,7 +448,7 @@ l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
 $$
 其中 $Q_{target}$ 满足：</p>
 <p>$$
-Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}')
+Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}&rsquo;)
 $$</p>
 <p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
 <p>观察公式9和公式10可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>

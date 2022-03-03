@@ -16,8 +16,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">conda activate keras-tf-2.1.0
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">conda activate keras-tf-2.1.0
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -27,8 +27,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pip3 install ipykernel --user
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip3 install ipykernel --user
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -38,8 +38,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">python3 -m ipykernel install --user --name<span class="o">=</span>keras-tf-2.1.0
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">python3 -m ipykernel install --user --name<span class="o">=</span>keras-tf-2.1.0
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>

@@ -4,7 +4,918 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>WebGL Samples Explanation</title>
+    <link>https://ayamir.github.io/posts/webgl-samples-explanation/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples-explanation/</guid>
+    <description><![CDATA[<h1 id="context">Context</h1>
+<ol>
+<li>Create an <code>HTML5</code> canvas</li>
+<li>Get the canvas id</li>
+<li>Obtain <code>WebGL</code> Context</li>
+</ol>
+<p>The parameter <code>WebGLContextAttributes</code> is not mandatory.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Attributes</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>alpha</code></td>
+<td style="text-align:center">true: provide an alpha buffer to the canvas;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>depth</code></td>
+<td style="text-align:center">true: drawing buffer contains a depth buffer of at least 16 bits;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>stencil</code></td>
+<td style="text-align:center">true: drawing buffer contains a stencil buffer of at least 8 bits;</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>antialias</code></td>
+<td style="text-align:center">true: drawing buffer performs anti-aliasing</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>premultipliedAlpha</code></td>
+<td style="text-align:center">true: drawing buffer contains colors with pre-multiplied alpha</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>preserveDrawingBuffer</code></td>
+<td style="text-align:center">true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;webgl&#34;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">antialias</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">stencil</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="geometry">Geometry</h1>
+<h2 id="definition">Definition</h2>
+<p>A 2D or 3D model drawn using vertices is call a <code>mesh</code>.</p>
+<p>Each facet in a mesh is called a polygon and a polygon is made of 3 or more vertices.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// create a 2D triangle which lies on the coordinates {(-5, -5), (5, -5), (5, 5)}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span>   <span class="c1">// Vertex 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>   <span class="c1">// Vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>    <span class="c1">// Vertex 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>Similarly, we can create an array for the indices follow the sequence.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>drawArrays()</code>: pass the vertices of the primitive using JavaScript arrays.</li>
+<li><code>drawElements()</code>: pass both vertices and indices of the primitive using JavaScript arrays.</li>
+</ul>
+<h2 id="buffer-objects">Buffer Objects</h2>
+<p>A buffer object indicates a memory area allocated in GPU.</p>
+<p>We can store data of the models corresponding to vertices, indices, color and etc.</p>
+<p>There are 2 types of buffer objects:</p>
+<ul>
+<li>Vertex Buffer Object(VBO): It holds the per-vertex data of the graphical model that is going to be rendered.</li>
+<li>Index Buffer Object(IBO): It holds the indices of the graphical model that is going to be rendered.</li>
+</ul>
+<p>After defining the required geometry and storing them in JavaScript arrays, we need to pass these arrays to the buffer objects, from where the data will be passed to the shader programs.</p>
+<ol>
+<li>
+<p>Create an empty buffer.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">index_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Bind an appropriate array object to the empty buffer.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bindBuffer</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// ARRAY_BUFFER represents vertex data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ELEMENT_ARRAY_BUFFER represent index data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">index_buffer</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Pass the data (vertices/indices) to the buffer using one of the typed arrays.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bufferData</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">data</span><span class="p">,</span> <span class="kr">enum</span> <span class="nx">usage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Usage specifies how to use the buffer object data to draw shapes
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STATIC_DRAW -- Data will be specified once and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STREAM_DRAW -- Data will be specified once and used a few times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.DYNAMIC_DRAW -- Data will be specified repeatedly and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// vertex buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// index buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Uint16Array</span><span class="p">(</span><span class="nx">indices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Unbind the buffer (Optional/Recommended).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h1 id="shader">Shader</h1>
+<p>Shaders are written in ES SL which has variables of its own data types, qualifiers, built-in inputs and outputs.</p>
+<h2 id="data-types">Data Types</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>void</code></td>
+<td style="text-align:center">empty value</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool</code></td>
+<td style="text-align:center">true or false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>int</code></td>
+<td style="text-align:center">signed integer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>float</code></td>
+<td style="text-align:center">floating scalar</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>vec2</code>, <code>vec3</code>, <code>vec4</code></td>
+<td style="text-align:center">n-component floating point vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bvec2</code>, <code>bvec3</code>, <code>bvec4</code></td>
+<td style="text-align:center">boolean vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ivec2</code>, <code>ivec3</code>, <code>ivec4</code></td>
+<td style="text-align:center">signed integer vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mat2</code>, <code>mat3</code>, <code>mat4</code></td>
+<td style="text-align:center">2x2, 3x3, 4x4 float matrix</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>sampler2D</code></td>
+<td style="text-align:center">access a 2D texture</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>samplerCube</code></td>
+<td style="text-align:center">access cube mapped texture</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qualifiers">Qualifiers</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Qualifier</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>attribute</code></td>
+<td style="text-align:center">acts as a link between a vertex shader and OpenGL ES for per-vertex data. Its value changes for every execution of the vertex shader.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>uniform</code></td>
+<td style="text-align:center">links shader programs and the WebGL application. Its value is <code>read-only</code>. It can be used for to declare a variable with any basic data types: <code>uniform vec4 lightPosition;</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>varying</code></td>
+<td style="text-align:center">forms a link between a vertex shader and fragment shader for interpolated data. It can be used with the following data types: <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, <code>mat2</code>, <code>mat3</code>, <code>mat4</code>, <code>arrays</code> like: <code>varying vec3 normal;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vertex-shader">Vertex Shader</h2>
+<p>Vertex shader is a program code, which is called on every vertex. Programmer have to define <code>attribute</code> in code of vertex shader to handle data. The <code>attribute</code> point to a VBO written in JavaScript.</p>
+<h3 id="predefined-variables">Predefined Variables</h3>
+<p>OpenGL ES SL provides the following predefined variables for every vertex shader</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>highp vec4 gl_Position</code></td>
+<td style="text-align:center">Holds the position of the vertex</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump float gl_PointSize</code></td>
+<td style="text-align:center">Holds the transformed point size</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">attribute</span> <span class="k">vec2</span> <span class="n">coordinates</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_Position</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>gl_Position</code> is the predefined variable which is available only in the vertex shader. It contains the vertex position. As vertex shader is a per-vertex operation, the <code>gl_Position</code> value is calculated for each vertex.</p>
+<h2 id="fragment-shader">Fragment Shader</h2>
+<p>A mesh is formed by multiple triangles, and the surface of each triangle is known as a fragment.</p>
+<p>Fragment shader is the code that runs on every pixel on each fragment. This is written to calculate and fill the color on individual pixels.</p>
+<h3 id="predefined-variables-1">Predefined Variables</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within the frame buffer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool gl_FrontFacing;</code></td>
+<td style="text-align:center">Holds the fragment that belongs to a front-facing primitive</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec2 gl_PointCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within a point</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gp_FragColor;</code></td>
+<td style="text-align:center">Holds the output fragment color value of the shader</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragData[n];</code></td>
+<td style="text-align:center">Holds the fragment color for color attachment n</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mo">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="store-and-compiling">Store and Compiling</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;gl_Postion = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span> <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0, 0.8, 0, 1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Compilation involves following 3 steps</p>
+<ul>
+<li>Creating the shader object</li>
+<li>Attaching the source code to the created shader object</li>
+<li>Compiling the program</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Same process for fragment shader</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="combined-program">Combined Program</h2>
+<ul>
+<li>Create a program object</li>
+<li>Attach both the shaders</li>
+<li>Link both the shaders</li>
+<li>Use the program</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="associating-attributes--buffer-objects">Associating Attributes &amp; Buffer Objects</h1>
+<ul>
+<li>Get the attribute location</li>
+<li>Point the attributes to a vertex buffer object</li>
+<li>Enable the attribute</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// ulong getAttribLocation(Object program, string name)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">coordinatesVar</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// void vertexAttribPointer(location, int size, enum type, bool normalized, long stride, long offset)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="drawing-a-model">Drawing a Model</h1>
+<h2 id="drawarrays">drawArrays()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawArrays</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">int</span> <span class="n">first</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>mode: <code>gl.POINTS</code>, <code>gl.LINE_STRIP</code>, <code>gl.LINE_LOOP</code>, <code>gl.LINES</code>, <code>gl.TRIANGLE_STRIP</code>, <code>gl.TRANGLE_FAN</code>, <code>gl.TRIANGLES</code>.</li>
+<li>first: specified the starting element in the enabled arrays. (Non-negative)</li>
+<li>count: specifies the number of elements to be rendered.</li>
+</ul>
+<p><code>WebGL</code> will create the geometry in the order in which the vertex coordinates while rendering the shapes.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>draw two contiguous triangles:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<h2 id="drawelements">drawElements()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawElements</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">,</span> <span class="k">enum</span> <span class="n">type</span><span class="p">,</span> <span class="k">long</span> <span class="n">offset</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>mode: same as <code>drawArrays()</code>;</li>
+<li>count: same as <code>drawArrays()</code>;</li>
+<li>type: specifies the data type of the indices which must be <code>UNSIGNED_BYTE</code> or <code>UNSIGNED_SHORT</code>;</li>
+<li>offset: specifies the starting point for rendering, usually the first element (0);</li>
+</ul>
+<p>If use <code>drawElements()</code> to draw a model, then index buffer object should also be created along with the vertex buffer object. The vertex data will be processed once and used as many time as mentioned in the indices.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>draw two contagious triangles:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mf">0.0</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+]]></description>
+</item>
+<item>
+    <title>WebGL Samples</title>
+    <link>https://ayamir.github.io/posts/webgl-samples/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples/</guid>
+    <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
+<p>WebGL application code is a combination of JavaScript and OpenGL Shader Language.</p>
+<ul>
+<li>JavaScript is required to communicate with the CPU.</li>
+<li>OpenGL Shader Language is required to communicate with the GPU.</li>
+</ul>
+<p></p>
+<h1 id="samples">Samples</h1>
+<h2 id="2d-coordinates">2D coordinates</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;my_canvas&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 1. Prepare the canvas and get context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">let</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;experimental-webgl&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 2. Define the geometry and store it in buffer objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="mf">0.5</span><span class="p">,</span> <span class="c1">// vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="mf">0.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span>
+</span></span><span class="line"><span class="cl">            <span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Create buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Bind an empty array buffer to it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Pass the vertices data to the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span>
+</span></span><span class="line"><span class="cl">            <span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Unbind the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 3. Create and compile Shader programs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34; gl_Position = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Create a vertex shader object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Attach vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Compile the vertex shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// Fragment shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// Create a shader program object to store combined shader program
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Attact vertex and fragment shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Link both programs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Use the combined shader program object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 4. Associate the shader programs to buffer objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Bind vertex buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Get the attribute location
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">coord</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Point an attribute to the currently bound VBO
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Enable the attribute
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coord</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// 5. Drawing the required object (triangle)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Clear the canvas
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Enable the depth test
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">enable</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">DEPTH_TEST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Clear the color buffer bit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Set the view port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Draw the triangle
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item>
+<item>
+    <title>WebGL Pipeline</title>
+    <link>https://ayamir.github.io/posts/webgl-pipeline/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-pipeline/</guid>
+    <description><![CDATA[<h1 id="overview">Overview</h1>
+<p></p>
+<h1 id="javascript">JavaScript</h1>
+<p>JavaScript is used to write the control code of the program, which includes the following actions:</p>
+<ul>
+<li>Initialization: initialize WebGL context.</li>
+<li>Arrays: create arrays to hold the data of the geometry.</li>
+<li>Buffer objects: create buffer objects by passing the arrays as parameters.</li>
+<li>Shaders: create, compile and link the shaders.</li>
+<li>Attributes: create attributes, enable them and associate them with buffer objects.</li>
+<li>Uniforms: associate the uniforms.</li>
+<li>Transformation matrix: create transformation matrix.</li>
+</ul>
+<h1 id="vertex-shader">Vertex Shader</h1>
+<p>The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods <code>drawElements()</code> and <code>drawArrays()</code>.</p>
+<ul>
+<li>
+<p>It calculates the position of each vertex of a primitive polygon and stores it in the varying <code>gl_position</code></p>
+</li>
+<li>
+<p>It calculates the other attributes such as color, texture coordinates and vertices that are normally associated with a vertex.</p>
+</li>
+</ul>
+<h1 id="primitive-assembly">Primitive Assembly</h1>
+<p>Here the triangles are assembled and passed to the rasterizer.</p>
+<h1 id="resterization">Resterization</h1>
+<p>The pixels in the final image of the primitive are determined.</p>
+<ul>
+<li>Culling: Initially the orientation of the polygons is determined. All those triangles with improper orientation that are not visible in view area are discarded.</li>
+<li>Clipping: If a triangle is partly outside the view area, then the part outside the view area is removed.</li>
+</ul>
+<h1 id="fragment-shader">Fragment Shader</h1>
+<p>The fragment shader gets:</p>
+<ul>
+<li>
+<p>data from the vertex shader in varying variables</p>
+</li>
+<li>
+<p>primitives from the rasterization stage</p>
+</li>
+</ul>
+<p>then:</p>
+<ul>
+<li>calculates the color value for each pixel between the vertices</li>
+<li>stores the color values of every pixel in each fragment</li>
+</ul>
+<h1 id="fragment-operations">Fragment Operations</h1>
+<p>The fragment operations may include:</p>
+<ul>
+<li>Depth</li>
+<li>Color buffer blend</li>
+<li>Dithering</li>
+</ul>
+<p>Once all the fragments are processed, a 2D image is formed and displayed on the screen.</p>
+<h1 id="frame-buffer">Frame Buffer</h1>
+<p>Frame buffer is the final destination of the rendering pipeline.</p>
+<p>Frame buffer is a portion of graphics memory that hold the scene data.</p>
+<p>This buffer contains details such as width and height of the surface (in pixels), color of each pixel and depth and stencil buffers.</p>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>WebGL Basics</title>
+    <link>https://ayamir.github.io/posts/webgl-basics/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-basics/</guid>
+    <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>
+<p>There are x, y, z axes in WebGL, where the z axis signifies <strong>depth</strong>.
+The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1).
+Positive value meaning:
+z: near viewer.
+x: near right.
+y: near top.</p>
+<p></p>
+<h1 id="graphics-system">Graphics System</h1>
+<h2 id="vertices">Vertices</h2>
+<p>To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon.
+A <code>vertex</code> is a point which defines the conjunction of the edges of a 3D object.
+Use <code>javascript</code> arrays to stores points&rsquo; coordinates like <code>[0.5, 0.5, 0.5]</code>.</p>
+<h2 id="indices">Indices</h2>
+<p>The numerical values which are used to identify the vertices is call <code>Indices</code>.</p>
+<h2 id="arrays">Arrays</h2>
+<p>There are no predefined methods in WebGL to render the vertices directly.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="buffers">Buffers</h2>
+<p>Buffers are the memory areas of WebGL that hold the data.
+There are various buffers:</p>
+<ul>
+<li><code>drawing buffer</code></li>
+<li><code>frame buffer</code></li>
+<li><code>vertex buffer</code></li>
+<li><code>index buffer</code></li>
+</ul>
+<p>The <code>vertex buffer</code> and <code>index buffer</code> are used to describe and process the geometry of the model, stores data about <code>vertices</code> and <code>indices</code> respectively.</p>
+<p>The <code>frame buffer</code> is a portion of graphics memory that hold the scene data. This buffer contains details such as width and height of the surface (in pixels), color of each pixel, depth and stencil buffers.</p>
+<h2 id="mesh">Mesh</h2>
+<p>The WebGL API provides two methods to draw 2D or 3D objects:</p>
+<ul>
+<li><code>drawArrays()</code></li>
+<li><code>drawElements()</code></li>
+</ul>
+<p>They accept a parameter called <code>mode</code> using which you can select the object you want to draw.</p>
+<p><code>mode</code>: <code>points</code> or <code>lines</code> or <code>triangles</code></p>
+<p>We can construct primitive polygons using points, lines and triangles.</p>
+<p>Thereafter, we can form a <code>mesh</code> using these polygons.</p>
+<p>A 3D object drawn using primitive polygons is called a <code>mesh</code>.</p>
+<h2 id="shader-programs">Shader Programs</h2>
+<p>Since WebGL uses GPU accelerated computing, the information about these triangles should be transferred from CPU to GPU which takes a lot of communication overhead.</p>
+<p>WebGL provides a solution to reduce the communication overhead. Since it uses ES SL(Embedded System Shader Language) that runs on GPU, we write all the required programs to draw graphical elements on the client system using shader programs(OpenGL ES Shader Language).</p>
+<p>Shader is a snippet that implements algorithms to get pixels for a mesh.</p>
+<p>There are two types of shaders: <code>Vertex Shader</code> and <code>Fragment Shader</code>.</p>
+<h3 id="vertex-shader">Vertex Shader</h3>
+<ul>
+<li>called on every vertex.</li>
+<li>used to transform the geometry from one place to another.</li>
+<li>handle the data of each vertex such as vertex coordinates, normals, colors, and texture coordinates.
+<ul>
+<li>vertex transformation</li>
+<li>normal transformation and normalization</li>
+<li>texture coordinate generation</li>
+<li>texture coordinate transformation</li>
+<li>lighting</li>
+<li>color material application</li>
+</ul>
+</li>
+</ul>
+<h3 id="fragment-shaderpixel-shader">Fragment Shader(Pixel Shader)</h3>
+<p>A mesh is formed by multiple triangles. The surface of each of the triangles is known as a fragment.</p>
+<p><code>Fragment shader</code> is the code that runs on all pixels of every fragment.</p>
+<p>It is written to calculate and fill the color on <em>individual pixels</em>.</p>
+<ul>
+<li>operations on interpolated values</li>
+<li>texture access</li>
+<li>texture application</li>
+<li>fog</li>
+<li>color sum</li>
+</ul>
+<p></p>
+<h2 id="opengl-es-sl-variables">OpenGL ES SL Variables</h2>
+<p>To handle the data in the shader programs, ES SL provides three types of variables.</p>
+<ul>
+<li>
+<p>Attributes: hold the input values of the vertex shader program. Attributes point to the vertex buffer objects that contains per-vertex data.</p>
+</li>
+<li>
+<p>Uniforms: hold the input data that is common for both vertex and fragment shaders, such as light position, texture coordinates and color.</p>
+</li>
+<li>
+<p>Varyings: used to pass the data from the vertex shader to the fragment shader.</p>
+</li>
+</ul>
+]]></description>
+</item>
+<item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
     <link>https://ayamir.github.io/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
     <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
@@ -86,7 +997,7 @@
 </ul>
 <h3 id="mdp-based">MDP-Based</h3>
 <p>The video streaming process is formulated as a finite MDP to be able to make adaptation decisions under fluctuating network conditions.</p>
-<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients' decentralized ON-OFF patterns.</p>
+<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients&rsquo; decentralized ON-OFF patterns.</p>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/6774598" target="_blank" rel="noopener noreffer">Real-time best-action search algorithm over multiple access networks</a> uses both Bluetooth and WiFi links to simultaneously download video segments. However, this scheme shows limitations during user mobility which negatively affect QoE.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7305810" target="_blank" rel="noopener noreffer">Optimizing in Vehicular environment</a> introduces a three-variant of RL-based algorithms which take advantage of the historical bandwidth samples to build an accurate bandwidth estimation model.</li>
@@ -100,7 +1011,7 @@
 <p>Server-based schemes use a bitrate shaping method at the server side and do not require any cooperation from the client. The switching between the bitrates is implicitly controlled by the bitrate shaper. The client still makes its own decisions, but the decisions are more or less determined by the shaping method on the server.</p>
 <ul>
 <li><a href="https://dl.acm.org/doi/10.1145/2155555.2155557" target="_blank" rel="noopener noreffer">Traffic shaping</a> analyzes instability and unfairness issues in the presence of multiple HAS players competing for the available bandwidth. This method can be deployed at a home gateway to improve fairness, stability and convergence delay, and to eliminate the OFF periods during the steady states.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients' statuses and helps them share knowledge about their statues.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients&rsquo; statuses and helps them share knowledge about their statues.</li>
 <li><a href="https://dl.acm.org/doi/10.1145/1943552.1943573" target="_blank" rel="noopener noreffer">Quality Adaptation Controller</a> aims to control the size of the server sending buffer in order to adjust and select the most appropriate bitrate level for each DASH player. It maintains the playback buffer occupancy of each player as stable as possible and to match bitrate level decisions with the available bandwidth.</li>
 <li><a href="https://ieeexplore.ieee.org/document/7983147/" target="_blank" rel="noopener noreffer">Multi-Source Stream system</a>: the client fetches the segments from multi-source stream servers.</li>
 </ul>
@@ -263,16 +1174,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">baseVideo</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
-
-<span class="nx">initBaseVideo</span><span class="p">();</span>
-<span class="nx">initVideos</span><span class="p">();</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="nx">video</span> <span class="k">in</span> <span class="nx">videos</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">baseVideo</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">baseVideo</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">initBaseVideo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">initVideos</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nx">video</span> <span class="k">in</span> <span class="nx">videos</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">baseVideo</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="自适应码率">自适应码率</h2>
 <p>自适应码率的方案使用<code>dashjs</code>库实现，即对每个分块<code>&lt;video&gt;</code>元素的播放都用<code>dashjs</code>的方案控制：</p>
@@ -296,23 +1207,23 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span><span class="nx">MediaPlayer</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;dashjs&#39;</span><span class="p">;</span>
-
-<span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="kd">let</span> <span class="nx">dashs</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="kd">let</span> <span class="nx">mpdUrls</span> <span class="o">=</span> <span class="p">[];</span>
-
-<span class="nx">initVideos</span><span class="p">();</span>
-<span class="nx">initMpdUrls</span><span class="p">();</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">tileNum</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">video</span> <span class="o">=</span> <span class="nx">videos</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-    <span class="kd">let</span> <span class="nx">dash</span> <span class="o">=</span> <span class="nx">MediaPlayer</span><span class="p">().</span><span class="nx">create</span><span class="p">();</span>
-    <span class="nx">dash</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="nx">mpdUrls</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">dash</span><span class="p">.</span><span class="nx">updateSettings</span><span class="p">(</span><span class="nx">dashSettings</span><span class="p">);</span>
-    <span class="nx">dashs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dash</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span><span class="nx">MediaPlayer</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;dashjs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">dashs</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">mpdUrls</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">initVideos</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">initMpdUrls</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">tileNum</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">video</span> <span class="o">=</span> <span class="nx">videos</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">dash</span> <span class="o">=</span> <span class="nx">MediaPlayer</span><span class="p">().</span><span class="nx">create</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dash</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="nx">mpdUrls</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dash</span><span class="p">.</span><span class="nx">updateSettings</span><span class="p">(</span><span class="nx">dashSettings</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dashs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dash</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过对<code>dashSettings</code>的调整的可以设置各种可用的dash参数如不同质量版本下的缓冲区长度，播放暂停时是否终止后台下载等。</p>
 <h2 id="沉浸式场景体验">沉浸式场景体验</h2>
@@ -362,36 +1273,36 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span><span class="nx">WebXRButton</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;webxr-button.js&#39;</span><span class="p">;</span>
-
-<span class="kd">let</span> <span class="nx">xrButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebXRButton</span><span class="p">({</span>
-    <span class="nx">onRequestSession</span><span class="o">:</span> <span class="nx">onRequestSession</span><span class="p">,</span>
-    <span class="nx">onEndSession</span><span class="o">:</span> <span class="nx">onEndSession</span>
-<span class="p">});</span>
-<span class="kd">let</span> <span class="nx">xrSession</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onRequestSession</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xrSession</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">requestSession</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">,</span> <span class="p">{</span>
-            <span class="nx">requiredFeatures</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
-        <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">onSessionStarted</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">onEndSession</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">onEndSession</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">xrSession</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">isSessionSupported</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">supported</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="nx">supported</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">xrButton</span><span class="p">.</span><span class="nx">enabled</span> <span class="o">=</span> <span class="nx">supported</span><span class="p">;</span>
-        <span class="p">}</span>
-	<span class="p">})</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span><span class="nx">WebXRButton</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;webxr-button.js&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebXRButton</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onRequestSession</span><span class="o">:</span> <span class="nx">onRequestSession</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onEndSession</span><span class="o">:</span> <span class="nx">onEndSession</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrSession</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onRequestSession</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xrSession</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">requestSession</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">requiredFeatures</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">onSessionStarted</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">onEndSession</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onEndSession</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrSession</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">isSessionSupported</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">supported</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nx">supported</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">xrButton</span><span class="p">.</span><span class="nx">enabled</span> <span class="o">=</span> <span class="nx">supported</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>获取到需要的<code>xrSession</code>之后请求<code>ReferenceSpace</code>，并创建会话中需要的对象，之后用创建的图层更新会话的渲染器状态，并设置<code>requestAnimationFrame</code>需要的回调函数：</li>
@@ -420,27 +1331,27 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onSessionStarted</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">xrSession</span> <span class="o">=</span> <span class="nx">session</span><span class="p">;</span>
-    <span class="nx">xrButton</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s2">&#34;Exit XR&#34;</span><span class="p">;</span>
-    
-    <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XRMediaBinding</span><span class="p">(</span><span class="nx">session</span><span class="p">);</span>
-    
-    <span class="nx">session</span><span class="p">.</span><span class="nx">requestReferenceSpace</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">refSpace</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="nx">refSpace</span><span class="p">;</span>
-        
-        <span class="kd">let</span> <span class="nx">baseLayer</span> <span class="o">=</span> <span class="nx">xrMediaFactory</span><span class="p">.</span><span class="nx">createEquirectLayer</span><span class="p">(</span><span class="nx">baseVideo</span><span class="p">,</span> <span class="p">{</span>
-        	<span class="nx">space</span><span class="o">:</span> <span class="nx">refSpace</span><span class="p">,</span>
-        	<span class="nx">centralHorizontalAngle</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="mi">2</span>
-    	<span class="p">});</span>
-    	<span class="nx">session</span><span class="p">.</span><span class="nx">updateRenderState</span><span class="p">({</span><span class="nx">layers</span><span class="o">:</span> <span class="p">[</span><span class="nx">baseLayer</span><span class="p">]});</span>
-    	<span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onSessionStarted</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrSession</span> <span class="o">=</span> <span class="nx">session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrButton</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s2">&#34;Exit XR&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XRMediaBinding</span><span class="p">(</span><span class="nx">session</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">session</span><span class="p">.</span><span class="nx">requestReferenceSpace</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">refSpace</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="nx">refSpace</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">baseLayer</span> <span class="o">=</span> <span class="nx">xrMediaFactory</span><span class="p">.</span><span class="nx">createEquirectLayer</span><span class="p">(</span><span class="nx">baseVideo</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        	<span class="nx">space</span><span class="o">:</span> <span class="nx">refSpace</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        	<span class="nx">centralHorizontalAngle</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">    	<span class="nx">session</span><span class="p">.</span><span class="nx">updateRenderState</span><span class="p">({</span><span class="nx">layers</span><span class="o">:</span> <span class="p">[</span><span class="nx">baseLayer</span><span class="p">]});</span>
+</span></span><span class="line"><span class="cl">    	<span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
 <li>最后设置每次<code>xrSession</code>要求渲染新帧的函数，并设定渲染循环：</li>
@@ -458,16 +1369,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onXRFrame</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">session</span><span class="p">;</span>
-    <span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
-    
-    <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">getViewerPose</span><span class="p">(</span><span class="nx">xrRefSpace</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">xrViewerPose</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onXRFrame</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">getViewerPose</span><span class="p">(</span><span class="nx">xrRefSpace</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">xrViewerPose</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>onXRFrame</code>函数在每次渲染新帧时调用，其中每帧对应的观看者的相对位置以及头戴设备的线速度和角速度等变量可以从<code>xrViewerPose</code>中取得。</p>
 <p>这么看<code>WebXR</code>的完全沉浸式体验是可行的，但是问题出在需要与分块结合。</p>
@@ -504,8 +1415,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">conda activate keras-tf-2.1.0
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">conda activate keras-tf-2.1.0
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -515,8 +1426,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">pip3 install ipykernel --user
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip3 install ipykernel --user
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -526,8 +1437,8 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">python3 -m ipykernel install --user --name<span class="o">=</span>keras-tf-2.1.0
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">python3 -m ipykernel install --user --name<span class="o">=</span>keras-tf-2.1.0
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -603,19 +1514,19 @@ $$</p>
 <p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
 <p>将上面的观察形式化为一个策略学习过程 $M$：
 $$
-M = &lt;S, A, P_{s, a, s'}, R&gt;
+M = &lt;S, A, P_{s, a, s&rsquo;}, R&gt;
 $$
-其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。</p>
-<p>系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s&rsquo;}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s&rsquo;$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s&rsquo;}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
 <p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
 $$
 v = E[Q_{s, a} | S_t = s]
 $$</p>
 <p>$$
-Q_{s, a} = R^a_s + \gamma \sum_{s' \in S} P_{s, a, s'} v
+Q_{s, a} = R^a_s + \gamma \sum_{s&rsquo; \in S} P_{s, a, s&rsquo;} v
 $$</p>
 <p>其中：$\gamma$ 是奖励参数。</p>
-<p>最终的目标是通过计算每个 $P_{s, a, s'}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s&rsquo;}$ 找到最大的 $max(Q_{s, a})$。</p>
 <p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
 <p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
 <ol>
@@ -633,7 +1544,7 @@ $$</p>
 <p>将这4种类型和2种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的8个选项组合；</p>
 <p>对每个状态而言，有2种动作（选中或不选中），因此每个表有8个状态和2个动作。</p>
 <p>对每个表的奖励基于用户是否看到了分块而更新。</p>
-<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s'))$；</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s&rsquo;))$；</p>
 <p></p>
 <h1 id="liveroi">LiveROI</h1>
 <p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
@@ -691,7 +1602,7 @@ $$
 <p></p>
 <p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
 <p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
-<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A'$ 来更新用户的偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A&rsquo;$ 来更新用户的偏好向量。</p>
 ]]></description>
 </item>
 <item>
@@ -773,463 +1684,6 @@ $$
 <p>收集用户在过去的视频片段中的用户轨迹，包括从 $k$ 个子采样帧中的 $k$ 个采样点，因此作为训练数据，同时将每个采样点中每个帧的索引指定为时间戳。最终模型的输出是预测出的分块的索引。</p>
 <h2 id="混合模型">混合模型</h2>
 <p>将<code>CNN</code>模块得到的输出作为主要的结果，接着结合<code>LSTM</code>模块的输出结果作为最终的预测结果。</p>
-]]></description>
-</item>
-<item>
-    <title>Note for Popularity Aware 360-Degree Video Streaming</title>
-    <link>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</link>
-    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-popularity-aware-360-degree-video-streaming/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://ieeexplore.ieee.org/abstract/document/9488856/" target="_blank" rel="noopener noreffer">Popularity-Aware 360-Degree Video Streaming</a></p>
-<p>Level：IEEE INFOCOM 2021</p>
-<p>Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization</p>
-<h2 id="motivation">Motivation</h2>
-<p>将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见<a href="https://ayamir.github.io/posts/note-for-optile/" target="_blank" rel="noopener noreffer">Optile</a>）</p>
-<p>而分块时根据用户的ROI来确定不同的大小，并在客户端预取，这可以节省带宽。</p>
-<p>用户的ROI推断利用跨用户的偏好来确定，即所谓的<code>Popularity-Aware</code>。</p>
-<h2 id="model-and-formulation">Model and Formulation</h2>
-<h3 id="video-model">Video Model</h3>
-<p>视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。</p>
-<p>除了常规的分块之外， $M$ 个宏块也被建构出来。</p>
-<p>每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。</p>
-<p>整个推流过程可以看作是一系列连续的下载任务。</p>
-<p>客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。</p>
-<p>用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。</p>
-<h3 id="qoe-model">QoE Model</h3>
-<p>$$
-Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k)
-$$</p>
-<p>$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；</p>
-<ul>
-<li>
-<p>平均质量：
-$$
-Q_0(V_k) = q(\overline{V_k})
-$$
-$\overline{V_k}$ 表示<code>FoV</code>内的平均视频质量； $q(\cdot)$ 表示视频质量和用户实际感知质量之间的映射函数；</p>
-</li>
-<li>
-<p>质量变化：两个连续段之间的质量差异和<code>FoV</code>内不同空间位置tile的质量差异会导致用户不适。
-$$
-I_v(V_k) = |Q_0(V_k) - Q_0(V_{k-1})| + \widehat{V_k}
-$$
-$|Q_0(V_k) - Q_0(V_{k-1})|$ 表示连续段间的<code>FoV</code>内时间质量差异； $\widehat{V_k}$ 表示一个视频段的<code>FoV</code>内空间质量差异；</p>
-</li>
-<li>
-<p>缓冲：
-$$
-L_r(V_k) = {(\frac{S(V_k)}{R} - L, 0)}_+
-$$
-$S(V_k)$ 表示段数据量大小； $R$ 表示下载吞吐量； ${(x)}_+ = max \lbrace x, 0 \rbrace$ ；</p>
-</li>
-</ul>
-<h3 id="formulation">Formulation</h3>
-<p>用 ${\beta}^v_m ({\beta}^v_c)$ 表示对应的宏块或常规块是否被下载：</p>
-<p>${\beta}^v_m = 1$ 表示下载编码的质量等级为 $v$ 的宏块，消耗的带宽为 $B^v_m$ ，反之 $ {\beta}^v_m = 0$ 表示不下载；</p>
-<p>${\beta}^v_c = 1$ 表示下载编码的质量等级为 $v$ 的常规块，消耗的带宽为 $B^v_c$，反之 ${\beta}^v_m = 0$ 表示不下载；</p>
-<p>客户端应该优先下载覆盖用户<code>FoV</code> 的宏块，如果没有这样的宏块则去下载对应的常规块的集合。</p>
-<p>优化目标：
-$$
-max\ Q(\lbrace v | {\forall}_{m, v} {\beta}^v_m = 1 \rbrace) + Q(\lbrace v | {\forall}_{c, v} {\beta}^v_c = 1 \rbrace)
-$$
-同时需要满足以下3个约束：
-$$
-\sum^{M}_{m=1} \sum^{V}_{v=1} {\beta}^v_m + 1(\sum^{C}_{c=1} \sum^{V}_{v=1} {\beta}^v_c) = 1
-$$</p>
-<p>$$
-\sum^{V}_{v=1} {\beta}^v_c \le 1,\ for\ c = 1, &hellip;, C
-$$</p>
-<p>$$
-\sum^{M}_{m=1} \sum^{V}_{v=1} {\beta}^v_m B^v_m + \sum^{C}_{c=1} \sum^{V}_{v=1} {\beta}^v_c B^v_c \le R \cdot L
-$$</p>
-<p>$Q(\cdot)$ 是公式1中定义的质量； $R$ 是网络带宽； $1(x) = 1 \iff x &gt; 0$ ；$1(x) = 0 \iff x \le 0$ ；</p>
-<p>约束1强制为观看区域下载宏块或常规块的集合，只下载宏块的一个质量版本；</p>
-<p>约束2规定只下载常规块的一个质量版本；</p>
-<p>约束3保证视频数据可以在开始播放之前被完全下载；</p>
-<p>给出用户的观看区域之后，候选的宏块或对应的常规块集合也可以求出。</p>
-<p>将<code>QoE</code>最大化的问题分解成两个子问题：</p>
-<ul>
-<li>确定宏块的质量等级；</li>
-<li>确定常规块的质量等级；</li>
-</ul>
-<p>最后的解取这两种方案能取得更大<code>QoE</code>的那种。</p>
-<p>如果<code>QoE</code>模型不考虑常规块之间的质量差异，则整体的<code>QoE</code>等价于下载的常规块的平均质量等级。</p>
-<p>确定常规块质量等级的问题则可以简化为：
-$$
-max\ \sum_{c \in C} \sum^{V}_{v=1} Q({\beta}^v_c v)
-$$
-需要满足以下2个约束：
-$$
-\sum^{V}_{v=1} {\beta}^v_c = 1,\ for\ c \in C
-$$</p>
-<p>$$
-\sum_{c \in C} \sum^{V}_{v=1} {\beta}^v_c B^v_c \le R \cdot L
-$$</p>
-<p>$C$ 表示覆盖观看区域的常规块集合。</p>
-<p>简化之后的子问题可以通过对多项选择背包问题的简化，证明为是<code>NP-hard</code>问题，基于此提出启发式算法。</p>
-<h2 id="基于宏块的流行性感知推流">基于宏块的流行性感知推流</h2>
-<h3 id="基于观看区域确定宏块">基于观看区域确定宏块</h3>
-<p>不同用户对相同视频的观看有着相似的ROI，其视野中心是相近的，因此首先确定其视野中心并聚类到一起。</p>
-<p>不能直接应用的知名聚类算法：</p>
-<ul>
-<li>需要事先确定簇（即宏块）数量的算法（事先并不能确定需要多少宏块）：<code>K-means</code></li>
-<li>簇会越聚越大的算法（这样会失去节约带宽的优点）：<code>DBSCAN</code></li>
-</ul>
-<p>提出的算法用2个参数 $\lambda$ 和 $\gamma$ 来保证彼此相近的两个视野中心被归入同一簇，同时基于簇的宏块不至于太大。</p>
-<ul>
-<li>被归入同一簇的视野中心之间的距离应该小于等于 $\lambda$；</li>
-<li>同一个簇的任意两个视野中心之间的距离应该小于等于 $\gamma$；</li>
-</ul>
-<p>为了确定这两个参数，还需要考虑常规块的大小带来的影响。</p>
-<p>算法描述：</p>
-<p>给出用 $P$ 表示的点集，其中每个点表示一个用户的视野中心位置；</p>
-<p>用 $N_p = \lbrace q | q \in P \land q \neq p \land dist(p, q) \le \lambda \rbrace$ 来表示与点 $p$ 之间欧式距离小于 $\lambda$ 的点集（即为临近点集）；</p>
-<ol>
-<li>初始化拥有最多临近点的点所在的簇，例如： $p = {argmax}_{p \in P} |N_p|$；</li>
-<li>添加临近簇内任何点的点到簇中，扩张过程直到找不到符合条件的点位置；</li>
-<li>检查簇中任意两个点之间的距离是否大于 $\gamma$ ，如果存在这种情况就使用<code>K-means</code>算法将这个簇分成两个子簇；</li>
-<li>从 $P$ 中移除簇中的点；</li>
-<li>重复1-4的过程直到 $P = \empty$；</li>
-</ol>
-<p></p>
-<h3 id="宏块优化">宏块优化</h3>
-<p>通过简单地覆盖簇中用户的所有观看区域来为每个簇建构宏块可能会导致建构出不必要的大宏块，因此需要确定恰当的宏块大小。</p>
-<ul>
-<li>
-<p>首先需要确定哪些用户的观看区域应该被用于构建宏块，这样用户下载宏块时的带宽使用率小于下载一组常规块时的带宽使用率：$B_m$ 和 $B_c$ 分别表示覆盖相同观看区域的宏块和常规块的数据量大小。</p>
-</li>
-<li>
-<p>为了解决用户头部运动的随机性，宏块应该在覆盖用户观看区域之外加上一些边界区域。边界区域可以基于用户观看中心的变化来确定，变化通过在推流观看过程中以固定采样率记录。</p>
-<p>一个视频片段中 $x(y)$ 坐标的变化定义为 $x(y)$ 坐标的标准差。</p>
-<p></p>
-<p>实验发现：在一个视频片段中，用户的 $x(y)$ 坐标的变化很小。</p>
-<p>分别用 $A_x$ 和 $A_y$ 表示 $x$ 和 $y$ 方向上的变化，构建的宏块应该覆盖用户的观看区域，并为 $x(y)$ 方向加上 $\frac{A_x}{2}(\frac{A_y}{2})$ 的边缘区域。</p>
-</li>
-</ul>
-<p>宏块构造问题的形式化：</p>
-<p>为每个用户 $i$ 引入二元变量 ${\alpha}_i$ ，${\alpha}_i = 1$ 表示此用户的观看区域用于构建宏块，反之则没有；</p>
-<p>实际应用中即为：如果 ${\alpha}_i = 1$ ，则用户 $i$ 可以下载宏块；否则用户只能下载对应的常规块集合。</p>
-<p>问题的目标是：在下载宏块或相同质量等级的常规块集合时，最小化所有用户的总带宽使用量。
-$$
-\underset{\lbrace {\alpha}_i \rbrace}{min}\ \sum^{N_j}_{i=1} {\alpha}_i B_m + (1-{\alpha}_i) B_c
-$$
-$N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用所有 ${\alpha}_i = 1$ 的用户观看区域构建宏块；</p>
-<p>尽管暴力枚举法可以完成最优求解，但是其时间复杂度为 $O(2^{N_j})$ ，为了减少实际建构宏块的时间，提出一种类似于<a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener noreffer">随机采样一致性算法</a>的迭代算法，每次迭代中，所做工作如下：</p>
-<ol>
-<li>随机选取用户观察区域的子集。</li>
-<li>编码宏块，用 $B_m$ 表示构建的宏块的带宽使用量。</li>
-<li>检查建构的宏块是否覆盖用户 $i \in \lbrace 1, &hellip;N_j \rbrace$ ，是则${\alpha}_i = 1$；否则 ${\alpha}_i = 0$。</li>
-<li>检查总共的带宽使用量是否比之前迭代的更小，是则用当前迭代建构的宏块更新最终的宏块；否则继续迭代。</li>
-</ol>
-<p>为了避免预测失败时用户看到空白区域，在下载观看区域的高质量宏块或常规块集合之外，也以最低质量下载其余的常规块。</p>
-<h3 id="流行性感知推流">流行性感知推流</h3>
-<p>服务端基于多个用户的历史观看信息建构宏块，同时也使用常规块的划分方案编码视频。</p>
-<p>客户端在推流过程中选择恰当块（宏块或常规块集）的恰当的质量等级来最大化用户的<code>QoE</code>。</p>
-<p>流行性感知的推流算法首先为每个视频段预测用户的观看区域，之后预取相应的宏块或常规块集。</p>
-<ul>
-<li>使用<a href="https://towardsdatascience.com/ridge-regression-for-better-usage-2f19b3a202db" target="_blank" rel="noopener noreffer">岭回归</a>做VP，输入用户在一系列历史帧中的观看区域中心坐标，输出未来帧中用户的观看区域位置。</li>
-<li>基于预测的观看区域，算法确定是否存在覆盖预测区域及其边缘区域的宏块，是则搜索并下载满足条件的最高质量的宏块；否则下载相应区域的常规块集。</li>
-</ul>
-<p></p>
-<p>选择常规块集时首先为所有要选择的块确定满足贷款限制的最高质量等级，分配完之后如果还有剩余的带宽，算法会根据常规块与视野中心距离的远近程度提高一个质量等级，越近越优先提高。同时考虑到空间质量差异会降低<code>QoE</code>，所以提高质量的行为只有在超过半数的常规块满足条件时才会执行。</p>
-]]></description>
-</item>
-<item>
-    <title>Summary for VR and Panoramic Video</title>
-    <link>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</guid>
-    <description><![CDATA[<p>VR和360度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
-<h2 id="全景视频">全景视频</h2>
-<ol>
-<li>全景视频实际上事先通过特殊的全景摄像机录制好视频，之后可以在<code>HMD</code>中观看。虽然看到的图像相对于用户当前环境而言是虚拟的，但是终归是从实际环境中录制而来的，本质上更贴近普通视频的全景推广。</li>
-<li>在全景视频的观看过程中，用户只有3DoF的自由度，即只能完成头部的3个角度的运动，同时手柄实际上并不能和视频中的内容进行交互。</li>
-<li>全景视频的主要应用在于实景导览，通过事先由拍摄者带着全景录像设备行走拍摄，用户观看时实际是将自己带入到全景设备的位置上，同时移动头部来观察不同角度的视频。</li>
-</ol>
-<h2 id="vr">VR</h2>
-<ol>
-<li>VR主要做的工作是创造出一个完全虚拟的环境，用户戴上<code>HMD</code>之后可以通过其看到虚拟环境中的事物，同时也可以使用<code>HMD</code>配套的手柄等设备进行操作，完成与虚拟环境之间的交互；</li>
-<li>VR支持的是6DoF的自由度，即除了头部的运动之外也支持身体的前后、左右、上下的移动，手柄；</li>
-<li>VR的主要应用在于游戏，比如广受好评的<code>Beat Saber</code>（又称<a href="https://zh.wikipedia.org/zh-cn/%E8%8A%82%E5%A5%8F%E5%85%89%E5%89%91" target="_blank" rel="noopener noreffer"><code>节奏光剑</code></a>），用户根据音乐节奏通过挥动手柄（在虚拟环境中被建模成光剑）来准确地按照提示的方向去砍击方块；</li>
-</ol>
-<h2 id="ar和mr">AR和MR</h2>
-<ol>
-<li>
-<p>AR主要做的工作是将虚拟世界中的事物投影到现实世界中，主体是现实世界，虚拟事物用于增强现实世界。</p>
-<p>MR主要做的工作是将现实世界中的事物虚拟化进入虚拟世界中，主体是虚拟世界，现实事物混合进虚拟世界中。</p>
-</li>
-<li>
-<p>AR实现起来比较简单，只需要将计算机产生的图像投影显示在现实中即可，目前的应用比如游戏<code>Pokémon GO</code>里面的<code>AR-mode</code>，启用之后游戏中遇到的<code>Pokémon</code>就可以投影在现实中。</p>
-<p>MR实现起来比较复杂，首先需要用摄像头扫描物体，得到的2D图像再交给计算机采用算法进行3D重建，最后将虚拟化建模好的物体展示到虚拟世界中，目前的应用比如<code>Meta</code>推出的<code>Workrooms</code>，线上的远距离视频会议在虚拟世界中可以变成虚拟人物之间面对面的交流。</p>
-</li>
-</ol>
-<h2 id="总结">总结</h2>
-<ol>
-<li>
-<p>全景视频侧重于对虚拟环境的观察，而VR侧重于对虚拟环境的交互。</p>
-</li>
-<li>
-<p>全景视频实际上是将用户带入到全景摄像机的位置上，让用户产生自己身临拍摄的环境中的感觉，本质上是对传统视频的推广；</p>
-<p>VR实际上是将用户完全带入到虚拟的环境中，用户可以和虚拟环境中的事物进行交互，而虚拟环境中发生的一切都和现实无关，本质上是对传统游戏的推广；</p>
-</li>
-<li>
-<p>全景视频实际上和VR、AR、MR这种概念距离比较远，实际上只是因为全景摄像机相较于普通摄像机的360度视角的特殊性，这能让用户产生沉浸感。</p>
-</li>
-<li>
-<p>VR相比于AR、MR而言，是纯粹的虚拟环境，并不涉及到现实事物（除了<code>HMD</code>配套的手柄等设备），而纯粹的虚拟环境将人带入到了一个完全不同的世界，也是VR沉浸式体验的来源。</p>
-</li>
-<li>
-<p>AR和MR是虚拟和现实交融的技术，前者主体是现实，后者主体是虚拟环境。</p>
-</li>
-</ol>
-<p></p>
-]]></description>
-</item>
-<item>
-    <title>Note for srlABR Cross User</title>
-    <link>https://ayamir.github.io/posts/note-for-srlabr-cross-user/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-srlabr-cross-user/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
-<p>Level：IEEE Transactions on Broadcasting 2021</p>
-<p>Keywords：Cross-user vp, Sequetial RL ABR</p>
-<h2 id="主要工作">主要工作</h2>
-<ul>
-<li>使用跨用户注意力网络<code>CUAN</code>来做VP；</li>
-<li>使用<code>360SRL</code>来做ABR</li>
-<li>将上面两者集成到了推流框架中；</li>
-</ul>
-<h2 id="vp">VP</h2>
-<h3 id="motivation">Motivation</h3>
-<p>形式化VP问题如下：</p>
-<p>给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；</p>
-<p>同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；</p>
-<p>目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &hellip;, t+T$ ；</p>
-<p>最终可以用数学公式表达为：
-$$
-\underset{F}{min} \sum^{t+T}_{k = t+1} {\parallel l^p_k - \hat{l}^p_k \parallel}_1
-$$</p>
-<p>现有的用<code>KNN</code>做的跨用户预测基于LR的模型，而LR的模型很容易产生偏差，所以为了增强<code>KNN</code>的性能，同时考虑单用户的历史视点轨迹和跨用户的视点轨迹。</p>
-<ul>
-<li>提出一种注意力机制来自动提取来自其他用户视口的有用信息；</li>
-<li>对于与当前用户有相似偏好的用户轨迹信息给与更多的注意；</li>
-<li>相似性通过基于过去时间段内其他用户的轨迹计算出来；</li>
-</ul>
-<h3 id="design">Design</h3>
-<p></p>
-<ol>
-<li>
-<p>轨迹编码器模块从用户的历史视点位置提取时间特征；</p>
-<p>使用<code>LSTM</code>来编码用户的观看路径；</p>
-<p>为了预测 ${(t+1)}^{th}$ 帧的视点位置，首先向<code>LSTM</code>输入 $p^{th}$ 用户的历史视点坐标：
-$$
-f^{p}_{t+1} = h(l^p_1, l^p_2, &hellip;, l^p_t)
-$$
-$h(\cdot)$ 是<code>LSTM</code>的输入输出函数；</p>
-<p>接着使用相同的<code>LTSM</code>编码其他用户的观看轨迹：
-$$
-f^{i}_{t+1} = h(l^i_1, l^i_2, &hellip;, l^i_{t+1}), i \in \lbrace 1, &hellip;, M \rbrace
-$$</p>
-</li>
-<li>
-<p>注意力模块从其他用户的视点轨迹中提取与 $p^{th}$ 用户相关的信息</p>
-<p>首先推导出 $p^{th}$ 用户和其他用户之间的相关系数：
-$$
-s^{pi}_{t+1} = z(f^{i}_{t+1}, l^{p}_{t+1}), i \in \lbrace 1, &hellip;, M \rbrace \cup \lbrace p \rbrace;
-$$
-$s^{th}_{t+1}$ 表示 $p^{th}$ 用户和 $i^{th}$ 用户之间的相似性；$z()$ 由内积运算建模（还可用其他方式建模比如多个FC层）；</p>
-<p>接着将相关系数规范化：
-$$
-{\alpha}^{pi}_{t+1} = \frac{e^{s^{pi}_{t+1}}}{\sum_{i \in \lbrace 1,&hellip; M \rbrace \cup {\lbrace p \rbrace}^{e^{s^{pi}_{t+1}}}}}
-$$
-最后得到融合特征：
-$$
-g^{p}_{t+1} = \sum_{i \in {\lbrace 1,&hellip;M \rbrace \cup \lbrace p \rbrace}} {\alpha}^{pi}_{t+1} \cdot f^{i}_{t+1}
-$$
-融合特征被最后用于VP。</p>
-</li>
-<li>
-<p>VP模块预测 ${(t+1)}^{th}$ 帧的视点位置</p>
-<p>$$
-\hat{l}^{p}_{t+1} = r(g^{p}_{t+1})
-$$
-函数 $r(\cdot)$ 由一层FC建模。值得注意的是，对应于未来 T 帧的视点是以滚动方式预测的。</p>
-</li>
-</ol>
-<h3 id="loss">Loss</h3>
-<p>损失函数定义为预测的视点位置和实际视点位置之间的所有绝对差异的总和：
-$$
-L = \sum^{t+T}_{i=t} {|\hat{l}^p_i - l^p_i|}_1
-$$</p>
-<h3 id="details">Details</h3>
-<ul>
-<li>使用<code>PyTorch</code>实现；</li>
-<li>函数 $h(\cdot)$ 由两个堆叠的<code>LSTM</code>层组成，两者都有32个神经元；</li>
-<li>函数 $r(\cdot)$ 包含一个带有32个神经元的FC层，接着是<code>Tanh</code>函数；</li>
-<li>历史视点和未来视点的长度设定为1秒和5秒；</li>
-<li>每次迭代从数据集中随机产生2048个样本；</li>
-<li>所有训练变量的优化函数采用<code>Adam</code>；</li>
-<li>$\beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 10^{-8}$；</li>
-<li>$learning\ rate = 10^{-3}, training\ epoch = 50$；</li>
-</ul>
-<h2 id="abr">ABR</h2>
-<h3 id="formulation">Formulation</h3>
-<p>全景视频被切分成 $m$ 个长度为 $T$ 秒的视频片段，每个视频片段空间上划分成 $N$ 个分块，分别以 $M$ 个不同的码率等级编码。因此对于每段有 $N \times M$ 个可选的编码块。</p>
-<p>ABR的目标是为每个片段找到最优的码率集 $X = \lbrace x_{i, j} \rbrace \in Z^{N \times M}$ （ $x_{i, j} = 1$ 意味着为 $i^{th}$ 块选择 $j^{th}$ 的码率等级）：
-$$
-\underset{X}{max} \sum^{m}_{t=1} Q_t
-$$
-$Q_t$ 表示 $t^{th}$ 段的QoE分数，与以下几个方面有关：</p>
-<ul>
-<li>
-<p>VIewport Quality：
-$$
-Q^1_t = \sum^{N}_{i=1} \sum^{M}_{j=1} x_{i,j} \cdot p_i \cdot r_{i,j}
-$$
-$p_i$ 表示 $i^{th}$ 分块的规范化观看概率； $r_{i,j}$ 记录块 $(i, j)$ 的码率；</p>
-</li>
-<li>
-<p>Viewport Temporal Variation：
-$$
-Q^2_t = |Q^1_t - Q^{1}_{t-1}|
-$$</p>
-</li>
-<li>
-<p>Viewport Spatial Variation：
-$$
-Q^3_t = \frac{1}{2} \sum^{N}_{i=1} \sum_{u \in U_i} p_i \cdot p_u \sum^{M}_{j=1} |x_{i,j} \cdot r_{i,j} - x_{u,j} \cdot r_{u,j}|
-$$
-$U_i$ 表示 $i^{th}$ 个分块的1跳邻居中的tile索引<a href="https://ieeexplore.ieee.org/document/8486606" target="_blank" rel="noopener noreffer">[1]</a>；</p>
-</li>
-<li>
-<p>Rebuffering：
-$$
-Q^4_t = max(\frac{\sum^{N}_{i=1} \sum^{M}_{j=1} x_{i,j} \cdot r_{i,j} \cdot T}{\xi_t} - b_{t-1}, 0)
-$$
-$\xi_t$ 表示网络吞吐量； $b_{t-1}$ 表示播放器的缓冲区占用率；</p>
-<p>最终的QoE可以由上面的指标定义：
-$$
-Q_t = Q^1_t - \eta_1 \cdot Q^2_t - \eta_2 \cdot Q^3_t - \eta_3 \cdot Q^4_t
-$$
-$\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
-</li>
-</ul>
-<h3 id="sequential-rl-based-abr">Sequential RL-Based ABR</h3>
-<p>假设基于tile的全景推流ABR过程也是MDP。</p>
-<p></p>
-<p>细节在<a href="https://ayamir.github.io/posts/note-for-360srl/" target="_blank" rel="noopener noreffer">360SRL</a>中已经说明清楚。</p>
-]]></description>
-</item>
-<item>
-    <title>Note for 360SRL</title>
-    <link>https://ayamir.github.io/posts/note-for-360srl/</link>
-    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-360srl/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://ieeexplore.ieee.org/document/8784927" target="_blank" rel="noopener noreffer">360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming</a></p>
-<p>Level：ICME 2019</p>
-<p>Keywords：ABR、RL、Sequential decision</p>
-<h2 id="创新点">创新点</h2>
-<ul>
-<li>在MDP中，将N维决策空间内的一次决策转换为1维空间内的N次级联顺序决策处理来降低复杂度。</li>
-</ul>
-<h2 id="问题定义">问题定义</h2>
-<p>原始的全景视频被划分成每段固定长度为 $T$ 的片段，</p>
-<p>每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，</p>
-<p>因此对每个片段，有 $N \times M$ 种可选的编码块。</p>
-<p>为了保证播放时的流畅性，需要确定最优的预取集合：</p>
-<p>${a_0, &hellip;, a_i, &hellip;, a_{N-1}}, i \in \lbrace 0, &hellip;, N-1 \rbrace, a_i \in \lbrace 0, &hellip;, M-1 \rbrace $</p>
-<p>分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</p>
-<p>用 $p_i \in [0, 1]$ 表示 $i^{th}$ 块的被看到的可能性。</p>
-<h2 id="顺序abr决策">顺序ABR决策</h2>
-<p></p>
-<h2 id="代理设计">代理设计</h2>
-<h3 id="状态">状态</h3>
-<p>对于 $i^{th}$ 维，输入状态包括原始的环境状态 $s_t$ ；</p>
-<p>与之前维度的动作集合相关的信号： $u^{i}_{s_t} = \lbrace Th, C_i, p_{0:i-1}, q_{0:i-1}, b_t, p_i, S_i, Q_{t-1} \rbrace$</p>
-<p>$Th$ ：表示过去 m 次下载一个段的平均吞吐量；</p>
-<p>$C_i \in R^M$ ：表示 $i^{th}$ 个分块的可用块大小向量；</p>
-<p>$p_{0:i-1}$ 和 $q_{0:i-1, a^{0:i-1}_{t}}$ 分别表示选中的码率集合和看到之前 $i-1$ 个分块的概率集；</p>
-<p>$b_t$ 是缓冲区大小；</p>
-<p>$p_i$ 是 $i^{th}$ 个分块被看到的可能性；</p>
-<p>$S_i$ 是之前选择的 $i-1$ 个分块的块大小之和： $S_i = \sum^{i-1}_{h=0} C_{h, a^h_t}$ ；</p>
-<p>$Q_{t-1}$ 记录了最后一个段中 $N$ 个分块的平均视频质量；</p>
-<h3 id="动作">动作</h3>
-<p>动作空间离散，代理输出定义为价值函数：$f(u^i_{s_t}, a^i_t)$</p>
-<p>表示所选状态的价值 $a^i_t \in \lbrace 0, &hellip;, M-1 \rbrace$ 处于状态 $u_{s_t}^i$ .</p>
-<h3 id="回报">回报</h3>
-<p>回报定义为下列因素的加权和：</p>
-<p>平均视频质量 $q^{avg}_t$，空间视频质量方差 $q^{s_v}_t$，时间视频质量方差 $q^{t_v}_t$ ，重缓冲时间 $T^r_t$</p>
-<p>$$
-q^{avg}_t = \frac{1}{\sum^{N-1}_{i=0} p_i} \cdot \sum^{N-1}_{i=0} p_i \cdot q_{i, a_i}
-$$</p>
-<p>$$
-q^{s_v}_t = \frac{1}{\sum^{N-1}_{i=0} p_i} \cdot \sum^{N-1}_{i=0} p_i \cdot |q_{i, a_i} - q^{avg}_t|
-$$</p>
-<p>$$
-q^{t_v}_t = |q^{avg}_{t-1} - q^{avg}_t|
-$$</p>
-<p>$$
-T^r_t = max \lbrace T_t - b_{t-1}, 0 \rbrace
-$$</p>
-<p>$$
-R_t = w_1 \cdot q^{avg}_t - w_2 \cdot q^{s_v}_t - w_3 \cdot q^{t_v}_t - w_4 \cdot T^r_t
-$$</p>
-<h2 id="训练方法">训练方法</h2>
-<p>使用<code>DQN</code>作为基本的算法来学习动作-价值函数 $Q(s_t, a_t; \theta)$ ，其中 $\theta$ 作为参数，对应的贪心策略为 $\pi(s_t; \theta) = \underset{\theta}{argmax} Q(s_t, a_t; \theta)$ 。</p>
-<p><code>DQN</code>网络的关键想法是更新最小化损失函数的方向上的参数：
-$$
-L(\theta) = E[y_t - Q(s_t, a_t; \theta)]
-$$</p>
-<p>$$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}'); {\theta}')
-$$
-${\theta}'$ 表示固定且分离的目标网络的参数；</p>
-<p>$r(\cdot)$ 是即时奖励函数，即上面公式5中的 $R_t$ ；</p>
-<p>$\gamma \in [0, 1]$ 是折扣因子；</p>
-<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式7被重写为：
-$$
-y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}')
-$$
-利用公式6和公式8可以得出 $i^{th}$ 维的暂时损失函数：
-$$
-l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
-$$
-其中 $Q_{target}$ 满足：</p>
-<p>$$
-Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}')
-$$</p>
-<p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
-<p>观察公式9和公式10可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
-<p>为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：
-$$
-l^i_t = r^i_{extra} + Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
-$$</p>
-<p>$$
-r^i_{extra} =
-\begin{cases}
-0, p_i &gt; P ;
-\
--a^i_t, p_i \le P
-\end{cases}
-$$</p>
-<p>通过设定一个观看概率的阈值 $P$ ，对观看概率低于 $P$ 但选择了高码率的分块施加 $-a^i_t$ 的奖励。</p>
-<p>因此最终的平均损失可以形式化为：
-$$
-l^{avg}_t = \frac{1}{N} \sum^{N-1}_{i=0} l^i_t
-$$
-接着使用梯度下降法来更新模型，学习率设定为 $\alpha$：
-$$
-\theta \larr \theta + \alpha \triangledown l^{avg}_t
-$$
-同时，在训练阶段利用经验回放法来提高<code>360SRL</code>的泛化性。</p>
-<p></p>
-<p></p>
-<h2 id="实现细节">实现细节</h2>
-<p></p>
-<p>特征从输入状态中通过特征提取网络提取出来。</p>
-<p>初始的4个输入通过带有128个过滤器的1维卷积层被传递，4个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这4个输入被喂给有128个神经元的全连接层；</p>
-<p>随后特征映射被连接成一个张量，接着是具有1024个神经元和256个神经元的前向网络；</p>
-<p>整个动作-价值网络的输出是M维的向量。</p>
-<p>特征提取层和前向网络层都使用 <code>Leaky-ReLU</code>作为激活函数，最后是层归一化层。</p>
 ]]></description>
 </item>
 </channel>

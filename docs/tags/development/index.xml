@@ -30,16 +30,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">baseVideo</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
-
-<span class="nx">initBaseVideo</span><span class="p">();</span>
-<span class="nx">initVideos</span><span class="p">();</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="nx">video</span> <span class="k">in</span> <span class="nx">videos</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">baseVideo</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">baseVideo</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">initBaseVideo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">initVideos</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nx">video</span> <span class="k">in</span> <span class="nx">videos</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">baseVideo</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="自适应码率">自适应码率</h2>
 <p>自适应码率的方案使用<code>dashjs</code>库实现，即对每个分块<code>&lt;video&gt;</code>元素的播放都用<code>dashjs</code>的方案控制：</p>
@@ -63,23 +63,23 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span><span class="nx">MediaPlayer</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;dashjs&#39;</span><span class="p">;</span>
-
-<span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="kd">let</span> <span class="nx">dashs</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="kd">let</span> <span class="nx">mpdUrls</span> <span class="o">=</span> <span class="p">[];</span>
-
-<span class="nx">initVideos</span><span class="p">();</span>
-<span class="nx">initMpdUrls</span><span class="p">();</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">tileNum</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">video</span> <span class="o">=</span> <span class="nx">videos</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-    <span class="kd">let</span> <span class="nx">dash</span> <span class="o">=</span> <span class="nx">MediaPlayer</span><span class="p">().</span><span class="nx">create</span><span class="p">();</span>
-    <span class="nx">dash</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="nx">mpdUrls</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">dash</span><span class="p">.</span><span class="nx">updateSettings</span><span class="p">(</span><span class="nx">dashSettings</span><span class="p">);</span>
-    <span class="nx">dashs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dash</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span><span class="nx">MediaPlayer</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;dashjs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">videos</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">dashs</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">mpdUrls</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">initVideos</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">initMpdUrls</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">tileNum</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">video</span> <span class="o">=</span> <span class="nx">videos</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">dash</span> <span class="o">=</span> <span class="nx">MediaPlayer</span><span class="p">().</span><span class="nx">create</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dash</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="nx">mpdUrls</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dash</span><span class="p">.</span><span class="nx">updateSettings</span><span class="p">(</span><span class="nx">dashSettings</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dashs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dash</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过对<code>dashSettings</code>的调整的可以设置各种可用的dash参数如不同质量版本下的缓冲区长度，播放暂停时是否终止后台下载等。</p>
 <h2 id="沉浸式场景体验">沉浸式场景体验</h2>
@@ -129,36 +129,36 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="p">{</span><span class="nx">WebXRButton</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;webxr-button.js&#39;</span><span class="p">;</span>
-
-<span class="kd">let</span> <span class="nx">xrButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebXRButton</span><span class="p">({</span>
-    <span class="nx">onRequestSession</span><span class="o">:</span> <span class="nx">onRequestSession</span><span class="p">,</span>
-    <span class="nx">onEndSession</span><span class="o">:</span> <span class="nx">onEndSession</span>
-<span class="p">});</span>
-<span class="kd">let</span> <span class="nx">xrSession</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onRequestSession</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xrSession</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">requestSession</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">,</span> <span class="p">{</span>
-            <span class="nx">requiredFeatures</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
-        <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">onSessionStarted</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">onEndSession</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">onEndSession</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">xrSession</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">isSessionSupported</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">supported</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="nx">supported</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">xrButton</span><span class="p">.</span><span class="nx">enabled</span> <span class="o">=</span> <span class="nx">supported</span><span class="p">;</span>
-        <span class="p">}</span>
-	<span class="p">})</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span><span class="nx">WebXRButton</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;webxr-button.js&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebXRButton</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onRequestSession</span><span class="o">:</span> <span class="nx">onRequestSession</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onEndSession</span><span class="o">:</span> <span class="nx">onEndSession</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrSession</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onRequestSession</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xrSession</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">requestSession</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">requiredFeatures</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">onSessionStarted</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">onEndSession</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onEndSession</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrSession</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">navigator</span><span class="p">.</span><span class="nx">xr</span><span class="p">.</span><span class="nx">isSessionSupported</span><span class="p">(</span><span class="s1">&#39;immersive-vr&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">supported</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nx">supported</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">xrButton</span><span class="p">.</span><span class="nx">enabled</span> <span class="o">=</span> <span class="nx">supported</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>获取到需要的<code>xrSession</code>之后请求<code>ReferenceSpace</code>，并创建会话中需要的对象，之后用创建的图层更新会话的渲染器状态，并设置<code>requestAnimationFrame</code>需要的回调函数：</li>
@@ -187,27 +187,27 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-<span class="kd">let</span> <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onSessionStarted</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">xrSession</span> <span class="o">=</span> <span class="nx">session</span><span class="p">;</span>
-    <span class="nx">xrButton</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s2">&#34;Exit XR&#34;</span><span class="p">;</span>
-    
-    <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XRMediaBinding</span><span class="p">(</span><span class="nx">session</span><span class="p">);</span>
-    
-    <span class="nx">session</span><span class="p">.</span><span class="nx">requestReferenceSpace</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">refSpace</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="nx">refSpace</span><span class="p">;</span>
-        
-        <span class="kd">let</span> <span class="nx">baseLayer</span> <span class="o">=</span> <span class="nx">xrMediaFactory</span><span class="p">.</span><span class="nx">createEquirectLayer</span><span class="p">(</span><span class="nx">baseVideo</span><span class="p">,</span> <span class="p">{</span>
-        	<span class="nx">space</span><span class="o">:</span> <span class="nx">refSpace</span><span class="p">,</span>
-        	<span class="nx">centralHorizontalAngle</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="mi">2</span>
-    	<span class="p">});</span>
-    	<span class="nx">session</span><span class="p">.</span><span class="nx">updateRenderState</span><span class="p">({</span><span class="nx">layers</span><span class="o">:</span> <span class="p">[</span><span class="nx">baseLayer</span><span class="p">]});</span>
-    	<span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onSessionStarted</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrSession</span> <span class="o">=</span> <span class="nx">session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">xrButton</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s2">&#34;Exit XR&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">xrMediaFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XRMediaBinding</span><span class="p">(</span><span class="nx">session</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">session</span><span class="p">.</span><span class="nx">requestReferenceSpace</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">refSpace</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">xrRefSpace</span> <span class="o">=</span> <span class="nx">refSpace</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="kd">let</span> <span class="nx">baseLayer</span> <span class="o">=</span> <span class="nx">xrMediaFactory</span><span class="p">.</span><span class="nx">createEquirectLayer</span><span class="p">(</span><span class="nx">baseVideo</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        	<span class="nx">space</span><span class="o">:</span> <span class="nx">refSpace</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        	<span class="nx">centralHorizontalAngle</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    	<span class="p">});</span>
+</span></span><span class="line"><span class="cl">    	<span class="nx">session</span><span class="p">.</span><span class="nx">updateRenderState</span><span class="p">({</span><span class="nx">layers</span><span class="o">:</span> <span class="p">[</span><span class="nx">baseLayer</span><span class="p">]});</span>
+</span></span><span class="line"><span class="cl">    	<span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
 <li>最后设置每次<code>xrSession</code>要求渲染新帧的函数，并设定渲染循环：</li>
@@ -225,16 +225,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">onXRFrame</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">session</span><span class="p">;</span>
-    <span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
-    
-    <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">getViewerPose</span><span class="p">(</span><span class="nx">xrRefSpace</span><span class="p">);</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">xrViewerPose</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">onXRFrame</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">session</span><span class="p">.</span><span class="nx">requestAnimationFrame</span><span class="p">(</span><span class="nx">onXRFrame</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nx">xrViewerPose</span> <span class="o">=</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">getViewerPose</span><span class="p">(</span><span class="nx">xrRefSpace</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">xrViewerPose</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>onXRFrame</code>函数在每次渲染新帧时调用，其中每帧对应的观看者的相对位置以及头戴设备的线速度和角速度等变量可以从<code>xrViewerPose</code>中取得。</p>
 <p>这么看<code>WebXR</code>的完全沉浸式体验是可行的，但是问题出在需要与分块结合。</p>
