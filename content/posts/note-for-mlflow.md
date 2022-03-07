@@ -37,11 +37,11 @@ categories: ["ML"]
 
 目录结构示例如下：
 
-![image-20220307203544057](../assets/image-20220307203544057.png)
+![image-20220307203544057](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png)
 
 `MLmode`文件内容示例如下：
 
-![image-20220307202038587](../assets/image-20220307202038587.png)
+![image-20220307202038587](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png)
 
 这个模型可以用于任何支持`pytorch`或`python_function` `flavor`的工具，例如可以使用如下的命令用`python_function`来serve一个有`python_function` `flavor`的模型：
 
