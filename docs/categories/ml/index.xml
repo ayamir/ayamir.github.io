@@ -1,0 +1,284 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ML - 分类 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/categories/ml/</link>
+        <description>ML - 分类 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/ml/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for MLflow</title>
+    <link>https://ayamir.github.io/posts/note-for-mlflow/</link>
+    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-mlflow/</guid>
+    <description><![CDATA[<h1 id="overview">Overview</h1>
+<p><code>MLflow</code>是一个用于管理机器学习全生命周期的框架。</p>
+<p>其主要的作用是：</p>
+<ul>
+<li>完成训练和测试过程中不同超参数的结果的记录、对比和可视化——<code>MLflow Tracking</code></li>
+<li>以一种可复现重用的方式包装ML代码——<code>MLflow Projects</code></li>
+<li>简化模型部署的难度——<code>MLflow Models</code></li>
+<li>提供中心化的模型存储来管理全生命周期——<code>MLflow Model Registry</code></li>
+</ul>
+<p>现在主要用到的是第三个，所以先记录<code>Models</code>的用法</p>
+<h1 id="mlflow-models">MLflow Models</h1>
+<p><code>MLflow Models</code>本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。</p>
+<p>这种格式定义了一种惯例来让我们以不同的<code>flavor</code>保存模型进而可以被下游工具所理解。</p>
+<h2 id="存储格式">存储格式</h2>
+<p>每个<code>MLflow Model</code>是一个包含任意文件的目录，根目录之下有一个<code>MLmodel</code>文件，用于定义多个<code>flavor</code>。</p>
+<p><code>flavor</code>是<code>MLflow Model</code>的关键概念，抽象上是部署工具可以用来理解模型的一种约定。</p>
+<p><code>MLflow</code>定义了其所有内置部署工具都支持的几种标准<code>flavor</code>，比如描述如何将模型作为<code>Python</code>函数运行的<code>python_function</code> <code>flavor</code>。</p>
+<p>目录结构示例如下：</p>
+<p></p>
+<p><code>MLmode</code>文件内容示例如下：</p>
+<p></p>
+<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来serve一个有<code>python_function</code> <code>flavor</code>的模型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mlflow models serve -m my_model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-signature">Model Signature</h2>
+<p>模型的输入输出要么是<code>column-based</code>，要么是<code>tensor-based</code>。</p>
+<ul>
+<li><code>column-based</code> inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the <code>MLflow data type</code>.</li>
+<li><code>tensor-based</code> inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the <code>numpy data type</code>.</li>
+</ul>
+<h3 id="signature-enforcement">Signature Enforcement</h3>
+<p>Schema enforcement checks the provided input against the model&rsquo;s signature and raises an exception if the input is not compatible. It only works when using <code>MLflow model</code> deployment tools or loading models as <code>python_function</code>. It has no impact on native model.</p>
+<h4 id="name-ordering-enforcement">Name Ordering Enforcement</h4>
+<p>The input names are checked against the model signature. If there are any missing inputs, <code>MLflow</code> will raise an exception. Extra inputs will be ignored. Prioritized method is matching by name if provided in input schema, then according to position.</p>
+<h4 id="input-type-enforcement">Input Type Enforcement</h4>
+<p>For <code>column-based</code> signatures, <code>MLflow</code> will perform safe type conversions if necessary. Only lossless conversions are allowed.</p>
+<p>For <code>tensor-based</code> signatures, type checking is strict(any dismatch will throw an exception).</p>
+<h4 id="handling-integers-with-missing-values">Handling Integers With Missing Values</h4>
+<p>Integer data with missing values is typically represented as floats in <code>Python</code>.</p>
+<p>Best way is to declare integer columns as doubles whenever there can be missing values.</p>
+<h4 id="handling-data-and-timestamp">Handling Data and Timestamp</h4>
+<p><code>Python</code> has precision built into the type for datatime values.</p>
+<p>Datetime precision is ignored for <code>column-based</code> model signature but is enforced for <code>tensor-based</code> signatures.</p>
+<h3 id="log-models-with-signatures">Log Models with Signatures</h3>
+<p>Pass signature object as an argument to the appropriate log_model call to include a signature with model. The model signature object can be created by hand or inferred from datasets with valid model inputs and valid model outputs.</p>
+<h4 id="column-based-example"><code>Column-based</code> example</h4>
+<p>The following example demonstrates how to store a model signature for a simple classifier trained on the <code>Iris</code> dataset:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">iris_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">iris_train</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">iris_train</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">iris_train</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="s2">&#34;iris_rf&#34;</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The same signature can be created explicitly as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">ModelSignature</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ColSpec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;sepal length (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;sepal width (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;petal length (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;petal width (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span><span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;long&#34;</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">ModelSignature</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_schema</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">output_schema</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="tensor-based-example"><code>Tensor-based</code> example</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">mnist</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">SGD</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow.keras</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">train_Y</span><span class="p">),</span> <span class="p">(</span><span class="n">test_X</span><span class="p">,</span> <span class="n">test_Y</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainX</span> <span class="o">=</span> <span class="n">train_X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">train_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">testX</span> <span class="o">=</span> <span class="n">test_X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">test_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">train_Y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">testY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">test_Y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_uniform&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_uniform&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">testY</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testX</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&#34;mnist_cnn&#34;</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The same signature can be created explicitly as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">ModelSignature</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">TensorSpec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">  <span class="n">TensorSpec</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))])</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">ModelSignature</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_schema</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">output_schema</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-input-example">Model Input Example</h2>
+<p>Model inputs can be <code>column-based</code> (i.e <code>DataFrame</code>) or <code>tensor-based</code> (i.e <code>numpy.ndarrays</code>).</p>
+<p>A model input example provides an instance of a valid model input which can be stored as separate artifact and is referenced in the <code>MLmodel</code> file.</p>
+<h3 id="log-model-with-column-based-example">Log Model with <code>column-based</code> example</h3>
+<p>An example can be a single record or a batch of records. The sample input can be passed in as a Pandas <code>DataFrame</code>, <code>list</code> or <code>dict</code>. The given example will be converted to a Pandas <code>DataFrame</code> and then serialized to json using the Pandas split-oriented format.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">input_example</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;sepal length (cm)&#34;</span><span class="p">:</span> <span class="mf">5.1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;sepal width (cm)&#34;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;petal length (cm)&#34;</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;petal width (cm)&#34;</span><span class="p">:</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="log-model-with-tensor-based-example">Log Model with <code>Tensor-based</code> example</h3>
+<p>An example must be a batch of inputs. The axis 0 is the batch axis by default unless specified otherwise in the model signature. The sample input can be passed in as a numpy <code>ndarray</code> or a <code>dict</code> mapping a string to a numpy <code>array</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># each input has shape (4, 4)</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_example</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">   <span class="p">[[</span>  <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">56</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="mi">253</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span>   <span class="mi">6</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">93</span><span class="p">,</span>  <span class="mi">82</span><span class="p">,</span>  <span class="mi">82</span><span class="p">]],</span>
+</span></span><span class="line"><span class="cl">   <span class="p">[[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">23</span><span class="p">,</span>  <span class="mi">46</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">13</span><span class="p">,</span>  <span class="mi">36</span><span class="p">,</span> <span class="mi">166</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">76</span><span class="p">,</span>  <span class="mi">75</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">44</span><span class="p">,</span>  <span class="mi">11</span><span class="p">,</span>  <span class="mi">82</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-api">Model API</h2>
+<p><code>MLflow</code> includes integrations with several common libraries. For example, <code>mlflow.sklearn</code> contains <code>save_model</code>, <code>log_model</code>, and <code>load_model</code> functions for <code>scikit-learn</code> models.</p>
+<p>Additionally, we can use <code>mlflow.models.Model</code> class to create and write models which has 4 key functions:</p>
+<ul>
+<li><code>add_flavor</code> to add a flavor to the model. Each <code>flavor</code> has a <code>string</code> name and a <code>dict</code> of key-value attributes, where the values can be any object that can be serialized to YAML.</li>
+<li><code>save</code> to save the model to a local directory.</li>
+<li><code>log</code> to log the model as an artifact in the current run using <code>MLflow tracking</code>.</li>
+<li><code>load</code> to load a model from a local directory or from an artifact in a previous run.</li>
+</ul>
+<h3 id="pytorch">Pytorch</h3>
+<p><code>mlflow.pytorch</code> module defines utilities for saving and loading <code>MLflow Models</code> with the <code>pytorch</code> flavor.</p>
+<p>We can use <code>mlflow.pytorch.save_model()</code> and <code>mlflow.pytorch.log_model()</code> methods to save <code>pytorch</code> models in <code>MLflow</code> format.</p>
+<p>We can use <code>mlflow.pytorch.load_mode()</code> to load <code>MLflow Models</code> with <code>pytorch</code> flavor as <code>pytorch</code> model objects. This loaded <code>PyFunc</code> model can be scored with both <code>DataFrame</code> input and numpy <code>array</code> input.</p>
+]]></description>
+</item>
+</channel>
+</rss>
