@@ -4,7 +4,150 @@
         <link>https://ayamir.github.io/categories/immersive-video/</link>
         <description>Immersive-Video - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/immersive-video/" rel="self" type="application/rss+xml" /><item>
+    <title>Note for Toward Immersive Experience</title>
+    <link>https://ayamir.github.io/posts/note-for-toward-immersive-experience/</link>
+    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-toward-immersive-experience/</guid>
+    <description><![CDATA[<h1 id="overview">Overview</h1>
+<p>Link: <a href="https://ieeexplore.ieee.org/document/9679801" target="_blank" rel="noopener noreffer">Toward Immersive Experience: Evaluation for Interactive Network Services</a></p>
+<p>Level: IEEE Network 2022</p>
+<p>Keywords: QoE Metrics</p>
+<h1 id="background">Background</h1>
+<p>Compared with traditional QoE for regular video/audio services, the existing work on IE is still in its infancy. This work aims at providing systematic and comprehensive research on IE for interactive network services, mainly studying the following three fundamental and challenging issues.</p>
+<ul>
+<li><em>What is the essential difference between IE and traditional QoE?</em></li>
+<li><em>Which categories of factors mainly influence IE?</em></li>
+<li><em>How to evaluate IE in an efficient and intelligent manner?</em></li>
+</ul>
+<h1 id="ie-versus-traditional-qoe">IE versus traditional QoE</h1>
+<h2 id="theoretical-definitions">Theoretical definitions</h2>
+<p>Existing concepts of IE can be classified into two categories.</p>
+<ul>
+<li>The subjective sense of being surrounded or experiencing multi-sensory stimulation when interacting with the virtual environment.</li>
+<li>The user&rsquo;s psychological state of deep involvement, engagement, absorption, or engrossment.</li>
+</ul>
+<p>Traditional QoE:</p>
+<ul>
+<li>A subjective measure from the user perspective of the overall value of the provided service and application.</li>
+</ul>
+<p>We can summary two significant points as follows to distinguish IE and traditional QoE:</p>
+<ul>
+<li>Both IE and traditional QoE are devoted to characterizing user&rsquo;s subjective experience for network services.</li>
+<li>In terms of application scenarios, IE concentrates on the evaluation of network services equipped with interactive characteristics while traditional QoE is generally appropriate for regular audio/video services.</li>
+</ul>
+<p>IE is much more complex, fine-grained and multi-dimensional perception, which is produced through the interplay between multi-sensory data and diverse cognitive processes.</p>
+<h2 id="technical-challenges">Technical challenges</h2>
+<ul>
+<li>Growing data volume</li>
+<li>Stricter delay constraint</li>
+<li>Increasing data dimension</li>
+</ul>
+<h2 id="ifs-on-ie">IFs on IE</h2>
+<p></p>
+<h2 id="network-aware-ifs">Network-aware IFs</h2>
+<p>Actually, when heterogeneous streams are delivered to the network, their transmission quality is dependent on the outside network conditions(e.g., delay, jitter, throughput, and so on), as well as the streaming strategy (e.g., encoding, transmission protocol, and so on) inside streams, which ultimately impact end users&rsquo; IE. To this end, we can further subdivide this category into two classes including network QoS and stream-related IFs.</p>
+<ul>
+<li>
+<p>QoS:</p>
+<ul>
+<li>low latency</li>
+<li>high throughput</li>
+<li>high reliability</li>
+<li>temporal synchronization among heterogeneous streams</li>
+</ul>
+</li>
+<li>
+<p>stream-related IFs</p>
+<ul>
+<li>the form of data compression strategy</li>
+<li>resource scheduling scheme</li>
+</ul>
+</li>
+</ul>
+<h2 id="user-aware-ifs">User-aware IFs</h2>
+<p>IE may be influenced by human users while human users can perceive IE, for which we can subdivide this category into three classes based on such correlations.</p>
+<ul>
+<li>User profile</li>
+<li>Physiological IFs</li>
+<li>Psychological IFs</li>
+</ul>
+<p>It is obvious that users with diverse user profiles have distinctive influences on IE.</p>
+<p>The psychology and physiology of users can highly reflect the IE for the application.</p>
+<ul>
+<li>For psychological IFs, they are able to directly demonstrate a user&rsquo;s positive or negative feedback for interactive network services. However, this can hardly be simply measured.</li>
+<li>For physiological IFs, some of them(e.g., heart rate, blood pressure) can be objectively measured by affordable medical sensors.</li>
+</ul>
+<h2 id="device-aware-ifs">Device-aware IFs</h2>
+<p>With regard to device-aware IFs, two broad classes can be gotten according to internal systems(e.g., CPU) and external specifications(e.g., screen size, FOV) of the device.</p>
+<p>IE management in the device level mainly lies in two aspects.</p>
+<ul>
+<li>The selection of terminal type(e.g., mobile phone, laptop, VR/AR glasses)</li>
+<li>The corresponding possession of hardware(e.g., CPU, GPU, battery).</li>
+</ul>
+<h2 id="context-aware-ifs">Context-aware IFs</h2>
+<p>Typically, IE for interactive network services is generated by interacting with the virtual environment. To this end, we can derive two primary classes.</p>
+<ul>
+<li>Virtual context: focuses on the specific virtual application scenario.</li>
+<li>Physical context: focuses on its surrounding physical environment.</li>
+</ul>
+<p>We can provide constructive suggestions for different contexts. For example, online virtual games are  appropriate to play outside for the broad horizon, but watching a 3D film is more proper inside the home.</p>
+<p>We can suggest appropriate application types with different technical requirement to guarantee users&rsquo; IE according to existing network resources and the surrounding environment.</p>
+<p></p>
+<h1 id="light-weight-ie-evaluation">Light-weight IE evaluation</h1>
+<p>We proposed two light-weight IE evaluation approaches by respectively exploiting the AI technology and exploring the mathematical relationship among IFs and IE, which are appropriate for different cases according to the data amount.</p>
+<h2 id="ai-based">AI-based</h2>
+<p>Existing popular studies focusing on DL-based models(e.g., DNNs, LSTMs) can hardly satisfy the stringent delay requirement.</p>
+<p>We employ a multi-view learning combining with lightweight ML methods(e.g., SVM, decision tree) for fast and accurate IE evaluation.</p>
+<p></p>
+<p>The raw data through multi-view learning is first represented by multiple feature extractors according to their heterogeneous properties. Each modality is regraded as a particular view for multi-modal applications. Motivations are:</p>
+<ol>
+<li>It can provide efficient dimension reduction via subspace mapping. Subspace learning-based approaches can map the high-dimensional raw data to a latent subspace, in which its dimensionality is lower than that of raw data.</li>
+<li>Multi-view learning is more applicable to the IE context with abundant infomation, which can overcome the weakness of ML-based methods regarding evaluation accuracy for interactive network services.</li>
+<li>Multi-view learning can take full advantage of the associated and complementary features from redundant views for evaluation performance improvement.</li>
+</ol>
+<h2 id="statistical-function-based">Statistical function-based</h2>
+<p>AI-based approach may achieve better evaluation performances under large amounts of data, they lack strong interpretability and cannot explicitly explain the inherent relations among IFs and IE.</p>
+<p>We introduced statistical function-based approach to analyze the mathematical relationship among IFs and IF under limited data.</p>
+<p>Existing statistical function-based approaches for user experience evaluation are broadly divided into three categories:</p>
+<ul>
+<li>Exponential model</li>
+<li>Logarithmic model</li>
+<li>Linear regression model</li>
+</ul>
+<p>Notably, in order to further improve evaluation performance for interactive network services via statistical function-based approaches, two fundamental and significant issues need to be concerned as follows:</p>
+<ol>
+<li>How to comprehensively explore diverse and various IFs for accurate IE evaluation?</li>
+<li>How to conduct an efficient dimension reduction method for fast IE evaluation?</li>
+</ol>
+<h1 id="case-study">Case study</h1>
+<h2 id="multi-view-generation">Multi-view generation</h2>
+<p>We can construct multiple views from expert prior knowledge or via the random subspace method, which is a random sampling algorithm for automatic feature set partitioning. Here we partition multi-modal data into three specific views according to different modalites.(e.g., audio, video, and haptic signals).</p>
+<h2 id="view-combination">View combination</h2>
+<p>Then we adopt subspace learning-based approaches to obtain an appropriate subspace from the above-mentioned multiple views. Importantly, canonical correlation analysis in subspace learning plays a significant role in dimension reduction, and outputs the optimal projection for each view.</p>
+<h3 id="ie-evaluation">IE evaluation</h3>
+<p>Finally, based on the optimal and combined projection subspace, decision tree is deployed here to evaluation IE.</p>
+<p>The key point is find a general and robust evaluation approach:
+$$
+f: X \rarr Y
+$$
+Result is:
+$$
+Y = X^{\top} {\beta} + {\epsilon}
+$$
+${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of various IFs to the IE.</p>
+<p>IE evaluation for multi-modal applications must satisfy more stringent delay requirements in the context of higher-dimensional data. So we apply the <a href="https://www.doi.org/10.1080/10618600.1998.10474784" target="_blank" rel="noopener noreffer">LASSO estimation</a>, which is equipped with sparse solutions for the linear regression model, is incorporated to alleviate the issue of high-dimensional data for fast IE evaluation.</p>
+<p>Dataset: <a href="http://8.133.175.194/" target="_blank" rel="noopener noreffer">VisTouch</a></p>
+<p>Compare obejcts:</p>
+<ul>
+<li>Ridge regression</li>
+<li>Exponential model</li>
+</ul>
+<p>Performance metric: MAE</p>
+<p>Test result:</p>
+<p></p>
+]]></description>
+</item>
+<item>
     <title>Note for Content Based Vp for Live Streaming (2)</title>
     <link>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</link>
     <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-content-based-vp-for-live-streaming-2/</guid>
@@ -3008,63 +3151,6 @@ $$</p>
 <p>360度视频中特殊的音效需要引起注意。</p>
 </li>
 </ol>
-]]></description>
-</item>
-<item>
-    <title>360度视频的音频处理</title>
-    <link>https://ayamir.github.io/posts/note8/</link>
-    <pubDate>Sun, 14 Nov 2021 16:52:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note8/</guid>
-    <description><![CDATA[<h2 id="背景">背景</h2>
-<p>空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。</p>
-<p>360度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。</p>
-<p>360度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过</p>
-<h2 id="空间音频的再现技术">空间音频的再现技术</h2>
-<h3 id="物理重建">物理重建</h3>
-<p>物理重建技术用于合成尽可能接近所需信号的整个声场。</p>
-<p>立体声配置在最流行的声音再现方法中使用两个扬声器，以促进更多的空间信息（包括距离、方向感、环境和舞台合奏）。而多信道再现方法在声学环境中使用，并在消费类设备中流行。</p>
-<h4 id="多信道再现技术">多信道再现技术</h4>
-<p>同样的声压场也通过其他物理重建技术产生，如环境中存在的环境声学和波场合成（WFS）。</p>
-<p>需要麦克风阵列来捕获更多的空间声场。</p>
-<p>因为不能直接用于声场特性分析，麦克风记录的内容需要后期处理。</p>
-<p>麦克风阵列用于语音增强、声源分离、回声消除和声音再现。</p>
-<h3 id="感知重建">感知重建</h3>
-<p>心理声学技术用于感知重建，以产生对空间声音特征的感知。</p>
-<p>感知重建技术复制空间音频的自然听觉感受来表示物理音频。</p>
-<h4 id="双耳录制技术">双耳录制技术</h4>
-<p>双耳录制技术是立体声录制的一种扩展形式，提供3D的听觉体验。</p>
-<p>双耳录制技术通过使用两个360度麦克风尽可能的复制人耳，这与使用定向麦克风捕捉声音的常规立体声录音相同。</p>
-<p>假人头部的360度麦克风用作人耳的代理，因为它提供了耳朵的精确几何坐标。</p>
-<p>假人头部还产生与人头轮廓相互作用的声波。借助360度麦克风，与任何其他记录方法相比，空间立体图像的捕获更精确。</p>
-<h5 id="头部相关传递函数hrtf">头部相关传递函数（HRTF）</h5>
-<p>用于双耳音频的实时技术中，以再现复杂的线索，帮助我们通过过滤音频信号来定位声音。</p>
-<p>多个因素（如耳朵、头部和听力环境）会影响线索，因为在现实中，我们会重新定位自己以定位声音。</p>
-<p>选择合适的录音/重放技术对于使听到的声音与真实场景中的体验相同至关重要。</p>
-<h2 id="环境声学">环境声学</h2>
-<h3 id="概述">概述</h3>
-<p>环境声学也被称为3D音频，被用于记录、混成和播放一个中心点周围的360度音频。</p>
-<h3 id="区别">区别</h3>
-<p>环境音频和传统的环绕声技术不同。</p>
-<ol>
-<li>
-<p>双声道和传统环绕声技术背后的原理是相同的，都是通过将声音信号送到特定的扬声器来创建音频。</p>
-<p>环境音频不受任何特定扬声器的预先限制，因为它在即使音域旋转的情况下，也能创造出平滑的音频。</p>
-</li>
-<li>
-<p>传统环绕声的格式只有在声音场景保持静态的情况下才能提供出色的成像效果。</p>
-<p>环境音频提供一个完整的球体，将声音均匀地传播到整个球体。</p>
-</li>
-</ol>
-<h3 id="格式">格式</h3>
-<p>环境音频有6种格式，分别为：A、B、C、D、E、G。</p>
-<h3 id="用途">用途</h3>
-<h4 id="一阶环境音频的用途">一阶环境音频的用途</h4>
-<p>第一阶的环境音频或B格式的环境音频，其麦克风用于使用四面体阵列表示线性VR。</p>
-<p>此外，这些在四个通道中进行处理，例如提供非定向压力水平的“W”。同时，“X、Y和Z”分别促进了从前到后、从侧到侧以及从上到下的方向信息。</p>
-<p>一阶环境音频仅适用于相对较小的场景，因为其有限的空间保真度会影响声音定位。</p>
-<h4 id="高阶环境音频的用途">高阶环境音频的用途</h4>
-<p>高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。</p>
-<h2 id="总结">总结</h2>
-<p></p>
 ]]></description>
 </item>
 </channel>
