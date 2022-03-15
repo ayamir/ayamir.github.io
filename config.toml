@@ -14,7 +14,7 @@ publishDir = "docs"
 [params]
 version = "1.0.X"
 description = "Welcome to Ayamir's blog."
-keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Paper Notes", "Projects", "Immersive Video", "VR", "Meta Universe"]
+keywords = ["GNU/Linux", "Algorithms", "Programming Language", "Immersive Video"]
 fingerprint = "sha256"
 dateFormat = "2006-01-02"
 SourceMap = true
