@@ -296,6 +296,24 @@
         ]
     },
     {
+        "title": "Note for DQB",
+        "uri": "posts/note-for-dqb",
+        "content": "Link Modeling Perceptual Quality Viewport Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level IEEE TCSVT 2021 DQB  Dynamic Quality Boundary         FoV                                DQB         FoV                                                              QoE                   Model                                                                                                                         FoV                                                                             DQB                                                       d_n     DQB                                        dn   Q H  n    Q_ L  n      Q H  n      Q L  n          n                                 3                                             dn           Dn               1             n               Dn   Q H  n    Q_ HL  n      Q_ HL  n      1         n     FoV          6                                        Dn   k1 d_n     k_1                               pn     k1                                       k1   a1  cdot ln a2  cdot pn   a3   cdot sgn pn   P      sgn         a1  a2  a_3               P                        P   0 118                                              D_n            Dn   a1  cdot ln a2  cdot pn   a3   cdot  Q H  n    Q L  n    cdot sgn pn   P                Q_n            Qn   Q H  n    D_n                        Exp Minkowski Based                                                    PQ            PQ    Big  frac 1  N   sum n 1   N  exp big   frac n N   delta   big   cdot  Qn  p  Big   1 p      N             p    Minkowski      p                  delta                                  delta               p      delta                                Quality Contribution Based                                        FoV                                          Quality Contribution                                                                            MOS                            Cn   Qn  cdot  p1   p2  cdot log T       C_n      n         T             T   Max T  33 3ms           30fps                                         FoV                 GoFs     GoF                                         GoF             Q GoF     frac  sum n  in N   big  C n   cdot T n   big    sum_ n  in N  T n            GoF                                                                                      75   GoF",
+        "objectID": "posts/note-for-dqb",
+        "date": "2022-03-20T14:09:11.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "QoE"
+        ],
+        "tags": [
+            "QoE"
+        ],
+        "categories": [
+            "Immersive Video"
+        ]
+    },
+    {
         "title": "Note for GPAC",
         "uri": "posts/note-for-gpac",
         "content": "Dash         tile priority setup         tile         rate allocation           tile          tile                       rate adaption                                           tile priority setup Dash       SRD   MPD          SRD   tile      tile             HEVC   tile         tile                    tile SRD                  SRD                    tile            tile                        tile     Rate allocation            tile    tile                                    HTTP 2                                          tile                  tile                               tile         tile                        tile",
