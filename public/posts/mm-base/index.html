@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.101.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Ayamir" />
+  <meta property="og:url" content="https://ayamir.github.io/posts/mm-base/" />
+  <link rel="canonical" href="https://ayamir.github.io/posts/mm-base/" /><link rel="alternate" type="application/atom+xml" href="https://ayamir.github.io/index.xml" title="Ayamir&#39;s Blog">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/ayamir.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "多媒体基础知识",
+      "headline" : "多媒体基础知识",
+      "description" : "媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。\n音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如DASH、HLS将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。\n同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）\n解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如MP4，FLV等。\n封装格式 封装格式如AVI、MPEG、Real Video将音频和视频组合打包成一个完整的文件.\n封装格式不会影响视频的画质，影响画质的是视频的编码格式。\n解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。\n比如FLV或TS格式数据，解封装之后得到H.264-AVC编码的视频码流和AAC编码的音频码流。\n编码 视频的本质是一帧又一帧的图片。\n所以对于一部每秒30帧，90分钟，分辨率为1920x1080，24位的真彩色的视频，在压缩之前的大小$S$满足： $$ 一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte) \\ 总帧数n = 90 * 60 * 30 = 162000 \\ 总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \\approx 939(GB) $$ 因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。\n视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC\n音频编码方式：MP3，AAC\n压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。\n解码 解码就是解压缩过程。\n解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如PCM数据）和视频像素数据（如YUV420，RGB数据）。\n音视频同步 根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。\n视频质量指标 分辨率 分辨率指的是视频图像在一个单位尺寸内的精密度。\n将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。\n视频的分辨率从数值上描述了像素点的个数，如1920x1080：视频在水平方向有1920个像素，垂直方向有1080个像素。\n常见的描述方式：\n1080P：指视频有1080行像素，P=\u0026gt;Progressive（逐行扫描） 2K：指视频有2000列像素 MP：像素总数，指像素的行数P与列数K乘积的结果（百万像素） 1080P的分辨率为1920x1080=2073600，所以1080P通常也称为200万像素分辨率 通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰",
+      "inLanguage" : "en-US",
+      "author" : "Ayamir",
+      "creator" : "Ayamir",
+      "publisher": "Ayamir",
+      "accountablePerson" : "Ayamir",
+      "copyrightHolder" : "Ayamir",
+      "copyrightYear" : "2021",
+      "datePublished": "2021-12-13 10:03:17 \u002b0800 CST",
+      "dateModified" : "2021-12-13 10:03:17 \u002b0800 CST",
+      "url" : "https:\/\/ayamir.github.io\/posts\/mm-base\/",
+      "keywords" : [ "Multimedia", ]
+  }
+</script>
+<title>多媒体基础知识</title>
+  <meta property="og:title" content="多媒体基础知识" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。
+音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如DASH、HLS将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。
+同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）
+解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如MP4，FLV等。
+封装格式 封装格式如AVI、MPEG、Real Video将音频和视频组合打包成一个完整的文件.
+封装格式不会影响视频的画质，影响画质的是视频的编码格式。
+解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。
+比如FLV或TS格式数据，解封装之后得到H.264-AVC编码的视频码流和AAC编码的音频码流。
+编码 视频的本质是一帧又一帧的图片。
+所以对于一部每秒30帧，90分钟，分辨率为1920x1080，24位的真彩色的视频，在压缩之前的大小$S$满足： $$ 一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte) \ 总帧数n = 90 * 60 * 30 = 162000 \ 总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB) $$ 因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。
+视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC
+音频编码方式：MP3，AAC
+压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。
+解码 解码就是解压缩过程。
+解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如PCM数据）和视频像素数据（如YUV420，RGB数据）。
+音视频同步 根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。
+视频质量指标 分辨率 分辨率指的是视频图像在一个单位尺寸内的精密度。
+将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。
+视频的分辨率从数值上描述了像素点的个数，如1920x1080：视频在水平方向有1920个像素，垂直方向有1080个像素。
+常见的描述方式：
+1080P：指视频有1080行像素，P=&amp;gt;Progressive（逐行扫描） 2K：指视频有2000列像素 MP：像素总数，指像素的行数P与列数K乘积的结果（百万像素） 1080P的分辨率为1920x1080=2073600，所以1080P通常也称为200万像素分辨率 通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰" />
+  <meta name="description" content="媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。
+音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如DASH、HLS将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。
+同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）
+解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如MP4，FLV等。
+封装格式 封装格式如AVI、MPEG、Real Video将音频和视频组合打包成一个完整的文件.
+封装格式不会影响视频的画质，影响画质的是视频的编码格式。
+解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。
+比如FLV或TS格式数据，解封装之后得到H.264-AVC编码的视频码流和AAC编码的音频码流。
+编码 视频的本质是一帧又一帧的图片。
+所以对于一部每秒30帧，90分钟，分辨率为1920x1080，24位的真彩色的视频，在压缩之前的大小$S$满足： $$ 一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte) \ 总帧数n = 90 * 60 * 30 = 162000 \ 总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB) $$ 因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。
+视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC
+音频编码方式：MP3，AAC
+压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。
+解码 解码就是解压缩过程。
+解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如PCM数据）和视频像素数据（如YUV420，RGB数据）。
+音视频同步 根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。
+视频质量指标 分辨率 分辨率指的是视频图像在一个单位尺寸内的精密度。
+将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。
+视频的分辨率从数值上描述了像素点的个数，如1920x1080：视频在水平方向有1920个像素，垂直方向有1080个像素。
+常见的描述方式：
+1080P：指视频有1080行像素，P=&amp;gt;Progressive（逐行扫描） 2K：指视频有2000列像素 MP：像素总数，指像素的行数P与列数K乘积的结果（百万像素） 1080P的分辨率为1920x1080=2073600，所以1080P通常也称为200万像素分辨率 通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰" />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  
+
+  
+    <style>body{font-family:bree serif,sans-serif;-webkit-font-smoothing:antialiased;margin:0 20px}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:3rem}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="Ayamir&#39;s Blog">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post 中文" id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >净土</a
+    >
+  </div>
+  <div class="header-subtitle">生活不只眼前的苟且</div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="https://www.zhihu.com/people/MiraculousMoon" target="_blank">Zhihu</a>
+  </div>
+  
+  <div class="header-item">
+    <a href="https://github.com/ayamir" target="_blank">Github</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+  
+  <div class="lang-switch col-xs-3 col-xs-offset-9">
+    <a href="/en/">English</a>
+  </div>
+    
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">多媒体基础知识</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2021-12-13 10:03:17 CST">
+                13 Dec 2021
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+              <div class="post-author">
+                <a target="_blank" href="https://github.com/ayamir">@Ayamir</a>
+              </div>
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h1 id="媒体处理过程">媒体处理过程</h1>
+<p><img src="https://s2.loli.net/2021/12/13/8zFCbNiSJjxPoAH.png" alt="处理过程"></p>
+<h2 id="解协议">解协议</h2>
+<p>将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。</p>
+<p>音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如DASH、HLS将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。</p>
+<p>同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）</p>
+<p>解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如MP4，FLV等。</p>
+<h2 id="封装格式">封装格式</h2>
+<p>封装格式如AVI、MPEG、Real Video将音频和视频组合打包成一个完整的文件.</p>
+<p>封装格式不会影响视频的画质，影响画质的是视频的编码格式。</p>
+<p>解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。</p>
+<p>比如FLV或TS格式数据，解封装之后得到H.264-AVC编码的视频码流和AAC编码的音频码流。</p>
+<h2 id="编码">编码</h2>
+<p>视频的本质是一帧又一帧的图片。</p>
+<p>所以对于一部每秒30帧，90分钟，分辨率为1920x1080，24位的真彩色的视频，在压缩之前的大小$S$满足：
+$$
+一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte)
+\
+总帧数n = 90 * 60 * 30 = 162000
+\
+总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB)
+$$
+因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。</p>
+<p>视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC</p>
+<p>音频编码方式：MP3，AAC</p>
+<p>压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。</p>
+<h2 id="解码">解码</h2>
+<p>解码就是解压缩过程。</p>
+<p>解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如PCM数据）和视频像素数据（如YUV420，RGB数据）。</p>
+<h2 id="音视频同步">音视频同步</h2>
+<p>根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。</p>
+<h1 id="视频质量指标">视频质量指标</h1>
+<h2 id="分辨率">分辨率</h2>
+<ul>
+<li>
+<p>分辨率指的是视频图像在一个单位尺寸内的精密度。</p>
+</li>
+<li>
+<p>将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。</p>
+</li>
+<li>
+<p>视频的分辨率从数值上描述了像素点的个数，如1920x1080：视频在水平方向有1920个像素，垂直方向有1080个像素。</p>
+</li>
+<li>
+<p>常见的描述方式：</p>
+<ul>
+<li>1080P：指视频有<strong>1080行</strong>像素，P=&gt;Progressive（逐行扫描）</li>
+<li>2K：指视频有<strong>2000列</strong>像素</li>
+<li>MP：像素总数，指像素的行数P与列数K乘积的结果（百万像素）</li>
+<li>1080P的分辨率为1920x1080=2073600，所以1080P通常也称为200万像素分辨率</li>
+</ul>
+</li>
+<li>
+<p>通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰</p>
+</li>
+<li>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://www.reneelab.com.cn/m/2k-4k-video-resolution.html">科普：视频分辨率是什么？</a></li>
+<li><a href="https://www.zhihu.com/question/24205632/answer/648608086">「1080p」和「2k、4k」的关系与差别在哪里？</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="视频帧率">视频帧率</h2>
+<ul>
+<li>
+<p>帧率的单位FPS(Frame Per Second)或Hz，即每秒多少帧，决定视频画面的流畅程度。</p>
+</li>
+<li>
+<p>低帧率会导致播放卡顿，镜头移动不顺畅，并伴随画面模糊的主观体验；</p>
+<p>帧率过高则会造成眩晕的感觉。</p>
+</li>
+<li>
+<p>不同帧率的视频在支持不同帧率的设备上播放：</p>
+<ol>
+<li>
+<p>若设备最高支持60fps，则播放120fps视频的时候，设备会每隔一帧删除一帧，被删除的帧即成为无效帧。</p>
+<p>所以高帧率的视频在低帧率设备上播放时会导致播放卡顿。</p>
+</li>
+<li>
+<p>若设备最高支持120fps，则播放60fps视频的时候，设备会每隔一帧复制一帧，来填补空缺的帧位置。</p>
+<p>但是效果和在60fps上的设备播放一样，不能提升播放流畅度。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>关于显卡对帧率的影像：</p>
+<ol>
+<li>显示器帧率低而显卡输出帧率高时，会导致<a href="https://zh.wikipedia.org/wiki/%E7%95%AB%E9%9D%A2%E6%92%95%E8%A3%82">画面撕裂</a>：显示器同时将两帧或几帧显示在同一个画面上</li>
+<li>显示器帧率高而显卡输出帧率低时，同视频帧率高显示器帧率低的情况。</li>
+</ol>
+</li>
+</ul>
+<h2 id="视频码率">视频码率</h2>
+<ul>
+<li>
+<p>码率的概念出现在视频编码之后，因为压缩之后的视频已经成为二进制数据，所以使用码率的称呼。</p>
+</li>
+<li>
+<p>码率的单位是bps(bit per second)，即每秒多少比特。</p>
+</li>
+<li>
+<p>与视频质量的关系：</p>
+<ol>
+<li>
+<p>分辨率不变的情况下，码率越大，压缩比越好，画面质量越清晰。</p>
+<p>码率越高，精度越高，处理出的文件就越接近压缩前的原始状态，每一帧的图像质量越高，画质越清晰，当然对播放设备的解码能力要求也越高。</p>
+<p>压缩比越小，视频体积越大，越接近源文件。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2021/12/13/TBDfa7CI2RwHzZK.png" alt="常见分辨率、码率关系对照表"></p>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+            <div class="post-tags">
+              <a href="/tags/multimedia/">
+                Multimedia
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

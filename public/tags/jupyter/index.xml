@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jupyter on Ayamir&#39;s Blog</title>
+    <link>https://ayamir.github.io/tags/jupyter/</link>
+    <description>Recent content in Jupyter on Ayamir&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Feb 2022 17:19:26 +0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/jupyter/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Use Jupyter Notebook in Conda Env</title>
+      <link>https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/</link>
+      <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
+      
+      <guid>https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/</guid>
+      <description>激活预先配置好的conda环境，这里假设环境名为keras-tf-2.1.0：
+conda activate keras-tf-2.1.0 安装ipykernel：
+pip3 install ipykernel --user 为ipykernel安装环境：
+python3 -m ipykernel install --user --name=keras-tf-2.1.0 打开notebook更改服务之后刷新即可：</description>
+    </item>
+    
+  </channel>
+</rss>
