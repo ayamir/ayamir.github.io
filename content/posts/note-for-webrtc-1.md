@@ -10,9 +10,9 @@ categories: ["MM"]
 
 # 概况
 
-`WebRTC`提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和CPU消耗。
+`WebRTC`提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。
 
-视频自适应发生的情形：带宽或CPU资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。
+视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。
 
 视频自适应调整的对象：帧率与分辨率。
 
@@ -22,35 +22,35 @@ categories: ["MM"]
 
 资源实现了`Resource`接口：
 
-+ 当资源检测到被过度使用则调用`SetUsageState(kOveruse)`；
-+ 当资源不再被过度使用则调用`SetUsageState(kUnderuse)`。
+-   当资源检测到被过度使用则调用`SetUsageState(kOveruse)`；
+-   当资源不再被过度使用则调用`SetUsageState(kUnderuse)`。
 
 对所有的视频而言，默认有两种类型的资源：
 
-+ 质量标量资源
-+ 编码过度使用资源
+-   质量标量资源
+-   编码过度使用资源
 
-## QP标量资源
+## QP 标量资源
 
 质量标量资源监测发送视频流中编码之后的帧的量化参数（QP），确保视频流的对于当前的分辨率而言可以接受。
 
-每一帧被编码之后，`QualityScaler`就能获得相应的QP。
+每一帧被编码之后，`QualityScaler`就能获得相应的 QP。
 
-过度使用或者未被充分使用的信号在平均QP脱离QP阈值之后发出。
+过度使用或者未被充分使用的信号在平均 QP 脱离 QP 阈值之后发出。
 
-QP阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
+QP 阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
 
-需要注意的是QP标量只在降级偏好设置为`MAINTAIN_FRAMERATE`或`BALANCED`时启用。
+需要注意的是 QP 标量只在降级偏好设置为`MAINTAIN_FRAMERATE`或`BALANCED`时启用。
 
 ## 编码使用资源
 
-编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是CPU使用率的代理度量指标。
+编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是 CPU 使用率的代理度量指标。
 
 当平均编码使用超过了设定的阈值，就会触发过度使用的信号。
 
 ## 插入其他资源
 
-自定义的资源可以通过`Call:AddAdaptationResource`方法插入。
+自定义的资源可以通过`Call::AddAdaptationResource`方法插入。
 
 # 自适应
 
@@ -60,11 +60,11 @@ QP阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
 
 ## 降级偏好设置
 
-有3种设置，在`RtpParameters`的头文件中定义：
+有 3 种设置，在`RtpParameters`的头文件中定义：
 
-+ `MAINTAIN_FRAMERATE`: 自适应分辨率
-+ `MAINTAIN_RESOLUTION`: 自适应帧率
-+ `BALANCED`: 自适应帧率或分辨率
+-   `MAINTAIN_FRAMERATE`: 自适应分辨率
+-   `MAINTAIN_RESOLUTION`: 自适应帧率
+-   `BALANCED`: 自适应帧率或分辨率
 
 降级偏好设置在`RtpParameters`中的`degradation_perference`属性中设置。
 
@@ -76,8 +76,8 @@ QP阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
 
 对于自适应而言需要被设置的属性为：
 
-+ `target_pixel_count`: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等，
-+ `max_pixel_count`: 每个视频帧中像素点的最大数量，不能被超过。
-+ `max_framerate_fps`: 视频的最大帧率，超过这个阈值的帧将会被丢弃。
+-   `target_pixel_count`: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等，
+-   `max_pixel_count`: 每个视频帧中像素点的最大数量，不能被超过。
+-   `max_framerate_fps`: 视频的最大帧率，超过这个阈值的帧将会被丢弃。
 
 `VideoSinkWants`可以被任何视频源应用，或者根据需要可以直接使用其基类`AdaptationVideoTraceSource`来执行自适应。

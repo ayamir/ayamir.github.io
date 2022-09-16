@@ -556,6 +556,24 @@
         ]
     },
     {
+        "title": "Note for WebRTC (1): Video Adaptation",
+        "uri": "posts/note-for-webrtc-1",
+        "content": "WebRTC                                    CPU                    CPU                                                                         Resources                                               Resource                  SetUsageState kOveruse                SetUsageState kUnderuse                                        QP                                QP                                 QualityScaler        QP                     QP    QP         QP    EncoderInfo  scaling_settings              QP            MAINTAIN_FRAMERATE BALANCED                                             CPU                                                           Call  AddAdaptationResource                                  ResourceAdaptationProcessor   VideoStreamAdapter   Adaptation                    ResourceAdaptationProcessor                   Adaptation           3      RtpParameters         MAINTAIN_FRAMERATE         MAINTAIN_RESOLUTION        BALANCED                   RtpParameters  degradation_perference       VideoSinkWants                                  VideoSinkWants                                                     targetpixelcount                                                      maxpixelcount                        maxframeratefps                         VideoSinkWants                          AdaptationVideoTraceSource",
+        "objectID": "posts/note-for-webrtc-1",
+        "date": "2022-09-15T12:48:51.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "WebRTC"
+        ],
+        "tags": [
+            "WebRTC"
+        ],
+        "categories": [
+            "MM"
+        ]
+    },
+    {
         "title": "360度流媒体面临的挑战、机遇和解决方案",
         "uri": "posts/note1",
         "content": "360                      360                 3D                          2                      3D                2D                               ERP                                    180   180   90   90                                                         CMP                                                                  25                                                                  TSP                                                                      80              120                180                                                                                                                          6                                                               AVC H 264 HEVC H 265  H 264   16x16                                         H 265        H 264     H 265     50       H 265  tiling               tile                                VVC    H 265      VVC    30                   DASH",
