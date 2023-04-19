@@ -1,6 +1,12 @@
 # Use Jupyter Notebook in Conda Env
 
 
+0. 远程启动`jupyter notebool`：
+
+   ```shell
+   jupyter notebook --no-browser --ip="<server-ip>" --port="<server-port>"
+   ```
+
 1. 激活预先配置好的`conda`环境，这里假设环境名为`keras-tf-2.1.0`：
 
    ```sh
