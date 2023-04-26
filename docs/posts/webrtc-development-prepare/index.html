@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Webrtc Development Prepare - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Webrtc Development Prepare" />
+<meta property="og:description" content="本文主要记录笔者在Gentoo Linux下面搭建WebRTC开发环境的过程。 准备工作 网络：可以科学上网的梯子 IDE：VSCode或者CLio" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/webrtc-development-prepare/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-23T21:28:38+08:00" />
+<meta property="article:modified_time" content="2023-04-23T21:28:38+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Webrtc Development Prepare"/>
+<meta name="twitter:description" content="本文主要记录笔者在Gentoo Linux下面搭建WebRTC开发环境的过程。 准备工作 网络：可以科学上网的梯子 IDE：VSCode或者CLio"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/webrtc-development-prepare/" /><link rel="prev" href="https://ayamir.github.io/posts/note-for-webrtc-1/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.1be03ad7df428f6727cc42c4c868ed4d8c551c5c2ba96602d9058d3840e29092.css" integrity="sha256-G&#43;A6199Cj2cnzELEyGjtTYxVHFwrqWYC2QWNOEDikJI="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Webrtc Development Prepare",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/webrtc-development-prepare\/"
+        },"genre": "posts","keywords": "WebRTC","wordcount":  1520 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/webrtc-development-prepare\/","datePublished": "2023-04-23T21:28:38+08:00","dateModified": "2023-04-23T21:28:38+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Webrtc Development Prepare</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/webrtc/"><i class="far fa-folder fa-fw"></i>WebRTC</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-23">2023-04-23</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1520 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#准备工作">准备工作</a></li>
+        <li><a href="#安装depot_tools">安装<code>depot_tools</code></a></li>
+        <li><a href="#克隆代码">克隆代码</a></li>
+        <li><a href="#编译webrtc">编译WebRTC</a></li>
+        <li><a href="#搭建开发环境">搭建开发环境</a>
+          <ul>
+            <li><a href="#配置clion属性">配置CLion属性</a></li>
+            <li><a href="#配置gdb">配置gdb</a></li>
+            <li><a href="#配置intellisense">配置intellisense</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>本文主要记录笔者在Gentoo Linux下面搭建WebRTC开发环境的过程。</p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>网络：可以科学上网的梯子</li>
+<li>IDE：VSCode或者CLion</li>
+</ol>
+<h2 id="安装depot_tools">安装<code>depot_tools</code></h2>
+<p>Google有自己的一套用于管理Chromium项目的工具，名叫<code>depot_tools</code>，其中有包括<code>git</code>在内的一系列工具和脚本。</p>
+<img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427003507935.png" alt="image-20230427003507935" style="zoom:80%;" />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 创建google目录用于存储google相关的代码</span>
+</span></span><span class="line"><span class="cl">mkdir ~/google
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ~/google
+</span></span><span class="line"><span class="cl"><span class="c1"># clone depot_tools</span>
+</span></span><span class="line"><span class="cl">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>克隆完成之后需要将<code>depot_tools</code>的路径加到<code>PATH</code>中，Linux上添加环境变量最简单的方式是修改<code>~/.profile</code>，这种方式与你的登录shell是什么没有关系，不管是<code>fish</code>还是<code>bash</code>还是<code>zsh</code>都会吃这种方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># ~/.profile</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">GOOGLE_BIN</span><span class="o">=</span><span class="nv">$HOME</span>/google/depot_tools
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$GOOGLE_BIN</span>:<span class="nv">$PATH</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这种方式需要你注销重新登录。</p>
+<h2 id="克隆代码">克隆代码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir webrtc-checkout
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> webrtc-checkout
+</span></span><span class="line"><span class="cl">fetch --nohooks webrtc
+</span></span><span class="line"><span class="cl">gclient sync
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>整个WebRTC的项目代码大小约20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。</p>
+<p>克隆期间可能会因为网络问题中断，重新执行<code>gclient sync</code>即可，直到所有的模块都克隆完毕。</p>
+<p>按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不checkout的话，可能你的commit还没写完，就被Remote的change给覆盖了，还要手动处理冲突。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> src
+</span></span><span class="line"><span class="cl">git checkout master
+</span></span><span class="line"><span class="cl">git new-branch &lt;branch-name&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编译webrtc">编译WebRTC</h2>
+<p>关于WebRTC的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
+<img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427010325904.png" alt="image-20230427010325904" style="zoom:80%;" />
+<p>如上图所示，113分支是当前的稳定分支，对应的tag是<code>branch-head/5672</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/google/webrtc-checkout/src
+</span></span><span class="line"><span class="cl">git checkout branch-heads/5672
+</span></span><span class="line"><span class="cl">git switch -c m113
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建本地分支之后就可以用<code>gn</code>生成<code>ninja</code>文件了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gn gen out/Default --root<span class="o">=</span><span class="s2">&#34;.&#34;</span> --args<span class="o">=</span><span class="s1">&#39;is_debug=true target_os=&#34;linux&#34; target_cpu=&#34;x64&#34; rtc_include_tests=false rtc_use_h264=true rtc_enable_protobuf=false is_clang=true symbol_level=0 enable_iterator_debugging=false is_component_build=false use_rtti=true rtc_use_x11=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里使用了<code>clang</code>并且启用了<code>h264</code>，详细的<code>gn</code>参数可以参考<a href="https://www.chromium.org/developers/gn-build-configuration/" target="_blank" rel="noopener noreffer">gn-build-configuration</a>和项目根目录下的<code>webrtc.gni</code>文件。</p>
+<p>之后使用<code>autoninja</code>进行编译：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">autoninja -C out/Default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果如下：</p>
+<img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427011455974.png" alt="image-20230427011455974" style="zoom:80%;" />
+<p>可以看到默认生成了几个样例的可执行文件。</p>
+<img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427011556056.png" alt="image-20230427011556056" style="zoom:80%;" />
+<p>cd到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接最终生成的可以引用的库文件。</p>
+<h2 id="搭建开发环境">搭建开发环境</h2>
+<p>Google官方给出了Chromium项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion配置指南</a>，所以只需要照猫画虎给WebRTC配置一下。</p>
+<h3 id="配置clion属性">配置CLion属性</h3>
+<p>因为整个项目比较大，所以需要调大CLion的VM内存和intellisence支持的文件大小：</p>
+<p><code>Help</code>-&gt; <code>Edit Custom VM Options</code>，在文件的末尾添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-Xmx8g
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示给VM设定<code>8G</code>的可用内存，这样基本上不用担心使用过程因为内存不足而CLion性能不够了。</p>
+<p><code>Help</code>-&gt;<code>Edit Custom Properties</code>，在文件的末尾添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">idea.max.intellisense.filesize=12500
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示为大小为<code>12500KB</code>也就是<code>12M</code>以下的文件提供intellisense支持。</p>
+<h3 id="配置gdb">配置gdb</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim ~/.gdbinit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加下面一行</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/google/webrtc-checkout/src/tools/gdb/gdbinit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后在CLion中的<code>Settings</code>-&gt;<code>Toolchain</code>-&gt;<code>Debugger</code>选择系统自带的gdb：<code>/usr/bin/gdb</code>即可。</p>
+<h3 id="配置intellisense">配置intellisense</h3>
+<p>因为WebRTC用的是<code>gn</code>+<code>ninja</code>作为构建工具，而<code>CLion</code>目前只支持<code>cmake</code>，所以当要求配置<code>CMakeLists.txt</code>时直接无视即可。网络上有说用<code>gn_to_cmake.py</code>这个脚本的，但是我没看懂这东西的功能，反正是不能生成<code>CMakeLists.txt</code>，只是生成一个<code>json</code>文件，并不能用于CLion的索引。</p>
+<p>我这边成功开启IDE语法高亮和索引的姿势是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd webrtc-checkout/src
+</span></span><span class="line"><span class="cl">python3 ./tools/clang/scripts/generate_compdb.py -p ./out/Default -o ./compile_commands.json --target_os=linux
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这一步会生成CLion可以自动识别的<code>compile_commands.json</code>文件，从而可以正确索引项目的代码并提供代码补全功能。</p>
+<img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427011803234.png" alt="image-20230427011803234" style="zoom:80%;" />
+<p>之后每次启动项目CLion就会自动索引项目文件，就可以愉快地看代码和写代码啦！</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/webrtc/">WebRTC</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-04-23</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/webrtc-development-prepare/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/note-for-webrtc-1/" class="prev" rel="prev" title="Note for WebRTC (1): Video Adaptation"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.39a97596903cc57488c5bee6fde4825489cd0faf1c3a8ca3520f3616b0be4a44.js" integrity="sha256-Oal1lpA8xXSIxb7m/eSCVInND68cOoyjUg82FrC&#43;SkQ="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.904025b078f2ab8ff417a039c698b64e0484569262eb0830aaa52a18b479a5d9.js" integrity="sha256-kEAlsHjyq4/0F6A5xpi2TgSEVpJi6wgwqqUqGLR5pdk="></script></body></html>

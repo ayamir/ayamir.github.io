@@ -4,7 +4,178 @@
         <link>https://ayamir.github.io/posts/</link>
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Webrtc Development Prepare</title>
+    <link>https://ayamir.github.io/posts/webrtc-development-prepare/</link>
+    <pubDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webrtc-development-prepare/</guid>
+    <description><![CDATA[<p>本文主要记录笔者在Gentoo Linux下面搭建WebRTC开发环境的过程。</p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>网络：可以科学上网的梯子</li>
+<li>IDE：VSCode或者CLion</li>
+</ol>
+<h2 id="安装depot_tools">安装<code>depot_tools</code></h2>
+<p>Google有自己的一套用于管理Chromium项目的工具，名叫<code>depot_tools</code>，其中有包括<code>git</code>在内的一系列工具和脚本。</p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 创建google目录用于存储google相关的代码</span>
+</span></span><span class="line"><span class="cl">mkdir ~/google
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ~/google
+</span></span><span class="line"><span class="cl"><span class="c1"># clone depot_tools</span>
+</span></span><span class="line"><span class="cl">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>克隆完成之后需要将<code>depot_tools</code>的路径加到<code>PATH</code>中，Linux上添加环境变量最简单的方式是修改<code>~/.profile</code>，这种方式与你的登录shell是什么没有关系，不管是<code>fish</code>还是<code>bash</code>还是<code>zsh</code>都会吃这种方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># ~/.profile</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">GOOGLE_BIN</span><span class="o">=</span><span class="nv">$HOME</span>/google/depot_tools
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$GOOGLE_BIN</span>:<span class="nv">$PATH</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是这种方式需要你注销重新登录。</p>
+<h2 id="克隆代码">克隆代码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir webrtc-checkout
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> webrtc-checkout
+</span></span><span class="line"><span class="cl">fetch --nohooks webrtc
+</span></span><span class="line"><span class="cl">gclient sync
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>整个WebRTC的项目代码大小约20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。</p>
+<p>克隆期间可能会因为网络问题中断，重新执行<code>gclient sync</code>即可，直到所有的模块都克隆完毕。</p>
+<p>按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不checkout的话，可能你的commit还没写完，就被Remote的change给覆盖了，还要手动处理冲突。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> src
+</span></span><span class="line"><span class="cl">git checkout master
+</span></span><span class="line"><span class="cl">git new-branch &lt;branch-name&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编译webrtc">编译WebRTC</h2>
+<p>关于WebRTC的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
+
+<p>如上图所示，113分支是当前的稳定分支，对应的tag是<code>branch-head/5672</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/google/webrtc-checkout/src
+</span></span><span class="line"><span class="cl">git checkout branch-heads/5672
+</span></span><span class="line"><span class="cl">git switch -c m113
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建本地分支之后就可以用<code>gn</code>生成<code>ninja</code>文件了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gn gen out/Default --root<span class="o">=</span><span class="s2">&#34;.&#34;</span> --args<span class="o">=</span><span class="s1">&#39;is_debug=true target_os=&#34;linux&#34; target_cpu=&#34;x64&#34; rtc_include_tests=false rtc_use_h264=true rtc_enable_protobuf=false is_clang=true symbol_level=0 enable_iterator_debugging=false is_component_build=false use_rtti=true rtc_use_x11=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里使用了<code>clang</code>并且启用了<code>h264</code>，详细的<code>gn</code>参数可以参考<a href="https://www.chromium.org/developers/gn-build-configuration/" target="_blank" rel="noopener noreffer">gn-build-configuration</a>和项目根目录下的<code>webrtc.gni</code>文件。</p>
+<p>之后使用<code>autoninja</code>进行编译：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">autoninja -C out/Default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果如下：</p>
+
+<p>可以看到默认生成了几个样例的可执行文件。</p>
+
+<p>cd到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接最终生成的可以引用的库文件。</p>
+<h2 id="搭建开发环境">搭建开发环境</h2>
+<p>Google官方给出了Chromium项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion配置指南</a>，所以只需要照猫画虎给WebRTC配置一下。</p>
+<h3 id="配置clion属性">配置CLion属性</h3>
+<p>因为整个项目比较大，所以需要调大CLion的VM内存和intellisence支持的文件大小：</p>
+<p><code>Help</code>-&gt; <code>Edit Custom VM Options</code>，在文件的末尾添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-Xmx8g
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示给VM设定<code>8G</code>的可用内存，这样基本上不用担心使用过程因为内存不足而CLion性能不够了。</p>
+<p><code>Help</code>-&gt;<code>Edit Custom Properties</code>，在文件的末尾添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">idea.max.intellisense.filesize=12500
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示为大小为<code>12500KB</code>也就是<code>12M</code>以下的文件提供intellisense支持。</p>
+<h3 id="配置gdb">配置gdb</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim ~/.gdbinit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加下面一行</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/google/webrtc-checkout/src/tools/gdb/gdbinit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后在CLion中的<code>Settings</code>-&gt;<code>Toolchain</code>-&gt;<code>Debugger</code>选择系统自带的gdb：<code>/usr/bin/gdb</code>即可。</p>
+<h3 id="配置intellisense">配置intellisense</h3>
+<p>因为WebRTC用的是<code>gn</code>+<code>ninja</code>作为构建工具，而<code>CLion</code>目前只支持<code>cmake</code>，所以当要求配置<code>CMakeLists.txt</code>时直接无视即可。网络上有说用<code>gn_to_cmake.py</code>这个脚本的，但是我没看懂这东西的功能，反正是不能生成<code>CMakeLists.txt</code>，只是生成一个<code>json</code>文件，并不能用于CLion的索引。</p>
+<p>我这边成功开启IDE语法高亮和索引的姿势是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd webrtc-checkout/src
+</span></span><span class="line"><span class="cl">python3 ./tools/clang/scripts/generate_compdb.py -p ./out/Default -o ./compile_commands.json --target_os=linux
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这一步会生成CLion可以自动识别的<code>compile_commands.json</code>文件，从而可以正确索引项目的代码并提供代码补全功能。</p>
+
+<p>之后每次启动项目CLion就会自动索引项目文件，就可以愉快地看代码和写代码啦！</p>
+]]></description>
+</item>
+<item>
     <title>Note for WebRTC (1): Video Adaptation</title>
     <link>https://ayamir.github.io/posts/note-for-webrtc-1/</link>
     <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-webrtc-1/</guid>
@@ -1581,131 +1752,6 @@ There are various buffers:</p>
 <li>Produce high overhead on the server side with a high complexity</li>
 <li>These schemes also need modifications to the MPD or a custom server software to implement the bitrate adaptation logic.(a violation of the DASH-standard design principles)</li>
 </ol>
-]]></description>
-</item>
-<item>
-    <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-    <link>https://ayamir.github.io/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
-    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
-    <description><![CDATA[<h1 id="paper-overview">Paper Overview</h1>
-<p>Link: <a href="https://ieeexplore.ieee.org/document/8424813" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/document/8424813</a></p>
-<p>Level: IEEE Communications Surveys &amp; Tutorials 2019</p>
-<h1 id="background">Background</h1>
-<h2 id="traditional-non-has-ip-based-streaming">Traditional non-HAS IP-based streaming</h2>
-<ol>
-<li>
-<p>The client receives media that is typically <em>pushed</em> by a media server using <strong>connection-oriented</strong> protocol such as Real-time Messaging Protocol(RTMP/TCP) or <strong>connectionless</strong> protocol such as Real-time Transport Protocol(RTP/UDP).</p>
-</li>
-<li>
-<p>Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</p>
-</li>
-<li>
-<p>The media server performs rate adaption and data delivery scheduling based on the RTP Control Protocol(RTCP) reports sent by the client.</p>
-</li>
-<li>
-<p>When it comes to NAT and firewall, additional protocols or configurations are needed during the session establishment.</p>
-</li>
-</ol>
-<p>The characteristics result in complex and expensive servers. These scalability and vendor dependency issues as well as high maintenance costs have resulted in deployment challenges for protocols like RTSP.</p>
-<h2 id="has">HAS</h2>
-<p>Around 2005, HTTP adaptive streaming(HAS) became popular and dominant, which treated the media content like regular Web content and delivered it in small pieces over HTTP protocol.</p>
-<ol>
-<li>HTTP as application and TCP as the transport-layer protocol.</li>
-<li>Client <em>pull</em> the data from a standard HTTP server, which simply hosts the media content.</li>
-<li>HAS solutions employ dynamic adaptation with respect to varying network conditions to provide a seamless streaming experience.</li>
-<li>The original file/stream is partitioned into <em>segments</em> (also called <em>chunks</em>) of equi-length playback time. Multiple versions(also called representations) of each segment are generated that vary in bitrate/resolution/quality using an encoder or a transcoder.</li>
-<li>The server generates an index file, which is a manifest that lists the available representations including HTTP urls to identify the segments along with their availability times.</li>
-<li>The client first receives the manifest that contains the metadata for video, audio, subtitles and other features, then constantly measures certain parameters: available network bandwidth, buffer status, battery and CPU levels, etc. According to these parameters, the HAS client repeatedly fetches the most suitable next segment among the available representations from the server.</li>
-</ol>
-<p>Advantages:</p>
-<ol>
-<li>It use HTTP to deliver video segments, which simplifies the traversal through NATs and firewalls.</li>
-<li>At the server side, it use conventional Web servers or caches available within the networks of ISPs and CDNs.</li>
-<li>At the client side, it requests and fetches each segment independently from others and maintains the playback session state, whereas the server is not required to maintain any state.</li>
-<li>It doesn&rsquo;t require a persistent connection between the client and server, which improves system scalability and reduces implementation and deployment costs.</li>
-</ol>
-<h2 id="comparison-summary">Comparison Summary</h2>
-<p></p>
-<p></p>
-<h1 id="challenges">Challenges</h1>
-<h2 id="multi-client-competitionstability-issues">Multi-Client Competition/Stability Issues</h2>
-<p>A centralized management controller can enhance the overall video quality, while improve QoE.</p>
-<p>A robust HAS scheme should achieve 3 main objectives:</p>
-<ol>
-<li><em>Stability</em>: HAS clients should avoid frequent bitrate switching.</li>
-<li><em>Fairness</em>: Multiple HAS clients competing for available bandwidth should equally share network resources based on viewer, content and device characteristics.</li>
-<li><em>High Utilization</em>: While the clients attempt to be stable and fair, network resources should be used as efficiently as possible.</li>
-</ol>
-<p>A streaming session consists of 2 states: buffer-filling state and steady state.</p>
-<ul>
-<li>
-<p>The buffer-filling state aims to fill the playback buffer and reach a certain threshold where the playback can be initiated or resumed.</p>
-</li>
-<li>
-<p>The steady state is to keep the buffer level above a minimum threshold despite bandwidth fluctuation or interruptions. The steady state consists of 2 activity periods referred to as ON and OFF.</p>
-<p>The client requests a segment every $T_s$ time units, where $T_s$ represents the content time duration of each segment, and sum of ON and OFF period durations equals $T_s$.</p>
-<ul>
-<li>ON period: client downloads the current segment and notes the achieved throughput value that will be later used in selecting the appropriate bitrate for future segments.</li>
-<li>OFF period: client becomes idle temporarily.</li>
-</ul>
-</li>
-</ul>
-<p></p>
-<p>There are different cases during competition process.</p>
-<ol>
-<li>
-<p>The ON periods of clients don&rsquo;t overlap during the current segment download, each client will overestimate the available bandwidth. So longer download time will cause the initially non-overlapping ON periods to eventually start overlapping.</p>
-<p></p>
-</li>
-<li>
-<p>As the amount of overlap increases, the clients will have lower bandwidth estimations and start selecting segments that have lower bitrate. These segment will take less time to download, causing the amount of overlap among the ON periods to precedurally shorten, until the process reverts to its initial situation.</p>
-<p></p>
-</li>
-<li>
-<p>The cycle repeats itself, causing periodic up and down shift in the selected bitrates, leading to unstable video quality, unfairness, and underutilization.</p>
-<p></p>
-</li>
-</ol>
-<h2 id="consistent-quality-streaming">Consistent-Quality Streaming</h2>
-<p>The correlation between video bitrate and its perceptual quality is non-linear.</p>
-<ul>
-<li>Different video content types have unique characteristics.</li>
-<li>Differences of inter-stream and intra-stream video scene complexity across content.</li>
-</ul>
-<p></p>
-<p></p>
-<h2 id="qoe-optimization-and-measurement">QoE Optimization and Measurement</h2>
-<p>HAS scheme uses application control loop, which also interacts with a lower-layer control loop(such as TCP congestion control). It plays a key role in determining the viewer QoE.</p>
-<p></p>
-<p>Factors influencing QoE are categorized as:</p>
-<ol>
-<li>Perceptual, directly perceived by the viewer.</li>
-<li>Technical, indirectly affecting the QoE.</li>
-</ol>
-<h3 id="perceptual">Perceptual</h3>
-<p>Perceptual factors include the video image quality, initial delay, stalling duration and frequency.</p>
-<p>The impact of these factors differs depending on the users subjectivity.</p>
-<p>Most users consider initial delays less critical than stalling.</p>
-<h3 id="technical">Technical</h3>
-<p>Technical factors include the algorithms, parameters, and hardware/software used in streaming system.</p>
-<p>Specifically, factors are:</p>
-<ul>
-<li>Server side: encoding parameters, video qualities and segment size.</li>
-<li>Client side: adaptation parameters and environment that clients reside in.</li>
-</ul>
-<h3 id="qoe-measurement">QoE measurement</h3>
-<ol>
-<li>Objective matrics: Peak Signal-to-Noise Ratio(PSNR), Structural SIMilarity(SSIM and SSIMplus), Perceived Video Quality(PVQ) and Statistically Indifferent Quality Variation(SIQV).</li>
-<li>Subjective matrics: Mean Opinion Score(MOS).</li>
-<li>Quality-of-Service (QoS)-derived matrics: startup delay, average video bitrate, quality switches and rebuffering events.</li>
-</ol>
-<p>Try to optimize each metric is difficult because it may result in conflicts.</p>
-<h2 id="inter-destination-multimedia-synchronization">Inter-Destination Multimedia Synchronization</h2>
-<p>Online communities are drifting towards watching online videos together in a synchronized manner.</p>
-<p>Having Multiple streaming clients distributed in different geographical locations poses challenges in delivering video content simultaneously, while keeping the playback state of each client the same.</p>
-<p>Typically, IDMS solutions involve a master node to which clients synchronize their playout to.</p>
-<p>Rainer et proposed an IDMS architecture for DASH by using a distribute control scheme where peers can communicate and negotiate a reference placback timestamp in each session.</p>
-<p>In another work, Rainer et provided a crowdsourced subjective evaluation to find a asynchronism threshold at which QoE was not significantly affected.</p>
 ]]></description>
 </item>
 </channel>
