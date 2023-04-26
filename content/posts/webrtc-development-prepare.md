@@ -66,7 +66,7 @@ git new-branch <branch-name>
 
 <img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427010325904.png" alt="image-20230427010325904" style="zoom:80%;" />
 
-如上图所示，113分支是当前的稳定分支，对应的tag是`branch-head/5672`：
+如上图所示，113分支是当前的稳定分支，对应的tag是`branch-heads/5672`：
 
 ```shell
 cd ~/google/webrtc-checkout/src
@@ -82,13 +82,11 @@ gn gen out/Default --root="." --args='is_debug=true target_os="linux" target_cpu
 
 这里使用了`clang`并且启用了`h264`，详细的`gn`参数可以参考[gn-build-configuration](https://www.chromium.org/developers/gn-build-configuration/)和项目根目录下的`webrtc.gni`文件。
 
-之后使用`autoninja`进行编译：
+之后使用`autoninja`进行编译，编译时会吃满你PC的所有核心，编译时间取决于你PC的配置：
 
 ```shell
 autoninja -C out/Default
 ```
-
-结果如下：
 
 <img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427011455974.png" alt="image-20230427011455974" style="zoom:80%;" />
 
@@ -96,7 +94,7 @@ autoninja -C out/Default
 
 <img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20230427011556056.png" alt="image-20230427011556056" style="zoom:80%;" />
 
-cd到`obj`目录下可以看到`libwebrtc.a`文件，就是编译链接最终生成的可以引用的库文件。
+cd到`obj`目录下可以看到`libwebrtc.a`文件，就是编译链接之后最终生成的可以引用的库文件。
 
 ## 搭建开发环境
 

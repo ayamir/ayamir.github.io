@@ -80,7 +80,7 @@
 </div><h2 id="编译webrtc">编译WebRTC</h2>
 <p>关于WebRTC的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
 
-<p>如上图所示，113分支是当前的稳定分支，对应的tag是<code>branch-head/5672</code>：</p>
+<p>如上图所示，113分支是当前的稳定分支，对应的tag是<code>branch-heads/5672</code>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -103,7 +103,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里使用了<code>clang</code>并且启用了<code>h264</code>，详细的<code>gn</code>参数可以参考<a href="https://www.chromium.org/developers/gn-build-configuration/" target="_blank" rel="noopener noreffer">gn-build-configuration</a>和项目根目录下的<code>webrtc.gni</code>文件。</p>
-<p>之后使用<code>autoninja</code>进行编译：</p>
+<p>之后使用<code>autoninja</code>进行编译，编译时会吃满你PC的所有核心，编译时间取决于你PC的配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -112,11 +112,10 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">autoninja -C out/Default
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>结果如下：</p>
-
+</div>
 <p>可以看到默认生成了几个样例的可执行文件。</p>
 
-<p>cd到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接最终生成的可以引用的库文件。</p>
+<p>cd到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接之后最终生成的可以引用的库文件。</p>
 <h2 id="搭建开发环境">搭建开发环境</h2>
 <p>Google官方给出了Chromium项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion配置指南</a>，所以只需要照猫画虎给WebRTC配置一下。</p>
 <h3 id="配置clion属性">配置CLion属性</h3>
