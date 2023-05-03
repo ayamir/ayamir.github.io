@@ -1,4 +1,4 @@
-# Note for WebRTC (1): Video Adaptation
+# WebRTC 中关于视频自适应的相关设置
 
 
 # 概况
@@ -15,13 +15,13 @@
 
 资源实现了`Resource`接口：
 
--   当资源检测到被过度使用则调用`SetUsageState(kOveruse)`；
--   当资源不再被过度使用则调用`SetUsageState(kUnderuse)`。
+- 当资源检测到被过度使用则调用`SetUsageState(kOveruse)`；
+- 当资源不再被过度使用则调用`SetUsageState(kUnderuse)`。
 
 对所有的视频而言，默认有两种类型的资源：
 
--   质量标量资源
--   编码过度使用资源
+- 质量标量资源
+- 编码过度使用资源
 
 ## QP 标量资源
 
@@ -55,9 +55,9 @@ QP 阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
 
 有 3 种设置，在`RtpParameters`的头文件中定义：
 
--   `MAINTAIN_FRAMERATE`: 自适应分辨率
--   `MAINTAIN_RESOLUTION`: 自适应帧率
--   `BALANCED`: 自适应帧率或分辨率
+- `MAINTAIN_FRAMERATE`: 自适应分辨率
+- `MAINTAIN_RESOLUTION`: 自适应帧率
+- `BALANCED`: 自适应帧率或分辨率
 
 降级偏好设置在`RtpParameters`中的`degradation_perference`属性中设置。
 
@@ -69,9 +69,9 @@ QP 阈值在`EncoderInfo`中的`scaling_settings`属性中设置。
 
 对于自适应而言需要被设置的属性为：
 
--   `target_pixel_count`: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等，
--   `max_pixel_count`: 每个视频帧中像素点的最大数量，不能被超过。
--   `max_framerate_fps`: 视频的最大帧率，超过这个阈值的帧将会被丢弃。
+- `target_pixel_count`: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等，
+- `max_pixel_count`: 每个视频帧中像素点的最大数量，不能被超过。
+- `max_framerate_fps`: 视频的最大帧率，超过这个阈值的帧将会被丢弃。
 
 `VideoSinkWants`可以被任何视频源应用，或者根据需要可以直接使用其基类`AdaptationVideoTraceSource`来执行自适应。
 

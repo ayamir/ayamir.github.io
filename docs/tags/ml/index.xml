@@ -5,7 +5,7 @@
         <description>ML - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/ml/" rel="self" type="application/rss+xml" /><item>
-    <title>Note for MLflow</title>
+    <title>MLflow 的用法</title>
     <link>https://ayamir.github.io/posts/note-for-mlflow/</link>
     <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-mlflow/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
@@ -13,7 +13,7 @@
 <p>其主要的作用是：</p>
 <ul>
 <li>完成训练和测试过程中不同超参数的结果的记录、对比和可视化——<code>MLflow Tracking</code></li>
-<li>以一种可复现重用的方式包装ML代码——<code>MLflow Projects</code></li>
+<li>以一种可复现重用的方式包装 ML 代码——<code>MLflow Projects</code></li>
 <li>简化模型部署的难度——<code>MLflow Models</code></li>
 <li>提供中心化的模型存储来管理全生命周期——<code>MLflow Model Registry</code></li>
 </ul>
@@ -29,7 +29,7 @@
 <p></p>
 <p><code>MLmode</code>文件内容示例如下：</p>
 <p></p>
-<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来serve一个有<code>python_function</code> <code>flavor</code>的模型：</p>
+<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来 serve 一个有<code>python_function</code> <code>flavor</code>的模型：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

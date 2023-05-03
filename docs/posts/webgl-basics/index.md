@@ -1,4 +1,4 @@
-# WebGL Basics
+# WebGL 基础知识
 
 
 # Coordinate System
@@ -37,10 +37,10 @@ let vertices = [0.5, 0.5, 0.1, -0.5, 0.5, -0.5];
 Buffers are the memory areas of WebGL that hold the data.
 There are various buffers:
 
--   `drawing buffer`
--   `frame buffer`
--   `vertex buffer`
--   `index buffer`
+- `drawing buffer`
+- `frame buffer`
+- `vertex buffer`
+- `index buffer`
 
 The `vertex buffer` and `index buffer` are used to describe and process the geometry of the model, stores data about `vertices` and `indices` respectively.
 
@@ -50,8 +50,8 @@ The `frame buffer` is a portion of graphics memory that hold the scene data. Thi
 
 The WebGL API provides two methods to draw 2D or 3D objects:
 
--   `drawArrays()`
--   `drawElements()`
+- `drawArrays()`
+- `drawElements()`
 
 They accept a parameter called `mode` using which you can select the object you want to draw.
 
@@ -75,15 +75,15 @@ There are two types of shaders: `Vertex Shader` and `Fragment Shader`.
 
 ### Vertex Shader
 
--   called on every vertex.
--   used to transform the geometry from one place to another.
--   handle the data of each vertex such as vertex coordinates, normals, colors, and texture coordinates.
-    -   vertex transformation
-    -   normal transformation and normalization
-    -   texture coordinate generation
-    -   texture coordinate transformation
-    -   lighting
-    -   color material application
+- called on every vertex.
+- used to transform the geometry from one place to another.
+- handle the data of each vertex such as vertex coordinates, normals, colors, and texture coordinates.
+  - vertex transformation
+  - normal transformation and normalization
+  - texture coordinate generation
+  - texture coordinate transformation
+  - lighting
+  - color material application
 
 ### Fragment Shader(Pixel Shader)
 
@@ -93,11 +93,11 @@ A mesh is formed by multiple triangles. The surface of each of the triangles is 
 
 It is written to calculate and fill the color on _individual pixels_.
 
--   operations on interpolated values
--   texture access
--   texture application
--   fog
--   color sum
+- operations on interpolated values
+- texture access
+- texture application
+- fog
+- color sum
 
 ![Fragment-Shader-and-Vertex-Shader](https://raw.githubusercontent.com/ayamir/blog-imgs/main/fragment_shader.jpg)
 
@@ -105,9 +105,9 @@ It is written to calculate and fill the color on _individual pixels_.
 
 To handle the data in the shader programs, ES SL provides three types of variables.
 
--   Attributes: hold the input values of the vertex shader program. Attributes point to the vertex buffer objects that contains per-vertex data.
+- Attributes: hold the input values of the vertex shader program. Attributes point to the vertex buffer objects that contains per-vertex data.
 
--   Uniforms: hold the input data that is common for both vertex and fragment shaders, such as light position, texture coordinates and color.
+- Uniforms: hold the input data that is common for both vertex and fragment shaders, such as light position, texture coordinates and color.
 
--   Varyings: used to pass the data from the vertex shader to the fragment shader.
+- Varyings: used to pass the data from the vertex shader to the fragment shader.
 

@@ -4,14 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Linux权限相关命令解读 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Linux权限相关命令解读" />
+        <title>Linux 权限相关命令解读 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Linux 权限相关命令解读" />
 <meta property="og:description" content="文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/linux-authority/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-15T21:43:35+08:00" />
-<meta property="article:modified_time" content="2022-09-15T20:38:15+08:00" />
+<meta property="article:modified_time" content="2021-03-15T21:43:35+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Linux权限相关命令解读"/>
+<meta name="twitter:title" content="Linux 权限相关命令解读"/>
 <meta name="twitter:description" content="文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -20,13 +20,13 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Linux权限相关命令解读",
+        "headline": "Linux 权限相关命令解读",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/linux-authority\/"
-        },"genre": "posts","keywords": "GNU\/Linux","wordcount":  2302 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/linux-authority\/","datePublished": "2021-03-15T21:43:35+08:00","dateModified": "2022-09-15T20:38:15+08:00","publisher": {
+        },"genre": "posts","keywords": "linux","wordcount":  2302 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/linux-authority\/","datePublished": "2021-03-15T21:43:35+08:00","dateModified": "2021-03-15T21:43:35+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -98,8 +98,8 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Linux权限相关命令解读</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/gnu/linux/"><i class="far fa-folder fa-fw"></i>GNU/Linux</a></span></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Linux 权限相关命令解读</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="far fa-folder fa-fw"></i>knowledge</a></span></div>
                 <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-15">2021-03-15</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2302 字</span>&nbsp;
                     <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
             </div>
@@ -410,7 +410,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </tr>
 </tbody>
 </table>
-<p>掩码中 1 对应位处的权限会被取消，0则不受影响
+<p>掩码中 1 对应位处的权限会被取消，0 则不受影响
 所以会有这样的结果：</p>
 <p><img
         class="lazyload"
@@ -561,14 +561,14 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
         title="img" /></p>
 <p>上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/gnu/linux/">GNU/Linux</a>
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/linux/">linux</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2022-09-15</span>
+                <span>更新于 2021-03-15</span>
             </div><div class="post-info-mod"><span>
                             <a class="link-to-markdown" href="/posts/linux-authority/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/posts/dns-settings-on-archlinux/" class="prev" rel="prev" title="Dns Settings on Archlinux"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/" class="next" rel="next" title="Python selenium settings on microsoft-edge-dev">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+        </div></div><div class="post-nav"><a href="/posts/dns-settings-on-archlinux/" class="prev" rel="prev" title="在 Linux 上手动设置 DNS"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/" class="next" rel="next" title="在 microsoft-edge-dev 上设置 Python selenium">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>

@@ -1,4 +1,4 @@
-# Note for MLflow
+# MLflow 的用法
 
 
 # Overview
@@ -7,10 +7,10 @@
 
 其主要的作用是：
 
-+ 完成训练和测试过程中不同超参数的结果的记录、对比和可视化——`MLflow Tracking`
-+ 以一种可复现重用的方式包装ML代码——`MLflow Projects`
-+ 简化模型部署的难度——`MLflow Models`
-+ 提供中心化的模型存储来管理全生命周期——`MLflow Model Registry`
+- 完成训练和测试过程中不同超参数的结果的记录、对比和可视化——`MLflow Tracking`
+- 以一种可复现重用的方式包装 ML 代码——`MLflow Projects`
+- 简化模型部署的难度——`MLflow Models`
+- 提供中心化的模型存储来管理全生命周期——`MLflow Model Registry`
 
 现在主要用到的是第三个，所以先记录`Models`的用法
 
@@ -36,7 +36,7 @@
 
 ![image-20220307202038587](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png)
 
-这个模型可以用于任何支持`pytorch`或`python_function` `flavor`的工具，例如可以使用如下的命令用`python_function`来serve一个有`python_function` `flavor`的模型：
+这个模型可以用于任何支持`pytorch`或`python_function` `flavor`的工具，例如可以使用如下的命令用`python_function`来 serve 一个有`python_function` `flavor`的模型：
 
 ```shell
 mlflow models serve -m my_model
@@ -46,8 +46,8 @@ mlflow models serve -m my_model
 
 模型的输入输出要么是`column-based`，要么是`tensor-based`。
 
-+ `column-based` inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the `MLflow data type`.
-+ `tensor-based` inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the `numpy data type`.
+- `column-based` inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the `MLflow data type`.
+- `tensor-based` inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the `numpy data type`.
 
 ### Signature Enforcement
 
@@ -206,10 +206,10 @@ mlflow.keras.log_model(..., input_example=input_example)
 
 Additionally, we can use `mlflow.models.Model` class to create and write models which has 4 key functions:
 
-+ `add_flavor` to add a flavor to the model. Each `flavor` has a `string` name and a `dict` of key-value attributes, where the values can be any object that can be serialized to YAML.
-+ `save` to save the model to a local directory.
-+ `log` to log the model as an artifact in the current run using `MLflow tracking`.
-+ `load` to load a model from a local directory or from an artifact in a previous run.
+- `add_flavor` to add a flavor to the model. Each `flavor` has a `string` name and a `dict` of key-value attributes, where the values can be any object that can be serialized to YAML.
+- `save` to save the model to a local directory.
+- `log` to log the model as an artifact in the current run using `MLflow tracking`.
+- `load` to load a model from a local directory or from an artifact in a previous run.
 
 ### Pytorch
 

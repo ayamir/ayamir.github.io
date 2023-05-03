@@ -1,4 +1,4 @@
-# How to Fix GPGME Error on Archlinux
+# 修复 Archlinux 上出现的 GPGME Error
 
 
 ## Delete old sync files

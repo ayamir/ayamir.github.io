@@ -7,17 +7,17 @@
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Webrtc Development Prepare</title>
+    <title>在Linux下如何搭建WebRTC的开发环境</title>
     <link>https://ayamir.github.io/posts/webrtc-development-prepare/</link>
     <pubDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webrtc-development-prepare/</guid>
-    <description><![CDATA[<p>本文主要记录笔者在Gentoo Linux下面搭建WebRTC开发环境的过程。</p>
+    <description><![CDATA[<p>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。</p>
 <h2 id="准备工作">准备工作</h2>
 <ol>
 <li>网络：可以科学上网的梯子</li>
-<li>IDE：VSCode或者CLion</li>
+<li>IDE：VSCode 或者 CLion</li>
 </ol>
 <h2 id="安装depot_tools">安装<code>depot_tools</code></h2>
-<p>Google有自己的一套用于管理Chromium项目的工具，名叫<code>depot_tools</code>，其中有包括<code>git</code>在内的一系列工具和脚本。</p>
+<p>Google 有自己的一套用于管理 Chromium 项目的工具，名叫<code>depot_tools</code>，其中有包括<code>git</code>在内的一系列工具和脚本。</p>
 
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -35,7 +35,7 @@
 </span></span><span class="line"><span class="cl">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>克隆完成之后需要将<code>depot_tools</code>的路径加到<code>PATH</code>中，Linux上添加环境变量最简单的方式是修改<code>~/.profile</code>，这种方式与你的登录shell是什么没有关系，不管是<code>fish</code>还是<code>bash</code>还是<code>zsh</code>都会吃这种方式：</p>
+</div><p>克隆完成之后需要将<code>depot_tools</code>的路径加到<code>PATH</code>中，Linux 上添加环境变量最简单的方式是修改<code>~/.profile</code>，这种方式与你的登录 shell 是什么没有关系，不管是<code>fish</code>还是<code>bash</code>还是<code>zsh</code>都会吃这种方式：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -64,9 +64,9 @@
 </span></span><span class="line"><span class="cl">gclient sync
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>整个WebRTC的项目代码大小约20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。</p>
+</div><p>整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。</p>
 <p>克隆期间可能会因为网络问题中断，重新执行<code>gclient sync</code>即可，直到所有的模块都克隆完毕。</p>
-<p>按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不checkout的话，可能你的commit还没写完，就被Remote的change给覆盖了，还要手动处理冲突。</p>
+<p>按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -79,10 +79,10 @@
 </span></span><span class="line"><span class="cl">git new-branch &lt;branch-name&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="编译webrtc">编译WebRTC</h2>
-<p>关于WebRTC的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
+</div><h2 id="编译-webrtc">编译 WebRTC</h2>
+<p>关于 WebRTC 的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
 
-<p>如上图所示，113分支是当前的稳定分支，对应的tag是<code>branch-heads/5672</code>：</p>
+<p>如上图所示，113 分支是当前的稳定分支，对应的 tag 是<code>branch-heads/5672</code>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -105,7 +105,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里使用了<code>clang</code>并且启用了<code>h264</code>，详细的<code>gn</code>参数可以参考<a href="https://www.chromium.org/developers/gn-build-configuration/" target="_blank" rel="noopener noreffer">gn-build-configuration</a>和项目根目录下的<code>webrtc.gni</code>文件。</p>
-<p>之后使用<code>autoninja</code>进行编译，编译时会吃满你PC的所有核心，编译时间取决于你PC的配置：</p>
+<p>之后使用<code>autoninja</code>进行编译，编译时会吃满你 PC 的所有核心，编译时间取决于你 PC 的配置：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -117,11 +117,11 @@
 </div>
 <p>可以看到默认生成了几个样例的可执行文件。</p>
 
-<p>cd到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接之后最终生成的可以引用的库文件。</p>
+<p>cd 到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接之后最终生成的可以引用的库文件。</p>
 <h2 id="搭建开发环境">搭建开发环境</h2>
-<p>Google官方给出了Chromium项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion配置指南</a>，所以只需要照猫画虎给WebRTC配置一下。</p>
-<h3 id="配置clion属性">配置CLion属性</h3>
-<p>因为整个项目比较大，所以需要调大CLion的VM内存和intellisence支持的文件大小：</p>
+<p>Google 官方给出了 Chromium 项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion 配置指南</a>，所以只需要照猫画虎给 WebRTC 配置一下。</p>
+<h3 id="配置-clion-属性">配置 CLion 属性</h3>
+<p>因为整个项目比较大，所以需要调大 CLion 的 VM 内存和 intellisence 支持的文件大小：</p>
 <p><code>Help</code>-&gt; <code>Edit Custom VM Options</code>，在文件的末尾添加：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -131,7 +131,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-Xmx8g
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>表示给VM设定<code>8G</code>的可用内存，这样基本上不用担心使用过程因为内存不足而CLion性能不够了。</p>
+</div><p>表示给 VM 设定<code>8G</code>的可用内存，这样基本上不用担心使用过程因为内存不足而 CLion 性能不够了。</p>
 <p><code>Help</code>-&gt;<code>Edit Custom Properties</code>，在文件的末尾添加：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -141,8 +141,8 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">idea.max.intellisense.filesize=12500
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>表示为大小为<code>12500KB</code>也就是<code>12M</code>以下的文件提供intellisense支持。</p>
-<h3 id="配置gdb">配置gdb</h3>
+</div><p>表示为大小为<code>12500KB</code>也就是<code>12M</code>以下的文件提供 intellisense 支持。</p>
+<h3 id="配置-gdb">配置 gdb</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -157,10 +157,10 @@
 </span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/google/webrtc-checkout/src/tools/gdb/gdbinit
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>之后在CLion中的<code>Settings</code>-&gt;<code>Toolchain</code>-&gt;<code>Debugger</code>选择系统自带的gdb：<code>/usr/bin/gdb</code>即可。</p>
-<h3 id="配置intellisense">配置intellisense</h3>
-<p>因为WebRTC用的是<code>gn</code>+<code>ninja</code>作为构建工具，而<code>CLion</code>目前只支持<code>cmake</code>，所以当要求配置<code>CMakeLists.txt</code>时直接无视即可。网络上有说用<code>gn_to_cmake.py</code>这个脚本的，但是我没看懂这东西的功能，反正是不能生成<code>CMakeLists.txt</code>，只是生成一个<code>json</code>文件，并不能用于CLion的索引。</p>
-<p>我这边成功开启IDE语法高亮和索引的姿势是这样的：</p>
+</div><p>之后在 CLion 中的<code>Settings</code>-&gt;<code>Toolchain</code>-&gt;<code>Debugger</code>选择系统自带的 gdb：<code>/usr/bin/gdb</code>即可。</p>
+<h3 id="配置-intellisense">配置 intellisense</h3>
+<p>因为 WebRTC 用的是<code>gn</code>+<code>ninja</code>作为构建工具，而<code>CLion</code>目前只支持<code>cmake</code>，所以当要求配置<code>CMakeLists.txt</code>时直接无视即可。网络上有说用<code>gn_to_cmake.py</code>这个脚本的，但是我没看懂这东西的功能，反正是不能生成<code>CMakeLists.txt</code>，只是生成一个<code>json</code>文件，并不能用于 CLion 的索引。</p>
+<p>我这边成功开启 IDE 语法高亮和索引的姿势是这样的：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -171,13 +171,13 @@
 </span></span><span class="line"><span class="cl">python3 ./tools/clang/scripts/generate_compdb.py -p ./out/Default -o ./compile_commands.json --target_os=linux
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这一步会生成CLion可以自动识别的<code>compile_commands.json</code>文件，从而可以正确索引项目的代码并提供代码补全功能。</p>
+</div><p>这一步会生成 CLion 可以自动识别的<code>compile_commands.json</code>文件，从而可以正确索引项目的代码并提供代码补全功能。</p>
 
-<p>之后每次启动项目CLion就会自动索引项目文件，就可以愉快地看代码和写代码啦！</p>
+<p>之后每次启动项目 CLion 就会自动索引项目文件，就可以愉快地看代码和写代码啦！</p>
 ]]></description>
 </item>
 <item>
-    <title>Note for WebRTC (1): Video Adaptation</title>
+    <title>WebRTC 中关于视频自适应的相关设置</title>
     <link>https://ayamir.github.io/posts/note-for-webrtc-1/</link>
     <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-webrtc-1/</guid>
     <description><![CDATA[<h1 id="概况">概况</h1>
@@ -461,7 +461,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 ]]></description>
 </item>
 <item>
-    <title>Note for MLflow</title>
+    <title>MLflow 的用法</title>
     <link>https://ayamir.github.io/posts/note-for-mlflow/</link>
     <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-mlflow/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
@@ -469,7 +469,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 <p>其主要的作用是：</p>
 <ul>
 <li>完成训练和测试过程中不同超参数的结果的记录、对比和可视化——<code>MLflow Tracking</code></li>
-<li>以一种可复现重用的方式包装ML代码——<code>MLflow Projects</code></li>
+<li>以一种可复现重用的方式包装 ML 代码——<code>MLflow Projects</code></li>
 <li>简化模型部署的难度——<code>MLflow Models</code></li>
 <li>提供中心化的模型存储来管理全生命周期——<code>MLflow Model Registry</code></li>
 </ul>
@@ -485,7 +485,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 <p></p>
 <p><code>MLmode</code>文件内容示例如下：</p>
 <p></p>
-<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来serve一个有<code>python_function</code> <code>flavor</code>的模型：</p>
+<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来 serve 一个有<code>python_function</code> <code>flavor</code>的模型：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -737,7 +737,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 ]]></description>
 </item>
 <item>
-    <title>WebGL Samples Explanation</title>
+    <title>WebGL 样例的解释</title>
     <link>https://ayamir.github.io/posts/webgl-samples-explanation/</link>
     <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples-explanation/</guid>
     <description><![CDATA[<h1 id="context">Context</h1>
@@ -1093,10 +1093,10 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;gl_Postion = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;gl_Postion = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;}&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span> <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0, 0.8, 0, 1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
@@ -1219,7 +1219,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
@@ -1270,8 +1270,8 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="mf">0.0</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="mf">0.0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
@@ -1282,7 +1282,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 ]]></description>
 </item>
 <item>
-    <title>WebGL Samples</title>
+    <title>WebGL 样例</title>
     <link>https://ayamir.github.io/posts/webgl-samples/</link>
     <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples/</guid>
     <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
@@ -1385,107 +1385,103 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </span><span class="lnt">87
 </span><span class="lnt">88
 </span><span class="lnt">89
-</span><span class="lnt">90
-</span><span class="lnt">91
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;my_canvas&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 1. Prepare the canvas and get context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="kd">let</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;experimental-webgl&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;my_canvas&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 1. Prepare the canvas and get context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;experimental-webgl&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 2. Define the geometry and store it in buffer objects
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="mf">0.5</span><span class="p">,</span> <span class="c1">// vertex 1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="c1">//
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="mf">0.0</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="o">-</span><span class="mf">0.5</span>
-</span></span><span class="line"><span class="cl">            <span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Create buffer object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Bind an empty array buffer to it
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Pass the vertices data to the buffer
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span>
-</span></span><span class="line"><span class="cl">            <span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Unbind the buffer
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 2. Define the geometry and store it in buffer objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mf">0.5</span><span class="p">,</span> <span class="c1">// vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="mf">0.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">];</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Bind an empty array buffer to it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Pass the vertices data to the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Unbind the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 3. Create and compile Shader programs
+</span></span><span class="line"><span class="cl">      <span class="c1">// 3. Create and compile Shader programs
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Vertex shader source code
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34; gl_Position = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;}&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Create a vertex shader object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Attach vertex shader source code
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Compile the vertex shader
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34; gl_Position = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create a vertex shader object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Attach vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Compile the vertex shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// Fragment shader source code
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);&#34;</span> <span class="o">+</span>
-</span></span><span class="line"><span class="cl">                <span class="s2">&#34;}&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Fragment shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// Create a shader program object to store combined shader program
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Attact vertex and fragment shader
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Link both programs
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Use the combined shader program object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create a shader program object to store combined shader program
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Attact vertex and fragment shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Link both programs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Use the combined shader program object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 4. Associate the shader programs to buffer objects
+</span></span><span class="line"><span class="cl">      <span class="c1">// 4. Associate the shader programs to buffer objects
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Bind vertex buffer object
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Get the attribute location
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kd">let</span> <span class="nx">coord</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Point an attribute to the currently bound VBO
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Enable the attribute
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coord</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Bind vertex buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Get the attribute location
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">coord</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Point an attribute to the currently bound VBO
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Enable the attribute
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coord</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 5. Drawing the required object (triangle)
+</span></span><span class="line"><span class="cl">      <span class="c1">// 5. Drawing the required object (triangle)
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Clear the canvas
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Enable the depth test
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">enable</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">DEPTH_TEST</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Clear the color buffer bit
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Set the view port
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Draw the triangle
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Clear the canvas
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Enable the depth test
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">enable</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">DEPTH_TEST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Clear the color buffer bit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Set the view port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Draw the triangle
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>]]></description>
 </item>
 <item>
-    <title>WebGL Pipeline</title>
+    <title>WebGL 中的管线</title>
     <link>https://ayamir.github.io/posts/webgl-pipeline/</link>
     <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-pipeline/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
@@ -1550,7 +1546,7 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 ]]></description>
 </item>
 <item>
-    <title>WebGL Basics</title>
+    <title>WebGL 基础知识</title>
     <link>https://ayamir.github.io/posts/webgl-basics/</link>
     <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-basics/</guid>
     <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>

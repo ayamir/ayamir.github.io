@@ -1,4 +1,4 @@
-# Immersive Video OMAF-Sample Deploy
+# 部署 Immersive Video OMAF-Sample
 
 
 原仓库地址：[Immersive-Video-Sample](https://github.com/OpenVisualCloud/Immersive-Video-Sample)

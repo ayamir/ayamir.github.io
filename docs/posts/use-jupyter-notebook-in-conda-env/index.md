@@ -1,4 +1,4 @@
-# Use Jupyter Notebook in Conda Env
+# 在 Jupyter Notebook 中设置 Conda 环境
 
 
 0. 远程启动`jupyter notebool`：
@@ -28,6 +28,4 @@
 4. 打开`notebook`更改服务之后刷新即可：
 
    ![image-20220215172551183](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220215172551183.png)
-
-   
 

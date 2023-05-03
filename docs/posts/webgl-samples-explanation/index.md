@@ -1,4 +1,4 @@
-# WebGL Samples Explanation
+# WebGL 样例的解释
 
 
 # Context
@@ -48,8 +48,8 @@ Similarly, we can create an array for the indices follow the sequence.
 let indices = [0, 1, 2];
 ```
 
--   `drawArrays()`: pass the vertices of the primitive using JavaScript arrays.
--   `drawElements()`: pass both vertices and indices of the primitive using JavaScript arrays.
+- `drawArrays()`: pass the vertices of the primitive using JavaScript arrays.
+- `drawElements()`: pass both vertices and indices of the primitive using JavaScript arrays.
 
 ## Buffer Objects
 
@@ -59,49 +59,49 @@ We can store data of the models corresponding to vertices, indices, color and et
 
 There are 2 types of buffer objects:
 
--   Vertex Buffer Object(VBO): It holds the per-vertex data of the graphical model that is going to be rendered.
--   Index Buffer Object(IBO): It holds the indices of the graphical model that is going to be rendered.
+- Vertex Buffer Object(VBO): It holds the per-vertex data of the graphical model that is going to be rendered.
+- Index Buffer Object(IBO): It holds the indices of the graphical model that is going to be rendered.
 
 After defining the required geometry and storing them in JavaScript arrays, we need to pass these arrays to the buffer objects, from where the data will be passed to the shader programs.
 
 1. Create an empty buffer.
 
-    ```javascript
-    let vertex_buffer = gl.createBuffer();
-    let index_buffer = gl.createBuffer();
-    ```
+   ```javascript
+   let vertex_buffer = gl.createBuffer();
+   let index_buffer = gl.createBuffer();
+   ```
 
 2. Bind an appropriate array object to the empty buffer.
 
-    ```javascript
-    void bindBuffer(enum target, Object buffer);
+   ```javascript
+   void bindBuffer(enum target, Object buffer);
 
-    // ARRAY_BUFFER represents vertex data
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-    // ELEMENT_ARRAY_BUFFER represent index data
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
-    ```
+   // ARRAY_BUFFER represents vertex data
+   gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+   // ELEMENT_ARRAY_BUFFER represent index data
+   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+   ```
 
 3. Pass the data (vertices/indices) to the buffer using one of the typed arrays.
 
-    ```javascript
-    void bufferData(enum target, Object data, enum usage);
-    // Usage specifies how to use the buffer object data to draw shapes
-    // gl.STATIC_DRAW -- Data will be specified once and used many times.
-    // gl.STREAM_DRAW -- Data will be specified once and used a few times.
-    // gl.DYNAMIC_DRAW -- Data will be specified repeatedly and used many times.
+   ```javascript
+   void bufferData(enum target, Object data, enum usage);
+   // Usage specifies how to use the buffer object data to draw shapes
+   // gl.STATIC_DRAW -- Data will be specified once and used many times.
+   // gl.STREAM_DRAW -- Data will be specified once and used a few times.
+   // gl.DYNAMIC_DRAW -- Data will be specified repeatedly and used many times.
 
-    // vertex buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    // index buffer
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
-    ```
+   // vertex buffer
+   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+   // index buffer
+   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+   ```
 
 4. Unbind the buffer (Optional/Recommended).
 
-    ```javascript
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
-    ```
+   ```javascript
+   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+   ```
 
 # Shader
 
@@ -179,19 +179,19 @@ void main(void) {
 
 ```javascript
 let vertCode =
-    "attribute vec2 coordinates;" +
-    "void main(void) {" +
-    "gl_Postion = vec4(coordinates, 0.0, 1.0);" +
-    "}";
+  "attribute vec2 coordinates;" +
+  "void main(void) {" +
+  "gl_Postion = vec4(coordinates, 0.0, 1.0);" +
+  "}";
 
 let fragCode = "void main(void) {" + "gl_FragColor = vec4(0, 0.8, 0, 1);" + "}";
 ```
 
 Compilation involves following 3 steps
 
--   Creating the shader object
--   Attaching the source code to the created shader object
--   Compiling the program
+- Creating the shader object
+- Attaching the source code to the created shader object
+- Compiling the program
 
 ```javascript
 let vertShader = gl.createShader(gl.VERTEX_SHADER);
@@ -209,10 +209,10 @@ gl.compileShader(fragShader);
 
 ## Combined Program
 
--   Create a program object
--   Attach both the shaders
--   Link both the shaders
--   Use the program
+- Create a program object
+- Attach both the shaders
+- Link both the shaders
+- Use the program
 
 ```javascript
 let shaderProgram = gl.createProgram();
@@ -224,9 +224,9 @@ gl.useProgram(shaderProgram);
 
 # Associating Attributes & Buffer Objects
 
--   Get the attribute location
--   Point the attributes to a vertex buffer object
--   Enable the attribute
+- Get the attribute location
+- Point the attributes to a vertex buffer object
+- Enable the attribute
 
 ```javascript
 // ulong getAttribLocation(Object program, string name)
@@ -246,9 +246,9 @@ gl.enableVertexAttribArray(coordinatesVar);
 void drawArrays(enum mode, int first, long count);
 ```
 
--   mode: `gl.POINTS`, `gl.LINE_STRIP`, `gl.LINE_LOOP`, `gl.LINES`, `gl.TRIANGLE_STRIP`, `gl.TRANGLE_FAN`, `gl.TRIANGLES`.
--   first: specified the starting element in the enabled arrays. (Non-negative)
--   count: specifies the number of elements to be rendered.
+- mode: `gl.POINTS`, `gl.LINE_STRIP`, `gl.LINE_LOOP`, `gl.LINES`, `gl.TRIANGLE_STRIP`, `gl.TRANGLE_FAN`, `gl.TRIANGLES`.
+- first: specified the starting element in the enabled arrays. (Non-negative)
+- count: specifies the number of elements to be rendered.
 
 `WebGL` will create the geometry in the order in which the vertex coordinates while rendering the shapes.
 
@@ -265,7 +265,7 @@ draw two contiguous triangles:
 
 ```javascript
 let vertices = [
-    -0.5, -0.5, -0.25, 0.5, 0.0, -0.5, 0.0, -0.5, 0.25, 0.5, 0.5, -0.5
+  -0.5, -0.5, -0.25, 0.5, 0.0, -0.5, 0.0, -0.5, 0.25, 0.5, 0.5, -0.5,
 ];
 gl.drawArrays(gl.TRIANGLES, 0, 6);
 ```
@@ -278,10 +278,10 @@ gl.drawArrays(gl.TRIANGLES, 0, 6);
 void drawElements(enum mode, long count, enum type, long offset);
 ```
 
--   mode: same as `drawArrays()`;
--   count: same as `drawArrays()`;
--   type: specifies the data type of the indices which must be `UNSIGNED_BYTE` or `UNSIGNED_SHORT`;
--   offset: specifies the starting point for rendering, usually the first element (0);
+- mode: same as `drawArrays()`;
+- count: same as `drawArrays()`;
+- type: specifies the data type of the indices which must be `UNSIGNED_BYTE` or `UNSIGNED_SHORT`;
+- offset: specifies the starting point for rendering, usually the first element (0);
 
 If use `drawElements()` to draw a model, then index buffer object should also be created along with the vertex buffer object. The vertex data will be processed once and used as many time as mentioned in the indices.
 
@@ -300,8 +300,8 @@ draw two contagious triangles:
 
 ```javascript
 let vertices = [
-    -0.5, -0.5, 0.0, -0.25, 0.5, 0.0, 0.0, -0.5, 0.0, 0.25, 0.5, 0.0, 0.5, -0.5,
-    0.0
+  -0.5, -0.5, 0.0, -0.25, 0.5, 0.0, 0.0, -0.5, 0.0, 0.25, 0.5, 0.0, 0.5, -0.5,
+  0.0,
 ];
 let indices = [0, 1, 2, 2, 3, 4];
 
