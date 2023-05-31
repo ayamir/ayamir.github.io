@@ -6,6 +6,7 @@ math: true
 keywords: ["DASH", "Control-Theoretic"]
 tags: ["DASH", "MPC", "ABR"]
 categories: ["paper"]
+url: "posts/papers/note-for-mpc"
 ---
 
 ## 论文概况

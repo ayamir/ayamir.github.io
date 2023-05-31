@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video",]
 tags: ["Immersive Video", "DRL", "Rainbow-DQN"]
 categories: ["paper"]
+url: "posts/papers/note-for-rainbowDQN+tiles"
 ---
 
 ## 论文概况

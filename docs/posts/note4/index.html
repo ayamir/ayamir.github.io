@@ -9,14 +9,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/note4/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-10-30T19:20:00+08:00" />
-<meta property="article:modified_time" content="2021-10-30T19:20:00+08:00" />
+<meta property="article:modified_time" content="2023-05-03T11:19:10+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="沉浸式流媒体网络问题的相关解决方案"/>
 <meta name="twitter:description" content="概况 现有的沉浸式流媒体应用都对带宽、QoS和计算需求有着高要求，这主要得益于5G网络。 传统的中心化云计算和云存储体系结构不适于实时的高码率内"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note4/" /><link rel="prev" href="https://ayamir.github.io/posts/iterator/" /><link rel="next" href="https://ayamir.github.io/posts/note5/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.1be03ad7df428f6727cc42c4c868ed4d8c551c5c2ba96602d9058d3840e29092.css" integrity="sha256-G&#43;A6199Cj2cnzELEyGjtTYxVHFwrqWYC2QWNOEDikJI="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/note4/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/cpp/iterator/" /><link rel="next" href="https://ayamir.github.io/posts/note5/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.f4efba72b201bd01e9371fb690efe6063b4a3785c6a9807a9340423c9aeed132.css" integrity="sha256-9O&#43;6crIBvQHpNx&#43;2kO/mBjtKN4XGqYB6k0BCPJru0TI="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -26,7 +26,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/note4\/"
         },"genre": "posts","keywords": "Immersive Video","wordcount":  3491 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/note4\/","datePublished": "2021-10-30T19:20:00+08:00","dateModified": "2021-10-30T19:20:00+08:00","publisher": {
+        "url": "https:\/\/ayamir.github.io\/posts\/note4\/","datePublished": "2021-10-30T19:20:00+08:00","dateModified": "2023-05-03T11:19:10+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -52,7 +52,7 @@
                         <span class="search-button search-loading" id="search-loading-desktop">
                             <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div>
@@ -84,7 +84,7 @@
                     <a href="#" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div></div>
@@ -358,11 +358,11 @@
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive-Video</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2021-10-30</span>
+                <span>更新于 2023-05-03</span>
             </div><div class="post-info-mod"><span>
                             <a class="link-to-markdown" href="/posts/note4/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/posts/iterator/" class="prev" rel="prev" title="重学C&#43;&#43;：容器和迭代器"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+        </div></div><div class="post-nav"><a href="/posts/knowledge/cpp/iterator/" class="prev" rel="prev" title="重学C&#43;&#43;：容器和迭代器"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/note5/" class="next" rel="next" title="自适应360度视频推流挑战">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
 </div></article></div>
             </main>

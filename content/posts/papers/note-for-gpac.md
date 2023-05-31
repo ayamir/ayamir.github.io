@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video", "DASH", "Tile"]
 tags: ["Immersive Video", "DASH"]
 categories: ["paper"]
+url: "posts/papers/note-for-gpac"
 ---
 
 ## Dash客户端自适应逻辑

@@ -5,6 +5,7 @@ draft: false
 keywords: ["Python"]
 tags: ["Python"]
 categories: ["development"]
+url: "posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux"
 ---
 
 ## Get Correct Version

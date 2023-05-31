@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Note for MPC - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for MPC" />
+<meta property="og:description" content="论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP Level：ACM SIGCOMM 15 Keywords：Model Predictive Control，ABR，DASH Motivation 关于码率自适应的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-mpc/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-23T10:39:32+08:00" />
+<meta property="article:modified_time" content="2023-05-03T11:19:10+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Note for MPC"/>
+<meta name="twitter:description" content="论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP Level：ACM SIGCOMM 15 Keywords：Model Predictive Control，ABR，DASH Motivation 关于码率自适应的"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-mpc/" /><link rel="prev" href="https://ayamir.github.io/posts/papers/note-for-tbra/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-gpac/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.f4efba72b201bd01e9371fb690efe6063b4a3785c6a9807a9340423c9aeed132.css" integrity="sha256-9O&#43;6crIBvQHpNx&#43;2kO/mBjtKN4XGqYB6k0BCPJru0TI="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Note for MPC",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-mpc\/"
+        },"genre": "posts","keywords": "DASH, MPC, ABR","wordcount":  2473 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-mpc\/","datePublished": "2021-12-23T10:39:32+08:00","dateModified": "2023-05-03T11:19:10+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for MPC</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="far fa-folder fa-fw"></i>paper</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-23">2021-12-23</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2473 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#论文概况">论文概况</a></li>
+        <li><a href="#motivation">Motivation</a></li>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#控制论模型">控制论模型</a>
+          <ul>
+            <li><a href="#视频推流模型">视频推流模型</a></li>
+            <li><a href="#qoe最大化问题">QoE最大化问题</a></li>
+            <li><a href="#算法">算法</a></li>
+          </ul>
+        </li>
+        <li><a href="#mpc-for-optimal-bitrate-adaptation">MPC for Optimal Bitrate Adaptation</a>
+          <ul>
+            <li><a href="#why-mpc">Why MPC</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
+<p>Level：ACM SIGCOMM 15</p>
+<p>Keywords：Model Predictive Control，ABR，DASH</p>
+<h2 id="motivation">Motivation</h2>
+<p>关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。</p>
+<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的MPC算法，并且预测误差很低，那么MPC方案可以优于传统的基于速率和基于缓冲区的策略。</p>
+<h2 id="背景">背景</h2>
+<ul>
+<li>播放器端为QoE需要考虑的问题：
+<ol>
+<li>最小化冲缓冲事件发生的次数；</li>
+<li>在吞吐量限制下尽可能传输码率较高的视频；</li>
+<li>最小化播放器开始播放花费的时间（启动时间）；</li>
+<li>保持播放过程平滑，尽可能避免大幅度的码率变化；</li>
+</ol>
+</li>
+<li>这些目标相互冲突的原因：
+<ol>
+<li>最小化重缓冲次数和启动时间会导致只选择最低码率的视频；</li>
+<li>尽可能选择高码率的视频会导致很多的重缓冲事件；</li>
+<li>保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突；</li>
+</ol>
+</li>
+</ul>
+<h2 id="控制论模型">控制论模型</h2>
+<h3 id="视频推流模型">视频推流模型</h3>
+<ol>
+<li>
+<p>参数形式化</p>
+<ul>
+<li>
+<p>将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &hellip;, K \rbrace$，每个片段长为$L$秒；</p>
+</li>
+<li>
+<p>每个片段以不同码率编码，$R$ 作为所有可用码率的集合；</p>
+</li>
+<li>
+<p>播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；</p>
+<ul>
+<li>对于恒定码率CBR的情况，$d_k(R_k) = L \times R_k$；</li>
+<li>对于变化码率VBR的情况，$d_k \sim R_k$；</li>
+</ul>
+</li>
+<li>
+<p>选择的码率越高，用户感知到的质量越高：</p>
+<p>$q(\cdot):R \rightarrow \R_+$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；</p>
+</li>
+<li>
+<p>片段被下载到<em>回访缓冲</em>中，其中包含下载了的但还没看过的片段。</p>
+</li>
+<li>
+<p>$B(t) \in [0, B_{max}]$ 表示 $t$ 时刻缓冲区的占用， $B_{max}$ 表示内容提供商的策略和播放器的存储限制；</p>
+</li>
+</ul>
+</li>
+<li>
+<p>播放过程形式化</p>
+<p>在 $t_k$ 时刻，视频播放器开始下载第 $k$ 个块，这个块的下载时间可以计算为： $d_k(R_k) / C_k$； $C_k$ 表示下载过程中经历的平均下载速度；</p>
+<p>一旦第 $k$ 个块下载完毕，播放器等待 $\Delta t_k$ 时间并在 $t_{k+1}$ 时刻下载下一个块 $k+1$ ；</p>
+<p>假设等待时间 $\Delta t_k$ 很短并且不会导致重缓冲事件，用 $C_t$ 表示 $t$ 时刻的网络吞吐量：
+$$
+t_{k+1} = t_k + \frac{d_k(R_k)}{C_k} + \Delta t_k
+$$</p>
+<p>$$
+C_k = \frac{1}{t_{k+1} - t_k - \Delta t_k} \int_{t_k}^{t_{k+1} - \Delta t_k} C_t dt
+$$</p>
+<p>$B(t)$ 的变化取决于下载的块和播放的块的数量：</p>
+<p>在第 $k$ 个块下载完毕之后缓冲区占用增长 $L$ 秒；用户观看一个块之后缓冲区占用减少 $L$ 秒；</p>
+<p>$B_k = B(t_k)$ 表示播放器开始下载第 $k$ 个块时的缓冲区占用；</p>
+<p>缓冲区占用的动态变化可以表示为：
+$$
+B_{k+1} = \big( (B_k - \frac{d_k(R_k)}{C_k})_+ + L - \Delta t_k \big)_+
+$$
+其中 $(x)_+ = max\lbrace x, 0 \rbrace $ 确保其非负；</p>
+<p>如果 $B_k &lt; d_k(R_k) / C_k$ ，表示缓冲区在播放器还在下载第 $k$ 个块时变空，而这会导致重缓冲事件；</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png"
+        title="Buffer dynamics" /></p>
+<p>等待时间 $\Delta t_k$ 的确定也称为<em>块调度</em>问题，本文中假设播放器在第 $k$ 个块下载完毕之后尽可能快地去下载第 $k+1$ 个块（除了缓冲区满了的情况，播放器等待缓冲区中的块被消耗之后再下载新的块）：
+$$
+\Delta t_k = \Big( \big( B_k - \frac{d_k(R_k)}{C_k} \big)_+ + L - B_max \Big)_+
+$$</p>
+</li>
+</ol>
+<h3 id="qoe最大化问题">QoE最大化问题</h3>
+<p>QoE的组成部分：</p>
+<ol>
+<li>
+<p>平均视频质量：在所有块中每个块平均的质量，计算为：
+$$
+\frac{1}{K} \sum^K_{k=1} q(B_k)
+$$</p>
+</li>
+<li>
+<p>平均质量变化：相邻块之间质量变化的平均值，计算为：
+$$
+\frac{1}{K-1} \sum^{K-1}_{k=1} | q(R_{k+1}) - q(R_k) |
+$$</p>
+</li>
+<li>
+<p>重缓冲总计时间：对每个块而言，当轮到其被消耗时但下载块的过程还没完成即出现了重缓冲，总时间计算为：
+$$
+\sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+
+$$</p>
+</li>
+<li>
+<p>启动延迟 $T_s$ ，假设 $T_s \ll B_{max}$ 。</p>
+</li>
+</ol>
+<p>对不同用户而言，上述4种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的QoE：
+$$
+QoE^K_1 = \sum^K_{k=1} q(R_k) - \lambda \sum^K_{k=1} | q(R_{k+1}) - q(R_k) | - \mu \sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+ - \mu_s T_s,\
+\lambda, \mu, \mu_s \nless 0
+$$
+相对较小的 $\lambda$ 表示用户不太关心视频质量变化； $\lambda$ 越大表明越需要使视频质量变得光滑。</p>
+<p>相对较大的 $\mu$ 表示用户很在意重缓冲；</p>
+<p>在这里文章倾向于启动延迟很低，所以采用大 $\mu_s$ ；</p>
+<p>QoE的最大化：</p>
+<p>输入：吞吐量迹 ${C_t, t \in [t_1, t_{K+1}]}$</p>
+<p>输出：码率选择 $R_1, &hellip;, R_K$；启动时间 $T_s$ ；</p>
+<p>需要注意：当最大化的决策发生在播放过程中时，启动时间便不再存在；</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224193943202.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224193943202.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224193943202.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224193943202.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224193943202.png"
+        title="QoE maximization" /></p>
+<h3 id="算法">算法</h3>
+<p>上图中的QoE最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
+<p>$t_k$ 时刻播放器选择码率 $R_k$ ，只有过去的吞吐量 $\lbrace C_t, t \le t_k \rbrace$ 可知，未来的值 ${C_t, t &gt; t_k}$ 未知。</p>
+<p>但是，<em>吞吐量预测器</em>可以用于获取对吞吐量的预测，定义其为 $\lbrace \hat{C_t}, t &gt; t_k \rbrace$ 。</p>
+<p>基于这样的预测和缓冲区的信息（精确可知），<em>码率选择器</em>对下个块 $k$ 的码率选择可以表示为：
+$$
+R_k = f \big( B_k, \lbrace \hat{C_t}, t &gt; t_k \rbrace, \lbrace R_i, i &lt; k \rbrace \big)
+$$
+文章只关注码率自适应算法，假设已经得到了预测值，并根据预期预测误差对其进行了表征，即：</p>
+<p>我们着重于 $f(\cdot)$ 的设计以及预测误差对比较控制算法性能的影响。</p>
+<p>现有的两类自适应算法：基于速率和基于缓冲区，分别可以表示为：
+$$
+R_k = f \big( \lbrace \hat{C_t}, t &gt; t_k \rbrace, \lbrace R_i, i &lt; k \rbrace \big)
+$$</p>
+<p>$$
+R_k = f(B_k, \lbrace R_i, i &lt; k \rbrace)
+$$</p>
+<p>前者只基于吞吐量的预测结果而不管缓冲区状况；后者只基于缓冲区而不管未来的吞吐量可能状况；</p>
+<p>这两种方法在原则上都只是次优的，理想情况下我们想要同时考虑缓冲区占用和吞吐量预测结果。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224202616006.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224202616006.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224202616006.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224202616006.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224202616006.png"
+        title="Design space" /></p>
+<h2 id="mpc-for-optimal-bitrate-adaptation">MPC for Optimal Bitrate Adaptation</h2>
+<h3 id="why-mpc">Why MPC</h3>
+<p>MPC天然适合码率自适应问题。</p>
+<ul>
+<li>
+<p><strong>Strawman solutions</strong></p>
+<p>码率自适应问题本质是<em>随机控制优化</em>问题，就这一点而言，有两个知名控制算法：</p>
+<ol>
+<li>Proportional-integral-derivation(PID) control.</li>
+<li>Markov Decision Process(MDP) based control.</li>
+</ol>
+<p>PID相较MDP而言计算起来更加简单，只能用于使系统稳定，不能显式地优化QoE目标；此外PID被设计用于有连续的时间和连续的状态空间的问题中，用于当前这种高度离散化的问题中会导致性能亏损和不稳定。</p>
+<p>应用MDP的话可以将吞吐量和缓冲区状态形式化为马氏过程，然后使用诸如值迭代和策略迭代等标准算法求出最优解。</p>
+<p>（然而，这有一个很强的假设，即吞吐量动态遵循马尔可夫过程，不清楚这在实践中是否成立。我们将MDP的潜在用途和吞吐量动态分析作为未来的工作。）</p>
+</li>
+<li>
+<p><strong>Case for MPC</strong></p>
+<p>理想情况下，如果给出未来吞吐量的完美数据，那么启动时间 $T_s$ 和最优码率选择 $R_1, &hellip; R_K$ 可以一下子就计算出来；</p>
+<p>实际情况中，虽然不能得到未来吞吐量的完美预测，但是我们可以假设吞吐量在较短的时间段 $[t_k, t_{k+N}]$ 内不会剧烈变化。</p>
+<p>基于此，可以使用当前视界中的预测来应用第1个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
+<p>而这种方案就称为MPC。MPC的一般好处在于，MPC可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/dash/">DASH</a>
+                </span><span><a href="/tags/mpc/">MPC</a>
+                </span><span><a href="/tags/abr/">ABR</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-05-03</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/papers/note-for-mpc/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/papers/note-for-tbra/" class="prev" rel="prev" title="Note for TBRA"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/papers/note-for-gpac/" class="next" rel="next" title="Note for GPAC">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.39a97596903cc57488c5bee6fde4825489cd0faf1c3a8ca3520f3616b0be4a44.js" integrity="sha256-Oal1lpA8xXSIxb7m/eSCVInND68cOoyjUg82FrC&#43;SkQ="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.904025b078f2ab8ff417a039c698b64e0484569262eb0830aaa52a18b479a5d9.js" integrity="sha256-kEAlsHjyq4/0F6A5xpi2TgSEVpJi6wgwqqUqGLR5pdk="></script></body></html>

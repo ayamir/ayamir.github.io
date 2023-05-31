@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video"]
 tags: ["Immersive Video", "RNN", "Trajectory-based predict", "Dynamic tile selection"]
 categories: ["paper"]
+url: "posts/papers/note-for-rnnQoE"
 ---
 
 ## 论文概况

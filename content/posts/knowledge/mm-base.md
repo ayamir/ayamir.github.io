@@ -6,6 +6,7 @@ math: true
 keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
+url: "posts/knowledge/mm-base"
 ---
 
 # 媒体处理过程

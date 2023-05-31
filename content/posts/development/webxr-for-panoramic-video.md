@@ -6,6 +6,7 @@ math: true
 keywords: ["WebXR"]
 tags: ["WebXR"]
 categories: ["development"]
+url: "posts/development/webxr-for-panoramic-video"
 ---
 
 最近几天一直在用`WebXR`的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。

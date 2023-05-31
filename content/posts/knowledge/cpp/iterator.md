@@ -5,6 +5,7 @@ draft: false
 keywords: ["C++"]
 tags: ["C++"]
 categories:  ["knowledge"]
+url: "posts/knowledge/cpp/iterator"
 ---
 
 ## 常见的坑

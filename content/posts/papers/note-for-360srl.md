@@ -6,6 +6,7 @@ math: true
 keywords: ["ABR", "RL"]
 tags: ["Immersive Video", "ABR"]
 categories: ["paper"]
+url: "posts/papers/note-for-360srl"
 ---
 
 ## 论文概况

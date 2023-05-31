@@ -6,4 +6,5 @@ math: true
 keywords: ["git"]
 tags: ["git"]
 categories: ["knowledge"]
+url: "posts/development/git-usage"
 ---

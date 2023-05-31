@@ -1,3 +1,4 @@
 [submodule "themes/FeelIt"]
+	branch = main
 	path = themes/FeelIt
 	url = https://github.com/khusika/FeelIt

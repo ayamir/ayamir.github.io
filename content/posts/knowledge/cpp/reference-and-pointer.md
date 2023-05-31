@@ -5,6 +5,7 @@ draft: false
 keywords: ["C++"]
 tags: ["C++"]
 categories:  ["knowledge"]
+url: "posts/knowledge/cpp/reference-and-pointer"
 ---
 
 ## 常见的坑

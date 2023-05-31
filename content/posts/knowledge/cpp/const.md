@@ -6,6 +6,7 @@ math: true
 keywords: ["C++"]
 tags: ["C++"]
 categories:  ["knowledge"]
+url: "posts/knowledge/cpp/const"
 ---
 
 ## 常见的坑

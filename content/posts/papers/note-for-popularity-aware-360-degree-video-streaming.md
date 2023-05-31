@@ -6,6 +6,7 @@ math: true
 keywords: ["Macrotile", "Popularity"]
 tags: ["Dynamic tiling", "Heuristic"]
 categories: ["paper"]
+url: "posts/papers/note-for-popularity-aware-360-degree-video-streaming"
 ---
 
 ## 论文概况

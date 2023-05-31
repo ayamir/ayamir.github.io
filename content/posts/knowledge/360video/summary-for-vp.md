@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video", "Viewport predict"]
 tags: ["Viewport predict"]
 categories: ["knowledge"]
+url: "posts/knowledge/360video/summary-for-vp"
 ---
 
 ## 视口预测是什么？

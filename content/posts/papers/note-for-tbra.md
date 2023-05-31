@@ -6,6 +6,7 @@ math: true
 keywords: ["Adaptive tiling and bitrate", "Tile-based", "Mobile"]
 tags: ["Immersive Video", "Dynamic tiling", "Mobile device", "MPC"]
 categories: ["paper"]
+url: "posts/papers/note-for-tbra"
 ---
 
 ## 论文概况

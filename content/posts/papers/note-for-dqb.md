@@ -6,6 +6,7 @@ math: true
 keywords: ["QoE"]
 tags: ["QoE"]
 categories: ["paper"]
+url: "posts/papers/note-for-dqb"
 ---
 
 # 整体概况

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>MLflow 的用法 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="MLflow 的用法" />
+<meta property="og:description" content="Overview MLflow是一个用于管理机器学习全生命周期的框架。 其主要的作用是： 完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflo" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/development/note-for-mlflow/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-07T19:25:46+08:00" />
+<meta property="article:modified_time" content="2023-05-03T11:19:10+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MLflow 的用法"/>
+<meta name="twitter:description" content="Overview MLflow是一个用于管理机器学习全生命周期的框架。 其主要的作用是： 完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflo"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/development/note-for-mlflow/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.f4efba72b201bd01e9371fb690efe6063b4a3785c6a9807a9340423c9aeed132.css" integrity="sha256-9O&#43;6crIBvQHpNx&#43;2kO/mBjtKN4XGqYB6k0BCPJru0TI="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MLflow 的用法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/development\/note-for-mlflow\/"
+        },"genre": "posts","keywords": "ML","wordcount":  1583 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/development\/note-for-mlflow\/","datePublished": "2022-03-07T19:25:46+08:00","dateModified": "2023-05-03T11:19:10+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">MLflow 的用法</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/development/"><i class="far fa-folder fa-fw"></i>development</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1583 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#mlflow-models">MLflow Models</a>
+      <ul>
+        <li><a href="#存储格式">存储格式</a></li>
+        <li><a href="#model-signature">Model Signature</a>
+          <ul>
+            <li><a href="#signature-enforcement">Signature Enforcement</a>
+              <ul>
+                <li><a href="#name-ordering-enforcement">Name Ordering Enforcement</a></li>
+                <li><a href="#input-type-enforcement">Input Type Enforcement</a></li>
+                <li><a href="#handling-integers-with-missing-values">Handling Integers With Missing Values</a></li>
+                <li><a href="#handling-data-and-timestamp">Handling Data and Timestamp</a></li>
+              </ul>
+            </li>
+            <li><a href="#log-models-with-signatures">Log Models with Signatures</a>
+              <ul>
+                <li><a href="#column-based-example"><code>Column-based</code> example</a></li>
+                <li><a href="#tensor-based-example"><code>Tensor-based</code> example</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#model-input-example">Model Input Example</a>
+          <ul>
+            <li><a href="#log-model-with-column-based-example">Log Model with <code>column-based</code> example</a></li>
+            <li><a href="#log-model-with-tensor-based-example">Log Model with <code>Tensor-based</code> example</a></li>
+          </ul>
+        </li>
+        <li><a href="#model-api">Model API</a>
+          <ul>
+            <li><a href="#pytorch">Pytorch</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="overview">Overview</h1>
+<p><code>MLflow</code>是一个用于管理机器学习全生命周期的框架。</p>
+<p>其主要的作用是：</p>
+<ul>
+<li>完成训练和测试过程中不同超参数的结果的记录、对比和可视化——<code>MLflow Tracking</code></li>
+<li>以一种可复现重用的方式包装 ML 代码——<code>MLflow Projects</code></li>
+<li>简化模型部署的难度——<code>MLflow Models</code></li>
+<li>提供中心化的模型存储来管理全生命周期——<code>MLflow Model Registry</code></li>
+</ul>
+<p>现在主要用到的是第三个，所以先记录<code>Models</code>的用法</p>
+<h1 id="mlflow-models">MLflow Models</h1>
+<p><code>MLflow Models</code>本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。</p>
+<p>这种格式定义了一种惯例来让我们以不同的<code>flavor</code>保存模型进而可以被下游工具所理解。</p>
+<h2 id="存储格式">存储格式</h2>
+<p>每个<code>MLflow Model</code>是一个包含任意文件的目录，根目录之下有一个<code>MLmodel</code>文件，用于定义多个<code>flavor</code>。</p>
+<p><code>flavor</code>是<code>MLflow Model</code>的关键概念，抽象上是部署工具可以用来理解模型的一种约定。</p>
+<p><code>MLflow</code>定义了其所有内置部署工具都支持的几种标准<code>flavor</code>，比如描述如何将模型作为<code>Python</code>函数运行的<code>python_function</code> <code>flavor</code>。</p>
+<p>目录结构示例如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307203544057.png"
+        title="image-20220307203544057" /></p>
+<p><code>MLmode</code>文件内容示例如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220307202038587.png"
+        title="image-20220307202038587" /></p>
+<p>这个模型可以用于任何支持<code>pytorch</code>或<code>python_function</code> <code>flavor</code>的工具，例如可以使用如下的命令用<code>python_function</code>来 serve 一个有<code>python_function</code> <code>flavor</code>的模型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mlflow models serve -m my_model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-signature">Model Signature</h2>
+<p>模型的输入输出要么是<code>column-based</code>，要么是<code>tensor-based</code>。</p>
+<ul>
+<li><code>column-based</code> inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the <code>MLflow data type</code>.</li>
+<li><code>tensor-based</code> inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the <code>numpy data type</code>.</li>
+</ul>
+<h3 id="signature-enforcement">Signature Enforcement</h3>
+<p>Schema enforcement checks the provided input against the model&rsquo;s signature and raises an exception if the input is not compatible. It only works when using <code>MLflow model</code> deployment tools or loading models as <code>python_function</code>. It has no impact on native model.</p>
+<h4 id="name-ordering-enforcement">Name Ordering Enforcement</h4>
+<p>The input names are checked against the model signature. If there are any missing inputs, <code>MLflow</code> will raise an exception. Extra inputs will be ignored. Prioritized method is matching by name if provided in input schema, then according to position.</p>
+<h4 id="input-type-enforcement">Input Type Enforcement</h4>
+<p>For <code>column-based</code> signatures, <code>MLflow</code> will perform safe type conversions if necessary. Only lossless conversions are allowed.</p>
+<p>For <code>tensor-based</code> signatures, type checking is strict(any dismatch will throw an exception).</p>
+<h4 id="handling-integers-with-missing-values">Handling Integers With Missing Values</h4>
+<p>Integer data with missing values is typically represented as floats in <code>Python</code>.</p>
+<p>Best way is to declare integer columns as doubles whenever there can be missing values.</p>
+<h4 id="handling-data-and-timestamp">Handling Data and Timestamp</h4>
+<p><code>Python</code> has precision built into the type for datatime values.</p>
+<p>Datetime precision is ignored for <code>column-based</code> model signature but is enforced for <code>tensor-based</code> signatures.</p>
+<h3 id="log-models-with-signatures">Log Models with Signatures</h3>
+<p>Pass signature object as an argument to the appropriate log_model call to include a signature with model. The model signature object can be created by hand or inferred from datasets with valid model inputs and valid model outputs.</p>
+<h4 id="column-based-example"><code>Column-based</code> example</h4>
+<p>The following example demonstrates how to store a model signature for a simple classifier trained on the <code>Iris</code> dataset:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">iris_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">iris_train</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">iris_train</span><span class="p">,</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">iris_train</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="s2">&#34;iris_rf&#34;</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The same signature can be created explicitly as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">ModelSignature</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ColSpec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;sepal length (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;sepal width (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;petal length (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;double&#34;</span><span class="p">,</span> <span class="s2">&#34;petal width (cm)&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span><span class="n">ColSpec</span><span class="p">(</span><span class="s2">&#34;long&#34;</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">ModelSignature</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_schema</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">output_schema</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="tensor-based-example"><code>Tensor-based</code> example</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">mnist</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">SGD</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">mlflow.keras</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">infer_signature</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">train_Y</span><span class="p">),</span> <span class="p">(</span><span class="n">test_X</span><span class="p">,</span> <span class="n">test_Y</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainX</span> <span class="o">=</span> <span class="n">train_X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">train_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">testX</span> <span class="o">=</span> <span class="n">test_X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">test_X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">train_Y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">testY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">test_Y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_uniform&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_uniform&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">testY</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">infer_signature</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testX</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&#34;mnist_cnn&#34;</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The same signature can be created explicitly as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.models.signature</span> <span class="kn">import</span> <span class="n">ModelSignature</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mlflow.types.schema</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">TensorSpec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">  <span class="n">TensorSpec</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">([</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))])</span>
+</span></span><span class="line"><span class="cl"><span class="n">signature</span> <span class="o">=</span> <span class="n">ModelSignature</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_schema</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">output_schema</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-input-example">Model Input Example</h2>
+<p>Model inputs can be <code>column-based</code> (i.e <code>DataFrame</code>) or <code>tensor-based</code> (i.e <code>numpy.ndarrays</code>).</p>
+<p>A model input example provides an instance of a valid model input which can be stored as separate artifact and is referenced in the <code>MLmodel</code> file.</p>
+<h3 id="log-model-with-column-based-example">Log Model with <code>column-based</code> example</h3>
+<p>An example can be a single record or a batch of records. The sample input can be passed in as a Pandas <code>DataFrame</code>, <code>list</code> or <code>dict</code>. The given example will be converted to a Pandas <code>DataFrame</code> and then serialized to json using the Pandas split-oriented format.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">input_example</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;sepal length (cm)&#34;</span><span class="p">:</span> <span class="mf">5.1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;sepal width (cm)&#34;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;petal length (cm)&#34;</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;petal width (cm)&#34;</span><span class="p">:</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="log-model-with-tensor-based-example">Log Model with <code>Tensor-based</code> example</h3>
+<p>An example must be a batch of inputs. The axis 0 is the batch axis by default unless specified otherwise in the model signature. The sample input can be passed in as a numpy <code>ndarray</code> or a <code>dict</code> mapping a string to a numpy <code>array</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># each input has shape (4, 4)</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_example</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">   <span class="p">[[</span>  <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">56</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="mi">253</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span>   <span class="mi">6</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">93</span><span class="p">,</span>  <span class="mi">82</span><span class="p">,</span>  <span class="mi">82</span><span class="p">]],</span>
+</span></span><span class="line"><span class="cl">   <span class="p">[[</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">23</span><span class="p">,</span>  <span class="mi">46</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">13</span><span class="p">,</span>  <span class="mi">36</span><span class="p">,</span> <span class="mi">166</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">76</span><span class="p">,</span>  <span class="mi">75</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">44</span><span class="p">,</span>  <span class="mi">11</span><span class="p">,</span>  <span class="mi">82</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlflow</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">input_example</span><span class="o">=</span><span class="n">input_example</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="model-api">Model API</h2>
+<p><code>MLflow</code> includes integrations with several common libraries. For example, <code>mlflow.sklearn</code> contains <code>save_model</code>, <code>log_model</code>, and <code>load_model</code> functions for <code>scikit-learn</code> models.</p>
+<p>Additionally, we can use <code>mlflow.models.Model</code> class to create and write models which has 4 key functions:</p>
+<ul>
+<li><code>add_flavor</code> to add a flavor to the model. Each <code>flavor</code> has a <code>string</code> name and a <code>dict</code> of key-value attributes, where the values can be any object that can be serialized to YAML.</li>
+<li><code>save</code> to save the model to a local directory.</li>
+<li><code>log</code> to log the model as an artifact in the current run using <code>MLflow tracking</code>.</li>
+<li><code>load</code> to load a model from a local directory or from an artifact in a previous run.</li>
+</ul>
+<h3 id="pytorch">Pytorch</h3>
+<p><code>mlflow.pytorch</code> module defines utilities for saving and loading <code>MLflow Models</code> with the <code>pytorch</code> flavor.</p>
+<p>We can use <code>mlflow.pytorch.save_model()</code> and <code>mlflow.pytorch.log_model()</code> methods to save <code>pytorch</code> models in <code>MLflow</code> format.</p>
+<p>We can use <code>mlflow.pytorch.load_mode()</code> to load <code>MLflow Models</code> with <code>pytorch</code> flavor as <code>pytorch</code> model objects. This loaded <code>PyFunc</code> model can be scored with both <code>DataFrame</code> input and numpy <code>array</code> input.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/ml/">ML</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-05-03</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/development/note-for-mlflow/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/knowledge/webgl/webgl-samples-explanation/" class="prev" rel="prev" title="WebGL 样例的解释"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/papers/note-for-toward-immersive-experience/" class="next" rel="next" title="Note for Toward Immersive Experience">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.99464ceb71bc9bbdcc72275faefe44f98eb5cbb6b5d8ee665b87b35376f1a96e.css" integrity="sha256-mUZM63G8m73Mcidfrv5E&#43;Y61y7a12O5mW4ezU3bxqW4="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.39a97596903cc57488c5bee6fde4825489cd0faf1c3a8ca3520f3616b0be4a44.js" integrity="sha256-Oal1lpA8xXSIxb7m/eSCVInND68cOoyjUg82FrC&#43;SkQ="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.904025b078f2ab8ff417a039c698b64e0484569262eb0830aaa52a18b479a5d9.js" integrity="sha256-kEAlsHjyq4/0F6A5xpi2TgSEVpJi6wgwqqUqGLR5pdk="></script></body></html>

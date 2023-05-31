@@ -6,6 +6,7 @@ math: true
 keywords: ["Conda", "Jupyter"]
 tags: ["Conda", "Jupyter"]
 categories: ["development"]
+url: "posts/development/use-jupyter-notebook-in-conda-env"
 ---
 
 0. 远程启动`jupyter notebool`：

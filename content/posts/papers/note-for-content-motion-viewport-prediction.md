@@ -6,6 +6,7 @@ math: true
 keywords: ["Content motion", "Viewport prediction", "Live video"]
 tags: ["Immersive Video", "Content-based predict", "Live video"]
 categories: ["paper"]
+url: "posts/papers/note-for-content-motion-viewport-prediction"
 ---
 
 ## 论文概况

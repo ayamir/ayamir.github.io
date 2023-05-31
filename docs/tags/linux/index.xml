@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
     <title>修复 Archlinux 上出现的 GPGME Error</title>
-    <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -49,8 +49,8 @@
 </item>
 <item>
     <title>Linux 权限相关命令解读</title>
-    <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/linux-authority/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
@@ -423,8 +423,8 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </item>
 <item>
     <title>在 Linux 上手动设置 DNS</title>
-    <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns-设置">Arch Linux DNS 设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>

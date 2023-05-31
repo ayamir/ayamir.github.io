@@ -5,6 +5,7 @@ draft: false
 keywords: ["linux"]
 tags: ["linux"]
 categories: ["knowledge"]
+url: "posts/knowledge/linux/how-to-fix-GPGME-error"
 ---
 
 ## Delete old sync files

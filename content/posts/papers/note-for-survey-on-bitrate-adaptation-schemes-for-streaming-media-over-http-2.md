@@ -6,6 +6,7 @@ math: true
 keywords: ["ABR"]
 tags: ["ABR", "Survey"]
 categories: ["paper"]
+url: "posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2"
 ---
 
 # Bitrate Adaptation Schemes

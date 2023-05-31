@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
     <title>WebRTC 中关于视频自适应的相关设置</title>
-    <link>https://ayamir.github.io/posts/note-for-webrtc-1/</link>
-    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-webrtc-1/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
     <description><![CDATA[<h1 id="概况">概况</h1>
 <p><code>WebRTC</code>提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。</p>
 <p>视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。</p>
@@ -60,8 +60,8 @@
 </item>
 <item>
     <title>WebGL 样例的解释</title>
-    <link>https://ayamir.github.io/posts/webgl-samples-explanation/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples-explanation/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
     <description><![CDATA[<h1 id="context">Context</h1>
 <ol>
 <li>Create an <code>HTML5</code> canvas</li>
@@ -605,8 +605,8 @@
 </item>
 <item>
     <title>WebGL 样例</title>
-    <link>https://ayamir.github.io/posts/webgl-samples/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-samples/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
     <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
 <p>WebGL application code is a combination of JavaScript and OpenGL Shader Language.</p>
 <ul>
@@ -804,8 +804,8 @@
 </item>
 <item>
     <title>WebGL 中的管线</title>
-    <link>https://ayamir.github.io/posts/webgl-pipeline/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-pipeline/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p></p>
 <h1 id="javascript">JavaScript</h1>
@@ -869,8 +869,8 @@
 </item>
 <item>
     <title>WebGL 基础知识</title>
-    <link>https://ayamir.github.io/posts/webgl-basics/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webgl-basics/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
     <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>
 <p>There are x, y, z axes in WebGL, where the z axis signifies <strong>depth</strong>.
 The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1).
@@ -967,8 +967,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>VR 和 全景视频的区别总结</title>
-    <link>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/summary-for-vr-and-panoramic-video/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
     <description><![CDATA[<p>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
 <h2 id="全景视频">全景视频</h2>
 <ol>
@@ -1017,8 +1017,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>全景视频中视口预测相关方法总结</title>
-    <link>https://ayamir.github.io/posts/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="视口预测是什么">视口预测是什么？</h2>
 <p>视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。</p>
 <p>相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。</p>
@@ -1109,8 +1109,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>多媒体基础知识</title>
-    <link>https://ayamir.github.io/posts/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/mm-base/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
     <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
 <p></p>
 <h2 id="解协议">解协议</h2>
@@ -1228,8 +1228,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>https://ayamir.github.io/posts/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/iterator/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1370,8 +1370,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>https://ayamir.github.io/posts/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/vector/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1466,8 +1466,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>https://ayamir.github.io/posts/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/string/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1613,8 +1613,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>https://ayamir.github.io/posts/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/auto/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1647,8 +1647,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：Const二三事</title>
-    <link>https://ayamir.github.io/posts/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/const/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -1843,8 +1843,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：引用和指针</title>
-    <link>https://ayamir.github.io/posts/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/reference-and-pointer/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2013,8 +2013,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：类型系统基础</title>
-    <link>https://ayamir.github.io/posts/cpp-types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/cpp-types/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2228,8 +2228,8 @@ $$</p>
 </item>
 <item>
     <title>修复 Archlinux 上出现的 GPGME Error</title>
-    <link>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/how-to-fix-gpgme-error/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2271,8 +2271,8 @@ $$</p>
 </item>
 <item>
     <title>Linux 权限相关命令解读</title>
-    <link>https://ayamir.github.io/posts/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/linux-authority/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
@@ -2645,8 +2645,8 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </item>
 <item>
     <title>在 Linux 上手动设置 DNS</title>
-    <link>https://ayamir.github.io/posts/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/dns-settings-on-archlinux/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns-设置">Arch Linux DNS 设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>

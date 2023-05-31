@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video", "Jointly Predict"]
 tags: ["Trajectory-based predict", "Content-based predict"]
 categories: ["paper"]
+url: "posts/papers/note-for-content-assisted-prediction"
 ---
 
 ## 论文概况

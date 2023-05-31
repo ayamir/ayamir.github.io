@@ -6,6 +6,7 @@ math: true
 keywords: ["VP"]
 tags: ["Content-based predict"]
 categories: ["paper"]
+url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 ---
 
 # LiveMotion

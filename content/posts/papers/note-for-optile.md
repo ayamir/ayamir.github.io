@@ -5,6 +5,7 @@ draft: false
 keywords: ["Immersive Video"]
 tags: ["Immersive Video", "Content-based division", "Dynamic tiling"]
 categories: ["paper"]
+url: "posts/papers/note-for-optile"
 ---
 
 ## 论文概况

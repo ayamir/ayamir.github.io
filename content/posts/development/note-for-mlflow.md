@@ -6,6 +6,7 @@ math: true
 keywords: ["ML", "Model Deploy"]
 tags: ["ML"]
 categories: ["development"]
+url: "posts/development/note-for-mlflow"
 ---
 
 # Overview

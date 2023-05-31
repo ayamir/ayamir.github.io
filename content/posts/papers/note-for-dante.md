@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video",]
 tags: ["Immersive Video", "UDP", "Heuristic"]
 categories: ["paper"]
+url: "posts/papers/note-for-dante"
 ---
 
 

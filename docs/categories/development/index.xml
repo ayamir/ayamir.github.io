@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/development/" rel="self" type="application/rss+xml" /><item>
     <title>在Linux下如何搭建WebRTC的开发环境</title>
-    <link>https://ayamir.github.io/posts/webrtc-development-prepare/</link>
-    <pubDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webrtc-development-prepare/</guid>
+    <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
+    <pubDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
     <description><![CDATA[<p>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。</p>
 <h2 id="准备工作">准备工作</h2>
 <ol>
@@ -176,8 +176,8 @@
 </item>
 <item>
     <title>MLflow 的用法</title>
-    <link>https://ayamir.github.io/posts/note-for-mlflow/</link>
-    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/note-for-mlflow/</guid>
+    <link>https://ayamir.github.io/posts/development/note-for-mlflow/</link>
+    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/note-for-mlflow/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p><code>MLflow</code>是一个用于管理机器学习全生命周期的框架。</p>
 <p>其主要的作用是：</p>
@@ -452,8 +452,8 @@
 </item>
 <item>
     <title>使用 WebXR 完成基于分块的全景视频自适应码率播放器</title>
-    <link>https://ayamir.github.io/posts/webxr-for-panoramic-video/</link>
-    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/webxr-for-panoramic-video/</guid>
+    <link>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</link>
+    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</guid>
     <description><![CDATA[<p>最近几天一直在用<code>WebXR</code>的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。</p>
 <p>首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用 WebXR 提供的 API）</p>
 <h2 id="分块播放">分块播放</h2>
@@ -711,8 +711,8 @@
 </item>
 <item>
     <title>在 Jupyter Notebook 中设置 Conda 环境</title>
-    <link>https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/</link>
-    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/use-jupyter-notebook-in-conda-env/</guid>
+    <link>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</guid>
     <description><![CDATA[<ol start="0">
 <li>
 <p>远程启动<code>jupyter notebool</code>：</p>
@@ -767,8 +767,8 @@
 </item>
 <item>
     <title>部署 Immersive Video OMAF-Sample</title>
-    <link>https://ayamir.github.io/posts/immersive-video-deploy/</link>
-    <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/immersive-video-deploy/</guid>
+    <link>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</link>
+    <pubDate>Sat, 09 Oct 2021 15:31:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</guid>
     <description><![CDATA[<p>原仓库地址：<a href="https://github.com/OpenVisualCloud/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
 <p>修改之后的仓库：<a href="https://github.com/ayamir/Immersive-Video-Sample" target="_blank" rel="noopener noreffer">Immersive-Video-Sample</a></p>
 <h2 id="server-端搭建">Server 端搭建</h2>
@@ -918,8 +918,8 @@
 </item>
 <item>
     <title>在 microsoft-edge-dev 上设置 Python selenium</title>
-    <link>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
-    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <link>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
     <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

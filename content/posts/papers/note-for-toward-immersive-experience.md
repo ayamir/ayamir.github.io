@@ -6,6 +6,7 @@ math: true
 keywords: ["QoE Metrics"]
 tags: ["QoE Metrics"]
 categories: ["paper"]
+url: "posts/papers/note-for-toward-immersive-experience"
 ---
 
 # Overview

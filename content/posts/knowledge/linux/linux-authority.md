@@ -5,6 +5,7 @@ draft: false
 keywords: ["linux"]
 tags: ["linux"]
 categories: ["knowledge"]
+url: "posts/knowledge/linux/linux-authority"
 ---
 
 ## 文件和目录的权限

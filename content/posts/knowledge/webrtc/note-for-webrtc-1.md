@@ -6,6 +6,7 @@ math: true
 keywords: ["WebRTC"]
 tags: ["WebRTC"]
 categories: ["knowledge"]
+url: "posts/knowledge/webrtc/note-for-webrtc-1"
 ---
 
 # 概况

@@ -6,6 +6,7 @@ math: true
 keywords: ["Trajectory-based predict", "Probabilistic Model"]
 tags: ["Immersive Video", "Trajectory-based predict", "Probabilistic Model"]
 categories: ["paper"]
+url: "posts/papers/note-for-360ProbDASH"
 ---
 
 ## 论文概况

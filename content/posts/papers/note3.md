@@ -6,6 +6,7 @@ math: true
 keywords: ["Immersive Video"]
 tags: ["Immersive Video"]
 categories: ["paper"]
+url: "posts/papers/note3"
 ---
 
 ## 概述

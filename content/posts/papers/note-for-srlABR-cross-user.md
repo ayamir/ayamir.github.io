@@ -6,6 +6,7 @@ math: true
 keywords: ["Cross-user vp", "RL", "ABR"]
 tags: ["Cross-user vp", "ABR", "Immersive Video"]
 categories: ["paper"]
+url: "posts/papers/note-for-srlABR-cross-user"
 ---
 
 ## 论文概况

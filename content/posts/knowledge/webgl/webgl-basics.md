@@ -6,6 +6,7 @@ math: true
 keywords: ["WebGL"]
 tags: ["WebGL"]
 categories: ["knowledge"]
+url: "posts/knowledge/webgl/webgl-basics"
 ---
 
 # Coordinate System

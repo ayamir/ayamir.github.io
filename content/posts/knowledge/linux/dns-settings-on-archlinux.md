@@ -5,6 +5,7 @@ draft: false
 keywords: ["linux"]
 tags: ["linux"]
 categories: ["knowledge"]
+url: "posts/knowledge/linux/dns-settings-on-archlinux"
 ---
 
 ## Arch Linux DNS 设置

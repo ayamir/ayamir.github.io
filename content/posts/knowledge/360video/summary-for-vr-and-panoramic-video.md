@@ -6,6 +6,7 @@ math: true
 keywords: ["VR", "Panoramic Video"]
 tags: ["VR", "Panoramic Video"]
 categories: ["knowledge"]
+url: "posts/knowledge/360video/summary-for-vr-and-panoramic-video"
 ---
 
 VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。

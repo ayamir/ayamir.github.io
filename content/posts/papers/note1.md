@@ -5,6 +5,7 @@ draft: false
 keywords: ["Immersive Video"]
 tags: ["Immersive Video"]
 categories: ["paper"]
+url: "posts/papers/note1"
 ---
 
 ## 360 度流媒体视频框架

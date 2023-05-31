@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/viewport-predict/" rel="self" type="application/rss+xml" /><item>
     <title>全景视频中视口预测相关方法总结</title>
-    <link>https://ayamir.github.io/posts/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="视口预测是什么">视口预测是什么？</h2>
 <p>视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。</p>
 <p>相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。</p>

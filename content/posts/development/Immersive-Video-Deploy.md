@@ -5,6 +5,7 @@ keywords: ["Immersive-Video", "Ubuntu", "Docker"]
 tags: ["Immersive-Video"]
 categories: ["development"]
 draft: false
+url: "posts/development/Immersive-Video-Deploy"
 ---
 
 原仓库地址：[Immersive-Video-Sample](https://github.com/OpenVisualCloud/Immersive-Video-Sample)

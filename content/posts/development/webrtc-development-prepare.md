@@ -6,6 +6,7 @@ math: true
 keywords: ["WebRTC"]
 tags: ["WebRTC"]
 categories: ["development"]
+url: "posts/development/webrtc-development-prepare"
 ---
 
 本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。

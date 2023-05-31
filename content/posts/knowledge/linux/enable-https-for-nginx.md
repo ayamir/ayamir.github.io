@@ -6,4 +6,5 @@ math: true
 keywords: ["nginx"]
 tags: ["nginx"]
 categories: ["knowledge"]
+url: "posts/knowledge/linux/enable-https-for-nginx"
 ---
