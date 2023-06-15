@@ -32,5 +32,53 @@ VNC使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一�
 
 ## RDP
 
-RDP是[微软提出的一种专有协议](https://learn.microsoft.com/en-us/troubleshoot/windows-server/remote/understanding-remote-desktop-protocol)，采用C-S架构，最早专用于Windows系统的终端和服务器之间的远程桌面连接，之后微软也实现了[RDP的MacOS客户端](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-mac)，现在也有很多第三方的实现版本实现了其功能的子集，为GNU/Linux做了适配如[xrdp](https://github.com/neutrinolabs/xrdp)。
+RDP是[微软提出的一种专有协议](https://learn.microsoft.com/en-us/troubleshoot/windows-server/remote/understanding-remote-desktop-protocol)，扩展了T-120系列协议标准，最早专用于Windows系统的终端和服务器之间的远程桌面连接，之后微软也实现了[RDP的MacOS客户端](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-mac)，现在也有很多第三方的实现版本实现了其功能的子集，为GNU/Linux做了适配如[xrdp](https://github.com/neutrinolabs/xrdp)。因此，可以说RDP也一定程度上具有跨平台的性质。
+
+相比于VNC，RDP的实现原理还是比较复杂的：
+
+![rdp协议或标准](https://raw.githubusercontent.com/ayamir/blog-imgs/main/131.png)
+
+首先，RDP的最底层是TCP，TCP之上是各层的协议和服务。
+
++ TPKT：是TCP之上的ISO传输服务，允许两个组交换TPDU（传输协议数据单元）或PDU（协议数据单元）的信息单元。
++ X.224：连接传输协议，主要用于RDP初始连接请求和响应。
++ T.125 MCS：多点通信服务，允许RDP通过多个通道进行通信和管理。
+
+RDP的工作原理是通过TPKT实现信息单元的交换，通过X.224建立连接，使用T.125 MCS打开两个通道来完成两个设备之间的来回数据传输。
+
+RDP的特点功能比较丰富，比如：
+
++ 支持共享剪切板。
++ 支持多个显示器。
++ 支持虚拟化GPU。
++ 支持32位彩色和64000个独立的数据传输通道。
++ 通过RC4对称加密算法使用128位密钥对数据进行加密。
++ 可以在使用远程计算机时参考本地计算机上的文件系统。
++ 远程计算机的应用程序可以在本地计算机上运行。
+
+当然，事物都有两面性，RDP拥有这么多强大功能，也有一些难以避免的缺点：
+
++ 网络速度较慢时，远程连接容易出现延迟。
++ 两台计算机在不同的网络上时，其配置过程相当复杂。
++ 固定使用3389端口监听，可能成为攻击的目标。
++ RDP整体上还是受到微软控制，定制性比较差。
+
+# WebRTC和远程桌面
+
+远程桌面的核心需求和WebRTC的核心功能完美契合。
+
++ WebRTC基于ICE/STUN/TURN的NAT穿透方案可以很方便地解决不同网络情况下主机连接的问题，
++ WebRTC基于SRTP的传输方式天然提供了实时特征、端到端的加密的数据传输服务。
++ WebRTC针对各种网络情况做了音视频传输的大量优化，可以保证各种网络条件下的可用性。
++ WebRTC本身其实是Chromium浏览器的一部分，天然具备跨平台的性质。
++ WebRTC完全开源，定制性极强，不少公司都基于WebRTC来做自家的直播、云游戏业务。
+
+整体上来讲，WebRTC的优势使其很适合用于远程桌面业务，当然，目前市面上已经有App基于WebRTC实现了远程桌面的功能，比如[Chrome Remote Desktop](https://en.wikipedia.org/wiki/Chrome_Remote_Desktop)和[ToDesk](https://www.todesk.com/)。前者可以理解为是Google用自己WebRTC推出的远程桌面服务，体验了一下，整体上功能比较少，但是连接比较稳定，不过受GFW影响，这玩意在国内应该是处于没法用的状态；后者则是国产远程桌面软件，目前已经比较成熟，提供了企业版、个人版、专业版和游戏版四个版本，从其官网上提供的信息来看，应该是做出了一定成绩。
+
+从技术上讲，基于WebRTC开发远程桌面应用相当合理，开源可控，还有谷歌背书，WebRTC本身在不停地与时俱进，作为上层应用开发的远程桌面也可以及时享受到WebRTC带来的改进。
+
+从业务上讲，WebRTC本身具有的功能可以解决上面所说的VNC和RDP的诸多问题，不过就功能的丰富性而言，可能跟微软的RDP还差一些，但是WebRTC基于音视频的解决方案本身可以优化的上限还是挺高的，毕竟随着人们需求的上升，高分辨率、高帧率也会成为未来远程桌面应用必不可少的功能需求。
+
+本篇博客从非技术层面探讨了远程桌面技术的当下两大主流技术，以及WebRTC应用于远程桌面业务下的可行性。下篇博客将从技术层面详细分析WebRTC与远程桌面业务的契合程度及可能的解决方案，就先从核心功能开始吧！
+
 
