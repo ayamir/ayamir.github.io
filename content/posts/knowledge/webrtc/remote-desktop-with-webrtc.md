@@ -3,9 +3,9 @@ title: "远程桌面与WebRTC"
 date: 2023-06-15T18:21:02+08:00
 draft: false
 math: true
-keywords: [""]
-tags: [""]
-categories: [""]
+keywords: ["WebRTC"]
+tags: ["WebRTC"]
+categories: ["WebRTC"]
 url: "posts/knowledge/webrtc/remote-desktop-with-webrtc"
 ---
 
