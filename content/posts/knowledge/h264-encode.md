@@ -6,7 +6,7 @@ math: true
 keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
-url: "posts/knowledge/mm-base"
+url: "posts/knowledge/h264-encode"
 ---
 
 ## 编码框架
