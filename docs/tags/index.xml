@@ -1,252 +1,128 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Tags on Ayamir&#39;s Blog</title>
-    <link>https://ayamir.github.io/tags/</link>
-    <description>Recent content in Tags on Ayamir&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
-    <lastBuildDate>Thu, 15 Jun 2023 18:21:02 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>WebRTC</title>
-      <link>https://ayamir.github.io/tags/webrtc/</link>
-      <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/webrtc/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>QoE</title>
-      <link>https://ayamir.github.io/tags/qoe/</link>
-      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/qoe/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>QoE Metrics</title>
-      <link>https://ayamir.github.io/tags/qoe-metrics/</link>
-      <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/qoe-metrics/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>ML</title>
-      <link>https://ayamir.github.io/tags/ml/</link>
-      <pubDate>Mon, 07 Mar 2022 19:25:46 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/ml/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>WebGL</title>
-      <link>https://ayamir.github.io/tags/webgl/</link>
-      <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/webgl/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>ABR</title>
-      <link>https://ayamir.github.io/tags/abr/</link>
-      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/abr/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Survey</title>
-      <link>https://ayamir.github.io/tags/survey/</link>
-      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/survey/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>WebXR</title>
-      <link>https://ayamir.github.io/tags/webxr/</link>
-      <pubDate>Fri, 25 Feb 2022 11:04:23 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/webxr/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Conda</title>
-      <link>https://ayamir.github.io/tags/conda/</link>
-      <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/conda/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Jupyter</title>
-      <link>https://ayamir.github.io/tags/jupyter/</link>
-      <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/jupyter/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Content-based predict</title>
-      <link>https://ayamir.github.io/tags/content-based-predict/</link>
-      <pubDate>Tue, 25 Jan 2022 11:59:24 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/content-based-predict/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Dynamic tiling</title>
-      <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
-      <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/dynamic-tiling/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Heuristic</title>
-      <link>https://ayamir.github.io/tags/heuristic/</link>
-      <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/heuristic/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Panoramic Video</title>
-      <link>https://ayamir.github.io/tags/panoramic-video/</link>
-      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/panoramic-video/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>VR</title>
-      <link>https://ayamir.github.io/tags/vr/</link>
-      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/vr/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Cross-user vp</title>
-      <link>https://ayamir.github.io/tags/cross-user-vp/</link>
-      <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/cross-user-vp/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Immersive-Video</title>
-      <link>https://ayamir.github.io/tags/immersive-video/</link>
-      <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/immersive-video/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Viewport predict</title>
-      <link>https://ayamir.github.io/tags/viewport-predict/</link>
-      <pubDate>Fri, 07 Jan 2022 23:08:36 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/viewport-predict/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Trajectory-based predict</title>
-      <link>https://ayamir.github.io/tags/trajectory-based-predict/</link>
-      <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/trajectory-based-predict/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>DASH</title>
-      <link>https://ayamir.github.io/tags/dash/</link>
-      <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/dash/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>MPC</title>
-      <link>https://ayamir.github.io/tags/mpc/</link>
-      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/mpc/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Mobile device</title>
-      <link>https://ayamir.github.io/tags/mobile-device/</link>
-      <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/mobile-device/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Live video</title>
-      <link>https://ayamir.github.io/tags/live-video/</link>
-      <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/live-video/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Dynamic tile selection</title>
-      <link>https://ayamir.github.io/tags/dynamic-tile-selection/</link>
-      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/dynamic-tile-selection/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>RNN</title>
-      <link>https://ayamir.github.io/tags/rnn/</link>
-      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/rnn/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Content-based division</title>
-      <link>https://ayamir.github.io/tags/content-based-division/</link>
-      <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/content-based-division/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Multimedia</title>
-      <link>https://ayamir.github.io/tags/multimedia/</link>
-      <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/multimedia/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>DRL</title>
-      <link>https://ayamir.github.io/tags/drl/</link>
-      <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/drl/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Rainbow-DQN</title>
-      <link>https://ayamir.github.io/tags/rainbow-dqn/</link>
-      <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/rainbow-dqn/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Probabilistic Model</title>
-      <link>https://ayamir.github.io/tags/probabilistic-model/</link>
-      <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/probabilistic-model/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>UDP</title>
-      <link>https://ayamir.github.io/tags/udp/</link>
-      <pubDate>Wed, 08 Dec 2021 22:14:15 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/udp/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>C&#43;&#43;</title>
-      <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
-      <pubDate>Thu, 28 Oct 2021 17:09:18 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>linux</title>
-      <link>https://ayamir.github.io/tags/linux/</link>
-      <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://ayamir.github.io/tags/python/</link>
-      <pubDate>Fri, 26 Mar 2021 21:43:35 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - 标签 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/tags/</link>
+        <description>Tags - 标签 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Multimedia</title>
+    <link>https://ayamir.github.io/tags/multimedia/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/multimedia/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>WebRTC</title>
+    <link>https://ayamir.github.io/tags/webrtc/</link>
+    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webrtc/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>QoE</title>
+    <link>https://ayamir.github.io/tags/qoe/</link>
+    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/qoe/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>QoE Metrics</title>
+    <link>https://ayamir.github.io/tags/qoe-metrics/</link>
+    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/qoe-metrics/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>ML</title>
+    <link>https://ayamir.github.io/tags/ml/</link>
+    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/ml/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>WebGL</title>
+    <link>https://ayamir.github.io/tags/webgl/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webgl/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>ABR</title>
+    <link>https://ayamir.github.io/tags/abr/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/abr/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Survey</title>
+    <link>https://ayamir.github.io/tags/survey/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/survey/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>WebXR</title>
+    <link>https://ayamir.github.io/tags/webxr/</link>
+    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webxr/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Conda</title>
+    <link>https://ayamir.github.io/tags/conda/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/conda/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Jupyter</title>
+    <link>https://ayamir.github.io/tags/jupyter/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/jupyter/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Content-based predict</title>
+    <link>https://ayamir.github.io/tags/content-based-predict/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/content-based-predict/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Dynamic tiling</title>
+    <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/dynamic-tiling/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Heuristic</title>
+    <link>https://ayamir.github.io/tags/heuristic/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/heuristic/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Panoramic Video</title>
+    <link>https://ayamir.github.io/tags/panoramic-video/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/panoramic-video/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>VR</title>
+    <link>https://ayamir.github.io/tags/vr/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/vr/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Cross-user vp</title>
+    <link>https://ayamir.github.io/tags/cross-user-vp/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/cross-user-vp/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Immersive-Video</title>
+    <link>https://ayamir.github.io/tags/immersive-video/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/immersive-video/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Viewport predict</title>
+    <link>https://ayamir.github.io/tags/viewport-predict/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/viewport-predict/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Trajectory-based predict</title>
+    <link>https://ayamir.github.io/tags/trajectory-based-predict/</link>
+    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/trajectory-based-predict/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>

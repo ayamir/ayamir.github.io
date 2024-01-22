@@ -1,13 +1,5 @@
----
-title: "H264 Encode"
-date: 2024-01-23T01:05:20+08:00
-draft: false
-math: true
-keywords: ["Multimedia"]
-tags: ["Multimedia"]
-categories: ["knowledge"]
-url: "posts/knowledge/h264-encode"
----
+# H264 Encode
+
 
 ## 编码框架
 
@@ -664,3 +656,4 @@ SFU从发布客户端复制音视频流的信息，然后分发到多个订阅�
 ## RTC应用中提高实时性
 
 因为编码主要的时间开销在运动预测过程中，如果在云游戏的场景下，可以得到游戏画面中物体的运动信息然后考虑用来辅助运动预测，或者说对搜索过程进行剪枝。
+

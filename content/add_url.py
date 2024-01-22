@@ -40,7 +40,6 @@ def add_url_to_file(file_path, directory_path, beginning_to_strip) -> bool:
 
     return False
 
-    
 
 def iterate_directory(directory_path):
     # Iterate over all files and directories in the given path

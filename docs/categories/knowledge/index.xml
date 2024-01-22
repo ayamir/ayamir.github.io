@@ -1,147 +1,3277 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>knowledge on Ayamir&#39;s Blog</title>
-    <link>https://ayamir.github.io/categories/knowledge/</link>
-    <description>Recent content in knowledge on Ayamir&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
-    <lastBuildDate>Thu, 15 Sep 2022 20:48:51 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/categories/knowledge/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>WebRTC 中关于视频自适应的相关设置</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
-      <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
-      <description>概况 WebRTC提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。 视频自适应发生的情形：带宽或 CPU 资源发出信号表明</description>
-    </item>
-    <item>
-      <title>WebGL 样例的解释</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
-      <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
-      <description>Context Create an HTML5 canvas Get the canvas id Obtain WebGL Context The parameter WebGLContextAttributes is not mandatory. Attributes Description Default value alpha true: provide an alpha buffer to the canvas; true depth true: drawing buffer contains a depth buffer of at least 16 bits; true stencil true: drawing buffer contains a stencil buffer of at least 8 bits; false antialias true: drawing buffer performs anti-aliasing true premultipliedAlpha true: drawing</description>
-    </item>
-    <item>
-      <title>WebGL 样例</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
-      <pubDate>Thu, 03 Mar 2022 10:31:31 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
-      <description>Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language. JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33</description>
-    </item>
-    <item>
-      <title>WebGL 中的管线</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
-      <pubDate>Thu, 03 Mar 2022 10:31:22 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
-      <description>Overview JavaScript JavaScript is used to write the control code of the program, which includes the following actions: Initialization: initialize WebGL context. Arrays: create arrays to hold the data of the geometry. Buffer objects: create buffer objects by passing the arrays as parameters. Shaders: create, compile and link the shaders. Attributes: create attributes, enable them and associate them with buffer objects. Uniforms: associate the uniforms. Transformation matrix: create transformation matrix.</description>
-    </item>
-    <item>
-      <title>WebGL 基础知识</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
-      <pubDate>Thu, 03 Mar 2022 10:31:04 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
-      <description>Coordinate System There are x, y, z axes in WebGL, where the z axis signifies depth. The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1). Positive value meaning: z: near viewer. x: near right. y: near top. Graphics System Vertices To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon. A vertex is a</description>
-    </item>
-    <item>
-      <title>VR 和 全景视频的区别总结</title>
-      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
-      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
-      <description>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火</description>
-    </item>
-    <item>
-      <title>全景视频中视口预测相关方法总结</title>
-      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
-      <pubDate>Fri, 07 Jan 2022 23:08:36 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
-      <description>视口预测是什么？ 视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。 相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实</description>
-    </item>
-    <item>
-      <title>多媒体基础知识</title>
-      <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
-      <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
-      <description>媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。 音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DAS</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：容器和迭代器</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
-      <pubDate>Thu, 28 Oct 2021 17:09:18 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
-      <description>常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。 string虽然不是容器，但是支持很多容器的操作。 容器不为空时：begin</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：标准库类模板Vector</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
-      <pubDate>Thu, 28 Oct 2021 15:35:17 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
-      <description>常见的坑 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义不同。</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：标准库类型string</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
-      <pubDate>Thu, 28 Oct 2021 10:31:33 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
-      <description>常见的坑 string.size()和string.length()等价。 string.size()和其他STL容器的命名风格相一致（如vec</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：类型推导</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
-      <pubDate>Tue, 26 Oct 2021 21:14:32 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
-      <description>常见的坑 auto可以在一条语句中声明多个变量，但是所有变量的类型必须一致。 decltype在分析表达式类型时并不执行表达式。 decltype</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：Const二三事</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
-      <pubDate>Tue, 26 Oct 2021 15:53:11 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
-      <description>常见的坑 仅用const修饰的对象只在单个文件中有效，如果想在多个文件之间共享const对象，必须在对象定义的前面加extern。 允许为一个常</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：引用和指针</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
-      <pubDate>Tue, 26 Oct 2021 15:49:49 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
-      <description>常见的坑 &amp;amp;和*在不同的上下文里面其含义并不相同，因此完全可以当成不同的符号看待。 1 2 3 4 5 6 int i = 42; int &amp;amp;r = i; // &amp;amp;在类型名后出</description>
-    </item>
-    <item>
-      <title>重学C&#43;&#43;：类型系统基础</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
-      <pubDate>Mon, 18 Oct 2021 19:32:22 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
-      <description>常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。 字符型被分为3种：char, signed char, unsigned char，前两种并不等</description>
-    </item>
-    <item>
-      <title>修复 Archlinux 上出现的 GPGME Error</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
-      <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
-      <description>Delete old sync files 1 sudo rm /var/lib/pacman/sync/* Re init pacman-key 1 sudo pacman-key --init Populate key 1 sudo pacman-key --populate Re sync 1 sudo pacman -Syyy Now you can update successfully!</description>
-    </item>
-    <item>
-      <title>Linux 权限相关命令解读</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
-      <pubDate>Mon, 15 Mar 2021 21:43:35 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
-      <description>文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号</description>
-    </item>
-    <item>
-      <title>在 Linux 上手动设置 DNS</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
-      <pubDate>Tue, 26 Jan 2021 21:43:35 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
-      <description>Arch Linux DNS 设置 安装dnsmasq 1 sudo pacman -S dnsmasq 配置/etc/resolv.conf中的域名代理服务器 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</description>
-    </item>
-    <item>
-      <title>H264编码</title>
-      <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
-      <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
-    </item>
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>knowledge - 分类 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/categories/knowledge/</link>
+        <description>knowledge - 分类 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
+    <title>H264 Encode</title>
+    <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
+    <description><![CDATA[<h2 id="编码框架">编码框架</h2>
+<p>编码器包含两个方向的码流分支：</p>
+<p></p>
+<p>从左到右的前向码流分支为编码过程；</p>
+<p>从右到左的反向码流分支为重建过程。</p>
+<h3 id="前向编码分支">前向编码分支</h3>
+<p>以16x16像素的MB为单位进行处理，首先从当前输入的视频图像(Frame or Field)中取一个待编码宏块$F_n$，该宏块以帧内或者帧间的模式进行编码，生成一个预测宏块$P$。</p>
+<p>如果是帧内编码，$P$由当前Slice里面已经编码、解码、重构并且还没进行去块滤波的宏块 $μF_n&rsquo;$ 使用帧内预测得到。当前宏块 $μF_n&rsquo;$ 减去预测宏块 $P$，得到残差块$D_n$，对残差块 $D_n$ 进行整数变换（一般是4x4，或者8x8）、量化后得到一组系数 $X$ ，再对 $X$ 进行重排序和熵编码，就完成了一个宏块的编码过程。对于P帧和B帧，如果ME时候找不到最佳匹配块那也会使用帧内预测编码。</p>
+<p>经过熵编码的码流加上宏块解码所需的一些信息，如预测模式、量化步长、描述宏块运动预测补偿的运动矢量信息等，就组成了该宏块压缩后的码流，Slice中所有MB的码流加上Slice头信息就组成了Slice的编码码流，再通过NAL层进行传输或存储。图像参数集PPS和序列参数集SPS则由NAL单独进行传输。</p>
+<h3 id="后向重建分支">后向重建分支</h3>
+<p>在后向重建分支中，对量化后的宏块系数 $X$ 进行解码从而得到重建宏块，后续宏块进行编码需要从已重建的宏块中寻找参考块。宏块重建过程如下：
+宏块系数 $X$ 经过反量化和反变换之后，得到残差宏块 $D_n$ 的近似值 $D_n&rsquo;$ ，预测块 $P$ 加上 $D_n&rsquo;$ 得到未滤波的重构宏块 $μF_n&rsquo;$ ，再做环路滤波来减少块效应，即得到了最终的重构宏块 $F_n&rsquo;$ ，当图像中所有宏块都重建完成后，就形成了重建图像。</p>
+<p>后向重建分支其实就是包含在编码中的完整解码流程，与真正解码器的唯一区别是： 其预测块P直接从前向编码分支中得到，而真正的解码器需要利用码流中解出的预测块信息获得预测块P。当前图像的已重建宏块会被用做帧内预测的参考，而完整的重建图像会被加入参考帧列表，作为未来编码图像帧预测的参考图像。</p>
+<h2 id="预测编码">预测编码</h2>
+<p>预测编码（Prediction Coding）利用相邻像素之间的空间和时间相关性，用已传输的像素对当前正在编码的像素进行预测，然后对预测值和真实值的差值——预测误差进行编码和传输。</p>
+<p>消除空间冗余：利用一帧图像已经编码的部分来预测还没有被编码的部分</p>
+<p>消除时间冗余：利用之前编码过的图像来预测当前图像需要编码的部分</p>
+<p>通过预测可以得到预测值，预测值通常不等于实际值，所以用实际值减去预测值可以得到预测残差。预测方法越好，残差越小，因而对残差进行编码得到的码流要比对实际值直接进行编码的码流要小</p>
+<p>在解码端可以解码出残差，使用与编码端相同的预测过程来获取预测值，加上残差便可以得到相应的实际值。</p>
+<p>目前使用较广的预测方法是线性预测。用已传像素的线性组合对正在编码的像素进行预测。</p>
+<p>编码器输出预测值和实际值之间的差值，选择最优的预测系数，使预测误差的分布在0附近。经过非均匀量化之后，最终传输的是量化之后的预测误差。</p>
+<p>重建的图像与编码前的图像之间的区别是量化带来的。</p>
+<p>如果取消量化操作，那么预测编码和解码就是一个无失真的编解码系统，但是这样的压缩率要远远低于使用量化的压缩率。</p>
+<p>量化的事实依据是图像中存在人眼感知并不明显的区域，通过非均匀量化可以过滤掉这部分数据（也被称为量化噪声），能达到提高压缩率但不降低主观质量的效果。</p>
+<h2 id="帧间预测">帧间预测</h2>
+<p>帧间预测消除的是时间冗余，主要利用的是运动估计和运动补偿。</p>
+<p>运动估计ME的过程其实就是计算运动向量MV的过程：</p>
+<p>寻找当前编码的块在已编码图像中的最佳对应快，并且计算出对应块的偏移量：运动向量</p>
+<p>假设当前编码块是 $B$ ，在参考帧 $P_r$ 中寻找与 $B$ 块相减残差最小的块 $B_r$ ， $B_r$ 就是 $B$ 块的最佳匹配块。</p>
+<p>$$
+MV=B_r-B=(x_r  - x,y_r  - y)
+$$</p>
+<p>$B_r$ 块就是 $B$ 块的参考块， $B_r$ 的像素值就作为 $B$ 块像素值的预测值。
+运动向量MV也需要用合适的方式编码到码流中。</p>
+<p>运动补偿MC：根据MV和帧间预测方法，求出当前帧的估计值的过程。</p>
+<p>当前帧的估计值是对当前图像的描述，用来说明当前图像的每一个像素怎么由它的参考图像的像素块得到。</p>
+<p>ME是动态的过程，MC是静态的描述。</p>
+<ul>
+<li>
+<p>ME设计很多算法和技巧。</p>
+</li>
+<li>
+<p>MC可以看作是索引表，一个描述像素块的最佳匹配块分布情况的索引表。</p>
+</li>
+</ul>
+<p>实际计算过程中会对树状结构分块的8种模式都尝试一遍。
+H264支持亮度1/4像素、色度1/8像素的运动估计，在亚像素ME之前需要先用插值法得到亚像素值。</p>
+<ul>
+<li>
+<p>在噪声大的视频中，提高搜索精度没法提高预测精确度。</p>
+</li>
+<li>
+<p>在噪声小的视频中，1/4像素精度可以达到比较好的预测效果。</p>
+</li>
+<li>
+<p>视频会议里1/2像素精度基本可以满足需求。</p>
+</li>
+</ul>
+<h3 id="运动估计算法">运动估计算法</h3>
+<p>假设匹配误差随着离全局误差最小点的距离增加而单调增加，从原点开始，采用固定的搜索模板和搜索策略得到最佳匹配块。</p>
+<p>理论最优的算法是全搜索法，但是计算量巨大，效率低, 一般作为其他搜索算法的一种效率参考。</p>
+<p>还有其他的快速法：X264里面主要使用的是钻石搜索法DIA、六边形搜索法HEX和UMH。</p>
+<p>钻石搜索法以搜索起点为中心，先用 LDSP 进行搜索，直到最佳匹配点位于大菱形的中心位置，然后再用小菱形搜索，直至最佳匹配点位于小菱形的中心位置。</p>
+<p>六边形搜索法采用 1 个大模板（六边形模板）和 2 个小模板（小菱形模板和小正方形模板）。</p>
+<ul>
+<li>步骤1：以搜索起点为中心，采用图中左边的六边形模板进行搜索。计算区域中心及周围6个点处的匹配误差并比较，如最小MBD 点位于模板中心点，则转至步骤2；否则以上一次的MBD 点作为中心点，以六边形模板为模板进行反复搜索。</li>
+<li>步骤2：以上一次的MBD 点为中心点，采用小菱形模板搜索，计算各点的匹配误差，找到MBD 点。然后以MBD点为中心点，采用小正方形模板搜索，得到的MBD点就是最优匹配点。</li>
+</ul>
+<p>UMH是基于 MV 具有时空相关性，所以可以结合上一帧和上一步中 MV 的方向和角度，来修改多层六边形的形状，UMH算法包含四中搜索模式:不均匀交叉搜索、多六边形网格搜索、迭代六边形搜索、菱形搜索。</p>
+<ul>
+<li>步骤1：进行一次小菱形搜索，根据匹配误差值和两个门限值（对于一种尺寸的宏块来说是固定大小的threshold1和threshold2）之间的关系作相应的处理，可能用到中菱形模板或者正八边形模板，也有可能直接跳到步骤1。</li>
+<li>步骤2：使用非对称十字模板搜索。“非对称”的原因是一般水平方向运动要比垂直方向运动剧烈，所以将水平方向搜索范围定为W，垂直方向搜索范围定为W/2。</li>
+<li>步骤3：使用5x5逐步搜索模板搜索。</li>
+<li>步骤4：使用大六边形模板搜索。</li>
+<li>步骤5：使用六边形搜索算法找到最优匹配点。</li>
+</ul>
+<p>码率不变的前提下，“Dia”、“HEX”、“UMH”编码获得的质量依次提高，速度依次降低。快速算法（“Dia”、“HEX”、“UMH”）的编码质量比全搜索算法低不了太多，但是速度却高了很多倍。</p>
+<h3 id="多参考帧预测">多参考帧预测</h3>
+<p>编码端存储参考帧的缓冲区就是DPB，主要有三种参考帧：短期参考帧、长期参考帧和非参考帧。</p>
+<ul>
+<li>短期参考帧就是和当前帧相邻的帧，按照从近到远的顺序排序。</li>
+<li>长期参考帧是较早之前的帧，按照从远到近的方式排列。</li>
+<li>不使用的参考帧是因为某些原因废弃了的参考帧，并且没有被新的参考帧替换掉。比如遇到IDR帧的时候DPB里面的所有参考帧都会标记成非参考状态。所以I帧之后的P帧也可以参考这个I帧之前的图像。</li>
+</ul>
+<h3 id="mv预测和skip模式">MV预测和Skip模式</h3>
+<p>需要对MV进行压缩，方式是使用临近分块MV之前的相关性对当前块的MV进行预测，只对预测残差MVD进行编码。</p>
+<p>Skip模式：Skip模式只针对宏块编码，也就是完全不用编码只需要在码流里面标明是SKIP宏块就行。P_Skip宏块就是COPY宏块，既没有MVD，也不编码量化残差，解码时候直接用MVp作为运动向量得到像素的预测值作为像素重建值。B_Skip宏块也是既没有MVD也没有量化残差，解码时候通过Direct预测模式计算出前向和后向MV，然后得到像素预测值作为重建值。</p>
+<ul>
+<li>
+<p>P_Skip：最佳模式是Inter16x16、参考帧是List0里面的第一个参考帧、MVD=0、变换系数被量化成0，或者在RDO模型中被抛弃。</p>
+</li>
+<li>
+<p>B_Skip：最佳模式是B_direct_16x16，变换系数要么全是0要么被算法抛弃。</p>
+</li>
+</ul>
+<h3 id="加权预测">加权预测</h3>
+<p>用来应对明暗/亮度变化的场景，使用两种预测模式：显式模式(P帧、B帧)和隐式模式(B帧)。</p>
+<ul>
+<li>显式模式：加权系数由编码器决定并且在Slice Header里面传输。</li>
+<li>隐式模式：加权系数由参考图像的时间位置推算，越接近当前图像，加权系数越大。</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>
+<p>亮度变化检测：</p>
+<p>使用直方图计算前后两幅图像在各个灰度级别SAD，然后采用阈值法判断有没有发生亮度变化。</p>
+</li>
+<li>
+<p>计算加权系数：
+第一种方法：计算参考帧和当前帧的亮度均值比值，利用比值作为加权系数（全局加权补偿的效果有限）</p>
+<p>第二种方法：全局补偿，但是使用使前后图像MSE和偏移量最小的加权系数：使MSE的表达式（加权系数$W_1$和偏移量$W_2$）分别基于$W_1$和$W_2$的偏微分等于0。</p>
+</li>
+<li>
+<p>亮度补偿：</p>
+<p>原则上需要做到宏块级别的亮度补偿，但是为了降低复杂度只做帧级亮度补偿。</p>
+<p>根据求出的加权系数和偏移量进行全局亮度补偿得到新图像。</p>
+<p>把新图像存到一个列表中作为带亮度补偿运动估计的参考帧。</p>
+</li>
+</ol>
+<h2 id="帧内预测">帧内预测</h2>
+<p>帧内预测实质是消除空间冗余，利用已编码的块的像素的来预测未编码的像素值。</p>
+<p>未编码的块像素的实际值-预测值=残差，传输只需要传输残差。</p>
+<p>H264引入了基于空域的帧内预测技术，在空域中利用当前块的相邻像素直接对每个像素做预测，并对预测残差进行变换、量化。</p>
+<p>H264帧内预测中，色度和亮度信息是被分开预测的。</p>
+<ul>
+<li>对于亮度待编码块，可以按照4x4块方式预测(I4MB)或16x16宏块方式预测(I16MB)。
+<ul>
+<li>4x4预测时有9种模式（水平、垂直、DC、6个方向），用于图像细节部分的预测。</li>
+<li>16x16预测时有4种模式（水平、垂直、DC、平面），用于图像平坦区域的预测。</li>
+</ul>
+</li>
+<li>对于色度待编码块，基于8x8块进行预测。
+<ul>
+<li>8x8预测有4种模式（水平、垂直、DC、平面）。</li>
+</ul>
+</li>
+</ul>
+<p>亮度和色度的最佳帧内预测模式相互独立：</p>
+<ul>
+<li>
+<p>色度的只需要比较4种模式的代价，选择最小的。</p>
+</li>
+<li>
+<p>亮度的需要：算出代价最小的Intra4x4模式、算出代价最小的Intra16x16模式、取两者最小的。</p>
+<ul>
+<li>Intra4x4：用RDO模型也就是拉格朗日模型计算代价。</li>
+<li>Intra16x16：用SATD，变换使用哈达马变换（看作是简单的时频变换，可以反映生成码流的大小）</li>
+</ul>
+</li>
+</ul>
+<h2 id="变换编码">变换编码</h2>
+<p>变换编码（Transform Coding）将空间域描述的图像，经过某种变换形成变换域中的数据，达到改变数据分布，减少有效数据量的目的。</p>
+<p>变换编码中主要使用方式是正交变换。正交变换不会改变信源的熵值，变换之后图像的信息量并没有损失，完全可以通过反变换得到原来的图像值。</p>
+<p>正交变换可以改变数据的分布，将数据集中分布之后就可以使用进一步的量化操作来去除大部分的0值和接近0的值。</p>
+<p>正交变换中的理论最优变换是K-L变换。</p>
+<p>实际中常用的正交变换有 DCT变换，DFT变换(离散傅里叶变换)，Hadamard变换。</p>
+<p>因为DCT系数主要集中在低频区域，越是高频区域系数值越小，通过设置不同的视觉阈值的量化电平，将许多能量较小的高频系数量化为0，可以增加变换系数中0的个数，同时保留能量较大的系数分量，对量化之后的系数进行熵编码可以获得进一步的压缩。</p>
+<p>H264使用的是整数变换，变换核只用加减法和左移操作实现，不需要乘法器。</p>
+<p>各种变换的比较：</p>
+<ul>
+<li>压缩比和重建质量：
+<ul>
+<li>较小分块时，DCT的MSE接近K-L变换。</li>
+<li>块大小超过16x16时，除傅里叶变换之外，其他几种变换的MSE下降很慢。</li>
+<li>大方块尺寸时，傅里叶变换趋向于K-L变换。</li>
+</ul>
+</li>
+<li>计算复杂度：
+<ul>
+<li>Hadamard计算复杂度最小。</li>
+<li>其次是DFT和DCT，具有固定的核函数。</li>
+<li>K-L变换的核函数与输入相关，计算量很大，不实用。</li>
+</ul>
+</li>
+</ul>
+<p>变换编码中的失真还是由量化器引起，正反变换和变长编解码都是无损处理。</p>
+<h3 id="dct变换">DCT变换</h3>
+<p>离散余弦变换与 DFT变换相似，但是DCT变换只使用实数。</p>
+<p>DCT变换具有能量集中性，大多数的声音和图像信号的能量都集中在DCT变换之后的低频部分。</p>
+<p>当信号具有接近马尔可夫过程的统计特性时，DCT变换的去相关性接近于 K-L变换。</p>
+<p>图像处理领域中，DCT变换的效果要强于 DFT变换，因而图像处理中更多应用的是DCT变换。</p>
+<p>DCT产生的系数很容易被量化，因而可以获得较好的块压缩。</p>
+<p>DCT算法的性能好，有快速算法，采用快速傅里叶变换可以进行高效的运算。</p>
+<h2 id="量化">量化</h2>
+<p>量化的思想就是映射一个输入间隔到一个整数，减少信源编码的bit数。</p>
+<p>量化器的设计就是率失真优化问题，在允许一定失真的条件下，获得尽可能高的压缩比。</p>
+<p>量化步长决定量化器的编码压缩率和图像精度。</p>
+<p>量化最简单的方法就是均匀（线性）量化，但均匀量化的效果往往并不好，因为它没有考虑到量化对象的概率分布。</p>
+<p>对DCT系数这样的数据而言，其分布大部分集中在直流和低频附近，如果采用非均匀量化，对低频区域进行细量化，对高频区域进行粗量化，在相同的量化步长的条件下，非均匀量化比均匀量化所造成的量化误差要小得多。</p>
+<p>量化之后，熵编码之前，可以根据从高到低的统计特性，对系数进行Zigzag锯齿扫描和游程长度编码。这样做的原因在于：量化之后的DCT系数更为稀疏，只有少数的AC系数不为0，Zigzag扫描能增加连0的长度，减少统计事件的个数，从而进一步增加对DCT系数熵编码的压缩率。</p>
+<p>量化区间上的最优量化值应该是区间的期望值，所以需要知道残差变换系数的统计分布。</p>
+<p>引入量化偏移量f来进行非均匀量化，在帧内预测时f=Qstep/3，帧间预测时f=Qstep/6.</p>
+<p>f可以控制量化死区大小，f变大，量化死区减少，f变小，量化死区增加。死区大小直接影响图像的主观质量。</p>
+<h2 id="去块滤波不是很了解细节">去块滤波（不是很了解细节）</h2>
+<p>环路滤波器是被放置在编解码的图像重建环路当中。</p>
+<p>在启用了环路滤波的编解码环境中，无论是编码器还是解码器，都是在图像被重建后才进行滤波。</p>
+<p>在编码器中，滤波后的图像会作为后续编码运动补偿的参考图像；</p>
+<p>在解码器中，滤波后的图像会被输出显示并且作为后续图像解码重建的参考图像。</p>
+<h3 id="块效应出现的原因">块效应出现的原因</h3>
+<ol>
+<li>基于块的量化会破坏相邻块之间的相关性，并且在低码率情况下会放大这种误差。</li>
+<li>运动补偿加剧了由变换量化导致的块效应。因为运动补偿块的匹配不可能绝对准确，各个块的残差大小程度存在差异，尤其是当相邻两个块用的参考帧不同、运动矢量或参考块的差距过大时，块边界上产生的数据不连续就更加明显。</li>
+</ol>
+<h3 id="过程">过程</h3>
+<p>估算边界强度、区分真假边界、滤波运算</p>
+<h2 id="熵编码">熵编码</h2>
+<p>主要利用信源的统计特性进行码率压缩，是无损压缩编码方法。</p>
+<p>H264支持CAVLC（变长编码）和CABAC（二进制算术编码）。</p>
+<p>CAVLC本质是哈夫曼编码，所以必须为所有可能的长度为N的序列设计和存储编码表，复杂度随N指数增长。</p>
+<p>CABAC的思想是用0到1区间上的一个数来表示整个字符输入流，而不是为输入流中的每个字符分别指定码字。</p>
+<ul>
+<li>算术编码用区间递进的方法为输入流寻找码字，从第一个符号确定的初始区间开始，逐个读入输入流，在每个新的字符出现后递归地划分当前区间，划分的依据是各个字符的概率，将当前区间按照各个字符的概率划分成若干子区间，将当前字符对应的子 2 区间取出，作为处理下一个字符时的当前区间。到处理完最后一个字符后，得到了最终区间，在最终区间中任意挑选一个数作为输出。在解码时候也采用相同的方法和步骤，但是解码器每划分一个子区间就能得到输入流中的一个字符。</li>
+<li>在实际过程中，输入流中字符的概率分布是动态改变的，这需要维护一个概率表去记录概率变化的信息。在作递进计算时，通过对概率表中的值估计当前字符的概率，当前字符处理后，需要重新刷新概率表。这个过程表现为对输入流字符的自适应。编码器和解码器按照同样的方法估计和刷新概率表，从而保证编码后的码流能够顺利解码。</li>
+</ul>
+<p>一般来讲，只要计算量允许，就应该选择使用算术编码。</p>
+<p>H264对不同的数据采用不同的熵编码模式，对于宏块和子块的残差数据经过变换之后的系数采用CAVLC，对于其他相对重要的语法元素使用指数哥伦布编码。在CABAC方案里，对不同的语法元素也使用了不同的编码树结构。</p>
+<h2 id="gopframesliceibp">GOP/Frame/Slice/I/B/P</h2>
+<p>帧Frame包含切片Slice，Slice包含宏块Macroblock(MB)。</p>
+<p>一个Frame至少包含一个Slice，一个Slice至少包含一个MB。</p>
+<p>Slice是MB的载体，出现的原因是为了防止误码的扩散和传播。</p>
+<p>每个Slice都是互相独立被传输的，某个Slice不能以其他Slice中的MB为参考。</p>
+<p>Slice存储在NAL单元NALU中，是NALU的有效载荷Payload。</p>
+<p>Slice中包含Slice Header和Slice Payload。</p>
+<p>Slice Header中存放的是Slice类型、Slice中的宏块类型、Slice属于哪个Frame、对应的帧的设置和参数等信息，Slice Payload中存放的是MB</p>
+<p>MB中包含了MB类型、预测类型、Coded Block Pattern(CBP)、量化参数QP、像素的亮度和色度数据等信息</p>
+<p>GOP由IDR帧开始，中间存在多个P帧或B帧（基本档次Baseline Profile不存在）</p>
+<p>I帧只进行帧内编码，IDR帧是每个GOP的第一个帧，IDR帧是I帧，I帧不一定是IDR帧</p>
+<p>P帧参考前面的I帧或者P帧进行编码；</p>
+<p>B帧参考前向、后向的I帧或P帧进行编码；</p>
+<p>P/B帧进行编码时候只能参考当前GOP的I/P帧，不能越过当前GOP开始时的IDR帧，但是I帧之后的P帧也可以参考这个I帧之前的图像。</p>
+<h2 id="spsppsdtspts">SPS/PPS/DTS/PTS</h2>
+<p>SPS：序列参数集，描述的是整个视频序列的参数信息，如图像的宽度、高度、帧率、色度空间等，一个视频序列只有一个SPS，用于描述整个视频序列的基本特性。SPS一般在视频码流的开头发送，是一种全局静态的描述方式。当然，如果编码器在编码过程中改变了SPS中描述的参数如分辨率时也需要发送新的SPS。</p>
+<p>PPS：图像参数集，描述的是一个序列中一个或多个图像的参数，例如编码图像的配置、QP这些，可以在视频序列的任何时刻发送，PPS相对与SPS来说比较灵活动态。</p>
+<p>发I帧之前至少要发一次SPS和PPS</p>
+<p>DTS：解码时间序列，编码帧时的顺序</p>
+<p>PTS：展示时间序列，展示帧时的顺序，当有B帧时PTS不等于DTS</p>
+<p>编码之后的VCL数据被封装进NALU中，构成了h264原始码流</p>
+<p></p>
+<h2 id="nalu">NALU</h2>
+<p>NALU 是视频编码的基本单位，同时也是后续进行视频传输的基本单位。</p>
+<p>不同应用需求采用不同的传输方式，NALU 根据传输方式可以以两种方式应用于传输业务。</p>
+<ul>
+<li>
+<p>一类是字节流，即把 NALU 按照解码顺序生成连续的比特流进行传输和处理。</p>
+</li>
+<li>
+<p>一类是分组流应用，也是本文使用的实时视频通信的应用场景，网络可以根据不同网络分组的重要性优化视频流的服务质量，分组流通过将编码后得到的 NALU 作为网络传输的载荷。</p>
+</li>
+</ul>
+<p>NALU由NAL Header和RBSP组成，Header占一个字节，分为3个部分。</p>
+<p>第1个部分是第0位，禁止位，值为0，值为1表示语法错误。</p>
+<p>第2个部分是第1~2位，表示当前NAL的优先级。值越高表示当前NAL越重要，越需要优先保护。SPS/PPS/IDR帧非常重要，I/P帧重要，B帧/SEI不重要</p>
+<p>第3个部分是第3~7位，表示当前NALU的类型：</p>
+<p></p>
+<p>RBSP：原始字节序列载荷，是NALU数据部分的封装格式，封装的数据来自于SODB（原始数据比特流）。</p>
+<p>SODB是编码后的原始数据。SODB到RBSP的过程：
+如果SODB是空的，生成的RBSP也是空的。
+否则：
+RBSP的第一个字节直接取自SODB的第1~8个bit，（RBSP字节内的bit按照从左到右对应位从高到低的顺序排列），RBSP其余的每个字节都直接取自SODB的相应bit。RBSP的最后一个字节包含SODB的最后几个Bit和rbsp_trailing_bits()
+rbsp_trailing_bits的第一个bit是1，接下来填充0直到字节对齐。
+最后添加几个cabac_zero_word，值为0x0000.</p>
+<p>NALU主要涉及到SPS/PPS/SEI和Slice这几种类型。</p>
+<p>SEI是补充增强信息，提供了向视频码流中加入额外信息的方法，不是解码过程中的必须选项，可能对解码过程有帮助，集成在视频码流中。</p>
+<p>RBSP 字节流加上0x0300就得到 NALU 载荷字节流：</p>
+<p></p>
+<h2 id="profilelevel">Profile/Level</h2>
+<p>Profile主要对视频编码的特性做了差异化支持。</p>
+<p></p>
+<p>H264中的常用Profile有Baseline，Extended，Main和High</p>
+<p>Baseline Profile：基本画质，只支持I/P帧和CAVLC和无交错</p>
+<p>Extended Profile：进阶画质，支持I/P/B/SP/SI，只支持CAVLC和无交错</p>
+<p>Main Profile：主流画质，支持I/P/B帧和，交错和无交错、CAVLC和CABAC</p>
+<p>High Profile：高级画质：在Main的基础上增加了8x8内部预测、自定义量化和更多的yuv格式。</p>
+<p>Baseline Profile主要用于实时视频通信，Main Profile和High Profile主要用于流媒体领域。</p>
+<p>Level主要根据设备能力来确定编解码时的码率/分辨率上限支持</p>
+<h2 id="cbrvbrabrcrf">CBR/VBR/ABR/CRF</h2>
+<p>CBR：恒定码率，每秒传输的bit数固定，每个视频帧都被分配相同数量的bit，和复杂度无关，适用于要求网络或者存储带宽具有固定容量的场景，但可能导致复杂场景下的帧质量下降。WebRTC中使用的就是CBR。</p>
+<p>VBR：可变码率，允许每个帧使用不同的比特数，根据图像复杂度和需要进行动态分配。适合于在不同场景下需要保持一致质量的情况，但是消耗的带宽会有较大波动。适合用于视频存储，不适合网络传输。</p>
+<p>ABR：平均码率，允许在整个视频序列中有一定的变化，但是在一个时间窗口内保持一定的平均码率。在此时间内，对简单、静态的图像分配低于平均码率的码率，对于复杂的、大量运动的图像分配高于平均码率的码流。码率分配比较均衡，比较适合网络传输。</p>
+<p>CRF：恒定质量因子，追求的是恒定的视觉质量，编码器根据图像内容自动调整码率，以保持相对恒定的质量。适合于追求质量而不在乎码率的场景如视频剪辑和存档。</p>
+<h2 id="openh264码控">OpenH264码控</h2>
+<p>编码第一个IDR帧时使用固定的QP，具体的值使用视频分辨率作为判断依据并查表得出并将其初始化为initialQP：</p>
+<p></p>
+<p>将QP查表转换为QStep完成初始化：</p>
+<p></p>
+<p>之后进行IDR帧的量化及后续编码操作，并得到frameDqBits（已编码的比特数），由此可以计算intraCmplx：</p>
+<p></p>
+<p>对于第一个PFrame，linearCmplx也使用下面的公式计算，其中QStep使用initialQP查表。</p>
+<p></p>
+<p>之后计算QStep&amp;QP时就使用一阶RQ模型计算，frameComplexity在预处理阶段得出。</p>
+<p></p>
+<h2 id="rtp">RTP</h2>
+<p>RTP（Real-time Transport Protocol，实时传输协议）是一种应用层协议，通常基于 UDP 协议，但也支持 TCP 协议。</p>
+<p>它提供了端到端的实时传输数据的功能，但不包含资源预留存 1（resource reservation）、不保证实时传输质量，这些功能都需要 WebRTC 自己实现。</p>
+<p>RTP 协议分为两种子协议，分别是 RTP Data Transfer Protocol 和 RTP Control Protocol。</p>
+<p>前者顾名思义，是用来传输实时数据的；后者则是我们常说的 RTCP 协议，可以提供实时传输过程中的统计信息（如网络延迟、丢包率等），WebRTC 正是根据这些信息处理丢包。</p>
+<p>RT(D)P 包分为两部分，分别是 header 和 payload，header 包含了实时音视频的同步信息（和一些额外参数），payload 则承载了具体的音视频数据。这里我们只需要关注 header 结构就好，payload 是编解码器关心的。</p>
+<p></p>
+<p>如图所示，RT(D)P header 最小为 12 bytes；红色部分为可选字段。字段的含义分别如下：</p>
+<ul>
+<li>Version 表示 RTP 协议的版本，目前版本为 2。</li>
+<li>P (Padding) 表示 RT(D)P 包末尾是否有 padding bytes，且 padding bytes 的最后一个 byte 表示 bytes 的数量。Padding 可以被用来填充数据块，比如加密算法可能会用到。</li>
+<li>X (Extension) 表示是否有头部扩展，头部扩展可以用于存储信息，比如视频旋转角度。</li>
+<li>CC (CSRC count) 表示红色部分的 CSRC（参见下文）数量，显然最多只能有 15 个 CSRC。</li>
+<li>M (Marker) 表示当前数据是否与应用程序有某种特殊的相关性。比如传输的是一些私有数据，或者数据中的某些标志位具有特殊的作用。</li>
+<li>PT (Payload type) 表示 payload 的数据类型，音视频的默认映射格式可参见 RFC 3551。</li>
+<li>Sequence number 是递增的序列号，用于标记每一个被发送的 RT(D)P 包。接收方可以根据序列号按顺序重新组包，以及识别是否有丢包。序列号的初始值应当是随机的（不可预测的），从而增加明文攻击的难度。</li>
+<li>Timestamp 即时间戳，接收方根据其来回放音视频。时间戳的间隔由传输的数据类型（或具体的应用场景）确定，比如音频通常以 125µs（8kHz）的时钟频率进行采样，而视频则以 90kHz 的时钟频率采样。这里时间戳的初始值也是随机选取的，是一种相对时间戳。</li>
+<li>SSRC (Synchronization source) 即同步源标识符。相同 RTP 会话中的 SSRC 是唯一的，且生成的 SSRC 也需要保持随机。尽管多个源选中同一个标识符的概率很低，但具体实现时仍然需要这种情况发生，即避免碰撞。</li>
+<li>CSRC (Contributing source) 在 MCU 混流时使用，表示混流出的新的音视频流的 SSRC 是由哪些源 SSRC 贡献的。根据上述 CC 得知，我们最多可以同时混 15 路音视频流。</li>
+<li>Extension header 即头部扩展，包含了音视频的一些额外信息，比如视频旋转角度。</li>
+</ul>
+<h3 id="rtp与nalu分组">RTP与NALU分组</h3>
+<p>RFC3984 给出了3 中不同的RTP 打包方案：</p>
+<ol>
+<li>Single NALU Packet：在一个RTP 包中只封装一个NALU，对于小于 1400字节的NALU 便采用这种打包方案。</li>
+<li>Aggregation Packet：在一个RTP 包中封装多个NALU，对于较小的NALU 可以采用这种打包方案，从而提高传输效率。</li>
+<li>Fragmentation Unit：一个NALU 封装在多个RTP包中，在本文中，对于大于1400字节的NALU 便采用这种方案进行拆包处理。</li>
+</ol>
+<h2 id="rtcp">RTCP</h2>
+<p>RTCP 协议提供实时传输过程中的统计信息，如网络延迟、丢包率等。</p>
+<p>在传统的实时通讯过程中，RT(D)P 协议占用偶数位的端口，而 RTCP 协议占用随后的奇数位端口。</p>
+<p>不过如果接收方的 SDP 中包含 rtcp-mux 字段 6，即表明接收方支持 RT(D)P 协议和 RTCP 协议共用同一个端口，即多路复用。在 Chrome 57 版本已经强制开启了 rtcp-mux 。</p>
+<p>对于 RTCP 包而言，我们不只要关注 header 的结构，还要关注具体的 report block 内容。不过我们先来看一个典型的 RTCP header 结构，如下图所示：</p>
+<p></p>
+<p>RTCP header 的固定大小为 8 bytes，其中 Version、P、SSRC 的含义同上述 RTP header 相同，在此不与赘述。其他几个字段的含义分别如下：
+RC (Reception report count) 表示当前 RTCP 包有几个 block，显然最多只能有 32 个。</p>
+<ul>
+<li>PT (Packet type) 表示 RTCP 包的类型，比如 SR=200、RR=201（SR、RR 参见下文）。</li>
+<li>Length 等于整个 RTCP 包的长度减一（使得 Length = 0 是合法的），其值包含 header 的长度和所有 padding 占用的空间长度。值的单位是以 32 位字长（32-bit words）描述的。</li>
+</ul>
+<h2 id="psnrssimvmafbd-rate">PSNR/SSIM/VMAF/BD-Rate</h2>
+<h3 id="psnr">PSNR</h3>
+<p>峰值信噪比，基于均方误差（MSE）计算。</p>
+<p>公式：</p>
+<p>$$
+PSNR = 10 \cdot log_{10}(\frac{MAX_I^2}{MSE})
+$$</p>
+<p>$$
+MSE = \frac{1}{MN}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}[I(i,j) - K(i,j)]^2
+$$</p>
+<p>对于用8bit表示的视频图像而言，MAX就是255</p>
+<p>PSNR的物理含义就是信号的峰值与平均误差的比值，如果误差越小，那么PSNR值越高。如果完全没有误差，那么PSNR值就是无穷大。</p>
+<p>对于图像数据来说，通常有Y、U、V三个分量，可以对三个分量各自计算PSNR。</p>
+<p>也可以把三个分量的PSNR值以一定的权重加起来作为总的PSNR值。</p>
+<p>对于整个视频来说，可以计算单帧的PSNR值，然后平均，也可以计算整个视频的Overall PSNR。</p>
+<ul>
+<li>
+<p>一般，psnr值高于40dB，表示画面质量极好，（非常接近于原始图像）；</p>
+</li>
+<li>
+<p>psnr值在30dB-40dB之间，表示画面质量较好（有失真但可接受）；</p>
+</li>
+<li>
+<p>psnr值在20dB-30dB之间，表示画面质量差；</p>
+</li>
+</ul>
+<h3 id="ssim">SSIM</h3>
+<p>PSNR指标比较常用，但是不能体现编码前后图像之间的相关性，SSIM可以从亮度，对比度和结构三个方面来描述编码前后图像之间的相似性。</p>
+<ul>
+<li>
+<p>亮度维度的相似性用均值计算，𝝁𝒙为均值：</p>
+<p></p>
+</li>
+<li>
+<p>对比度维度的相似性用方差计算，𝝈𝒙 为方差：</p>
+<p></p>
+</li>
+<li>
+<p>结构维度的相似性用协方差计算， 𝝈𝒙𝒚 表示协方差：</p>
+<p></p>
+</li>
+</ul>
+<p>SSIM指标和SSIM计算公式：</p>
+<p></p>
+<p>SSIM性质：</p>
+<p></p>
+<h3 id="vmaf">VMAF</h3>
+<p>VMAF 是一种 Full reference 的视频质量评估方法，适用于视频流媒体质量评估。</p>
+<p>主要包括三种指标：视觉信息保真度 (VIF: visualquality fidelity) 、细节损失指标 (DLM: detail loss measure) 、时域运动指标/平均相关位置像素差 (Tl: temporal information) 。</p>
+<ul>
+<li>其中 VIF 和 DLM 是空间域的一个画面之内的特征。</li>
+<li>TI 是时间域的，多个画面之间相关性的特征。</li>
+</ul>
+<p>这些特性之间融合计算总分的过程使用了训练好的 SVM 来预测。</p>
+<p>VMAF 基于 SVM 的 nuSvr 算法，在运行的过程中，根据事先训练好的 model，赋予每种视频特征以不同的权重。对每一帧画面都生成一个评分。最终以均值算法进行汇总，算出该视频的最终评分</p>
+<p>使用方式：</p>
+<p>计算时需要保证编码后图像的分辨率与原始图像分辨率一致，如果不一致需要向上或者向下缩放编码图像，而不能缩放原始图像。</p>
+<h3 id="bd-rate">BD-Rate</h3>
+<p>比较两个编码器的RD曲线（Rate-Distortion）的差异：</p>
+<ul>
+<li>一种是相同质量下的码率差异，指标为BD-Rate。</li>
+<li>一种是相同码率下的质量差异，指标为BD-PSNR。</li>
+</ul>
+<p>BD-Rate是选取一个范围的的多个采样点（通常是4个），然后进行曲线拟合插值，最后计算出平均的指标差异。目前大部分测试数据的对比，都是基于BDRate指标的。</p>
+<h2 id="视频封装">视频封装</h2>
+<p>视频的封装格式定义的是多媒体数据的存储结构，包括如何组织和存储音频、视频、字幕、元数据等信息，以及怎么进行同步和时间标记。</p>
+<p>感觉封装其实可以理解为是一个柜子，并且对柜子里的不同抽屉里面能存放哪些数据以及怎么存放数据做了规定。\</p>
+<p>常见的封装格式有Mp4、Mkv，微软的AVI、苹果的MOV、Adobe的FLV、Google的Webm。</p>
+<p>不同的封装格式提供了一种统一的方式来存储和传输各种编码格式的多媒体数据。</p>
+<p>H264支持AnnexB和AVCC两种封装模式。</p>
+<ul>
+<li>
+<p>AnnexB模式是传统模式，有startcode，SPS和PPS在码流中分别作为一个NALU。</p>
+</li>
+<li>
+<p>AVCC模式没有startcode，SPS和PPS以及其它信息被封装在container中，每个frame前面4个字节是这个frame的长度。一般在mp4和mkv中使用AVCC。</p>
+</li>
+</ul>
+<h2 id="硬件编码和软件编码">硬件编码和软件编码</h2>
+<p>硬编码是通过专用的硬件编码器，比如GPU或者专用的视频编码芯片来进行的，硬件编码可以利用专为编码设计的电路从而提供更高的编码速度和更低的功耗，适用于实时性要求较高的应用比如云游戏、视频会议这些场景。硬编码也通常会在移动设备比如手机或者其他的专业视频设备中使用</p>
+<p>软编码是通过通用的计算设备，一般来讲就是用CPU编码。软编码的性能和功耗一般来讲要比硬件编码差，但是可以跨平台运行，容易升级和更新，编码的画质也会更好。一般用于需要更大灵活性和可定制性的应用，比如短视频录制、非实时的转码等。</p>
+<h2 id="码率和分辨率">码率和分辨率</h2>
+<p>码率提高和分辨率提高都会增大视频的体积，两者之间需要平衡。</p>
+<ul>
+<li>
+<p>在码率一定的情况下，提高分辨率可能会导致每个像素获得的比特数减少，从而降低整体感知质量。</p>
+</li>
+<li>
+<p>在分辨率一定的情况下，提高码率可以分配更多的比特给每个像素，从而提高每个像素的清晰度。</p>
+</li>
+</ul>
+<p>高分辨率主要是为了适应更大的屏幕尺寸，或者需要更多图像细节的任务。</p>
+<p>其实屏幕尺寸和分辨率之间的关系有点类似于分辨率和码率之间的关系。</p>
+<h2 id="一个视频文件能否倒放">一个视频文件能否倒放</h2>
+<p>一个文件不行，至少需要两个文件才可以。</p>
+<p>理论上方式有两种：</p>
+<ul>
+<li>
+<p>第一种是先顺序解码视频到一个yuv文件中，然后倒序读入内存进行编码。</p>
+</li>
+<li>
+<p>第二种是先遍历视频，获取一共有多少个GOP，跳到最后一个GOP的IDR帧，对这个GOP进行解码输出到yuv文件中，再逆序读出这个解码之后的yuv文件然后编码，这样最后一个GOP就变成了第一个GOP，按照从后往前的顺序依次类推就可以。</p>
+</li>
+</ul>
+<p>第一种方式简单粗暴好实现，但是对于磁盘存储空间的要求比较高。</p>
+<h2 id="h265hevc比h264avc做了哪些改进">H265(HEVC)比H264(AVC)做了哪些改进</h2>
+<ul>
+<li>
+<p>H265针对编码的各个环节都引入各自对应的单元。</p>
+<ul>
+<li>
+<p>与H264中宏块类似的是，在 H.265里面用的是一系列互不重叠的编码树单元CTU处理信息，CTU内部可以以四叉树结构递归向下划分成更小的正方形编码单元CU。CU可以支持最大64x64的尺寸，因而可以对高分辨率视频中的平坦和复杂区域做有针对性的CTU划分。</p>
+</li>
+<li>
+<p>预测单元PU是定义在CU上的一个矩形区域，用来存储和预测相关的所有信息如帧内预测方向、帧间预测的参考帧、和MV等。</p>
+</li>
+<li>
+<p>变换单元TU是变换和量化的基本单位，支持4种正方形的尺寸大小(4/8/16/32)。变换时采用RQT技术，基于四叉树结构进行自适应变换。大块的 TU 模式能够将能量更好地集中，小块的 TU 模式能够保存更多的图像细节。根据当前 CU 内残差特性，自适应选择变换块大小，可以在能量集中和细节保留两者做最优的折中。与传统的固定块大小变换相比，RQT 对编码效率贡献更大。</p>
+</li>
+<li>
+<p>CU划分成PU和TU，PU和TU之间存在交叉重叠关系，Inter预测时允许CU内的TU跨越PU边界，Intra预测时，TU不能跨越PU边界。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>在帧内预测模块，H265支持更多的帧内预测模式。H265的亮度分量支持35种帧内预测模式包括平面模式、DC模式和33种角度模式，色度分量有5种帧内预测模式包括平面模式、DC模式、水平、垂直方向模式和对应于亮度分量的帧内预测模式。</p>
+</li>
+<li>
+<p>在帧间预测模块，H265引入了更加复杂的ME方式，主要包括Merge和AMPV以及基于Merge的Skip模式。</p>
+<ul>
+<li>Merge：取相邻PU的运动参数作为当前PU的运动参数（利用空域相关性和时域相关性）</li>
+<li>AMVP得到的MV一方面为ME提供了搜索起点，另一方面也用于预测MV。AMVP根据周围块预测MV，MV=MVP+MVD(矢量差值)</li>
+</ul>
+</li>
+<li>
+<p>H265把变换和量化模块结合了起来，降低了计算复杂度，支持加权量化矩阵。</p>
+</li>
+<li>
+<p>在环路滤波模块，H265新增了采样点自适应偏移滤波SAO，通过解析去方块滤波后的像素的统计特性，为像素添加相应的偏移值，削弱振铃效应。</p>
+</li>
+<li>
+<p>因为H265的解码要比h264的解码复杂很多，所以提供了很多可以并行优化的思路。</p>
+</li>
+</ul>
+<h2 id="simd">SIMD</h2>
+<p>SIMD是一种并行计算技术，允许单一指令处理多个数据元素。SIMD指令集通常由处理器提供，用于加速向量化计算。视频编码中，SIMD可以用于加速压缩和解压算法。</p>
+<h2 id="h264中的差错控制">H264中的差错控制</h2>
+<p>Slice分割、Data Partition (DPA &gt; DPB &gt; DPC)、对SPS和PPS提供使用高传输优先级、差异化的熵编码（对重要的SPS和PPS采用指数哥伦布编码）</p>
+<p>FMO通过宏块分配映射把同一帧里的不同宏块划分到不同的Slice Group里，在同一个Slice Group里的MB按照普通的光栅扫描顺序编码。</p>
+<p>因为不管是Intra Coding还是Inter Coding都必须使用同一个Slice group的宏块数据，这样当一个Slice group里的某一个或者某几个宏块发生错误时候，因为相邻的宏块可能分布在不同的Slice group，就可以从其他正确接收的Slice group里拿到和丢失宏块相邻的宏块信息来进行错误掩盖。</p>
+<h2 id="svc">SVC</h2>
+<p>SVC：(Scalable Video Coding)可伸缩视频编码，编码器产生的码流包含一个或者多个子码流或者层，子码流可以有不同的码流、帧率和分辨率。基本层编码最低层的时域、空域和质量流；增强层以基本层作为起始点，对附加信息进行，从而在解码过程中重构更高层的质量、分辨率和时域层。通过解码基本层和相邻增强层，解码器能生成特定层的视频流。</p>
+<ul>
+<li>
+<p>时域分层：从码流中提取出有不同帧频的码流。</p>
+</li>
+<li>
+<p>空域分层：从码流中提取出有不同分辨率的码流。</p>
+</li>
+<li>
+<p>质量分层：从码流中提取出有不同质量的码流。</p>
+</li>
+</ul>
+<h3 id="应用场景">应用场景</h3>
+<p>监控：监控视频流产生两路，一路质量好的用于存储，一路低码率的用于预览。</p>
+<p>视频会议：会议终端利用SVC编出多种分辨率、分层质量的码流，会议中心替代传统的MCU二次编解码方法改成视频路由分解转发。也可以在丢包环境下利用时域分级，抛弃一些时域级别实现网络适应性。</p>
+<p>流媒体IPTV：服务器可以根据不同的网络情况丢弃质量层，保证视频的流畅。兼容不同网络环境和终端。</p>
+<h3 id="优缺点">优缺点</h3>
+<p>优点：分级码流优点是应用非常灵活，因为能根据需要产生不同的码流或者提取出不同的码流。使用SVC实现一次分层编码比用AVC编多次更高效。
+SFU从发布客户端复制音视频流的信息，然后分发到多个订阅客户端。典型的应用场景是1对多的直播服务。SFU是解决服务端性能问题的好方法，因为它不涉及视频解码和编码的计算费用，用最低的开销来转发各路媒体流，能实现海量的客户端接入。重终端，轻平台。</p>
+<p>缺点：因为SVC解码控制复杂不利于流式处理，硬件编解码器支持差，协议协商细节复杂，业界标准不统一。</p>
+<h2 id="rtc应用中提高实时性">RTC应用中提高实时性</h2>
+<p>因为编码主要的时间开销在运动预测过程中，如果在云游戏的场景下，可以得到游戏画面中物体的运动信息然后考虑用来辅助运动预测，或者说对搜索过程进行剪枝。</p>
+]]></description>
+</item>
+<item>
+    <title>WebRTC 中关于视频自适应的相关设置</title>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+    <description><![CDATA[<h1 id="概况">概况</h1>
+<p><code>WebRTC</code>提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。</p>
+<p>视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。</p>
+<p>视频自适应调整的对象：帧率与分辨率。</p>
+<h1 id="资源">资源</h1>
+<p><code>Resources</code>监测指标来自于系统或视频流。例如，一个资源可以监测系统温度或者视频流的带宽使用率。</p>
+<p>资源实现了<code>Resource</code>接口：</p>
+<ul>
+<li>当资源检测到被过度使用则调用<code>SetUsageState(kOveruse)</code>；</li>
+<li>当资源不再被过度使用则调用<code>SetUsageState(kUnderuse)</code>。</li>
+</ul>
+<p>对所有的视频而言，默认有两种类型的资源：</p>
+<ul>
+<li>质量标量资源</li>
+<li>编码过度使用资源</li>
+</ul>
+<h2 id="qp-标量资源">QP 标量资源</h2>
+<p>质量标量资源监测发送视频流中编码之后的帧的量化参数（QP），确保视频流的对于当前的分辨率而言可以接受。</p>
+<p>每一帧被编码之后，<code>QualityScaler</code>就能获得相应的 QP。</p>
+<p>过度使用或者未被充分使用的信号在平均 QP 脱离 QP 阈值之后发出。</p>
+<p>QP 阈值在<code>EncoderInfo</code>中的<code>scaling_settings</code>属性中设置。</p>
+<p>需要注意的是 QP 标量只在降级偏好设置为<code>MAINTAIN_FRAMERATE</code>或<code>BALANCED</code>时启用。</p>
+<h2 id="编码使用资源">编码使用资源</h2>
+<p>编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是 CPU 使用率的代理度量指标。</p>
+<p>当平均编码使用超过了设定的阈值，就会触发过度使用的信号。</p>
+<h2 id="插入其他资源">插入其他资源</h2>
+<p>自定义的资源可以通过<code>Call::AddAdaptationResource</code>方法插入。</p>
+<h1 id="自适应">自适应</h1>
+<p>资源发出过度使用或未充分使用的信号之后，会发送给<code>ResourceAdaptationProcessor</code>，其从<code>VideoStreamAdapter</code>中请求<code>Adaptation</code>提案。这个提案基于视频的降级偏好设置。</p>
+<p><code>ResourceAdaptationProcessor</code>基于获得的提案来确定是否需要执行当前的<code>Adaptation</code>。</p>
+<h2 id="降级偏好设置">降级偏好设置</h2>
+<p>有 3 种设置，在<code>RtpParameters</code>的头文件中定义：</p>
+<ul>
+<li><code>MAINTAIN_FRAMERATE</code>: 自适应分辨率</li>
+<li><code>MAINTAIN_RESOLUTION</code>: 自适应帧率</li>
+<li><code>BALANCED</code>: 自适应帧率或分辨率</li>
+</ul>
+<p>降级偏好设置在<code>RtpParameters</code>中的<code>degradation_perference</code>属性中设置。</p>
+<h1 id="videosinkwants和视频流自适应"><code>VideoSinkWants</code>和视频流自适应</h1>
+<p>自适应完成之后就会通知视频流，视频流就会转换自适应为<code>VideoSinkWants</code>。</p>
+<p>这些接收器需求向视频流表明：在其被送去编码之前需要施加一些限制。</p>
+<p>对于自适应而言需要被设置的属性为：</p>
+<ul>
+<li><code>target_pixel_count</code>: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等，</li>
+<li><code>max_pixel_count</code>: 每个视频帧中像素点的最大数量，不能被超过。</li>
+<li><code>max_framerate_fps</code>: 视频的最大帧率，超过这个阈值的帧将会被丢弃。</li>
+</ul>
+<p><code>VideoSinkWants</code>可以被任何视频源应用，或者根据需要可以直接使用其基类<code>AdaptationVideoTraceSource</code>来执行自适应。</p>
+]]></description>
+</item>
+<item>
+    <title>WebGL 样例的解释</title>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+    <description><![CDATA[<h1 id="context">Context</h1>
+<ol>
+<li>Create an <code>HTML5</code> canvas</li>
+<li>Get the canvas id</li>
+<li>Obtain <code>WebGL</code> Context</li>
+</ol>
+<p>The parameter <code>WebGLContextAttributes</code> is not mandatory.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Attributes</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>alpha</code></td>
+<td style="text-align:center">true: provide an alpha buffer to the canvas;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>depth</code></td>
+<td style="text-align:center">true: drawing buffer contains a depth buffer of at least 16 bits;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>stencil</code></td>
+<td style="text-align:center">true: drawing buffer contains a stencil buffer of at least 8 bits;</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>antialias</code></td>
+<td style="text-align:center">true: drawing buffer performs anti-aliasing</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>premultipliedAlpha</code></td>
+<td style="text-align:center">true: drawing buffer contains colors with pre-multiplied alpha</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>preserveDrawingBuffer</code></td>
+<td style="text-align:center">true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;webgl&#34;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">antialias</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">stencil</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="geometry">Geometry</h1>
+<h2 id="definition">Definition</h2>
+<p>A 2D or 3D model drawn using vertices is call a <code>mesh</code>.</p>
+<p>Each facet in a mesh is called a polygon and a polygon is made of 3 or more vertices.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// create a 2D triangle which lies on the coordinates {(-5, -5), (5, -5), (5, 5)}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span>   <span class="c1">// Vertex 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>   <span class="c1">// Vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>    <span class="c1">// Vertex 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>Similarly, we can create an array for the indices follow the sequence.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>drawArrays()</code>: pass the vertices of the primitive using JavaScript arrays.</li>
+<li><code>drawElements()</code>: pass both vertices and indices of the primitive using JavaScript arrays.</li>
+</ul>
+<h2 id="buffer-objects">Buffer Objects</h2>
+<p>A buffer object indicates a memory area allocated in GPU.</p>
+<p>We can store data of the models corresponding to vertices, indices, color and etc.</p>
+<p>There are 2 types of buffer objects:</p>
+<ul>
+<li>Vertex Buffer Object(VBO): It holds the per-vertex data of the graphical model that is going to be rendered.</li>
+<li>Index Buffer Object(IBO): It holds the indices of the graphical model that is going to be rendered.</li>
+</ul>
+<p>After defining the required geometry and storing them in JavaScript arrays, we need to pass these arrays to the buffer objects, from where the data will be passed to the shader programs.</p>
+<ol>
+<li>
+<p>Create an empty buffer.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">index_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Bind an appropriate array object to the empty buffer.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bindBuffer</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// ARRAY_BUFFER represents vertex data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ELEMENT_ARRAY_BUFFER represent index data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">index_buffer</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Pass the data (vertices/indices) to the buffer using one of the typed arrays.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bufferData</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">data</span><span class="p">,</span> <span class="kr">enum</span> <span class="nx">usage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Usage specifies how to use the buffer object data to draw shapes
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STATIC_DRAW -- Data will be specified once and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STREAM_DRAW -- Data will be specified once and used a few times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.DYNAMIC_DRAW -- Data will be specified repeatedly and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// vertex buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// index buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Uint16Array</span><span class="p">(</span><span class="nx">indices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Unbind the buffer (Optional/Recommended).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h1 id="shader">Shader</h1>
+<p>Shaders are written in ES SL which has variables of its own data types, qualifiers, built-in inputs and outputs.</p>
+<h2 id="data-types">Data Types</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>void</code></td>
+<td style="text-align:center">empty value</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool</code></td>
+<td style="text-align:center">true or false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>int</code></td>
+<td style="text-align:center">signed integer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>float</code></td>
+<td style="text-align:center">floating scalar</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>vec2</code>, <code>vec3</code>, <code>vec4</code></td>
+<td style="text-align:center">n-component floating point vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bvec2</code>, <code>bvec3</code>, <code>bvec4</code></td>
+<td style="text-align:center">boolean vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ivec2</code>, <code>ivec3</code>, <code>ivec4</code></td>
+<td style="text-align:center">signed integer vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mat2</code>, <code>mat3</code>, <code>mat4</code></td>
+<td style="text-align:center">2x2, 3x3, 4x4 float matrix</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>sampler2D</code></td>
+<td style="text-align:center">access a 2D texture</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>samplerCube</code></td>
+<td style="text-align:center">access cube mapped texture</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qualifiers">Qualifiers</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Qualifier</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>attribute</code></td>
+<td style="text-align:center">acts as a link between a vertex shader and OpenGL ES for per-vertex data. Its value changes for every execution of the vertex shader.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>uniform</code></td>
+<td style="text-align:center">links shader programs and the WebGL application. Its value is <code>read-only</code>. It can be used for to declare a variable with any basic data types: <code>uniform vec4 lightPosition;</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>varying</code></td>
+<td style="text-align:center">forms a link between a vertex shader and fragment shader for interpolated data. It can be used with the following data types: <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, <code>mat2</code>, <code>mat3</code>, <code>mat4</code>, <code>arrays</code> like: <code>varying vec3 normal;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vertex-shader">Vertex Shader</h2>
+<p>Vertex shader is a program code, which is called on every vertex. Programmer have to define <code>attribute</code> in code of vertex shader to handle data. The <code>attribute</code> point to a VBO written in JavaScript.</p>
+<h3 id="predefined-variables">Predefined Variables</h3>
+<p>OpenGL ES SL provides the following predefined variables for every vertex shader</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>highp vec4 gl_Position</code></td>
+<td style="text-align:center">Holds the position of the vertex</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump float gl_PointSize</code></td>
+<td style="text-align:center">Holds the transformed point size</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">attribute</span> <span class="k">vec2</span> <span class="n">coordinates</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_Position</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>gl_Position</code> is the predefined variable which is available only in the vertex shader. It contains the vertex position. As vertex shader is a per-vertex operation, the <code>gl_Position</code> value is calculated for each vertex.</p>
+<h2 id="fragment-shader">Fragment Shader</h2>
+<p>A mesh is formed by multiple triangles, and the surface of each triangle is known as a fragment.</p>
+<p>Fragment shader is the code that runs on every pixel on each fragment. This is written to calculate and fill the color on individual pixels.</p>
+<h3 id="predefined-variables-1">Predefined Variables</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within the frame buffer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool gl_FrontFacing;</code></td>
+<td style="text-align:center">Holds the fragment that belongs to a front-facing primitive</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec2 gl_PointCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within a point</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gp_FragColor;</code></td>
+<td style="text-align:center">Holds the output fragment color value of the shader</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragData[n];</code></td>
+<td style="text-align:center">Holds the fragment color for color attachment n</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mo">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="store-and-compiling">Store and Compiling</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;gl_Postion = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span> <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0, 0.8, 0, 1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Compilation involves following 3 steps</p>
+<ul>
+<li>Creating the shader object</li>
+<li>Attaching the source code to the created shader object</li>
+<li>Compiling the program</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Same process for fragment shader</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="combined-program">Combined Program</h2>
+<ul>
+<li>Create a program object</li>
+<li>Attach both the shaders</li>
+<li>Link both the shaders</li>
+<li>Use the program</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="associating-attributes--buffer-objects">Associating Attributes &amp; Buffer Objects</h1>
+<ul>
+<li>Get the attribute location</li>
+<li>Point the attributes to a vertex buffer object</li>
+<li>Enable the attribute</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// ulong getAttribLocation(Object program, string name)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">coordinatesVar</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// void vertexAttribPointer(location, int size, enum type, bool normalized, long stride, long offset)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="drawing-a-model">Drawing a Model</h1>
+<h2 id="drawarrays">drawArrays()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawArrays</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">int</span> <span class="n">first</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>mode: <code>gl.POINTS</code>, <code>gl.LINE_STRIP</code>, <code>gl.LINE_LOOP</code>, <code>gl.LINES</code>, <code>gl.TRIANGLE_STRIP</code>, <code>gl.TRANGLE_FAN</code>, <code>gl.TRIANGLES</code>.</li>
+<li>first: specified the starting element in the enabled arrays. (Non-negative)</li>
+<li>count: specifies the number of elements to be rendered.</li>
+</ul>
+<p><code>WebGL</code> will create the geometry in the order in which the vertex coordinates while rendering the shapes.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>draw two contiguous triangles:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<h2 id="drawelements">drawElements()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawElements</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">,</span> <span class="k">enum</span> <span class="n">type</span><span class="p">,</span> <span class="k">long</span> <span class="n">offset</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>mode: same as <code>drawArrays()</code>;</li>
+<li>count: same as <code>drawArrays()</code>;</li>
+<li>type: specifies the data type of the indices which must be <code>UNSIGNED_BYTE</code> or <code>UNSIGNED_SHORT</code>;</li>
+<li>offset: specifies the starting point for rendering, usually the first element (0);</li>
+</ul>
+<p>If use <code>drawElements()</code> to draw a model, then index buffer object should also be created along with the vertex buffer object. The vertex data will be processed once and used as many time as mentioned in the indices.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+<p>draw two contagious triangles:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="mf">0.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
+]]></description>
+</item>
+<item>
+    <title>WebGL 样例</title>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
+    <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
+<p>WebGL application code is a combination of JavaScript and OpenGL Shader Language.</p>
+<ul>
+<li>JavaScript is required to communicate with the CPU.</li>
+<li>OpenGL Shader Language is required to communicate with the GPU.</li>
+</ul>
+<p></p>
+<h1 id="samples">Samples</h1>
+<h2 id="2d-coordinates">2D coordinates</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;my_canvas&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 1. Prepare the canvas and get context
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;experimental-webgl&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// 2. Define the geometry and store it in buffer objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mf">0.5</span><span class="p">,</span> <span class="c1">// vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="mf">0.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">];</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Bind an empty array buffer to it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Pass the vertices data to the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Unbind the buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// 3. Create and compile Shader programs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34; gl_Position = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create a vertex shader object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Attach vertex shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Compile the vertex shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// Fragment shader source code
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// Create a shader program object to store combined shader program
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Attact vertex and fragment shader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Link both programs
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Use the combined shader program object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// 4. Associate the shader programs to buffer objects
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Bind vertex buffer object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Get the attribute location
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kd">let</span> <span class="nx">coord</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Point an attribute to the currently bound VBO
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Enable the attribute
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coord</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">// 5. Drawing the required object (triangle)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Clear the canvas
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">clearColor</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Enable the depth test
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">enable</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">DEPTH_TEST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Clear the color buffer bit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Set the view port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">viewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// Draw the triangle
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item>
+<item>
+    <title>WebGL 中的管线</title>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
+    <description><![CDATA[<h1 id="overview">Overview</h1>
+<p></p>
+<h1 id="javascript">JavaScript</h1>
+<p>JavaScript is used to write the control code of the program, which includes the following actions:</p>
+<ul>
+<li>Initialization: initialize WebGL context.</li>
+<li>Arrays: create arrays to hold the data of the geometry.</li>
+<li>Buffer objects: create buffer objects by passing the arrays as parameters.</li>
+<li>Shaders: create, compile and link the shaders.</li>
+<li>Attributes: create attributes, enable them and associate them with buffer objects.</li>
+<li>Uniforms: associate the uniforms.</li>
+<li>Transformation matrix: create transformation matrix.</li>
+</ul>
+<h1 id="vertex-shader">Vertex Shader</h1>
+<p>The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods <code>drawElements()</code> and <code>drawArrays()</code>.</p>
+<ul>
+<li>
+<p>It calculates the position of each vertex of a primitive polygon and stores it in the varying <code>gl_position</code></p>
+</li>
+<li>
+<p>It calculates the other attributes such as color, texture coordinates and vertices that are normally associated with a vertex.</p>
+</li>
+</ul>
+<h1 id="primitive-assembly">Primitive Assembly</h1>
+<p>Here the triangles are assembled and passed to the rasterizer.</p>
+<h1 id="resterization">Resterization</h1>
+<p>The pixels in the final image of the primitive are determined.</p>
+<ul>
+<li>Culling: Initially the orientation of the polygons is determined. All those triangles with improper orientation that are not visible in view area are discarded.</li>
+<li>Clipping: If a triangle is partly outside the view area, then the part outside the view area is removed.</li>
+</ul>
+<h1 id="fragment-shader">Fragment Shader</h1>
+<p>The fragment shader gets:</p>
+<ul>
+<li>
+<p>data from the vertex shader in varying variables</p>
+</li>
+<li>
+<p>primitives from the rasterization stage</p>
+</li>
+</ul>
+<p>then:</p>
+<ul>
+<li>calculates the color value for each pixel between the vertices</li>
+<li>stores the color values of every pixel in each fragment</li>
+</ul>
+<h1 id="fragment-operations">Fragment Operations</h1>
+<p>The fragment operations may include:</p>
+<ul>
+<li>Depth</li>
+<li>Color buffer blend</li>
+<li>Dithering</li>
+</ul>
+<p>Once all the fragments are processed, a 2D image is formed and displayed on the screen.</p>
+<h1 id="frame-buffer">Frame Buffer</h1>
+<p>Frame buffer is the final destination of the rendering pipeline.</p>
+<p>Frame buffer is a portion of graphics memory that hold the scene data.</p>
+<p>This buffer contains details such as width and height of the surface (in pixels), color of each pixel and depth and stencil buffers.</p>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>WebGL 基础知识</title>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
+    <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>
+<p>There are x, y, z axes in WebGL, where the z axis signifies <strong>depth</strong>.
+The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1).
+Positive value meaning:
+z: near viewer.
+x: near right.
+y: near top.</p>
+<p></p>
+<h1 id="graphics-system">Graphics System</h1>
+<h2 id="vertices">Vertices</h2>
+<p>To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon.
+A <code>vertex</code> is a point which defines the conjunction of the edges of a 3D object.
+Use <code>javascript</code> arrays to stores points&rsquo; coordinates like <code>[0.5, 0.5, 0.5]</code>.</p>
+<h2 id="indices">Indices</h2>
+<p>The numerical values which are used to identify the vertices is call <code>Indices</code>.</p>
+<h2 id="arrays">Arrays</h2>
+<p>There are no predefined methods in WebGL to render the vertices directly.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">];</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="buffers">Buffers</h2>
+<p>Buffers are the memory areas of WebGL that hold the data.
+There are various buffers:</p>
+<ul>
+<li><code>drawing buffer</code></li>
+<li><code>frame buffer</code></li>
+<li><code>vertex buffer</code></li>
+<li><code>index buffer</code></li>
+</ul>
+<p>The <code>vertex buffer</code> and <code>index buffer</code> are used to describe and process the geometry of the model, stores data about <code>vertices</code> and <code>indices</code> respectively.</p>
+<p>The <code>frame buffer</code> is a portion of graphics memory that hold the scene data. This buffer contains details such as width and height of the surface (in pixels), color of each pixel, depth and stencil buffers.</p>
+<h2 id="mesh">Mesh</h2>
+<p>The WebGL API provides two methods to draw 2D or 3D objects:</p>
+<ul>
+<li><code>drawArrays()</code></li>
+<li><code>drawElements()</code></li>
+</ul>
+<p>They accept a parameter called <code>mode</code> using which you can select the object you want to draw.</p>
+<p><code>mode</code>: <code>points</code> or <code>lines</code> or <code>triangles</code></p>
+<p>We can construct primitive polygons using points, lines and triangles.</p>
+<p>Thereafter, we can form a <code>mesh</code> using these polygons.</p>
+<p>A 3D object drawn using primitive polygons is called a <code>mesh</code>.</p>
+<h2 id="shader-programs">Shader Programs</h2>
+<p>Since WebGL uses GPU accelerated computing, the information about these triangles should be transferred from CPU to GPU which takes a lot of communication overhead.</p>
+<p>WebGL provides a solution to reduce the communication overhead. Since it uses ES SL(Embedded System Shader Language) that runs on GPU, we write all the required programs to draw graphical elements on the client system using shader programs(OpenGL ES Shader Language).</p>
+<p>Shader is a snippet that implements algorithms to get pixels for a mesh.</p>
+<p>There are two types of shaders: <code>Vertex Shader</code> and <code>Fragment Shader</code>.</p>
+<h3 id="vertex-shader">Vertex Shader</h3>
+<ul>
+<li>called on every vertex.</li>
+<li>used to transform the geometry from one place to another.</li>
+<li>handle the data of each vertex such as vertex coordinates, normals, colors, and texture coordinates.
+<ul>
+<li>vertex transformation</li>
+<li>normal transformation and normalization</li>
+<li>texture coordinate generation</li>
+<li>texture coordinate transformation</li>
+<li>lighting</li>
+<li>color material application</li>
+</ul>
+</li>
+</ul>
+<h3 id="fragment-shaderpixel-shader">Fragment Shader(Pixel Shader)</h3>
+<p>A mesh is formed by multiple triangles. The surface of each of the triangles is known as a fragment.</p>
+<p><code>Fragment shader</code> is the code that runs on all pixels of every fragment.</p>
+<p>It is written to calculate and fill the color on <em>individual pixels</em>.</p>
+<ul>
+<li>operations on interpolated values</li>
+<li>texture access</li>
+<li>texture application</li>
+<li>fog</li>
+<li>color sum</li>
+</ul>
+<p></p>
+<h2 id="opengl-es-sl-variables">OpenGL ES SL Variables</h2>
+<p>To handle the data in the shader programs, ES SL provides three types of variables.</p>
+<ul>
+<li>
+<p>Attributes: hold the input values of the vertex shader program. Attributes point to the vertex buffer objects that contains per-vertex data.</p>
+</li>
+<li>
+<p>Uniforms: hold the input data that is common for both vertex and fragment shaders, such as light position, texture coordinates and color.</p>
+</li>
+<li>
+<p>Varyings: used to pass the data from the vertex shader to the fragment shader.</p>
+</li>
+</ul>
+]]></description>
+</item>
+<item>
+    <title>VR 和 全景视频的区别总结</title>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+    <description><![CDATA[<p>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
+<h2 id="全景视频">全景视频</h2>
+<ol>
+<li>全景视频实际上事先通过特殊的全景摄像机录制好视频，之后可以在<code>HMD</code>中观看。虽然看到的图像相对于用户当前环境而言是虚拟的，但是终归是从实际环境中录制而来的，本质上更贴近普通视频的全景推广。</li>
+<li>在全景视频的观看过程中，用户只有 3DoF 的自由度，即只能完成头部的 3 个角度的运动，同时手柄实际上并不能和视频中的内容进行交互。</li>
+<li>全景视频的主要应用在于实景导览，通过事先由拍摄者带着全景录像设备行走拍摄，用户观看时实际是将自己带入到全景设备的位置上，同时移动头部来观察不同角度的视频。</li>
+</ol>
+<h2 id="vr">VR</h2>
+<ol>
+<li>VR 主要做的工作是创造出一个完全虚拟的环境，用户戴上<code>HMD</code>之后可以通过其看到虚拟环境中的事物，同时也可以使用<code>HMD</code>配套的手柄等设备进行操作，完成与虚拟环境之间的交互；</li>
+<li>VR 支持的是 6DoF 的自由度，即除了头部的运动之外也支持身体的前后、左右、上下的移动，手柄；</li>
+<li>VR 的主要应用在于游戏，比如广受好评的<code>Beat Saber</code>（又称<a href="https://zh.wikipedia.org/zh-cn/%E8%8A%82%E5%A5%8F%E5%85%89%E5%89%91" target="_blank" rel="noopener noreffer"><code>节奏光剑</code></a>），用户根据音乐节奏通过挥动手柄（在虚拟环境中被建模成光剑）来准确地按照提示的方向去砍击方块；</li>
+</ol>
+<h2 id="ar-和-mr">AR 和 MR</h2>
+<ol>
+<li>
+<p>AR 主要做的工作是将虚拟世界中的事物投影到现实世界中，主体是现实世界，虚拟事物用于增强现实世界。</p>
+<p>MR 主要做的工作是将现实世界中的事物虚拟化进入虚拟世界中，主体是虚拟世界，现实事物混合进虚拟世界中。</p>
+</li>
+<li>
+<p>AR 实现起来比较简单，只需要将计算机产生的图像投影显示在现实中即可，目前的应用比如游戏<code>Pokémon GO</code>里面的<code>AR-mode</code>，启用之后游戏中遇到的<code>Pokémon</code>就可以投影在现实中。</p>
+<p>MR 实现起来比较复杂，首先需要用摄像头扫描物体，得到的 2D 图像再交给计算机采用算法进行 3D 重建，最后将虚拟化建模好的物体展示到虚拟世界中，目前的应用比如<code>Meta</code>推出的<code>Workrooms</code>，线上的远距离视频会议在虚拟世界中可以变成虚拟人物之间面对面的交流。</p>
+</li>
+</ol>
+<h2 id="总结">总结</h2>
+<ol>
+<li>
+<p>全景视频侧重于对虚拟环境的观察，而 VR 侧重于对虚拟环境的交互。</p>
+</li>
+<li>
+<p>全景视频实际上是将用户带入到全景摄像机的位置上，让用户产生自己身临拍摄的环境中的感觉，本质上是对传统视频的推广；</p>
+<p>VR 实际上是将用户完全带入到虚拟的环境中，用户可以和虚拟环境中的事物进行交互，而虚拟环境中发生的一切都和现实无关，本质上是对传统游戏的推广；</p>
+</li>
+<li>
+<p>全景视频实际上和 VR、AR、MR 这种概念距离比较远，实际上只是因为全景摄像机相较于普通摄像机的 360 度视角的特殊性，这能让用户产生沉浸感。</p>
+</li>
+<li>
+<p>VR 相比于 AR、MR 而言，是纯粹的虚拟环境，并不涉及到现实事物（除了<code>HMD</code>配套的手柄等设备），而纯粹的虚拟环境将人带入到了一个完全不同的世界，也是 VR 沉浸式体验的来源。</p>
+</li>
+<li>
+<p>AR 和 MR 是虚拟和现实交融的技术，前者主体是现实，后者主体是虚拟环境。</p>
+</li>
+</ol>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>全景视频中视口预测相关方法总结</title>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
+    <description><![CDATA[<h2 id="视口预测是什么">视口预测是什么？</h2>
+<p>视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。</p>
+<p>相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。</p>
+<p>因为用户在观看全景视频时会在 3DoF 的自由度下转动头部去观看全景视频在空间上的不同部分，所以视口预测做的事情就是在用户的观看过程中预测相较于预测执行时刻的下一时刻的视口位置。</p>
+<h2 id="vp-在传输中所处的作用">VP 在传输中所处的作用</h2>
+<p>基于 tile 的全景视频传输方式之所以热门，就是因其可以通过只传输用户 FoV 内的分块而大幅减少观看过程中消耗的带宽。</p>
+<p>所以对用户 FoV 的预测是首先要处理的因素，如果 VP 精度很高，那么所有的带宽都可以用很高的码率去传输 FoV 内的分块。</p>
+<h2 id="两种方式的基本假设">两种方式的基本假设</h2>
+<ul>
+<li>
+<p>基于轨迹的方法的基本假设</p>
+<p>相对于当前时刻，前 $hw$ (history window)内用户的 FoV 位置对未来可预测的 $pw$ (predict window)内用户的 FoV 位置有影响，比如用户只有很小可能性会在很短的一段单位时间内做 180 度的转弯，而更小角度的调整则更可能发生。</p>
+</li>
+<li>
+<p>基于内容的方法的基本假设</p>
+<p>用户的 FoV 变化是因为对视频内容感兴趣，即 ROI 与 FoV 之间有相关关系，比如在观看篮球比赛这样的全景视频时，用户的 FoV 更可能专注于篮球。</p>
+<p>按照提取 ROI 的来源不同可以分为两种类型：</p>
+<ol>
+<li>从视频内容本身出发，使用 CV 方法去猜测 ROI；</li>
+<li>从用户观看视频的热图出发，相当于得到了经过统计之后的平均 FoV 分布，以此推测其他用户的 ROI；</li>
+</ol>
+</li>
+</ul>
+<p>基于轨迹的方式是要在最表层的历史和预测的轨迹之间学习，即假设两者之间只有时空关系。</p>
+<p>跨用户的方式则假设由用户群体所得出的热图可以用来预测单个用户的 FoV，即利用共性来推断个性。</p>
+<p>基于内容的方式直接提取视频显著图来推断 FoV，即进一步假设共性与视频内容本身有关系。</p>
+<h2 id="跨用户预测的概念">跨用户预测的概念</h2>
+<ul>
+<li>
+<p>基本假设</p>
+<p>就单个用户而言，在观看视频过程中其 FoV 的变化看似随机，但是其行为可能从用户群体的角度去看是跨用户相通的，即多个用户在观看视频时可能会表现出相似的，可以学习的行为模式，这种行为模式可以帮助提高 VP 的精度。</p>
+</li>
+<li>
+<p>实际应用</p>
+<p>基于轨迹的跨用户：如果训练的模型是基于轨迹的离线模型如 LSTM，那么实际上训练好的模型已经学习到了这种跨用户的行为模式；而如果采用的是边训练边预测的模型如 LR（输入历史窗口的经纬度数据，输出预测窗口的经纬度数据），那么这样的模型就是纯粹的单用户模型。</p>
+<p>基于内容的跨用户：将用户在观看视频帧时的注意点作为研究对象，找到用户群体在面对同一帧视频时共同关注的空间区域，而这就是用户间相似的行为模式。这种与内容相结合的跨用户方式即为实际研究中所指的跨用户的研究方式。（实际上就是基于内容的研究方法，只不过出发点不是视频本身，而是用户在观看视频时的 FoV）</p>
+</li>
+</ul>
+<h2 id="实际应用">实际应用</h2>
+<p></p>
+<ul>
+<li>
+<p>图中 3 个黄色矩形表示 3 种方法：</p>
+<ol>
+<li>
+<p>ROI extract：基于内容的预测</p>
+</li>
+<li>
+<p>Multiple watchers&rsquo; FoV：跨用户的预测</p>
+</li>
+<li>
+<p>Multiple watchers&rsquo; trajectories：基于轨迹的预测</p>
+</li>
+</ol>
+</li>
+<li>
+<p>绿色渐变矩形表示直接使用用户当前的历史轨迹数据去训练模型，接着做出预测。</p>
+</li>
+</ul>
+<h2 id="研究方法">研究方法</h2>
+<ul>
+<li>
+<p>基于轨迹的方法</p>
+<p>在线训练：输入历史窗口的位置信息，不断迭代修正模型，输出预测窗口的位置信息。</p>
+<p>离线训练：输入任何采样条件下的多对 hw 和 pw 信息来拟合模型。</p>
+</li>
+<li>
+<p>跨用户的方法</p>
+<p>求出多个用户在同一帧上的热图，以此作为 FoV 预测的依据。</p>
+</li>
+<li>
+<p>基于内容的方法</p>
+<p>提取视频帧中的显著图，以此作为 FoV 预测的依据。</p>
+</li>
+</ul>
+<h2 id="优点">优点</h2>
+<ol>
+<li>使用回归实现的在线训练模型实现简单，反应迅速，有优秀的短期预测精度。</li>
+<li>因为独立于 $pw$ ，并且不需要历史窗口 $hw$ 的轨迹输入，跨用户的热图可以帮助长期的预测，可以提供合理的离线全视频 FOV 预测，并具有一致的性能。</li>
+<li>显著图对于 ROI 集中突出的预测效果较好。</li>
+</ol>
+<h2 id="缺点">缺点</h2>
+<ol>
+<li>使用回归实现的在线训练模型在预测窗口增大时，性能会显著下降。</li>
+<li>提取显著图的方式一方面训练开销比较大，另一方面对于 ROI 不够集中突出的视频效果并不好。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>多媒体基础知识</title>
+    <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
+    <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
+<p></p>
+<h2 id="解协议">解协议</h2>
+<p>将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。</p>
+<p>音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DASH、HLS 将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。</p>
+<p>同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）</p>
+<p>解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如 MP4，FLV 等。</p>
+<h2 id="封装格式">封装格式</h2>
+<p>封装格式如 AVI、MPEG、Real Video 将音频和视频组合打包成一个完整的文件.</p>
+<p>封装格式不会影响视频的画质，影响画质的是视频的编码格式。</p>
+<p>解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。</p>
+<p>比如 FLV 或 TS 格式数据，解封装之后得到 H.264-AVC 编码的视频码流和 AAC 编码的音频码流。</p>
+<h2 id="编码">编码</h2>
+<p>视频的本质是一帧又一帧的图片。</p>
+<p>所以对于一部每秒 30 帧，90 分钟，分辨率为 1920x1080，24 位的真彩色的视频，在压缩之前的大小$S$满足：</p>
+<p>$$
+一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte)
+\
+总帧数n = 90 * 60 * 30 = 162000
+\
+总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB)
+$$</p>
+<p>因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。</p>
+<p>视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC</p>
+<p>音频编码方式：MP3，AAC</p>
+<p>压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。</p>
+<h2 id="解码">解码</h2>
+<p>解码就是解压缩过程。</p>
+<p>解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如 PCM 数据）和视频像素数据（如 YUV420，RGB 数据）。</p>
+<h2 id="音视频同步">音视频同步</h2>
+<p>根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。</p>
+<h1 id="视频质量指标">视频质量指标</h1>
+<h2 id="分辨率">分辨率</h2>
+<ul>
+<li>
+<p>分辨率指的是视频图像在一个单位尺寸内的精密度。</p>
+</li>
+<li>
+<p>将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。</p>
+</li>
+<li>
+<p>视频的分辨率从数值上描述了像素点的个数，如 1920x1080：视频在水平方向有 1920 个像素，垂直方向有 1080 个像素。</p>
+</li>
+<li>
+<p>常见的描述方式：</p>
+<ul>
+<li>1080P：指视频有<strong>1080 行</strong>像素，P=&gt;Progressive（逐行扫描）</li>
+<li>2K：指视频有<strong>2000 列</strong>像素</li>
+<li>MP：像素总数，指像素的行数 P 与列数 K 乘积的结果（百万像素）</li>
+<li>1080P 的分辨率为 1920x1080=2073600，所以 1080P 通常也称为 200 万像素分辨率</li>
+</ul>
+</li>
+<li>
+<p>通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰</p>
+</li>
+<li>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://www.reneelab.com.cn/m/2k-4k-video-resolution.html" target="_blank" rel="noopener noreffer">科普：视频分辨率是什么？</a></li>
+<li><a href="https://www.zhihu.com/question/24205632/answer/648608086" target="_blank" rel="noopener noreffer">「1080p」和「2k、4k」的关系与差别在哪里？</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="视频帧率">视频帧率</h2>
+<ul>
+<li>
+<p>帧率的单位 FPS(Frame Per Second)或 Hz，即每秒多少帧，决定视频画面的流畅程度。</p>
+</li>
+<li>
+<p>低帧率会导致播放卡顿，镜头移动不顺畅，并伴随画面模糊的主观体验；</p>
+<p>帧率过高则会造成眩晕的感觉。</p>
+</li>
+<li>
+<p>不同帧率的视频在支持不同帧率的设备上播放：</p>
+<ol>
+<li>
+<p>若设备最高支持 60fps，则播放 120fps 视频的时候，设备会每隔一帧删除一帧，被删除的帧即成为无效帧。</p>
+<p>所以高帧率的视频在低帧率设备上播放时会导致播放卡顿。</p>
+</li>
+<li>
+<p>若设备最高支持 120fps，则播放 60fps 视频的时候，设备会每隔一帧复制一帧，来填补空缺的帧位置。</p>
+<p>但是效果和在 60fps 上的设备播放一样，不能提升播放流畅度。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>关于显卡对帧率的影像：</p>
+<ol>
+<li>显示器帧率低而显卡输出帧率高时，会导致<a href="https://zh.wikipedia.org/wiki/%E7%95%AB%E9%9D%A2%E6%92%95%E8%A3%82" target="_blank" rel="noopener noreffer">画面撕裂</a>：显示器同时将两帧或几帧显示在同一个画面上</li>
+<li>显示器帧率高而显卡输出帧率低时，同视频帧率高显示器帧率低的情况。</li>
+</ol>
+</li>
+</ul>
+<h2 id="视频码率">视频码率</h2>
+<ul>
+<li>
+<p>码率的概念出现在视频编码之后，因为压缩之后的视频已经成为二进制数据，所以使用码率的称呼。</p>
+</li>
+<li>
+<p>码率的单位是 bps(bit per second)，即每秒多少比特。</p>
+</li>
+<li>
+<p>与视频质量的关系：</p>
+<ol>
+<li>
+<p>分辨率不变的情况下，码率越大，压缩比越好，画面质量越清晰。</p>
+<p>码率越高，精度越高，处理出的文件就越接近压缩前的原始状态，每一帧的图像质量越高，画质越清晰，当然对播放设备的解码能力要求也越高。</p>
+<p>压缩比越小，视频体积越大，越接近源文件。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：容器和迭代器</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。</p>
+</li>
+<li>
+<p><code>string</code>虽然不是容器，但是支持很多容器的操作。</p>
+</li>
+<li>
+<p>容器不为空时：<code>begin()</code>返回的是容器中第一个元素的位置；<code>end()</code>返回的是容器中最后一个元素的<strong>后一个位置</strong>。</p>
+<p>容器为空时：<code>begin()</code>和<code>end()</code>返回的都是最后一个元素的<strong>后一个位置</strong>。</p>
+</li>
+<li>
+<p>任何可能改变容器大小的操作都会使容器的迭代器失效。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>和指针类似的是，迭代器支持对对象的间接访问。</p>
+</li>
+<li>
+<p>和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如<code>begin()</code>, <code>end()</code>。</p>
+</li>
+<li>
+<p>所有迭代器都支持的运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center"><code>*iter</code></td>
+<td style="text-align:center">返回迭代器<code>iter</code>指向元素的<strong>引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">-&gt;</td>
+<td style="text-align:center"><code>iter-&gt;mem</code></td>
+<td style="text-align:center">解引用<code>iter</code>并获取该元素名为<code>mem</code>的成员，即<code>(*iter).mem</code></td>
+</tr>
+<tr>
+<td style="text-align:center">++</td>
+<td style="text-align:center"><code>++iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的后一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">&ndash;</td>
+<td style="text-align:center"><code>--iter</code></td>
+<td style="text-align:center">令<code>iter</code>指向当前元素的前一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">==</td>
+<td style="text-align:center"><code>iter1 == iter2</code></td>
+<td style="text-align:center">如果两个迭代器指向相同的元素返回<code>true</code>，否则返回<code>false</code></td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td style="text-align:center"><code>iter1 != iter2</code></td>
+<td style="text-align:center">上面例子的反面</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>迭代器的类型有两种：<code>iterator</code>和<code>const_iterator</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itv</span><span class="p">;</span>          <span class="c1">// 可用于读写vector&lt;int&gt;中的元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">iterator</span> <span class="n">its</span><span class="p">;</span>               <span class="c1">// 可用于读写string对象中的元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">citv</span><span class="p">;</span>   <span class="c1">// 只能读取元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">cits</span><span class="p">;</span>        <span class="c1">// 只能读取元素
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>begin()</code>和<code>end()</code>返回哪一种取决于对象本身是否被<code>const</code>修饰。</p>
+<p>C++11中引入了<code>cbegin()</code>和<code>cend()</code>来专门返回<code>const_iterator</code>。</p>
+</li>
+<li>
+<p>认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。</p>
+</li>
+<li>
+<p><code>vector</code>和<code>string</code>的迭代器支持的<strong>额外的</strong>运算：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>iter + n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的后n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter - n</code></td>
+<td style="text-align:center">运算得到一个新迭代器，指向当前元素的前n个元素的位置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter += n</code></td>
+<td style="text-align:center">运算得到的新迭代器赋值给<code>iter</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter -= n</code></td>
+<td style="text-align:center">同上</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>iter1 - iter2</code></td>
+<td style="text-align:center">两个迭代器之间的距离，可正可负</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td style="text-align:center">同两类型的下标运算符中的数字的关系，位置靠前的较小</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>一般不在意迭代器的类型，因此使用<code>auto</code>来标注。</li>
+<li>循环结束的判断条件习惯使用迭代器和<code>!=</code>，这样可以不用在意容器类型。</li>
+<li>凡是使用了迭代器的循环体中都不能有改变容器大小的操作如<code>push_back()</code>。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：标准库类模板Vector</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>vector</code>的默认初始化是否合法取决于<code>vector</code>内对象所属的类是否要求显式初始化。</p>
+</li>
+<li>
+<p>使用<code>()</code>和<code>{}</code>对<code>vector</code>执行初始化含义不同。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>    <span class="c1">// 存储1个int对象，值为10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>    <span class="c1">// 存储10个int对象，值为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// 存储10个int对象，值都是1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v4</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span> <span class="c1">// 存储2个int对象，值分别是10和1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
+<ol>
+<li>
+<p>如果<code>{}</code>内容可以用于初始化，则采用<code>{}</code>默认的初始化含义。</p>
+</li>
+<li>
+<p>如果<code>{}</code>中的内容无法用<code>{}</code>默认的初始化含义做出解释，则会按照<code>()</code>的初始化含义去解释<code>{}</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v1</span><span class="p">{</span><span class="s">&#34;hi&#34;</span><span class="p">};</span>      <span class="c1">// 存储1个值为hi的string对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>        <span class="c1">// 存储10个值为空的string对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v3</span><span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;hi&#34;</span><span class="p">};</span>  <span class="c1">// 存储10个值为hi的string对象
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+</li>
+<li>
+<p>与<code>string</code>相同，<code>vector</code>也有<code>size_type</code>作为其<code>size()</code>的返回值类型。</p>
+<p>但是使用时必须首先指定<code>vector</code>由哪个类型定义。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">::</span><span class="n">size_type</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// 错误
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>只有<code>vector</code>内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。</p>
+</li>
+<li>
+<p>增加<code>vector</code>中的元素只能使用<code>push_back()</code>，而不能使用对下标赋值的方式。</p>
+</li>
+</ol>
+<h2 id="必须理解的点">必须理解的点</h2>
+<ol>
+<li><code>vector</code>是类模板而非类型。</li>
+<li><code>vector</code>中只能容纳对象，不能容纳引用。</li>
+<li><code>vector</code>对象能高效增长，增加<code>vector</code>中的元素需要使用<code>push_back()</code>成员函数。</li>
+<li><code>vector</code>的成员函数（<code>empty()</code>, <code>size()</code>）和各种运算符（赋值、关系、下标）的操作使用方法和规则基本同<code>string</code>。</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>不需要在创建<code>vector</code>时确定其中的元素及其大小。</li>
+<li>在循环体内部包含向<code>vector</code>对象添加元素的操作时，不应该使用<code>foreach</code>循环。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：标准库类型string</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>string.size()</code>和<code>string.length()</code>等价。</p>
+<p><code>string.size()</code>和其他<code>STL</code>容器的命名风格相一致（如<code>vector</code>, <code>map</code>）。</p>
+<p><code>string.length()</code>出现主要是因为这样的命名符合人的直觉，有更好的可读性。</p>
+</li>
+<li>
+<p><code>string::size_type</code>是无符号类型，和<code>int</code>不同，能存放下任何<code>string</code>对象的大小。</p>
+</li>
+<li>
+<p><code>+</code>两边至少有一端需要是<code>string</code>对象，不允许两个字符串字面量单独相加。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span><span class="p">;</span>   <span class="c1">// 正确，从左到右运算时能保证至少一段是string对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">c</span> <span class="o">=</span> <span class="s">&#34;b&#34;</span> <span class="o">+</span> <span class="s">&#34;c&#34;</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>   <span class="c1">// 错误，从左到右运算时第一个+左右都是字符串字面量
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p><code>string</code>的初始化方式有两种，一种是默认初始化，另一种是拷贝初始化。</p>
+</li>
+<li>
+<p><code>string.size()</code>返回值类型为<code>string::size_type</code>，出现这种类型是为了体现标准库类型和机器无关的特性。</p>
+</li>
+<li>
+<p><code>string</code>对象的比较运算完全实现了运算符重载（<code>==</code>, <code>!=</code>, <code>&lt;</code>,<code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>）。</p>
+<p><code>==</code>表明两个对象的内容和长度完全一致，反之任一不同则<code>!=</code>。</p>
+<p>不等关系运算符比较的法则：</p>
+<ol>
+<li>如果两个对象长度不同，但是从前到后内容一致，则长度较短的对象较小。</li>
+<li>如果两个对象从前到后有对应位置的字符不同，则这个位置的两个字符的大小关系就是两个对象的大小关系。</li>
+</ol>
+</li>
+<li>
+<p><code>string</code>对象赋值操作就是内容的替换。</p>
+</li>
+<li>
+<p><code>string</code>对象相加操作就是内容的拼接，<code>+=</code>操作同理。</p>
+</li>
+<li>
+<p><code>string</code>对象可以与字符串字面量相加。</p>
+</li>
+<li>
+<p>形如<code>cname</code>的<code>C++</code>头文件兼容形如<code>ctype.h</code>的<code>C</code>头文件，<code>C++</code>头文件中定义的名字可以在<code>std</code>中找到。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>
+<p>表达式中出现<code>string.size()</code>函数时就不应该使用<code>int</code>类型，这样可以避免<code>int</code>和<code>unsigned</code>混用的问题。</p>
+</li>
+<li>
+<p><code>C++</code>和<code>C</code>兼容的头文件作选择时，选择<code>C++</code>的头文件。</p>
+</li>
+<li>
+<p>处理<code>string</code>对象中每一个字符时，使用<code>foreach</code>语句。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cctype&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">str</span><span class="p">{</span><span class="s">&#34;Some String&#34;</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用引用来改变原字符串内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">c</span> <span class="p">:</span> <span class="n">str</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>处理<code>string</code>对象中特定字符时使用<code>[]</code>（下标运算符）或者迭代器。</p>
+<p>使用<code>[]</code>访问字符之前检查<code>string</code>对象是否为空。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;a&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>string</code>对象下标使用<code>string::size_type</code>作为类型而非<code>int</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span><span class="o">::</span><span class="n">size_type</span> <span class="n">index_of_space</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34; &#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：类型推导</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>auto</code>可以在一条语句中声明多个变量，但是所有变量的类型必须一致。</p>
+</li>
+<li>
+<p><code>decltype</code>在分析表达式类型时并不执行表达式。</p>
+</li>
+<li>
+<p><code>decltype</code>处理解引用操作之后返回的是引用类型，而引用类型的变量必须初始化。</p>
+</li>
+<li>
+<p><code>decltype((variable))</code>的结果永远是引用。</p>
+<p><code>decltype(variable)</code>的结果只有当<code>variable</code>是引用时才是引用。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li><code>auto</code>用于变量初始化时的类型推导，<code>decltype</code>用于分析表达式的类型。</li>
+<li><code>auto</code>对引用类型推导时实际上用的是引用对象的值。</li>
+<li><code>auto</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
+<li><code>decltype</code>与<code>const</code>：详见<a href="https://ayamir.github.io/posts/const/" target="_blank" rel="noopener noreffer">重学C++：Const二三事</a>。</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li><code>auto</code>尽量只在类型较长但比较清晰时使用。</li>
+<li><code>decltype</code>尽量不要使用。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：Const二三事</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>仅用<code>const</code>修饰的对象只在单个文件中有效，如果想在多个文件之间共享<code>const</code>对象，必须在对象<strong>定义</strong>的前面加<code>extern</code>。</p>
+</li>
+<li>
+<p>允许为一个常量引用绑定非常量的对象、字面量和表达式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>      <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r4</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>        <span class="c1">// 错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r5</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">r5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>                 <span class="c1">// 错误
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>指向常量的指针和常量指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">cur_err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">err_numb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mut_pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从声明语句的变量符号开始，自右向左看：</p>
+<p><code>cur_err</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
+<p><code>mut_pi_pointer</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+<p><code>pi_pointer</code>首先是一个不可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+</li>
+<li>
+<p>当<code>typedef</code>遇到<code>const</code>时容易出现错误理解：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">pstring</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">pstring</span> <span class="o">*</span><span class="n">ps</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>pstring</code>是<code>char *</code>的别名，即指向<code>char</code>的指针。</p>
+<p><code>const</code>修饰的是<code>pstring</code>，因此<code>cstr</code>是：初始化值为<code>nullptr</code>的<strong>不可变指针</strong>。</p>
+<p>错误理解会用<code>char *</code>替换掉<code>pstring</code>，即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样从<code>cstr</code>开始自右向左读的话，<code>cstr</code>就会被理解成：指向<strong>字符常量</strong>的<strong>可变指针</strong>。</p>
+</li>
+<li>
+<p><code>constexpr</code>属于顶层<code>const</code>，因此<code>constexpr</code>修饰指针意味着指针本身不可变。</p>
+</li>
+<li>
+<p><code>auto</code>默认会去除顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cr</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>       <span class="c1">// b是一个初始化值为0的可变int对象 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cr</span><span class="p">;</span>       <span class="c1">// c同b
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>       <span class="c1">// d是一个初始化为指向可变int类对象i的可变指针对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>      <span class="c1">// e是一个初始化为指向不可变int类对象ci的可变指针对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span> <span class="c1">// f是一个初始化值为0的不可变int对象
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>decltype</code>不会去除顶层<code>const</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// x的类型是const int
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p><code>const</code>对象在创建时必须进行初始化。</p>
+</li>
+<li>
+<p>常量引用即对<code>const</code>对象的引用。</p>
+</li>
+<li>
+<p>常量引用绑定<em>不可变对象</em>和<em>可变对象</em>时含义不同。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">可变对象</th>
+<th style="text-align:center">不可变对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">用常量引用绑定</td>
+<td style="text-align:center">可以</td>
+<td style="text-align:center">必须</td>
+</tr>
+<tr>
+<td style="text-align:center">常量引用的含义</td>
+<td style="text-align:center">不能通过此引用改变对象的值</td>
+<td style="text-align:center">不可以改变对象的值</td>
+</tr>
+</tbody>
+</table>
+<p>常量引用绑定到可变对象上：对原有可操作性质的窄化，减少操作肯定不会引发错误，所以是允许的。</p>
+<p>非常量引用绑定到不可变对象上：对原有可操作性质的拓宽，增加不允许的操作会出错、，所以不可变对象必须使用常量引用。</p>
+</li>
+<li>
+<p>因为指针是对象，而引用不是对象，所以<code>const</code>和指针的组合有2种情况，<code>const</code>和引用的组合只有1种情况。</p>
+<ul>
+<li>指针
+<ul>
+<li>指向常量的指针（pointer to const）：不能通过此指针修改对应的量。</li>
+<li>常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。</li>
+</ul>
+</li>
+<li>引用
+<ul>
+<li>常量引用：不能通过此引用修改对应的量。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>顶层<code>const</code>表示指针本身是常量，推广之后可以指任意对象是常量；</p>
+<p>底层<code>const</code>表示指针指向的对象是常量，推广之后主要于指针和引用等复合类型的基本类型部分有关。</p>
+</li>
+<li>
+<p><strong>常量表达式</strong>指：值不会改变，在编译过程中就能得到计算结果的表达式。</p>
+</li>
+<li>
+<p>为什么需要<code>constexpr</code>？</p>
+<p>因为实际中很难判断一个初始值是否为常量表达式。</p>
+<p>使用<code>constexpr</code>相当于把验证变量的值是否是一个常量表达式的工作交给了编译器。</p>
+<p>用<code>constexpr</code>声明的变量一定是一个变量，并且必须用常量表达式来初始化。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>如果认定变量是一个常量表达式，那就将其声明成<code>constexpr</code>类型。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：引用和指针</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>&amp;</code>和<code>*</code>在不同的上下文里面其含义并不相同，因此<strong>完全可以当成不同的符号看待</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>    <span class="c1">// &amp;在类型名后出现，是声明的一部分，表明r是一个引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>        <span class="c1">// *在类型名后出现，是声明的一部分，表明p是一个指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>        <span class="c1">// &amp;在表达式中出现，是取地址符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">43</span><span class="p">;</span>       <span class="c1">// *在表达式中出现，是解引用符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>  <span class="c1">// &amp;是声明的一部分，*是解引用符
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>指针可以用<code>0</code>进行初始化成空指针，但是不可以用<code>0</code>赋值。</p>
+</li>
+<li>
+<p>指针之间使用<code>==</code>来比较时，如果结果是<code>true</code>，对应多种情况：</p>
+<ul>
+<li>都是空指针</li>
+<li>都是同一个地址
+<ul>
+<li>都指向同一个对象</li>
+<li>一个指针指向某一个对象，另一个指针指向另一对象的下一地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>引用和指针——都可以用于间接访问对象</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">引用</th>
+<th style="text-align:center">指针</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">复合类型</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">表示符号</td>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center">含义</td>
+<td style="text-align:center">变量的别名</td>
+<td style="text-align:center">变量在内存中的地址</td>
+</tr>
+<tr>
+<td style="text-align:center">初始化和赋值时是否需要类型匹配</td>
+<td style="text-align:center">必须匹配（除常量引用）</td>
+<td style="text-align:center">必须匹配（除void*和指向常量的指针）</td>
+</tr>
+<tr>
+<td style="text-align:center">是否需要初始化</td>
+<td style="text-align:center">必须初始化</td>
+<td style="text-align:center">无需初始化</td>
+</tr>
+<tr>
+<td style="text-align:center">可否重新绑定其他变量</td>
+<td style="text-align:center">不可以</td>
+<td style="text-align:center">可以</td>
+</tr>
+<tr>
+<td style="text-align:center">可否嵌套定义</td>
+<td style="text-align:center">不可以</td>
+<td style="text-align:center">可以</td>
+</tr>
+</tbody>
+</table>
+<p>引用：</p>
+<ul>
+<li>引用只能<strong>绑定</strong>在对象上，不能绑定在字面量或者表达式上。</li>
+<li>引用只是原有对象的<strong>别名</strong>，并非对象，因此不可以定义引用的引用。</li>
+<li>定义引用时并不开辟新的内存空间，因此不可以定义引用的指针。</li>
+</ul>
+<p>指针：</p>
+<ul>
+<li>
+<p>指针本身就是一个对象，能执行的操作自由度远超过引用。</p>
+<ul>
+<li>
+<p>可以实现嵌套定义，即指针的指针。</p>
+</li>
+<li>
+<p>可以实现指针的引用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>         <span class="c1">// p是int型指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>    <span class="c1">// r是指针p的引用，从r开始自右向左读，&amp;表明r是一个引用，引用的是指针，指针指向的类型是int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>         <span class="c1">// r是p的别名，即给p赋值为i的地址，即令p指向i
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>         <span class="c1">// r是p的别名，对r解引用即对p解引用，即将p所指向的地址处变量的值赋值为0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>指针初始化和赋值时需要使用&amp;运算符取得对象的地址。</p>
+</li>
+<li>
+<p>指针值的情况：</p>
+<ol>
+<li>指向一个对象。</li>
+<li>指向紧邻对象所占空间的下一个位置。</li>
+<li>空指针，没有指向任何对象。</li>
+<li>无效指针，除上述情况之外。</li>
+</ol>
+<p>对第4种无效指针的操作是未定义的，后果无法预计。</p>
+<p>2、3两种值虽然有效，但是因为没有指向任何对象，所以对其操作的后果同样无法预计。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>void*</code>眼中内存空间仅仅是内存空间，并不能访问内存空间中的对象。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>
+<p>初始化所有的指针，并且<strong>在对象定义完成之后</strong>再定义指向它的指针。</p>
+</li>
+<li>
+<p>避免使用<code>0</code>和<code>NULL</code>初始化空指针，应该使用<code>nullptr</code>。</p>
+</li>
+<li>
+<p>在使用指针之前检查其是否为<code>nullptr</code>。</p>
+</li>
+<li>
+<p><strong>记住赋值改变的永远是等号左侧的对象。</strong></p>
+</li>
+<li>
+<p>面对复杂的指针或引用的声明语句时，从变量名开始自右向左阅读来弄清楚其真实含义。</p>
+</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：类型系统基础</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p><code>int</code>, <code>short</code>, <code>long</code>, <code>long long</code>都是带符号的，在前面添加<code>unsigned</code>就能得到无符号类型。</p>
+</li>
+<li>
+<p>字符型被分为3种：<code>char</code>, <code>signed char</code>, <code>unsigned char</code>，前两种并不等价。
+虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</p>
+</li>
+<li>
+<p>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</p>
+</li>
+<li>
+<p>虽然变量初始化时候使用了<code>=</code>号，但是初始化和变量赋值并不相同。</p>
+</li>
+<li>
+<p>变量默认初始化：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量类型</th>
+<th style="text-align:center">位置在函数内部</th>
+<th style="text-align:center">位置在函数外部</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">内置类型</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">自定义类型</td>
+<td style="text-align:center">由类决定</td>
+<td style="text-align:center">由类决定</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">default_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 输出必定是0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 输出是随机值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">default_initialize</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>如果在函数体内部试图初始化一个<code>extern</code>标记的变量会引发错误。</p>
+</li>
+<li>
+<p>在嵌套作用域中，内层作用域中的<strong>定义</strong>可以覆盖外层作用域中<strong>声明</strong>的变量。</p>
+<p>可以显式使用<strong>域操作符</strong><code>::</code>来指明使用哪层的变量。</p>
+</li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</p>
+</li>
+<li>
+<p>变量的组成部分：类型和值。说白了就是一个定性一个定量。</p>
+<p>类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。</p>
+<p>值在实际代码运行过程中则被各种函数使用参与运算。</p>
+</li>
+<li>
+<p>变量声明和定义：</p>
+<p>声明的意思就是：我要用这个变量。</p>
+<p>定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">声明</th>
+<th style="text-align:center">定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">规定变量的类型和名字</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">申请空间</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">初始化</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">执行多次</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>用<code>extern</code>标记<strong>未初始化</strong>的变量来表明只对变量作声明：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>             <span class="c1">//声明并且定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//声明并且定义
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Q：为什么会有声明和定义这两个概念？</p>
+<p>A：因为C++支持<em>分离式编译</em>机制，这允许程序被分割成若干个文件，每个文件可以被独立编译。如果要在多个文件中使用同一个变量，就必须要将声明和定义分离。变量的定义必须且只能出现在一个文件中，其他用到这个变量的文件必须对其进行声明，且绝对不能进行重复定义。</p>
+</li>
+<li>
+<p>名字的作用域：</p>
+<p>同一个名字在不同的作用域中可以指向不同的实体。</p>
+<p>名字的有效区域始于<strong>声明</strong>语句，以<strong>声明</strong>语句所在的作用域末端结束。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>
+<p>明确数值不可能为负时使用<code>unsigned</code>类型。</p>
+</li>
+<li>
+<p>使用<code>int</code>执行整数运算，范围不够时使用<code>long long</code>。</p>
+</li>
+<li>
+<p>使用<code>double</code>执行浮点数运算。</p>
+</li>
+<li>
+<p>算术表达式中不要使用<code>bool</code>和<code>char</code>。</p>
+</li>
+<li>
+<p>避免写出依赖实现环境的代码，否则代码不可移植。</p>
+</li>
+<li>
+<p>避免有符号类型和无符号类型之间的隐式类型转换。</p>
+</li>
+<li>
+<p>C++11中引入了<strong>列表初始化</strong>，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 传统的初始化方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">units_sold</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 现代的初始化方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="n">pi</span><span class="p">},</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="n">pi</span><span class="p">};</span>   <span class="c1">// 错误：没有执行类型转换，因为可能丢失信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">a</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span>     <span class="c1">// 正确：执行了隐式类型转化，丢失了信息
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>对每个内置类型的变量都执行<strong>显式默认初始化</strong>以防止undefined行为。</p>
+</li>
+<li>
+<p>在变量第一次使用的地方进行<strong>定义</strong>操作。</p>
+</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>修复 Archlinux 上出现的 GPGME Error</title>
+    <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
+    <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo rm /var/lib/pacman/sync/*
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="re-init-pacman-key">Re init pacman-key</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman-key --init
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="populate-key">Populate key</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman-key --populate
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="re-sync">Re sync</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -Syyy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now you can update successfully!</p>
+]]></description>
+</item>
+<item>
+    <title>Linux 权限相关命令解读</title>
+    <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
+    <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
+<p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
+<p></p>
+<p>上图中的 Permission 字段下面的字母表示权限
+第一个字母表示 <strong>文件类型</strong> ：</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">属性</td>
+<td class="org-left">文件类型</td>
+</tr>
+<tr>
+<td class="org-left">-</td>
+<td class="org-left">普通文件</td>
+</tr>
+<tr>
+<td class="org-left">d</td>
+<td class="org-left">目录文件</td>
+</tr>
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">符号链接 符号链接文件剩余的属性都是 rwxrwxrwx，是伪属性值，符号链接指向的文件属性才是真正的文件属性</td>
+</tr>
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">字符设备文件 表示以字节流形式处理数据的设备，如 modem</td>
+</tr>
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">块设备文件 表示以数据块方式处理数据的设备，如硬盘驱动或光盘驱动</td>
+</tr>
+</tbody>
+</table>
+<p>剩下的 9 个位置上的字符称为 <strong>文件模式</strong> ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">属性</td>
+<td class="org-left">文件</td>
+<td class="org-left">目录</td>
+</tr>
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">允许打开和读取文件</td>
+<td class="org-left">如果设置了执行权限，允许列出目录下的内容</td>
+</tr>
+<tr>
+<td class="org-left">w</td>
+<td class="org-left">允许写入或截断文件，但是不允许重命名或删除文件</td>
+<td class="org-left">如果设置了执行权限，那么允许目录中的文件被创建、被删除和被重命名</td>
+</tr>
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">允许把文件当作程序一样来执行</td>
+<td class="org-left">允许进入目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="id显示用户身份标识">id：显示用户身份标识</h2>
+<p>一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权
+用户之上是群组，一个群组可以由多个用户组成
+文件和目录的访问权限由其所有者授予群组或者用户</p>
+<p>下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果</p>
+<p></p>
+<p>uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名
+groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称</p>
+<p>许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users
+现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组</p>
+<h2 id="chmod更改文件模式">chmod：更改文件模式</h2>
+<p>chmod 支持两种标识方法</p>
+<ol>
+<li>
+<p>八进制表示法</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-right" />
+<col  class="org-right" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">八进制</td>
+<td class="org-right">二进制</td>
+<td class="org-left">文件模式</td>
+</tr>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">000</td>
+<td class="org-left">---</td>
+</tr>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">001</td>
+<td class="org-left">&##x2013;x</td>
+</tr>
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">010</td>
+<td class="org-left">-w-</td>
+</tr>
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">011</td>
+<td class="org-left">-wx</td>
+</tr>
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">100</td>
+<td class="org-left">r--</td>
+</tr>
+<tr>
+<td class="org-right">5</td>
+<td class="org-right">101</td>
+<td class="org-left">r-x</td>
+</tr>
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">110</td>
+<td class="org-left">rw-</td>
+</tr>
+<tr>
+<td class="org-right">7</td>
+<td class="org-right">111</td>
+<td class="org-left">rwx</td>
+</tr>
+</tbody>
+</table>
+<p>常用的模式有 7,6,5,4,0</p>
+</li>
+<li>
+<p>符号表示法</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">符号</td>
+<td class="org-left">含义</td>
+</tr>
+<tr>
+<td class="org-left">u</td>
+<td class="org-left">user：表示文件或目录的所有者</td>
+</tr>
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">group：文件所属群组</td>
+</tr>
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">others：表示其他用户</td>
+</tr>
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">all：u+g+o</td>
+</tr>
+</tbody>
+</table>
+<p>如果没有指定字符默认使用 all
+’+’表示添加一种权限
+’-’表示删除一种权限
+例如：</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">符号</td>
+<td class="org-left">含义</td>
+</tr>
+<tr>
+<td class="org-left">u+x</td>
+<td class="org-left">所有者+可执行</td>
+</tr>
+<tr>
+<td class="org-left">u-x</td>
+<td class="org-left">所有者-可执行</td>
+</tr>
+<tr>
+<td class="org-left">+x</td>
+<td class="org-left">所有用户+可执行</td>
+</tr>
+<tr>
+<td class="org-left">o-rw</td>
+<td class="org-left">其他用户-读写</td>
+</tr>
+<tr>
+<td class="org-left">go=rw</td>
+<td class="org-left">群组用户和其他用户权限更改为读，写</td>
+</tr>
+<tr>
+<td class="org-left">u+x,go=rx</td>
+<td class="org-left">所有者+可执行，群组用户和其他用户权限更改为读，可执行</td>
+</tr>
+</tbody>
+</table>
+<p>’-R’=’&amp;##x2013;recursive’表示递归设置</p>
+</li>
+</ol>
+<h2 id="umask设置文件默认权限">umask：设置文件默认权限</h2>
+<p>使用八进制表示法表示从文件模式属性中删除一个位掩码
+掩码的意思：用掩码来取消不同的文件模式</p>
+<pre><code>umask
+</code></pre>
+<p>可以看到输出为：</p>
+<pre><code>0022
+</code></pre>
+<p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
+0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">原始文件模式</td>
+<td class="org-left">---</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+</tr>
+<tr>
+<td class="org-left">掩码</td>
+<td class="org-left">000</td>
+<td class="org-left">000</td>
+<td class="org-left">000</td>
+<td class="org-left">010</td>
+</tr>
+<tr>
+<td class="org-left">结果</td>
+<td class="org-left">---</td>
+<td class="org-left">rw-</td>
+<td class="org-left">rw-</td>
+<td class="org-left">r--</td>
+</tr>
+</tbody>
+</table>
+<p>掩码中 1 对应位处的权限会被取消，0 则不受影响
+所以会有这样的结果：</p>
+<p></p>
+<p>再来谈最前面的 0:因为除了 rwx 之外还有较少用到的权限设置</p>
+<ol>
+<li>
+<p>setuid 位:4000(8 进制)
+设置此位到一个可执行文件时，有效用户 ID 将从实际运行此程序的用户 ID 变成该程序拥有者的 ID
+设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
+设置程序 setuid：</p>
+<pre><code>chmod u+s program_name
+</code></pre>
+<p>结果：</p>
+<pre><code>-rwsr-xr-x
+</code></pre>
+<p>可以看到第二组权限中第一个符号是 s</p>
+</li>
+<li>
+<p>setgid 位:2000(8 进制)
+有效组 ID 从该用户的实际组 ID 更改为该文件所有者的组 ID
+设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
+对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有</p>
+<pre><code>chmod g+s dir_name
+</code></pre>
+<p>结果：</p>
+<pre><code>drwxrwsr-x
+</code></pre>
+<p>可以看到第二组权限中最后一个符号是 s(替换了 x)</p>
+</li>
+<li>
+<p>sticky 位:1000(8 进制)
+标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
+用来控制对共享目录的访问</p>
+<pre><code>chmod +t dir_name
+</code></pre>
+<p>结果：</p>
+<pre><code>drwxrwxrwt
+</code></pre>
+<p>可以看到第三组权限中最后一个符号是 t(替换了 x)</p>
+</li>
+</ol>
+<h2 id="su以另一个用户身份运行-shell">su：以另一个用户身份运行 shell</h2>
+<h3 id="使用-su-命令登录">使用 su 命令登录</h3>
+<pre><code>su [-[l]] [user]
+</code></pre>
+<p>如果包含“-l”选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
+即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
+<p></p>
+<h3 id="使用-su-命令执行单个命令">使用 su 命令执行单个命令</h3>
+<pre><code>su -c 'comand'
+</code></pre>
+<p>命令内容必须用 <strong>’’</strong> 引用起来（也可以是双引号）</p>
+<p></p>
+<h2 id="sudo以另一个用户身份执行命令">sudo：以另一个用户身份执行命令</h2>
+<h3 id="sudo-和-su-的区别">sudo 和 su 的区别</h3>
+<ol>
+<li>
+<p>sudo 比 su 有更丰富的功能，而且可以配置
+通过修改配置文件来配置 sudo</p>
+<pre><code>EDITOR=vim visudo
+</code></pre>
+<p>执行上面的命令可以用 vim 来编辑 sudo 的配置文件
+常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限</p>
+</li>
+<li>
+<p>使用 sudo 命令输入的不是 root 的密码，而是自己的密码
+可以使用 `sudo -l`来查看通过 sudo 命令能获得的权限</p>
+</li>
+</ol>
+<h2 id="chown更改文件所有者">chown：更改文件所有者</h2>
+<h3 id="用法">用法</h3>
+<pre><code>chown [owner][:[group]] file ...
+</code></pre>
+<p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<colgroup>
+<col  class="org-left" />
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">参数</td>
+<td class="org-left">结果</td>
+</tr>
+<tr>
+<td class="org-left">bob</td>
+<td class="org-left">文件所有者=&gt;bob</td>
+</tr>
+<tr>
+<td class="org-left">bob:users</td>
+<td class="org-left">文件所有者=&gt;bob 文件所属群组=&gt;users</td>
+</tr>
+<tr>
+<td class="org-left">:admins</td>
+<td class="org-left">文件所属群组=&gt;admins</td>
+</tr>
+<tr>
+<td class="org-left">bob:</td>
+<td class="org-left">文件所有者=&gt;bob 文件所属群组=&gt;bob 登录系统时的组</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>图中使用 root 用户在/home/ayamir 目录下创建了一个 foo.txt 文件，最后将此文件的所有者和所属组都改为了 ayamir（rg 是<a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener noreffer">ripgrep</a>）</p>
+<h2 id="chgrp更改文件所属群组">chgrp：更改文件所属群组</h2>
+<p>这个命令是历史遗留问题，在早期的 UNIX 版本中，chown 只能更改文件的所有者，而不能改变文件的所属群组，因此出现了这个命令，事实上现在的 chown 已经能实现 chgrp 的功能，因此没必要再使用这个命令（其使用方式几乎与 chown 命令相同）</p>
+<h2 id="passwd更改用户密码">passwd：更改用户密码</h2>
+<h3 id="一般用法">一般用法</h3>
+<pre><code>passwd [user]
+</code></pre>
+<p>用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
+执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
+拥有 root 用户权限的用户可以设置所有用户的密码</p>
+<p></p>
+<p>上图为 Gentoo Linux 下使用 passwd 命令修改 ayamir 用户密码的过程，这里可以看到 passwd 会强迫用户使用强密码，会拒绝短密码或容易猜到的密码（其他发行版可能输出会不一样）</p>
+]]></description>
+</item>
+<item>
+    <title>在 Linux 上手动设置 DNS</title>
+    <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
+    <description><![CDATA[<h2 id="arch-linux-dns-设置">Arch Linux DNS 设置</h2>
+<ol>
+<li>安装<code>dnsmasq</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -S dnsmasq
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>配置<code>/etc/resolv.conf</code>中的域名代理服务器</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># Tencent</span>
+</span></span><span class="line"><span class="cl">nameserver 119.29.29.29
+</span></span><span class="line"><span class="cl">nameserver 182.254.118.118
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Ali</span>
+</span></span><span class="line"><span class="cl">nameserver 223.5.5.5
+</span></span><span class="line"><span class="cl">nameserver 223.6.6.6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># OpenDNS IPv4 nameservers</span>
+</span></span><span class="line"><span class="cl">nameserver 208.67.222.222
+</span></span><span class="line"><span class="cl">nameserver 208.67.220.220
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># OpenDNS IPv6 nameservers</span>
+</span></span><span class="line"><span class="cl">nameserver 2620:0:ccc::2
+</span></span><span class="line"><span class="cl">nameserver 2620:0:ccd::2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Google IPv4 nameservers</span>
+</span></span><span class="line"><span class="cl">nameserver 8.8.8.8
+</span></span><span class="line"><span class="cl">nameserver 8.8.4.4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Google IPv6 nameservers</span>
+</span></span><span class="line"><span class="cl">nameserver 2001:4860:4860::8888
+</span></span><span class="line"><span class="cl">nameserver 2001:4860:4860::8844
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Comodo nameservers</span>
+</span></span><span class="line"><span class="cl">nameserver 8.26.56.26
+</span></span><span class="line"><span class="cl">nameserver 8.20.247.20
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Generated by NetworkManager</span>
+</span></span><span class="line"><span class="cl">nameserver 192.168.1.1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>防止<code>/etc/resolv.conf</code>被修改</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo chattr +i /etc/resolv.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>减少主机名查找时间</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo <span class="nb">echo</span> <span class="s2">&#34;options timeout:1&#34;</span> &gt; /etc/resolv.conf.tail
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>启动<code>dnsmasq</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> dnsmasq.service --now
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item>
+</channel>
 </rss>
