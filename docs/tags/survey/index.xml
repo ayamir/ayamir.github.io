@@ -1,241 +1,28 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Survey - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/survey/</link>
-        <description>Survey - 标签 - Ayamir&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/survey/" rel="self" type="application/rss+xml" /><item>
-    <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
-    <description><![CDATA[<h1 id="bitrate-adaptation-schemes">Bitrate Adaptation Schemes</h1>
-<h2 id="client-based">Client-based</h2>
-<p>Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.</p>
-<p></p>
-<p>Purposes:</p>
-<ol>
-<li>Minimal rebuffering events when the playback buffer depletes.</li>
-<li>Minimal startup delay especially in case of live video streaming.</li>
-<li>A high overall playback bitrate level with respect to network resources.</li>
-<li>Minimal video quality oscillations, which occur due to frequent switching.</li>
-</ol>
-<h3 id="available-bandwidth-based">Available bandwidth-based</h3>
-<p>The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</p>
-<p>This scheme suffers from poor QoE due to a lack of a reliable bandwidth estimation methods, which results in frequent buffer underruns.</p>
-<h4 id="general-context">General context</h4>
-<ul>
-<li>
-<p><a href="https://dl.acm.org/doi/10.1145/1943552.1943575" target="_blank" rel="noopener noreffer">Based on segment fetch time(SFT)</a> measures the time starting from sending the HTTP GET request to receiving the last byte of the segment. Sequential and parallel segment fetching method in CDNs, by using metric that compares the expected segment fetch time(ESFT) with the measured SFT to determine if the selected segment bitrate matches the network capacity.</p>
-<p><a href="https://ieeexplore.ieee.org/document/6333880/" target="_blank" rel="noopener noreffer">Based on the bitrate observed for the last segment downloaded</a> and the estimated throughput that was calculated during the previous estimation.</p>
-</li>
-<li>
-<p><a href="https://ieeexplore.ieee.org/document/6774592" target="_blank" rel="noopener noreffer">Probe AND Adapt</a> tries to eliminate the ON-OFF steady state issue as well as reduce bitrate oscillations when multiple clients share the same bottleneck link.</p>
-</li>
-<li>
-<p><a href="https://dl.acm.org/doi/10.1145/2789168.2790118" target="_blank" rel="noopener noreffer">piStream</a> enables clients to estimate bandwidth based on a resource monitor module that act as a physical-layer daemon.</p>
-</li>
-<li>
-<p><a href="https://dl.acm.org/doi/10.1145/2155555.2155580" target="_blank" rel="noopener noreffer">SVC with DASH</a> prefetches base layers of future segments or downloads enhancement layers for existing segments using a bandwidth-sloping-based heuristic.</p>
-</li>
-</ul>
-<h4 id="mobile-context">Mobile context</h4>
-<h5 id="static">Static</h5>
-<ul>
-<li><a href="https://dl.acm.org/doi/10.1145/2964284.2964313" target="_blank" rel="noopener noreffer">DASH2M</a> uses HTTP/2 server push and stream terminate properties to reduce the battery consumption of the mobile device. Adaptive k-push scheme propose to increase/decrease k according to a bandwidth increase/decrease while keeping in mind the overall power consumption in a push cycle.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2990505" target="_blank" rel="noopener noreffer">LOw-LatenceY Prediction-based adaPtation(LOLYPOP)</a> leverages TCP throughput predictions on multiple times scales to achieve low latency and improve QoE.</li>
-</ul>
-<h5 id="motive">Motive</h5>
-<ul>
-<li><a href="https://dl.acm.org/doi/10.1145/2964284.2964333" target="_blank" rel="noopener noreffer">GeoStream</a>: introduce the use of geostatistics to estimate future bandwidth in unknown locations.</li>
-</ul>
-<h3 id="playback-buffer-based">Playback Buffer-Based</h3>
-<p>The client uses the playout buffer occupancy as a criterion to select the next segment bitrate during video playback.</p>
-<p>This scheme suffers from many limitations including low overall QoE and instability issues, especially in the case of long-term bandwidth fluctuations. SVC-based approaches have limitations related to the complexity of SVC.</p>
-<ul>
-<li><a href="https://ieeexplore.ieee.org/document/7177435" target="_blank" rel="noopener noreffer">Base</a> combines the buffer size with a tool-set of client metrics for accurate rate selection and smooth switching.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2619239.2626296" target="_blank" rel="noopener noreffer">BBA</a> aims to maximize the average video quality and avoid unnecessary rebuffering events, but suffers from QoE degradation during long-term bandwidth fluctuations.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7524428" target="_blank" rel="noopener noreffer">BOLA</a> uses online control algorithm that treats bitrate adaptation as a utility maximization problem. Provide strong theorectical proof that it is near optimal, design a QoE model that incorporates both the average playback quality and the rebuffering time. It is implemented and available in the <code>dash.js</code> player.</li>
-<li><a href="https://ieeexplore.ieee.org/document/6573184" target="_blank" rel="noopener noreffer">BIEB</a> maximizes video quality based on SVC priority while reducing the number of quality oscillations and avoiding stalls and frequent bitrate switching. it maintains a stable buffer occupancy before increasing the quality.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/3123266.3123390" target="_blank" rel="noopener noreffer">QUEuing Theory approach to DASH Rate Adaptation(QUETRA)</a> allows to calculate the expected buffer occupancy given a bitrate choice, network throughput, and buffer capacity.</li>
-</ul>
-<h3 id="mixed-adaptation">Mixed Adaptation</h3>
-<p>The client makes its bitrate selection based on a combination of metrics including available bandwidth, buffer occupancy, segment size and/or duration.</p>
-<h4 id="simple-client">Simple client</h4>
-<ul>
-<li>Control-theoretic based: <a href="https://dl.acm.org/doi/10.1145/2829988.2787486" target="_blank" rel="noopener noreffer">FastMPC</a>, <a href="https://ieeexplore.ieee.org/document/6410740" target="_blank" rel="noopener noreffer">Another</a></li>
-<li>Optimization problem: <a href="https://dl.acm.org/doi/10.1145/2557642.2557658" target="_blank" rel="noopener noreffer">Streaming video over HTTP with Consistent Quality</a></li>
-<li><a href="https://dl.acm.org/doi/10.1145/2413176.2413190" target="_blank" rel="noopener noreffer">Towards agile and smooth video adaptation in dynamic HTTP streaming</a> aims to balance bandwidth utilization and smoothness in DASH in both single and multiple CDN(s) scenarois.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910593" target="_blank" rel="noopener noreffer">SQUAD</a> is a lightweight bitrate adaptation algorithm that uses the available bandwidth and buffer information to increase the average bitrate while minimizing the number of quality switches.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2155555.2155582" target="_blank" rel="noopener noreffer">Multi-path solution for abr in wireless networks</a> avoids the problems of TCP congestion control by using parallel TCP streams.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7247436" target="_blank" rel="noopener noreffer">SARA</a> is Segment-Aware Rate Adaptation algorithm based on the segment size variation, the available bandwidth estimate and the buffer occupancy. It extends MPD file to include the size of every segment.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910596" target="_blank" rel="noopener noreffer">ABMA+</a> selects the highest segment representation based on the estimated <em>probability of video rebuffering</em>. It makes use of buffer maps, which define the playout buffer capacity that is required under certain conditions to satisfy a rebuffering threshold and to avoid heavy online calculations.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/3204949.3204961" target="_blank" rel="noopener noreffer">GTA</a> uses a cooperative game in coalition formation then formulates the bitrate selection problem as a bargaining process and consensus mechanism. GTA improves QoE and video stability without increasing the stall rate or startup delay.</li>
-</ul>
-<h4 id="multiple-clients">Multiple clients</h4>
-<ul>
-<li><a href="https://ieeexplore.ieee.org/document/6691442" target="_blank" rel="noopener noreffer">ELASTIC</a> generates a long-lived TCP flow and avoids the ON-OFF steady state behavior which leads to bandwidth overestimations. Ensure bandwidth fairness between competing clients based on network feedback assistance, but without taking the QoE into consideration. In addition, it ignores quality oscillations in its bitrate decisions.</li>
-<li><a href="https://ieeexplore.ieee.org/document/6229732" target="_blank" rel="noopener noreffer">Adaptation algorithm for HAS</a> uses current buffer occupancy level to estimate available bandwidth and average bitrate of the different bitarte levels from MPD as metrics in its bitrate selection.</li>
-<li><a href="https://ieeexplore.ieee.org/document/6704839" target="_blank" rel="noopener noreffer">FESTIVE</a> contains:
-<ul>
-<li>a bandwidth estimator module</li>
-<li>a bitrate selection and update method with stateful player</li>
-<li>a randomized scheduler which incorporates the buffer size to schedule the download of the next segment.</li>
-</ul>
-</li>
-<li><a href="https://ieeexplore.ieee.org/document/8101529" target="_blank" rel="noopener noreffer">TSDASH</a> uses a logarithmic-increase-multiplicative-decrease (LIMD) based bandwidth probing algorithm to estimate the available bandwidth and a dual-threshold buffer for the bitrate adaptation.</li>
-</ul>
-<h3 id="mdp-based">MDP-Based</h3>
-<p>The video streaming process is formulated as a finite MDP to be able to make adaptation decisions under fluctuating network conditions.</p>
-<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients&rsquo; decentralized ON-OFF patterns.</p>
-<ul>
-<li><a href="https://ieeexplore.ieee.org/document/6774598" target="_blank" rel="noopener noreffer">Real-time best-action search algorithm over multiple access networks</a> uses both Bluetooth and WiFi links to simultaneously download video segments. However, this scheme shows limitations during user mobility which negatively affect QoE.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7305810" target="_blank" rel="noopener noreffer">Optimizing in Vehicular environment</a> introduces a three-variant of RL-based algorithms which take advantage of the historical bandwidth samples to build an accurate bandwidth estimation model.</li>
-<li><a href="https://ieeexplore.ieee.org/document/6838245" target="_blank" rel="noopener noreffer">Multi-agent Q-Learning-based for fairness</a> uses a central manager in charge of collecting QoE statistics and coordination between the competing clients. The algorithm ensures a fair QoE distribution and improves QoE while avoiding suboptimal decisions.(without considering stalls and quality switches)</li>
-<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910603" target="_blank" rel="noopener noreffer">Online learning adaptation</a> aims to select the optimal representation and maximize the long-term expected QoE. The reward function is calculated from a combination of quality oscillations, segment quality and stalls experienced by the client. It exploits a parallel learning technique to avoid slow convergence and suboptimal solutions.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7393865" target="_blank" rel="noopener noreffer">mDASH</a> aims to improve QoE during long-term bandwidth variations. It takes buffer size, bandwidth conditions and bitrate stability as Markov state variables.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/3098822.3098843" target="_blank" rel="noopener noreffer">Pensive</a> does not rely on pre-programmed models or assumptions about the environment, but gradually learns the best policy for bitrate decisions through observation and experience.</li>
-<li><a href="https://ieeexplore.ieee.org/document/8048013" target="_blank" rel="noopener noreffer">D-DASH</a> combines DL and RL to improve QoE, achieves a good trade-off between policy optimality and convergence speed during the decision process.</li>
-</ul>
-<h2 id="server-based">Server-Based</h2>
-<p>Server-based schemes use a bitrate shaping method at the server side and do not require any cooperation from the client. The switching between the bitrates is implicitly controlled by the bitrate shaper. The client still makes its own decisions, but the decisions are more or less determined by the shaping method on the server.</p>
-<ul>
-<li><a href="https://dl.acm.org/doi/10.1145/2155555.2155557" target="_blank" rel="noopener noreffer">Traffic shaping</a> analyzes instability and unfairness issues in the presence of multiple HAS players competing for the available bandwidth. This method can be deployed at a home gateway to improve fairness, stability and convergence delay, and to eliminate the OFF periods during the steady states.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7524620" target="_blank" rel="noopener noreffer">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients&rsquo; statuses and helps them share knowledge about their statues.</li>
-<li><a href="https://dl.acm.org/doi/10.1145/1943552.1943573" target="_blank" rel="noopener noreffer">Quality Adaptation Controller</a> aims to control the size of the server sending buffer in order to adjust and select the most appropriate bitrate level for each DASH player. It maintains the playback buffer occupancy of each player as stable as possible and to match bitrate level decisions with the available bandwidth.</li>
-<li><a href="https://ieeexplore.ieee.org/document/7983147/" target="_blank" rel="noopener noreffer">Multi-Source Stream system</a>: the client fetches the segments from multi-source stream servers.</li>
-</ul>
-<p></p>
-<p>Cons:</p>
-<ol>
-<li>Produce high overhead on the server side with a high complexity</li>
-<li>These schemes also need modifications to the MPD or a custom server software to implement the bitrate adaptation logic.(a violation of the DASH-standard design principles)</li>
-</ol>
-]]></description>
-</item>
-<item>
-    <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
-    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
-    <description><![CDATA[<h1 id="paper-overview">Paper Overview</h1>
-<p>Link: <a href="https://ieeexplore.ieee.org/document/8424813" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/document/8424813</a></p>
-<p>Level: IEEE Communications Surveys &amp; Tutorials 2019</p>
-<h1 id="background">Background</h1>
-<h2 id="traditional-non-has-ip-based-streaming">Traditional non-HAS IP-based streaming</h2>
-<ol>
-<li>
-<p>The client receives media that is typically <em>pushed</em> by a media server using <strong>connection-oriented</strong> protocol such as Real-time Messaging Protocol(RTMP/TCP) or <strong>connectionless</strong> protocol such as Real-time Transport Protocol(RTP/UDP).</p>
-</li>
-<li>
-<p>Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</p>
-</li>
-<li>
-<p>The media server performs rate adaption and data delivery scheduling based on the RTP Control Protocol(RTCP) reports sent by the client.</p>
-</li>
-<li>
-<p>When it comes to NAT and firewall, additional protocols or configurations are needed during the session establishment.</p>
-</li>
-</ol>
-<p>The characteristics result in complex and expensive servers. These scalability and vendor dependency issues as well as high maintenance costs have resulted in deployment challenges for protocols like RTSP.</p>
-<h2 id="has">HAS</h2>
-<p>Around 2005, HTTP adaptive streaming(HAS) became popular and dominant, which treated the media content like regular Web content and delivered it in small pieces over HTTP protocol.</p>
-<ol>
-<li>HTTP as application and TCP as the transport-layer protocol.</li>
-<li>Client <em>pull</em> the data from a standard HTTP server, which simply hosts the media content.</li>
-<li>HAS solutions employ dynamic adaptation with respect to varying network conditions to provide a seamless streaming experience.</li>
-<li>The original file/stream is partitioned into <em>segments</em> (also called <em>chunks</em>) of equi-length playback time. Multiple versions(also called representations) of each segment are generated that vary in bitrate/resolution/quality using an encoder or a transcoder.</li>
-<li>The server generates an index file, which is a manifest that lists the available representations including HTTP urls to identify the segments along with their availability times.</li>
-<li>The client first receives the manifest that contains the metadata for video, audio, subtitles and other features, then constantly measures certain parameters: available network bandwidth, buffer status, battery and CPU levels, etc. According to these parameters, the HAS client repeatedly fetches the most suitable next segment among the available representations from the server.</li>
-</ol>
-<p>Advantages:</p>
-<ol>
-<li>It use HTTP to deliver video segments, which simplifies the traversal through NATs and firewalls.</li>
-<li>At the server side, it use conventional Web servers or caches available within the networks of ISPs and CDNs.</li>
-<li>At the client side, it requests and fetches each segment independently from others and maintains the playback session state, whereas the server is not required to maintain any state.</li>
-<li>It doesn&rsquo;t require a persistent connection between the client and server, which improves system scalability and reduces implementation and deployment costs.</li>
-</ol>
-<h2 id="comparison-summary">Comparison Summary</h2>
-<p></p>
-<p></p>
-<h1 id="challenges">Challenges</h1>
-<h2 id="multi-client-competitionstability-issues">Multi-Client Competition/Stability Issues</h2>
-<p>A centralized management controller can enhance the overall video quality, while improve QoE.</p>
-<p>A robust HAS scheme should achieve 3 main objectives:</p>
-<ol>
-<li><em>Stability</em>: HAS clients should avoid frequent bitrate switching.</li>
-<li><em>Fairness</em>: Multiple HAS clients competing for available bandwidth should equally share network resources based on viewer, content and device characteristics.</li>
-<li><em>High Utilization</em>: While the clients attempt to be stable and fair, network resources should be used as efficiently as possible.</li>
-</ol>
-<p>A streaming session consists of 2 states: buffer-filling state and steady state.</p>
-<ul>
-<li>
-<p>The buffer-filling state aims to fill the playback buffer and reach a certain threshold where the playback can be initiated or resumed.</p>
-</li>
-<li>
-<p>The steady state is to keep the buffer level above a minimum threshold despite bandwidth fluctuation or interruptions. The steady state consists of 2 activity periods referred to as ON and OFF.</p>
-<p>The client requests a segment every $T_s$ time units, where $T_s$ represents the content time duration of each segment, and sum of ON and OFF period durations equals $T_s$.</p>
-<ul>
-<li>ON period: client downloads the current segment and notes the achieved throughput value that will be later used in selecting the appropriate bitrate for future segments.</li>
-<li>OFF period: client becomes idle temporarily.</li>
-</ul>
-</li>
-</ul>
-<p></p>
-<p>There are different cases during competition process.</p>
-<ol>
-<li>
-<p>The ON periods of clients don&rsquo;t overlap during the current segment download, each client will overestimate the available bandwidth. So longer download time will cause the initially non-overlapping ON periods to eventually start overlapping.</p>
-<p></p>
-</li>
-<li>
-<p>As the amount of overlap increases, the clients will have lower bandwidth estimations and start selecting segments that have lower bitrate. These segment will take less time to download, causing the amount of overlap among the ON periods to precedurally shorten, until the process reverts to its initial situation.</p>
-<p></p>
-</li>
-<li>
-<p>The cycle repeats itself, causing periodic up and down shift in the selected bitrates, leading to unstable video quality, unfairness, and underutilization.</p>
-<p></p>
-</li>
-</ol>
-<h2 id="consistent-quality-streaming">Consistent-Quality Streaming</h2>
-<p>The correlation between video bitrate and its perceptual quality is non-linear.</p>
-<ul>
-<li>Different video content types have unique characteristics.</li>
-<li>Differences of inter-stream and intra-stream video scene complexity across content.</li>
-</ul>
-<p></p>
-<p></p>
-<h2 id="qoe-optimization-and-measurement">QoE Optimization and Measurement</h2>
-<p>HAS scheme uses application control loop, which also interacts with a lower-layer control loop(such as TCP congestion control). It plays a key role in determining the viewer QoE.</p>
-<p></p>
-<p>Factors influencing QoE are categorized as:</p>
-<ol>
-<li>Perceptual, directly perceived by the viewer.</li>
-<li>Technical, indirectly affecting the QoE.</li>
-</ol>
-<h3 id="perceptual">Perceptual</h3>
-<p>Perceptual factors include the video image quality, initial delay, stalling duration and frequency.</p>
-<p>The impact of these factors differs depending on the users subjectivity.</p>
-<p>Most users consider initial delays less critical than stalling.</p>
-<h3 id="technical">Technical</h3>
-<p>Technical factors include the algorithms, parameters, and hardware/software used in streaming system.</p>
-<p>Specifically, factors are:</p>
-<ul>
-<li>Server side: encoding parameters, video qualities and segment size.</li>
-<li>Client side: adaptation parameters and environment that clients reside in.</li>
-</ul>
-<h3 id="qoe-measurement">QoE measurement</h3>
-<ol>
-<li>Objective matrics: Peak Signal-to-Noise Ratio(PSNR), Structural SIMilarity(SSIM and SSIMplus), Perceived Video Quality(PVQ) and Statistically Indifferent Quality Variation(SIQV).</li>
-<li>Subjective matrics: Mean Opinion Score(MOS).</li>
-<li>Quality-of-Service (QoS)-derived matrics: startup delay, average video bitrate, quality switches and rebuffering events.</li>
-</ol>
-<p>Try to optimize each metric is difficult because it may result in conflicts.</p>
-<h2 id="inter-destination-multimedia-synchronization">Inter-Destination Multimedia Synchronization</h2>
-<p>Online communities are drifting towards watching online videos together in a synchronized manner.</p>
-<p>Having Multiple streaming clients distributed in different geographical locations poses challenges in delivering video content simultaneously, while keeping the playback state of each client the same.</p>
-<p>Typically, IDMS solutions involve a master node to which clients synchronize their playout to.</p>
-<p>Rainer et proposed an IDMS architecture for DASH by using a distribute control scheme where peers can communicate and negotiate a reference placback timestamp in each session.</p>
-<p>In another work, Rainer et provided a crowdsourced subjective evaluation to find a asynchronism threshold at which QoE was not significantly affected.</p>
-]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Survey on Ayamir&#39;s Blog</title>
+    <link>https://ayamir.github.io/tags/survey/</link>
+    <description>Recent content in Survey on Ayamir&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
+    <lastBuildDate>Sun, 27 Feb 2022 10:39:45 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/survey/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+      <description>Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.&#xA;Purposes:&#xA;Minimal rebuffering events when the playback buffer depletes. Minimal startup delay especially in case of live video streaming. A high overall playback bitrate level with respect to network resources. Minimal video quality oscillations, which occur due to frequent switching. Available bandwidth-based The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+      <pubDate>Sat, 26 Feb 2022 11:26:06 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+      <description>Paper Overview Link: https://ieeexplore.ieee.org/document/8424813&#xA;Level: IEEE Communications Surveys &amp;amp; Tutorials 2019&#xA;Background Traditional non-HAS IP-based streaming The client receives media that is typically pushed by a media server using connection-oriented protocol such as Real-time Messaging Protocol(RTMP/TCP) or connectionless protocol such as Real-time Transport Protocol(RTP/UDP).&#xA;Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</description>
+    </item>
+  </channel>
 </rss>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Ayamir&#39;s Blog</title>
+    <link>https://ayamir.github.io/categories/</link>
+    <description>Recent content in Categories on Ayamir&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
+    <lastBuildDate>Thu, 15 Jun 2023 18:21:02 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebRTC</title>
+      <link>https://ayamir.github.io/categories/webrtc/</link>
+      <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/categories/webrtc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>development</title>
+      <link>https://ayamir.github.io/categories/development/</link>
+      <pubDate>Sun, 23 Apr 2023 21:28:38 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/categories/development/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>knowledge</title>
+      <link>https://ayamir.github.io/categories/knowledge/</link>
+      <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/categories/knowledge/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>paper</title>
+      <link>https://ayamir.github.io/categories/paper/</link>
+      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/categories/paper/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,58 +1,21 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Panoramic Video - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/panoramic-video/</link>
-        <description>Panoramic Video - 标签 - Ayamir&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/panoramic-video/" rel="self" type="application/rss+xml" /><item>
-    <title>VR 和 全景视频的区别总结</title>
-    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
-    <description><![CDATA[<p>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
-<h2 id="全景视频">全景视频</h2>
-<ol>
-<li>全景视频实际上事先通过特殊的全景摄像机录制好视频，之后可以在<code>HMD</code>中观看。虽然看到的图像相对于用户当前环境而言是虚拟的，但是终归是从实际环境中录制而来的，本质上更贴近普通视频的全景推广。</li>
-<li>在全景视频的观看过程中，用户只有 3DoF 的自由度，即只能完成头部的 3 个角度的运动，同时手柄实际上并不能和视频中的内容进行交互。</li>
-<li>全景视频的主要应用在于实景导览，通过事先由拍摄者带着全景录像设备行走拍摄，用户观看时实际是将自己带入到全景设备的位置上，同时移动头部来观察不同角度的视频。</li>
-</ol>
-<h2 id="vr">VR</h2>
-<ol>
-<li>VR 主要做的工作是创造出一个完全虚拟的环境，用户戴上<code>HMD</code>之后可以通过其看到虚拟环境中的事物，同时也可以使用<code>HMD</code>配套的手柄等设备进行操作，完成与虚拟环境之间的交互；</li>
-<li>VR 支持的是 6DoF 的自由度，即除了头部的运动之外也支持身体的前后、左右、上下的移动，手柄；</li>
-<li>VR 的主要应用在于游戏，比如广受好评的<code>Beat Saber</code>（又称<a href="https://zh.wikipedia.org/zh-cn/%E8%8A%82%E5%A5%8F%E5%85%89%E5%89%91" target="_blank" rel="noopener noreffer"><code>节奏光剑</code></a>），用户根据音乐节奏通过挥动手柄（在虚拟环境中被建模成光剑）来准确地按照提示的方向去砍击方块；</li>
-</ol>
-<h2 id="ar-和-mr">AR 和 MR</h2>
-<ol>
-<li>
-<p>AR 主要做的工作是将虚拟世界中的事物投影到现实世界中，主体是现实世界，虚拟事物用于增强现实世界。</p>
-<p>MR 主要做的工作是将现实世界中的事物虚拟化进入虚拟世界中，主体是虚拟世界，现实事物混合进虚拟世界中。</p>
-</li>
-<li>
-<p>AR 实现起来比较简单，只需要将计算机产生的图像投影显示在现实中即可，目前的应用比如游戏<code>Pokémon GO</code>里面的<code>AR-mode</code>，启用之后游戏中遇到的<code>Pokémon</code>就可以投影在现实中。</p>
-<p>MR 实现起来比较复杂，首先需要用摄像头扫描物体，得到的 2D 图像再交给计算机采用算法进行 3D 重建，最后将虚拟化建模好的物体展示到虚拟世界中，目前的应用比如<code>Meta</code>推出的<code>Workrooms</code>，线上的远距离视频会议在虚拟世界中可以变成虚拟人物之间面对面的交流。</p>
-</li>
-</ol>
-<h2 id="总结">总结</h2>
-<ol>
-<li>
-<p>全景视频侧重于对虚拟环境的观察，而 VR 侧重于对虚拟环境的交互。</p>
-</li>
-<li>
-<p>全景视频实际上是将用户带入到全景摄像机的位置上，让用户产生自己身临拍摄的环境中的感觉，本质上是对传统视频的推广；</p>
-<p>VR 实际上是将用户完全带入到虚拟的环境中，用户可以和虚拟环境中的事物进行交互，而虚拟环境中发生的一切都和现实无关，本质上是对传统游戏的推广；</p>
-</li>
-<li>
-<p>全景视频实际上和 VR、AR、MR 这种概念距离比较远，实际上只是因为全景摄像机相较于普通摄像机的 360 度视角的特殊性，这能让用户产生沉浸感。</p>
-</li>
-<li>
-<p>VR 相比于 AR、MR 而言，是纯粹的虚拟环境，并不涉及到现实事物（除了<code>HMD</code>配套的手柄等设备），而纯粹的虚拟环境将人带入到了一个完全不同的世界，也是 VR 沉浸式体验的来源。</p>
-</li>
-<li>
-<p>AR 和 MR 是虚拟和现实交融的技术，前者主体是现实，后者主体是虚拟环境。</p>
-</li>
-</ol>
-<p></p>
-]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Panoramic Video on Ayamir&#39;s Blog</title>
+    <link>https://ayamir.github.io/tags/panoramic-video/</link>
+    <description>Recent content in Panoramic Video on Ayamir&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
+    <lastBuildDate>Mon, 17 Jan 2022 17:02:51 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/panoramic-video/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VR 和 全景视频的区别总结</title>
+      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+      <description>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火</description>
+    </item>
+  </channel>
 </rss>
