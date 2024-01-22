@@ -403,11 +403,11 @@
       <description>个人概况 20 岁，北京邮电大学 18 级软件工程专业本科生，已推免至北京邮电大学网络智能中心。 目前主要的研究方向是全景视频的传输（VR or Metaver</description>
     </item>
     <item>
-      <title>多媒体基础知识</title>
+      <title>H264编码</title>
       <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
       <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
-      <description>H264编码 编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x1</description>
+      <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
     </item>
   </channel>
 </rss>

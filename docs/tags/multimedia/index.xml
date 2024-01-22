@@ -18,11 +18,11 @@
       <description>媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。 音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DAS</description>
     </item>
     <item>
-      <title>多媒体基础知识</title>
+      <title>H264编码</title>
       <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
       <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
-      <description>H264编码 编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x1</description>
+      <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
     </item>
   </channel>
 </rss>
