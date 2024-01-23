@@ -4,9 +4,46 @@
         <link>https://ayamir.github.io/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate>
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Git 常用用法记录</title>
+    <link>https://ayamir.github.io/posts/development/git-usage/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+    <description><![CDATA[<p>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。</p>
+<h2 id="clone-相关">clone 相关</h2>
+<p>克隆指定 branch ： <code>git clone --branch &lt;branch-name&gt; &lt;remote-repo-url&gt;</code></p>
+<p>递归克隆（包括submodule）：<code>git clone --recursive</code></p>
+<p>已经 clone 完的仓库：<code>git submodule update --init --recursive</code></p>
+<h2 id="checkout-相关">checkout 相关</h2>
+<p>切换分支：<code>git checkout &lt;branch-name&gt;</code> / <code>git switch &lt;branch-name&gt;</code></p>
+<p>新建分支：<code>git checkout -b &lt;branch-name&gt;</code> / <code>git switch -c &lt;branch-name&gt;</code></p>
+<p>切换到一个 tag ：<code>git fetch --all --tags --prune</code> -&gt; <code>git tag</code> -&gt; 使用 <code>/</code> 快速搜索 -&gt; <code>git checkout tags/&lt;tag-name&gt; -b &lt;branch-name&gt;</code></p>
+<h2 id="协作相关">协作相关</h2>
+<p>Review 并且 Commit 别人提出的 PR 的流程：</p>
+<ol>
+<li>
+<p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code></p>
+</li>
+<li>
+<p><code>git remote -v</code></p>
+</li>
+<li>
+<p><code>git fetch &lt;remote-name&gt;</code></p>
+</li>
+<li>
+<p><code>git checkout -b &lt;local-branch-name&gt; &lt;PR-branch-name&gt;</code></p>
+</li>
+<li>
+<p><code>git commit -sm &quot;&lt;commit-message&gt;&quot;</code></p>
+</li>
+<li>
+<p><code>git push &lt;remote-name&gt; HEAD:&lt;PR-branch-name&gt;</code></p>
+</li>
+</ol>
+]]></description>
+</item>
+<item>
     <title>H264 Encode</title>
     <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
     <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
@@ -2062,71 +2099,6 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </span></span></code></pre></td></tr></table>
 </div>
 </div>]]></description>
-</item>
-<item>
-    <title>WebGL 中的管线</title>
-    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
-    <description><![CDATA[<h1 id="overview">Overview</h1>
-<p></p>
-<h1 id="javascript">JavaScript</h1>
-<p>JavaScript is used to write the control code of the program, which includes the following actions:</p>
-<ul>
-<li>Initialization: initialize WebGL context.</li>
-<li>Arrays: create arrays to hold the data of the geometry.</li>
-<li>Buffer objects: create buffer objects by passing the arrays as parameters.</li>
-<li>Shaders: create, compile and link the shaders.</li>
-<li>Attributes: create attributes, enable them and associate them with buffer objects.</li>
-<li>Uniforms: associate the uniforms.</li>
-<li>Transformation matrix: create transformation matrix.</li>
-</ul>
-<h1 id="vertex-shader">Vertex Shader</h1>
-<p>The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods <code>drawElements()</code> and <code>drawArrays()</code>.</p>
-<ul>
-<li>
-<p>It calculates the position of each vertex of a primitive polygon and stores it in the varying <code>gl_position</code></p>
-</li>
-<li>
-<p>It calculates the other attributes such as color, texture coordinates and vertices that are normally associated with a vertex.</p>
-</li>
-</ul>
-<h1 id="primitive-assembly">Primitive Assembly</h1>
-<p>Here the triangles are assembled and passed to the rasterizer.</p>
-<h1 id="resterization">Resterization</h1>
-<p>The pixels in the final image of the primitive are determined.</p>
-<ul>
-<li>Culling: Initially the orientation of the polygons is determined. All those triangles with improper orientation that are not visible in view area are discarded.</li>
-<li>Clipping: If a triangle is partly outside the view area, then the part outside the view area is removed.</li>
-</ul>
-<h1 id="fragment-shader">Fragment Shader</h1>
-<p>The fragment shader gets:</p>
-<ul>
-<li>
-<p>data from the vertex shader in varying variables</p>
-</li>
-<li>
-<p>primitives from the rasterization stage</p>
-</li>
-</ul>
-<p>then:</p>
-<ul>
-<li>calculates the color value for each pixel between the vertices</li>
-<li>stores the color values of every pixel in each fragment</li>
-</ul>
-<h1 id="fragment-operations">Fragment Operations</h1>
-<p>The fragment operations may include:</p>
-<ul>
-<li>Depth</li>
-<li>Color buffer blend</li>
-<li>Dithering</li>
-</ul>
-<p>Once all the fragments are processed, a 2D image is formed and displayed on the screen.</p>
-<h1 id="frame-buffer">Frame Buffer</h1>
-<p>Frame buffer is the final destination of the rendering pipeline.</p>
-<p>Frame buffer is a portion of graphics memory that hold the scene data.</p>
-<p>This buffer contains details such as width and height of the surface (in pixels), color of each pixel and depth and stencil buffers.</p>
-<p></p>
-]]></description>
 </item>
 </channel>
 </rss>

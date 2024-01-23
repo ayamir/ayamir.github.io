@@ -4,11 +4,42 @@
         <link>https://ayamir.github.io/tags/git/</link>
         <description>git - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 03 May 2023 10:21:22 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
-    <title>Git 的常用用法</title>
-    <link>https://ayamir.github.io/posts/git-usage/</link>
-    <pubDate>Wed, 03 May 2023 10:21:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/git-usage/</guid>
-    <description><![CDATA[]]></description>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+    <title>Git 常用用法记录</title>
+    <link>https://ayamir.github.io/posts/development/git-usage/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+    <description><![CDATA[<p>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。</p>
+<h2 id="clone-相关">clone 相关</h2>
+<p>克隆指定 branch ： <code>git clone --branch &lt;branch-name&gt; &lt;remote-repo-url&gt;</code></p>
+<p>递归克隆（包括submodule）：<code>git clone --recursive</code></p>
+<p>已经 clone 完的仓库：<code>git submodule update --init --recursive</code></p>
+<h2 id="checkout-相关">checkout 相关</h2>
+<p>切换分支：<code>git checkout &lt;branch-name&gt;</code> / <code>git switch &lt;branch-name&gt;</code></p>
+<p>新建分支：<code>git checkout -b &lt;branch-name&gt;</code> / <code>git switch -c &lt;branch-name&gt;</code></p>
+<p>切换到一个 tag ：<code>git fetch --all --tags --prune</code> -&gt; <code>git tag</code> -&gt; 使用 <code>/</code> 快速搜索 -&gt; <code>git checkout tags/&lt;tag-name&gt; -b &lt;branch-name&gt;</code></p>
+<h2 id="协作相关">协作相关</h2>
+<p>Review 并且 Commit 别人提出的 PR 的流程：</p>
+<ol>
+<li>
+<p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code></p>
+</li>
+<li>
+<p><code>git remote -v</code></p>
+</li>
+<li>
+<p><code>git fetch &lt;remote-name&gt;</code></p>
+</li>
+<li>
+<p><code>git checkout -b &lt;local-branch-name&gt; &lt;PR-branch-name&gt;</code></p>
+</li>
+<li>
+<p><code>git commit -sm &quot;&lt;commit-message&gt;&quot;</code></p>
+</li>
+<li>
+<p><code>git push &lt;remote-name&gt; HEAD:&lt;PR-branch-name&gt;</code></p>
+</li>
+</ol>
+]]></description>
 </item>
 </channel>
 </rss>

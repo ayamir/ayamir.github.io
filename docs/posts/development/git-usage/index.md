@@ -1,13 +1,5 @@
----
-title: "Git 常用用法记录"
-date: 2024-01-23T09:50:29+08:00
-draft: false
-math: true
-keywords: ["git"]
-tags: ["git"]
-categories: ["development"]
-url: "posts/development/git-usage"
----
+# Git 常用用法记录
+
 
 这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。
 
@@ -42,3 +34,4 @@ Review 并且 Commit 别人提出的 PR 的流程：
 5. `git commit -sm "<commit-message>"`
 
 6. `git push <remote-name> HEAD:<PR-branch-name>`
+

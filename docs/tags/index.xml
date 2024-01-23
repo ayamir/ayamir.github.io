@@ -4,7 +4,13 @@
         <link>https://ayamir.github.io/tags/</link>
         <description>Tags - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>git</title>
+    <link>https://ayamir.github.io/tags/git/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/git/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>Multimedia</title>
     <link>https://ayamir.github.io/tags/multimedia/</link>
     <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/multimedia/</guid>
@@ -116,12 +122,6 @@
     <title>Viewport predict</title>
     <link>https://ayamir.github.io/tags/viewport-predict/</link>
     <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/viewport-predict/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Trajectory-based predict</title>
-    <link>https://ayamir.github.io/tags/trajectory-based-predict/</link>
-    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/trajectory-based-predict/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
