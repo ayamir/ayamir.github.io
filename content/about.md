@@ -27,7 +27,7 @@
 ## 友链
 
 - cl 的博客：[https://clslaid.icu/](https://clslaid.icu/)
-- 黄鸡的博客：[https://hyiker.com/](https://hyiker.com/)
+- 黄鸡的博客：[https://blog.hyiker.com/](https://blog.hyiker.com/)
 - z217 的博客：[https://z217blog.cn/](https://z217blog.cn/)
 - Tackoil 的博客：[https://tackoil.github.io/](https://tackoil.github.io/)
 - Leeshy 的博客: [https://leeshy-tech.github.io/](https://leeshy-tech.github.io/)

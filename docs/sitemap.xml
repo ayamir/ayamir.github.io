@@ -2,13 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://ayamir.github.io/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/development/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://ayamir.github.io/tags/git/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://ayamir.github.io/posts/development/git-usage/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://ayamir.github.io/posts/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/development/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/git/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/development/git-usage/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/posts/knowledge/h264-encode/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/categories/knowledge/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/multimedia/</loc><lastmod>2024-01-23T01:08:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -102,5 +102,5 @@
             <loc>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</loc><lastmod>2023-06-01T02:10:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://ayamir.github.io/about/</loc><lastmod>2022-09-15T20:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://ayamir.github.io/about/</loc><lastmod>2024-01-23T11:55:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/offline/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
