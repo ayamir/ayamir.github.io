@@ -4,7 +4,25 @@
         <link>https://ayamir.github.io/tags/</link>
         <description>Tags - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>OS</title>
+    <link>https://ayamir.github.io/tags/os/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/os/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Python</title>
+    <link>https://ayamir.github.io/tags/python/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/python/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Shell</title>
+    <link>https://ayamir.github.io/tags/shell/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/shell/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>git</title>
     <link>https://ayamir.github.io/tags/git/</link>
     <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/git/</guid>
@@ -104,24 +122,6 @@
     <title>VR</title>
     <link>https://ayamir.github.io/tags/vr/</link>
     <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/vr/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Cross-user vp</title>
-    <link>https://ayamir.github.io/tags/cross-user-vp/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/cross-user-vp/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Immersive-Video</title>
-    <link>https://ayamir.github.io/tags/immersive-video/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/immersive-video/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Viewport predict</title>
-    <link>https://ayamir.github.io/tags/viewport-predict/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/viewport-predict/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
