@@ -5,7 +5,7 @@ draft: false
 math: true
 keywords: ["WebRTC"]
 tags: ["WebRTC"]
-categories: ["WebRTC"]
+categories: ["knowledge"]
 url: "posts/knowledge/webrtc/remote-desktop-with-webrtc"
 ---
 
@@ -88,4 +88,3 @@ RDP的特点功能比较丰富，比如：
 从业务上讲，WebRTC本身具有的功能可以解决上面所说的VNC和RDP的诸多问题，不过就功能的丰富性而言，可能跟微软的RDP还差一些，但是WebRTC基于音视频的解决方案本身可以优化的上限还是挺高的，毕竟随着人们需求的上升，高分辨率、高帧率也会成为未来远程桌面应用必不可少的功能需求。
 
 本篇博客从非技术层面探讨了远程桌面技术的当下两大主流技术，以及WebRTC应用于远程桌面业务下的可行性。下篇博客将从技术层面详细分析WebRTC与远程桌面业务的契合程度及可能的解决方案，就先从核心功能开始吧！
-

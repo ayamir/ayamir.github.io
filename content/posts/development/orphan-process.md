@@ -6,6 +6,7 @@ math: true
 keywords: ["OS", "Shell", "Python"]
 tags: ["OS", "Shell", "Python"]
 categories: ["development"]
+url: "posts/development/orphan-process"
 ---
 
 ## 问题背景

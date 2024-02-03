@@ -12,9 +12,9 @@
     <atom:link href="https://ayamir.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>孤儿进程</title>
-      <link>https://ayamir.github.io/posts/orphan-process/</link>
+      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
       <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/orphan-process/</guid>
+      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
       <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill</description>
     </item>
   </channel>

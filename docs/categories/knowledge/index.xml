@@ -18,6 +18,13 @@
       <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
     </item>
     <item>
+      <title>远程桌面与WebRTC</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+      <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+      <description>关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相</description>
+    </item>
+    <item>
       <title>WebRTC 中关于视频自适应的相关设置</title>
       <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
       <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>

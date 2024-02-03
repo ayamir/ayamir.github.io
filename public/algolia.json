@@ -78,7 +78,8 @@
         ],
         "categories": [
             "development"
-        ]
+        ],
+        "url": "posts/development/orphan-process"
     },
     {
         "title": "在 microsoft-edge-dev 上设置 Python selenium",
@@ -528,7 +529,7 @@
             "WebRTC"
         ],
         "categories": [
-            "WebRTC"
+            "knowledge"
         ],
         "url": "posts/knowledge/webrtc/remote-desktop-with-webrtc"
     },
