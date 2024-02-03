@@ -8,8 +8,43 @@
     <language>zh-CN</language>
     <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
     <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
-    <lastBuildDate>Thu, 15 Jun 2023 18:21:02 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jan 2024 10:31:56 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OS</title>
+      <link>https://ayamir.github.io/tags/os/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/tags/os/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://ayamir.github.io/tags/python/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shell</title>
+      <link>https://ayamir.github.io/tags/shell/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/tags/shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>git</title>
+      <link>https://ayamir.github.io/tags/git/</link>
+      <pubDate>Tue, 23 Jan 2024 09:50:29 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multimedia</title>
+      <link>https://ayamir.github.io/tags/multimedia/</link>
+      <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/tags/multimedia/</guid>
+      <description></description>
+    </item>
     <item>
       <title>WebRTC</title>
       <link>https://ayamir.github.io/tags/webrtc/</link>
@@ -193,13 +228,6 @@
       <description></description>
     </item>
     <item>
-      <title>Multimedia</title>
-      <link>https://ayamir.github.io/tags/multimedia/</link>
-      <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/multimedia/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>DRL</title>
       <link>https://ayamir.github.io/tags/drl/</link>
       <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
@@ -239,13 +267,6 @@
       <link>https://ayamir.github.io/tags/linux/</link>
       <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
       <guid>https://ayamir.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://ayamir.github.io/tags/python/</link>
-      <pubDate>Fri, 26 Mar 2021 21:43:35 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/tags/python/</guid>
       <description></description>
     </item>
   </channel>

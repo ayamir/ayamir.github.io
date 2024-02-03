@@ -1,5 +1,24 @@
 [
     {
+        "title": "Git 常用用法记录",
+        "uri": "posts/development/git-usage",
+        "content": "Git                clone         branch   git clone   branch        submodule  git clone   recursive    clone      git submodule update   init   recursive checkout         git checkout   git switch      git checkout  b   git switch  c       tag  git fetch   all   tags   prune    git tag                 git checkout tags   b      Review    Commit       PR      git remote add git remote  v git fetch git checkout  b git commit  sm    git push HEAD",
+        "objectID": "posts/development/git-usage",
+        "date": "2024-01-23T01:50:29.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "git"
+        ],
+        "tags": [
+            "git"
+        ],
+        "categories": [
+            "development"
+        ],
+        "url": "posts/development/git-usage"
+    },
+    {
         "title": "部署 Immersive Video OMAF-Sample",
         "uri": "posts/development/Immersive-Video-Deploy",
         "content": "Immersive Video Sample         Immersive Video Sample Server        Dockerfile      wget   git   http_proxy   package    not found      package          glog            ln  s  usr local lib64 libglog so 0 6 0  usr local lib64 libglog so 0                libnuma         numa        numactl  H       node              numa                 fakenuma            Ubuntu                       Linux        usr src    wget https   mirrors edge kernel org pub linux kernel v5 x linux 5 11 1 tar gz    tar xpvf linux 5 11 1 tar gz          cd linux 5 11 1    cp  v  boot config   uname  r   config        sudo apt install build essential libncurses dev bison flex libssl dev libelf dev          sudo menuconfig         CONFIGNUMA CONFIGNUMA_EMU                              sudo  j   nproc     sudo modules_install    sudo install   grub       fake numa    sudo vim  etc default grub           GRUBCMDLINELINUX  numa fake 2    grub    sudo update grub    sudo reboot   numactl  H   numa       2                Client        Ubuntu18 04               README",
@@ -38,6 +57,28 @@
             "development"
         ],
         "url": "posts/development/note-for-mlflow"
+    },
+    {
+        "title": "孤儿进程",
+        "uri": "posts/development/orphan-process",
+        "content": "kill    Shell        Python                 htop                Shell           kill   Python         kill          Python               init                        OS                                                                 OS                                                                                             init                                                                                                                                     bin bash             cleanup     echo               Python        kill  PYTHON_PID exit        SIGINT    SIGTERM    SIGKILL     cleanup    trap  cleanup  SIGINT SIGTERM    Python          ID python example_python py   PYTHON_PID       Python      wait  PYTHON_PID import time import signal import sys          def signal_handler signum  frame   print  Python                     sys exit      SIGINT SIGTERM      signal signal signal SIGINT  signal_handler  signal signal signal SIGTERM  signal_handler  Python        try  True  print  Python             time sleep 1  except KeyboardInterrupt  pass                           kill        Shell             Python              chmod  x example sh example_python py    bash example sh    SIGTERM     kill                          kill  9  PARENT_PID                           9          SIGKILL    SIGKILL                    SIGKILL                                             SIGSTOP                                        Python                  Python",
+        "objectID": "posts/development/orphan-process",
+        "date": "2024-01-29T02:31:56.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "OS",
+            "Shell",
+            "Python"
+        ],
+        "tags": [
+            "OS",
+            "Shell",
+            "Python"
+        ],
+        "categories": [
+            "development"
+        ]
     },
     {
         "title": "在 microsoft-edge-dev 上设置 Python selenium",
@@ -286,11 +327,11 @@
         "url": "posts/knowledge/cpp/vector"
     },
     {
-        "title": "H264编码",
+        "title": "H264 Encode",
         "uri": "posts/knowledge/h264-encode",
         "content": "16x16   MB                     Frame Field           F_n                             P            P    Slice                            Fn                   Fn           P        Dn        Dn            4x4   8x8             X       X                            P  B    ME                                                                                         Slice   MB     Slice       Slice         NAL              PPS      SPS  NAL                                   X                                                       X                      Dn        Dn         P      Dn                Fn                              F_n                                                                       P                                        P                                                                     Prediction Coding                                                                                                                                                                                                                                                                                                                                                             0                                                                                                                                                                                                                               ME             MV                                                       B         Pr        B             Br     B_r      B              MV Br B  xr   x y_r   y      Br       B          Br           B                MV                     MC   MV                                                                      ME       MC        ME           MC                                                8          H264    1 4     1 8            ME                                                    1 4                       1 2                                                                                                                                   X264             DIA       HEX UMH                   LDSP                                                              1              2                       1                                    6               MBD               2        MBD                           2      MBD                             MBD      MBD                    MBD          UMH    MV                        MV                    UMH                                            1                                          threshold1 threshold2                                         1    2                                                      W           W 2    3   5x5            4               5                             Dia   HEX   UMH                          Dia   HEX   UMH                                                    DPB                                                                                                                           IDR    DPB                     I    P        I        MV   Skip      MV              MV           MV           MVD      Skip   Skip                              SKIP     PSkip    COPY      MVD                 MVp                      BSkip       MVD              Direct            MV                 P_Skip      Inter16x16     List0          MVD 0         0    RDO        BSkip      Bdirect_16x16         0                                           P  B        B                      Slice Header                                                                            SAD                                                                                                MSE             MSE          W1      W2       W1   W2       0                                                                                                                                                                            H264                                                       H264                                   4x4      I4MB  16x16       I16MB   4x4    9          DC 6                  16x16    4          DC                             8x8       8x8   4          DC                                  4                           Intra4x4          Intra16x16           Intra4x4  RDO                 Intra16x16  SATD                                             Transform Coding                                                                                                                                                             0    0                 K L                DCT   DFT            Hadamard      DCT                                                        0          0                                           H264                                                          DCT MSE  K L         16x16                  MSE                     K L           Hadamard            DFT DCT           K L                                                          DCT           DFT       DCT         DCT                            DCT                               DCT           K L            DCT         DFT                DCT    DC",
         "objectID": "posts/knowledge/h264-encode",
-        "date": "2024-01-22T16:41:17.000Z",
+        "date": "2024-01-22T17:05:20.000Z",
         "draft": false,
         "math": true,
         "keywords": [
@@ -302,7 +343,7 @@
         "categories": [
             "knowledge"
         ],
-        "url": "posts/knowledge/mm-base"
+        "url": "posts/knowledge/h264-encode"
     },
     {
         "title": "在 Linux 上手动设置 DNS",

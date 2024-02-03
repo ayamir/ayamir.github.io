@@ -3,21 +3,71 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ayamir.github.io/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://ayamir.github.io/categories/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/categories/development/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/os/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://ayamir.github.io/posts/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/python/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/shell/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://ayamir.github.io/tags/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/posts/orphan-process/</loc>
+    <lastmod>2024-01-29T10:31:56+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/git/</loc>
+    <lastmod>2023-06-01T02:10:37+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/posts/development/git-usage/</loc>
+    <lastmod>2023-06-01T02:10:37+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/posts/knowledge/h264-encode/</loc>
+    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/categories/knowledge/</loc>
+    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/multimedia/</loc>
     <lastmod>2024-01-23T00:52:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -37,18 +87,8 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://ayamir.github.io/categories/development/</loc>
-    <lastmod>2023-06-01T02:10:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://ayamir.github.io/posts/development/webrtc-development-prepare/</loc>
     <lastmod>2023-06-01T02:10:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://ayamir.github.io/categories/knowledge/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -312,11 +352,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://ayamir.github.io/tags/multimedia/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/mm-base/</loc>
     <lastmod>2023-06-01T02:10:37+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -467,11 +502,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://ayamir.github.io/tags/python/</loc>
-    <lastmod>2023-06-01T02:10:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</loc>
     <lastmod>2023-06-01T02:10:37+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -489,11 +519,6 @@
   </url><url>
     <loc>https://ayamir.github.io/about/</loc>
     <lastmod>2022-09-15T20:38:15+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://ayamir.github.io/posts/knowledge/mm-base/</loc>
-    <lastmod>2024-01-23T00:52:15+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

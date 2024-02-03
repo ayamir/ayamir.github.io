@@ -8,21 +8,21 @@
     <language>zh-CN</language>
     <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
     <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
-    <lastBuildDate>Mon, 13 Dec 2021 10:03:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jan 2024 01:05:20 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/tags/multimedia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>H264 Encode</title>
+      <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+      <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
+      <guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
+      <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
+    </item>
     <item>
       <title>多媒体基础知识</title>
       <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
       <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
       <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
       <description>媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。 音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DAS</description>
-    </item>
-    <item>
-      <title>H264编码</title>
-      <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
-      <description>编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB</description>
     </item>
   </channel>
 </rss>

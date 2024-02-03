@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>H264 Encode - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="H264 Encode" />
+<meta property="og:description" content="编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/h264-encode/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-23T01:05:20+08:00" />
+<meta property="article:modified_time" content="2024-01-23T01:08:03+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="H264 Encode"/>
+<meta name="twitter:description" content="编码框架 编码器包含两个方向的码流分支： 从左到右的前向码流分支为编码过程； 从右到左的反向码流分支为重建过程。 前向编码分支 以16x16像素的MB"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/knowledge/h264-encode/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/" /><link rel="next" href="https://ayamir.github.io/posts/development/git-usage/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "H264 Encode",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/knowledge\/h264-encode\/"
+        },"genre": "posts","keywords": "Multimedia","wordcount":  14658 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/h264-encode\/","datePublished": "2024-01-23T01:05:20+08:00","dateModified": "2024-01-23T01:08:03+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">H264 Encode</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="fa-regular fa-folder fa-fw"></i>knowledge</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 14658 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 30 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#编码框架">编码框架</a>
+          <ul>
+            <li><a href="#前向编码分支">前向编码分支</a></li>
+            <li><a href="#后向重建分支">后向重建分支</a></li>
+          </ul>
+        </li>
+        <li><a href="#预测编码">预测编码</a></li>
+        <li><a href="#帧间预测">帧间预测</a>
+          <ul>
+            <li><a href="#运动估计算法">运动估计算法</a></li>
+            <li><a href="#多参考帧预测">多参考帧预测</a></li>
+            <li><a href="#mv预测和skip模式">MV预测和Skip模式</a></li>
+            <li><a href="#加权预测">加权预测</a></li>
+          </ul>
+        </li>
+        <li><a href="#帧内预测">帧内预测</a></li>
+        <li><a href="#变换编码">变换编码</a>
+          <ul>
+            <li><a href="#dct变换">DCT变换</a></li>
+          </ul>
+        </li>
+        <li><a href="#量化">量化</a></li>
+        <li><a href="#去块滤波不是很了解细节">去块滤波（不是很了解细节）</a>
+          <ul>
+            <li><a href="#块效应出现的原因">块效应出现的原因</a></li>
+            <li><a href="#过程">过程</a></li>
+          </ul>
+        </li>
+        <li><a href="#熵编码">熵编码</a></li>
+        <li><a href="#gopframesliceibp">GOP/Frame/Slice/I/B/P</a></li>
+        <li><a href="#spsppsdtspts">SPS/PPS/DTS/PTS</a></li>
+        <li><a href="#nalu">NALU</a></li>
+        <li><a href="#profilelevel">Profile/Level</a></li>
+        <li><a href="#cbrvbrabrcrf">CBR/VBR/ABR/CRF</a></li>
+        <li><a href="#openh264码控">OpenH264码控</a></li>
+        <li><a href="#rtp">RTP</a>
+          <ul>
+            <li><a href="#rtp与nalu分组">RTP与NALU分组</a></li>
+          </ul>
+        </li>
+        <li><a href="#rtcp">RTCP</a></li>
+        <li><a href="#psnrssimvmafbd-rate">PSNR/SSIM/VMAF/BD-Rate</a>
+          <ul>
+            <li><a href="#psnr">PSNR</a></li>
+            <li><a href="#ssim">SSIM</a></li>
+            <li><a href="#vmaf">VMAF</a></li>
+            <li><a href="#bd-rate">BD-Rate</a></li>
+          </ul>
+        </li>
+        <li><a href="#视频封装">视频封装</a></li>
+        <li><a href="#硬件编码和软件编码">硬件编码和软件编码</a></li>
+        <li><a href="#码率和分辨率">码率和分辨率</a></li>
+        <li><a href="#一个视频文件能否倒放">一个视频文件能否倒放</a></li>
+        <li><a href="#h265hevc比h264avc做了哪些改进">H265(HEVC)比H264(AVC)做了哪些改进</a></li>
+        <li><a href="#simd">SIMD</a></li>
+        <li><a href="#h264中的差错控制">H264中的差错控制</a></li>
+        <li><a href="#svc">SVC</a>
+          <ul>
+            <li><a href="#应用场景">应用场景</a></li>
+            <li><a href="#优缺点">优缺点</a></li>
+          </ul>
+        </li>
+        <li><a href="#rtc应用中提高实时性">RTC应用中提高实时性</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="编码框架">编码框架</h2>
+<p>编码器包含两个方向的码流分支：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123002928114.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123002928114.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123002928114.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123002928114.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123002928114.png"
+        title="image-20240123002928114" /></p>
+<p>从左到右的前向码流分支为编码过程；</p>
+<p>从右到左的反向码流分支为重建过程。</p>
+<h3 id="前向编码分支">前向编码分支</h3>
+<p>以16x16像素的MB为单位进行处理，首先从当前输入的视频图像(Frame or Field)中取一个待编码宏块$F_n$，该宏块以帧内或者帧间的模式进行编码，生成一个预测宏块$P$。</p>
+<p>如果是帧内编码，$P$由当前Slice里面已经编码、解码、重构并且还没进行去块滤波的宏块 $μF_n&rsquo;$ 使用帧内预测得到。当前宏块 $μF_n&rsquo;$ 减去预测宏块 $P$，得到残差块$D_n$，对残差块 $D_n$ 进行整数变换（一般是4x4，或者8x8）、量化后得到一组系数 $X$ ，再对 $X$ 进行重排序和熵编码，就完成了一个宏块的编码过程。对于P帧和B帧，如果ME时候找不到最佳匹配块那也会使用帧内预测编码。</p>
+<p>经过熵编码的码流加上宏块解码所需的一些信息，如预测模式、量化步长、描述宏块运动预测补偿的运动矢量信息等，就组成了该宏块压缩后的码流，Slice中所有MB的码流加上Slice头信息就组成了Slice的编码码流，再通过NAL层进行传输或存储。图像参数集PPS和序列参数集SPS则由NAL单独进行传输。</p>
+<h3 id="后向重建分支">后向重建分支</h3>
+<p>在后向重建分支中，对量化后的宏块系数 $X$ 进行解码从而得到重建宏块，后续宏块进行编码需要从已重建的宏块中寻找参考块。宏块重建过程如下：
+宏块系数 $X$ 经过反量化和反变换之后，得到残差宏块 $D_n$ 的近似值 $D_n&rsquo;$ ，预测块 $P$ 加上 $D_n&rsquo;$ 得到未滤波的重构宏块 $μF_n&rsquo;$ ，再做环路滤波来减少块效应，即得到了最终的重构宏块 $F_n&rsquo;$ ，当图像中所有宏块都重建完成后，就形成了重建图像。</p>
+<p>后向重建分支其实就是包含在编码中的完整解码流程，与真正解码器的唯一区别是： 其预测块P直接从前向编码分支中得到，而真正的解码器需要利用码流中解出的预测块信息获得预测块P。当前图像的已重建宏块会被用做帧内预测的参考，而完整的重建图像会被加入参考帧列表，作为未来编码图像帧预测的参考图像。</p>
+<h2 id="预测编码">预测编码</h2>
+<p>预测编码（Prediction Coding）利用相邻像素之间的空间和时间相关性，用已传输的像素对当前正在编码的像素进行预测，然后对预测值和真实值的差值——预测误差进行编码和传输。</p>
+<p>消除空间冗余：利用一帧图像已经编码的部分来预测还没有被编码的部分</p>
+<p>消除时间冗余：利用之前编码过的图像来预测当前图像需要编码的部分</p>
+<p>通过预测可以得到预测值，预测值通常不等于实际值，所以用实际值减去预测值可以得到预测残差。预测方法越好，残差越小，因而对残差进行编码得到的码流要比对实际值直接进行编码的码流要小</p>
+<p>在解码端可以解码出残差，使用与编码端相同的预测过程来获取预测值，加上残差便可以得到相应的实际值。</p>
+<p>目前使用较广的预测方法是线性预测。用已传像素的线性组合对正在编码的像素进行预测。</p>
+<p>编码器输出预测值和实际值之间的差值，选择最优的预测系数，使预测误差的分布在0附近。经过非均匀量化之后，最终传输的是量化之后的预测误差。</p>
+<p>重建的图像与编码前的图像之间的区别是量化带来的。</p>
+<p>如果取消量化操作，那么预测编码和解码就是一个无失真的编解码系统，但是这样的压缩率要远远低于使用量化的压缩率。</p>
+<p>量化的事实依据是图像中存在人眼感知并不明显的区域，通过非均匀量化可以过滤掉这部分数据（也被称为量化噪声），能达到提高压缩率但不降低主观质量的效果。</p>
+<h2 id="帧间预测">帧间预测</h2>
+<p>帧间预测消除的是时间冗余，主要利用的是运动估计和运动补偿。</p>
+<p>运动估计ME的过程其实就是计算运动向量MV的过程：</p>
+<p>寻找当前编码的块在已编码图像中的最佳对应快，并且计算出对应块的偏移量：运动向量</p>
+<p>假设当前编码块是 $B$ ，在参考帧 $P_r$ 中寻找与 $B$ 块相减残差最小的块 $B_r$ ， $B_r$ 就是 $B$ 块的最佳匹配块。</p>
+<p>$$
+MV=B_r-B=(x_r  - x,y_r  - y)
+$$</p>
+<p>$B_r$ 块就是 $B$ 块的参考块， $B_r$ 的像素值就作为 $B$ 块像素值的预测值。
+运动向量MV也需要用合适的方式编码到码流中。</p>
+<p>运动补偿MC：根据MV和帧间预测方法，求出当前帧的估计值的过程。</p>
+<p>当前帧的估计值是对当前图像的描述，用来说明当前图像的每一个像素怎么由它的参考图像的像素块得到。</p>
+<p>ME是动态的过程，MC是静态的描述。</p>
+<ul>
+<li>
+<p>ME设计很多算法和技巧。</p>
+</li>
+<li>
+<p>MC可以看作是索引表，一个描述像素块的最佳匹配块分布情况的索引表。</p>
+</li>
+</ul>
+<p>实际计算过程中会对树状结构分块的8种模式都尝试一遍。
+H264支持亮度1/4像素、色度1/8像素的运动估计，在亚像素ME之前需要先用插值法得到亚像素值。</p>
+<ul>
+<li>
+<p>在噪声大的视频中，提高搜索精度没法提高预测精确度。</p>
+</li>
+<li>
+<p>在噪声小的视频中，1/4像素精度可以达到比较好的预测效果。</p>
+</li>
+<li>
+<p>视频会议里1/2像素精度基本可以满足需求。</p>
+</li>
+</ul>
+<h3 id="运动估计算法">运动估计算法</h3>
+<p>假设匹配误差随着离全局误差最小点的距离增加而单调增加，从原点开始，采用固定的搜索模板和搜索策略得到最佳匹配块。</p>
+<p>理论最优的算法是全搜索法，但是计算量巨大，效率低, 一般作为其他搜索算法的一种效率参考。</p>
+<p>还有其他的快速法：X264里面主要使用的是钻石搜索法DIA、六边形搜索法HEX和UMH。</p>
+<p>钻石搜索法以搜索起点为中心，先用 LDSP 进行搜索，直到最佳匹配点位于大菱形的中心位置，然后再用小菱形搜索，直至最佳匹配点位于小菱形的中心位置。</p>
+<p>六边形搜索法采用 1 个大模板（六边形模板）和 2 个小模板（小菱形模板和小正方形模板）。</p>
+<ul>
+<li>步骤1：以搜索起点为中心，采用图中左边的六边形模板进行搜索。计算区域中心及周围6个点处的匹配误差并比较，如最小MBD 点位于模板中心点，则转至步骤2；否则以上一次的MBD 点作为中心点，以六边形模板为模板进行反复搜索。</li>
+<li>步骤2：以上一次的MBD 点为中心点，采用小菱形模板搜索，计算各点的匹配误差，找到MBD 点。然后以MBD点为中心点，采用小正方形模板搜索，得到的MBD点就是最优匹配点。</li>
+</ul>
+<p>UMH是基于 MV 具有时空相关性，所以可以结合上一帧和上一步中 MV 的方向和角度，来修改多层六边形的形状，UMH算法包含四中搜索模式:不均匀交叉搜索、多六边形网格搜索、迭代六边形搜索、菱形搜索。</p>
+<ul>
+<li>步骤1：进行一次小菱形搜索，根据匹配误差值和两个门限值（对于一种尺寸的宏块来说是固定大小的threshold1和threshold2）之间的关系作相应的处理，可能用到中菱形模板或者正八边形模板，也有可能直接跳到步骤1。</li>
+<li>步骤2：使用非对称十字模板搜索。“非对称”的原因是一般水平方向运动要比垂直方向运动剧烈，所以将水平方向搜索范围定为W，垂直方向搜索范围定为W/2。</li>
+<li>步骤3：使用5x5逐步搜索模板搜索。</li>
+<li>步骤4：使用大六边形模板搜索。</li>
+<li>步骤5：使用六边形搜索算法找到最优匹配点。</li>
+</ul>
+<p>码率不变的前提下，“Dia”、“HEX”、“UMH”编码获得的质量依次提高，速度依次降低。快速算法（“Dia”、“HEX”、“UMH”）的编码质量比全搜索算法低不了太多，但是速度却高了很多倍。</p>
+<h3 id="多参考帧预测">多参考帧预测</h3>
+<p>编码端存储参考帧的缓冲区就是DPB，主要有三种参考帧：短期参考帧、长期参考帧和非参考帧。</p>
+<ul>
+<li>短期参考帧就是和当前帧相邻的帧，按照从近到远的顺序排序。</li>
+<li>长期参考帧是较早之前的帧，按照从远到近的方式排列。</li>
+<li>不使用的参考帧是因为某些原因废弃了的参考帧，并且没有被新的参考帧替换掉。比如遇到IDR帧的时候DPB里面的所有参考帧都会标记成非参考状态。所以I帧之后的P帧也可以参考这个I帧之前的图像。</li>
+</ul>
+<h3 id="mv预测和skip模式">MV预测和Skip模式</h3>
+<p>需要对MV进行压缩，方式是使用临近分块MV之前的相关性对当前块的MV进行预测，只对预测残差MVD进行编码。</p>
+<p>Skip模式：Skip模式只针对宏块编码，也就是完全不用编码只需要在码流里面标明是SKIP宏块就行。P_Skip宏块就是COPY宏块，既没有MVD，也不编码量化残差，解码时候直接用MVp作为运动向量得到像素的预测值作为像素重建值。B_Skip宏块也是既没有MVD也没有量化残差，解码时候通过Direct预测模式计算出前向和后向MV，然后得到像素预测值作为重建值。</p>
+<ul>
+<li>
+<p>P_Skip：最佳模式是Inter16x16、参考帧是List0里面的第一个参考帧、MVD=0、变换系数被量化成0，或者在RDO模型中被抛弃。</p>
+</li>
+<li>
+<p>B_Skip：最佳模式是B_direct_16x16，变换系数要么全是0要么被算法抛弃。</p>
+</li>
+</ul>
+<h3 id="加权预测">加权预测</h3>
+<p>用来应对明暗/亮度变化的场景，使用两种预测模式：显式模式(P帧、B帧)和隐式模式(B帧)。</p>
+<ul>
+<li>显式模式：加权系数由编码器决定并且在Slice Header里面传输。</li>
+<li>隐式模式：加权系数由参考图像的时间位置推算，越接近当前图像，加权系数越大。</li>
+</ul>
+<p>步骤：</p>
+<ol>
+<li>
+<p>亮度变化检测：</p>
+<p>使用直方图计算前后两幅图像在各个灰度级别SAD，然后采用阈值法判断有没有发生亮度变化。</p>
+</li>
+<li>
+<p>计算加权系数：
+第一种方法：计算参考帧和当前帧的亮度均值比值，利用比值作为加权系数（全局加权补偿的效果有限）</p>
+<p>第二种方法：全局补偿，但是使用使前后图像MSE和偏移量最小的加权系数：使MSE的表达式（加权系数$W_1$和偏移量$W_2$）分别基于$W_1$和$W_2$的偏微分等于0。</p>
+</li>
+<li>
+<p>亮度补偿：</p>
+<p>原则上需要做到宏块级别的亮度补偿，但是为了降低复杂度只做帧级亮度补偿。</p>
+<p>根据求出的加权系数和偏移量进行全局亮度补偿得到新图像。</p>
+<p>把新图像存到一个列表中作为带亮度补偿运动估计的参考帧。</p>
+</li>
+</ol>
+<h2 id="帧内预测">帧内预测</h2>
+<p>帧内预测实质是消除空间冗余，利用已编码的块的像素的来预测未编码的像素值。</p>
+<p>未编码的块像素的实际值-预测值=残差，传输只需要传输残差。</p>
+<p>H264引入了基于空域的帧内预测技术，在空域中利用当前块的相邻像素直接对每个像素做预测，并对预测残差进行变换、量化。</p>
+<p>H264帧内预测中，色度和亮度信息是被分开预测的。</p>
+<ul>
+<li>对于亮度待编码块，可以按照4x4块方式预测(I4MB)或16x16宏块方式预测(I16MB)。
+<ul>
+<li>4x4预测时有9种模式（水平、垂直、DC、6个方向），用于图像细节部分的预测。</li>
+<li>16x16预测时有4种模式（水平、垂直、DC、平面），用于图像平坦区域的预测。</li>
+</ul>
+</li>
+<li>对于色度待编码块，基于8x8块进行预测。
+<ul>
+<li>8x8预测有4种模式（水平、垂直、DC、平面）。</li>
+</ul>
+</li>
+</ul>
+<p>亮度和色度的最佳帧内预测模式相互独立：</p>
+<ul>
+<li>
+<p>色度的只需要比较4种模式的代价，选择最小的。</p>
+</li>
+<li>
+<p>亮度的需要：算出代价最小的Intra4x4模式、算出代价最小的Intra16x16模式、取两者最小的。</p>
+<ul>
+<li>Intra4x4：用RDO模型也就是拉格朗日模型计算代价。</li>
+<li>Intra16x16：用SATD，变换使用哈达马变换（看作是简单的时频变换，可以反映生成码流的大小）</li>
+</ul>
+</li>
+</ul>
+<h2 id="变换编码">变换编码</h2>
+<p>变换编码（Transform Coding）将空间域描述的图像，经过某种变换形成变换域中的数据，达到改变数据分布，减少有效数据量的目的。</p>
+<p>变换编码中主要使用方式是正交变换。正交变换不会改变信源的熵值，变换之后图像的信息量并没有损失，完全可以通过反变换得到原来的图像值。</p>
+<p>正交变换可以改变数据的分布，将数据集中分布之后就可以使用进一步的量化操作来去除大部分的0值和接近0的值。</p>
+<p>正交变换中的理论最优变换是K-L变换。</p>
+<p>实际中常用的正交变换有 DCT变换，DFT变换(离散傅里叶变换)，Hadamard变换。</p>
+<p>因为DCT系数主要集中在低频区域，越是高频区域系数值越小，通过设置不同的视觉阈值的量化电平，将许多能量较小的高频系数量化为0，可以增加变换系数中0的个数，同时保留能量较大的系数分量，对量化之后的系数进行熵编码可以获得进一步的压缩。</p>
+<p>H264使用的是整数变换，变换核只用加减法和左移操作实现，不需要乘法器。</p>
+<p>各种变换的比较：</p>
+<ul>
+<li>压缩比和重建质量：
+<ul>
+<li>较小分块时，DCT的MSE接近K-L变换。</li>
+<li>块大小超过16x16时，除傅里叶变换之外，其他几种变换的MSE下降很慢。</li>
+<li>大方块尺寸时，傅里叶变换趋向于K-L变换。</li>
+</ul>
+</li>
+<li>计算复杂度：
+<ul>
+<li>Hadamard计算复杂度最小。</li>
+<li>其次是DFT和DCT，具有固定的核函数。</li>
+<li>K-L变换的核函数与输入相关，计算量很大，不实用。</li>
+</ul>
+</li>
+</ul>
+<p>变换编码中的失真还是由量化器引起，正反变换和变长编解码都是无损处理。</p>
+<h3 id="dct变换">DCT变换</h3>
+<p>离散余弦变换与 DFT变换相似，但是DCT变换只使用实数。</p>
+<p>DCT变换具有能量集中性，大多数的声音和图像信号的能量都集中在DCT变换之后的低频部分。</p>
+<p>当信号具有接近马尔可夫过程的统计特性时，DCT变换的去相关性接近于 K-L变换。</p>
+<p>图像处理领域中，DCT变换的效果要强于 DFT变换，因而图像处理中更多应用的是DCT变换。</p>
+<p>DCT产生的系数很容易被量化，因而可以获得较好的块压缩。</p>
+<p>DCT算法的性能好，有快速算法，采用快速傅里叶变换可以进行高效的运算。</p>
+<h2 id="量化">量化</h2>
+<p>量化的思想就是映射一个输入间隔到一个整数，减少信源编码的bit数。</p>
+<p>量化器的设计就是率失真优化问题，在允许一定失真的条件下，获得尽可能高的压缩比。</p>
+<p>量化步长决定量化器的编码压缩率和图像精度。</p>
+<p>量化最简单的方法就是均匀（线性）量化，但均匀量化的效果往往并不好，因为它没有考虑到量化对象的概率分布。</p>
+<p>对DCT系数这样的数据而言，其分布大部分集中在直流和低频附近，如果采用非均匀量化，对低频区域进行细量化，对高频区域进行粗量化，在相同的量化步长的条件下，非均匀量化比均匀量化所造成的量化误差要小得多。</p>
+<p>量化之后，熵编码之前，可以根据从高到低的统计特性，对系数进行Zigzag锯齿扫描和游程长度编码。这样做的原因在于：量化之后的DCT系数更为稀疏，只有少数的AC系数不为0，Zigzag扫描能增加连0的长度，减少统计事件的个数，从而进一步增加对DCT系数熵编码的压缩率。</p>
+<p>量化区间上的最优量化值应该是区间的期望值，所以需要知道残差变换系数的统计分布。</p>
+<p>引入量化偏移量f来进行非均匀量化，在帧内预测时f=Qstep/3，帧间预测时f=Qstep/6.</p>
+<p>f可以控制量化死区大小，f变大，量化死区减少，f变小，量化死区增加。死区大小直接影响图像的主观质量。</p>
+<h2 id="去块滤波不是很了解细节">去块滤波（不是很了解细节）</h2>
+<p>环路滤波器是被放置在编解码的图像重建环路当中。</p>
+<p>在启用了环路滤波的编解码环境中，无论是编码器还是解码器，都是在图像被重建后才进行滤波。</p>
+<p>在编码器中，滤波后的图像会作为后续编码运动补偿的参考图像；</p>
+<p>在解码器中，滤波后的图像会被输出显示并且作为后续图像解码重建的参考图像。</p>
+<h3 id="块效应出现的原因">块效应出现的原因</h3>
+<ol>
+<li>基于块的量化会破坏相邻块之间的相关性，并且在低码率情况下会放大这种误差。</li>
+<li>运动补偿加剧了由变换量化导致的块效应。因为运动补偿块的匹配不可能绝对准确，各个块的残差大小程度存在差异，尤其是当相邻两个块用的参考帧不同、运动矢量或参考块的差距过大时，块边界上产生的数据不连续就更加明显。</li>
+</ol>
+<h3 id="过程">过程</h3>
+<p>估算边界强度、区分真假边界、滤波运算</p>
+<h2 id="熵编码">熵编码</h2>
+<p>主要利用信源的统计特性进行码率压缩，是无损压缩编码方法。</p>
+<p>H264支持CAVLC（变长编码）和CABAC（二进制算术编码）。</p>
+<p>CAVLC本质是哈夫曼编码，所以必须为所有可能的长度为N的序列设计和存储编码表，复杂度随N指数增长。</p>
+<p>CABAC的思想是用0到1区间上的一个数来表示整个字符输入流，而不是为输入流中的每个字符分别指定码字。</p>
+<ul>
+<li>算术编码用区间递进的方法为输入流寻找码字，从第一个符号确定的初始区间开始，逐个读入输入流，在每个新的字符出现后递归地划分当前区间，划分的依据是各个字符的概率，将当前区间按照各个字符的概率划分成若干子区间，将当前字符对应的子 2 区间取出，作为处理下一个字符时的当前区间。到处理完最后一个字符后，得到了最终区间，在最终区间中任意挑选一个数作为输出。在解码时候也采用相同的方法和步骤，但是解码器每划分一个子区间就能得到输入流中的一个字符。</li>
+<li>在实际过程中，输入流中字符的概率分布是动态改变的，这需要维护一个概率表去记录概率变化的信息。在作递进计算时，通过对概率表中的值估计当前字符的概率，当前字符处理后，需要重新刷新概率表。这个过程表现为对输入流字符的自适应。编码器和解码器按照同样的方法估计和刷新概率表，从而保证编码后的码流能够顺利解码。</li>
+</ul>
+<p>一般来讲，只要计算量允许，就应该选择使用算术编码。</p>
+<p>H264对不同的数据采用不同的熵编码模式，对于宏块和子块的残差数据经过变换之后的系数采用CAVLC，对于其他相对重要的语法元素使用指数哥伦布编码。在CABAC方案里，对不同的语法元素也使用了不同的编码树结构。</p>
+<h2 id="gopframesliceibp">GOP/Frame/Slice/I/B/P</h2>
+<p>帧Frame包含切片Slice，Slice包含宏块Macroblock(MB)。</p>
+<p>一个Frame至少包含一个Slice，一个Slice至少包含一个MB。</p>
+<p>Slice是MB的载体，出现的原因是为了防止误码的扩散和传播。</p>
+<p>每个Slice都是互相独立被传输的，某个Slice不能以其他Slice中的MB为参考。</p>
+<p>Slice存储在NAL单元NALU中，是NALU的有效载荷Payload。</p>
+<p>Slice中包含Slice Header和Slice Payload。</p>
+<p>Slice Header中存放的是Slice类型、Slice中的宏块类型、Slice属于哪个Frame、对应的帧的设置和参数等信息，Slice Payload中存放的是MB</p>
+<p>MB中包含了MB类型、预测类型、Coded Block Pattern(CBP)、量化参数QP、像素的亮度和色度数据等信息</p>
+<p>GOP由IDR帧开始，中间存在多个P帧或B帧（基本档次Baseline Profile不存在）</p>
+<p>I帧只进行帧内编码，IDR帧是每个GOP的第一个帧，IDR帧是I帧，I帧不一定是IDR帧</p>
+<p>P帧参考前面的I帧或者P帧进行编码；</p>
+<p>B帧参考前向、后向的I帧或P帧进行编码；</p>
+<p>P/B帧进行编码时候只能参考当前GOP的I/P帧，不能越过当前GOP开始时的IDR帧，但是I帧之后的P帧也可以参考这个I帧之前的图像。</p>
+<h2 id="spsppsdtspts">SPS/PPS/DTS/PTS</h2>
+<p>SPS：序列参数集，描述的是整个视频序列的参数信息，如图像的宽度、高度、帧率、色度空间等，一个视频序列只有一个SPS，用于描述整个视频序列的基本特性。SPS一般在视频码流的开头发送，是一种全局静态的描述方式。当然，如果编码器在编码过程中改变了SPS中描述的参数如分辨率时也需要发送新的SPS。</p>
+<p>PPS：图像参数集，描述的是一个序列中一个或多个图像的参数，例如编码图像的配置、QP这些，可以在视频序列的任何时刻发送，PPS相对与SPS来说比较灵活动态。</p>
+<p>发I帧之前至少要发一次SPS和PPS</p>
+<p>DTS：解码时间序列，编码帧时的顺序</p>
+<p>PTS：展示时间序列，展示帧时的顺序，当有B帧时PTS不等于DTS</p>
+<p>编码之后的VCL数据被封装进NALU中，构成了h264原始码流</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003111970.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003111970.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003111970.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003111970.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003111970.png"
+        title="image-20240123003111970" /></p>
+<h2 id="nalu">NALU</h2>
+<p>NALU 是视频编码的基本单位，同时也是后续进行视频传输的基本单位。</p>
+<p>不同应用需求采用不同的传输方式，NALU 根据传输方式可以以两种方式应用于传输业务。</p>
+<ul>
+<li>
+<p>一类是字节流，即把 NALU 按照解码顺序生成连续的比特流进行传输和处理。</p>
+</li>
+<li>
+<p>一类是分组流应用，也是本文使用的实时视频通信的应用场景，网络可以根据不同网络分组的重要性优化视频流的服务质量，分组流通过将编码后得到的 NALU 作为网络传输的载荷。</p>
+</li>
+</ul>
+<p>NALU由NAL Header和RBSP组成，Header占一个字节，分为3个部分。</p>
+<p>第1个部分是第0位，禁止位，值为0，值为1表示语法错误。</p>
+<p>第2个部分是第1~2位，表示当前NAL的优先级。值越高表示当前NAL越重要，越需要优先保护。SPS/PPS/IDR帧非常重要，I/P帧重要，B帧/SEI不重要</p>
+<p>第3个部分是第3~7位，表示当前NALU的类型：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003122907.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003122907.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003122907.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003122907.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003122907.png"
+        title="image-20240123003122907" /></p>
+<p>RBSP：原始字节序列载荷，是NALU数据部分的封装格式，封装的数据来自于SODB（原始数据比特流）。</p>
+<p>SODB是编码后的原始数据。SODB到RBSP的过程：
+如果SODB是空的，生成的RBSP也是空的。
+否则：
+RBSP的第一个字节直接取自SODB的第1~8个bit，（RBSP字节内的bit按照从左到右对应位从高到低的顺序排列），RBSP其余的每个字节都直接取自SODB的相应bit。RBSP的最后一个字节包含SODB的最后几个Bit和rbsp_trailing_bits()
+rbsp_trailing_bits的第一个bit是1，接下来填充0直到字节对齐。
+最后添加几个cabac_zero_word，值为0x0000.</p>
+<p>NALU主要涉及到SPS/PPS/SEI和Slice这几种类型。</p>
+<p>SEI是补充增强信息，提供了向视频码流中加入额外信息的方法，不是解码过程中的必须选项，可能对解码过程有帮助，集成在视频码流中。</p>
+<p>RBSP 字节流加上0x0300就得到 NALU 载荷字节流：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003131193.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003131193.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003131193.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003131193.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003131193.png"
+        title="image-20240123003131193" /></p>
+<h2 id="profilelevel">Profile/Level</h2>
+<p>Profile主要对视频编码的特性做了差异化支持。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003137786.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003137786.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003137786.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003137786.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003137786.png"
+        title="image-20240123003137786" /></p>
+<p>H264中的常用Profile有Baseline，Extended，Main和High</p>
+<p>Baseline Profile：基本画质，只支持I/P帧和CAVLC和无交错</p>
+<p>Extended Profile：进阶画质，支持I/P/B/SP/SI，只支持CAVLC和无交错</p>
+<p>Main Profile：主流画质，支持I/P/B帧和，交错和无交错、CAVLC和CABAC</p>
+<p>High Profile：高级画质：在Main的基础上增加了8x8内部预测、自定义量化和更多的yuv格式。</p>
+<p>Baseline Profile主要用于实时视频通信，Main Profile和High Profile主要用于流媒体领域。</p>
+<p>Level主要根据设备能力来确定编解码时的码率/分辨率上限支持</p>
+<h2 id="cbrvbrabrcrf">CBR/VBR/ABR/CRF</h2>
+<p>CBR：恒定码率，每秒传输的bit数固定，每个视频帧都被分配相同数量的bit，和复杂度无关，适用于要求网络或者存储带宽具有固定容量的场景，但可能导致复杂场景下的帧质量下降。WebRTC中使用的就是CBR。</p>
+<p>VBR：可变码率，允许每个帧使用不同的比特数，根据图像复杂度和需要进行动态分配。适合于在不同场景下需要保持一致质量的情况，但是消耗的带宽会有较大波动。适合用于视频存储，不适合网络传输。</p>
+<p>ABR：平均码率，允许在整个视频序列中有一定的变化，但是在一个时间窗口内保持一定的平均码率。在此时间内，对简单、静态的图像分配低于平均码率的码率，对于复杂的、大量运动的图像分配高于平均码率的码流。码率分配比较均衡，比较适合网络传输。</p>
+<p>CRF：恒定质量因子，追求的是恒定的视觉质量，编码器根据图像内容自动调整码率，以保持相对恒定的质量。适合于追求质量而不在乎码率的场景如视频剪辑和存档。</p>
+<h2 id="openh264码控">OpenH264码控</h2>
+<p>编码第一个IDR帧时使用固定的QP，具体的值使用视频分辨率作为判断依据并查表得出并将其初始化为initialQP：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003154138.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003154138.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003154138.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003154138.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003154138.png"
+        title="image-20240123003154138" /></p>
+<p>将QP查表转换为QStep完成初始化：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003201991.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003201991.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003201991.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003201991.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003201991.png"
+        title="image-20240123003201991" /></p>
+<p>之后进行IDR帧的量化及后续编码操作，并得到frameDqBits（已编码的比特数），由此可以计算intraCmplx：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003208172.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003208172.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003208172.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003208172.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003208172.png"
+        title="image-20240123003208172" /></p>
+<p>对于第一个PFrame，linearCmplx也使用下面的公式计算，其中QStep使用initialQP查表。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003217458.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003217458.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003217458.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003217458.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003217458.png"
+        title="image-20240123003217458" /></p>
+<p>之后计算QStep&amp;QP时就使用一阶RQ模型计算，frameComplexity在预处理阶段得出。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003222850.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003222850.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003222850.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003222850.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003222850.png"
+        title="image-20240123003222850" /></p>
+<h2 id="rtp">RTP</h2>
+<p>RTP（Real-time Transport Protocol，实时传输协议）是一种应用层协议，通常基于 UDP 协议，但也支持 TCP 协议。</p>
+<p>它提供了端到端的实时传输数据的功能，但不包含资源预留存 1（resource reservation）、不保证实时传输质量，这些功能都需要 WebRTC 自己实现。</p>
+<p>RTP 协议分为两种子协议，分别是 RTP Data Transfer Protocol 和 RTP Control Protocol。</p>
+<p>前者顾名思义，是用来传输实时数据的；后者则是我们常说的 RTCP 协议，可以提供实时传输过程中的统计信息（如网络延迟、丢包率等），WebRTC 正是根据这些信息处理丢包。</p>
+<p>RT(D)P 包分为两部分，分别是 header 和 payload，header 包含了实时音视频的同步信息（和一些额外参数），payload 则承载了具体的音视频数据。这里我们只需要关注 header 结构就好，payload 是编解码器关心的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003246634.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003246634.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003246634.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003246634.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003246634.png"
+        title="image-20240123003246634" /></p>
+<p>如图所示，RT(D)P header 最小为 12 bytes；红色部分为可选字段。字段的含义分别如下：</p>
+<ul>
+<li>Version 表示 RTP 协议的版本，目前版本为 2。</li>
+<li>P (Padding) 表示 RT(D)P 包末尾是否有 padding bytes，且 padding bytes 的最后一个 byte 表示 bytes 的数量。Padding 可以被用来填充数据块，比如加密算法可能会用到。</li>
+<li>X (Extension) 表示是否有头部扩展，头部扩展可以用于存储信息，比如视频旋转角度。</li>
+<li>CC (CSRC count) 表示红色部分的 CSRC（参见下文）数量，显然最多只能有 15 个 CSRC。</li>
+<li>M (Marker) 表示当前数据是否与应用程序有某种特殊的相关性。比如传输的是一些私有数据，或者数据中的某些标志位具有特殊的作用。</li>
+<li>PT (Payload type) 表示 payload 的数据类型，音视频的默认映射格式可参见 RFC 3551。</li>
+<li>Sequence number 是递增的序列号，用于标记每一个被发送的 RT(D)P 包。接收方可以根据序列号按顺序重新组包，以及识别是否有丢包。序列号的初始值应当是随机的（不可预测的），从而增加明文攻击的难度。</li>
+<li>Timestamp 即时间戳，接收方根据其来回放音视频。时间戳的间隔由传输的数据类型（或具体的应用场景）确定，比如音频通常以 125µs（8kHz）的时钟频率进行采样，而视频则以 90kHz 的时钟频率采样。这里时间戳的初始值也是随机选取的，是一种相对时间戳。</li>
+<li>SSRC (Synchronization source) 即同步源标识符。相同 RTP 会话中的 SSRC 是唯一的，且生成的 SSRC 也需要保持随机。尽管多个源选中同一个标识符的概率很低，但具体实现时仍然需要这种情况发生，即避免碰撞。</li>
+<li>CSRC (Contributing source) 在 MCU 混流时使用，表示混流出的新的音视频流的 SSRC 是由哪些源 SSRC 贡献的。根据上述 CC 得知，我们最多可以同时混 15 路音视频流。</li>
+<li>Extension header 即头部扩展，包含了音视频的一些额外信息，比如视频旋转角度。</li>
+</ul>
+<h3 id="rtp与nalu分组">RTP与NALU分组</h3>
+<p>RFC3984 给出了3 中不同的RTP 打包方案：</p>
+<ol>
+<li>Single NALU Packet：在一个RTP 包中只封装一个NALU，对于小于 1400字节的NALU 便采用这种打包方案。</li>
+<li>Aggregation Packet：在一个RTP 包中封装多个NALU，对于较小的NALU 可以采用这种打包方案，从而提高传输效率。</li>
+<li>Fragmentation Unit：一个NALU 封装在多个RTP包中，在本文中，对于大于1400字节的NALU 便采用这种方案进行拆包处理。</li>
+</ol>
+<h2 id="rtcp">RTCP</h2>
+<p>RTCP 协议提供实时传输过程中的统计信息，如网络延迟、丢包率等。</p>
+<p>在传统的实时通讯过程中，RT(D)P 协议占用偶数位的端口，而 RTCP 协议占用随后的奇数位端口。</p>
+<p>不过如果接收方的 SDP 中包含 rtcp-mux 字段 6，即表明接收方支持 RT(D)P 协议和 RTCP 协议共用同一个端口，即多路复用。在 Chrome 57 版本已经强制开启了 rtcp-mux 。</p>
+<p>对于 RTCP 包而言，我们不只要关注 header 的结构，还要关注具体的 report block 内容。不过我们先来看一个典型的 RTCP header 结构，如下图所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003300444.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003300444.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003300444.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003300444.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003300444.png"
+        title="image-20240123003300444" /></p>
+<p>RTCP header 的固定大小为 8 bytes，其中 Version、P、SSRC 的含义同上述 RTP header 相同，在此不与赘述。其他几个字段的含义分别如下：
+RC (Reception report count) 表示当前 RTCP 包有几个 block，显然最多只能有 32 个。</p>
+<ul>
+<li>PT (Packet type) 表示 RTCP 包的类型，比如 SR=200、RR=201（SR、RR 参见下文）。</li>
+<li>Length 等于整个 RTCP 包的长度减一（使得 Length = 0 是合法的），其值包含 header 的长度和所有 padding 占用的空间长度。值的单位是以 32 位字长（32-bit words）描述的。</li>
+</ul>
+<h2 id="psnrssimvmafbd-rate">PSNR/SSIM/VMAF/BD-Rate</h2>
+<h3 id="psnr">PSNR</h3>
+<p>峰值信噪比，基于均方误差（MSE）计算。</p>
+<p>公式：</p>
+<p>$$
+PSNR = 10 \cdot log_{10}(\frac{MAX_I^2}{MSE})
+$$</p>
+<p>$$
+MSE = \frac{1}{MN}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}[I(i,j) - K(i,j)]^2
+$$</p>
+<p>对于用8bit表示的视频图像而言，MAX就是255</p>
+<p>PSNR的物理含义就是信号的峰值与平均误差的比值，如果误差越小，那么PSNR值越高。如果完全没有误差，那么PSNR值就是无穷大。</p>
+<p>对于图像数据来说，通常有Y、U、V三个分量，可以对三个分量各自计算PSNR。</p>
+<p>也可以把三个分量的PSNR值以一定的权重加起来作为总的PSNR值。</p>
+<p>对于整个视频来说，可以计算单帧的PSNR值，然后平均，也可以计算整个视频的Overall PSNR。</p>
+<ul>
+<li>
+<p>一般，psnr值高于40dB，表示画面质量极好，（非常接近于原始图像）；</p>
+</li>
+<li>
+<p>psnr值在30dB-40dB之间，表示画面质量较好（有失真但可接受）；</p>
+</li>
+<li>
+<p>psnr值在20dB-30dB之间，表示画面质量差；</p>
+</li>
+</ul>
+<h3 id="ssim">SSIM</h3>
+<p>PSNR指标比较常用，但是不能体现编码前后图像之间的相关性，SSIM可以从亮度，对比度和结构三个方面来描述编码前后图像之间的相似性。</p>
+<ul>
+<li>
+<p>亮度维度的相似性用均值计算，𝝁𝒙为均值：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003555046.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003555046.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003555046.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003555046.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003555046.png"
+        title="image-20240123003555046" /></p>
+</li>
+<li>
+<p>对比度维度的相似性用方差计算，𝝈𝒙 为方差：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003606618.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003606618.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003606618.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003606618.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003606618.png"
+        title="image-20240123003606618" /></p>
+</li>
+<li>
+<p>结构维度的相似性用协方差计算， 𝝈𝒙𝒚 表示协方差：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003637110.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003637110.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003637110.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003637110.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003637110.png"
+        title="image-20240123003637110" /></p>
+</li>
+</ul>
+<p>SSIM指标和SSIM计算公式：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003643066.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003643066.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003643066.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003643066.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003643066.png"
+        title="image-20240123003643066" /></p>
+<p>SSIM性质：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003649816.png"
+        data-srcset="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003649816.png, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003649816.png 1.5x, https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003649816.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240123003649816.png"
+        title="image-20240123003649816" /></p>
+<h3 id="vmaf">VMAF</h3>
+<p>VMAF 是一种 Full reference 的视频质量评估方法，适用于视频流媒体质量评估。</p>
+<p>主要包括三种指标：视觉信息保真度 (VIF: visualquality fidelity) 、细节损失指标 (DLM: detail loss measure) 、时域运动指标/平均相关位置像素差 (Tl: temporal information) 。</p>
+<ul>
+<li>其中 VIF 和 DLM 是空间域的一个画面之内的特征。</li>
+<li>TI 是时间域的，多个画面之间相关性的特征。</li>
+</ul>
+<p>这些特性之间融合计算总分的过程使用了训练好的 SVM 来预测。</p>
+<p>VMAF 基于 SVM 的 nuSvr 算法，在运行的过程中，根据事先训练好的 model，赋予每种视频特征以不同的权重。对每一帧画面都生成一个评分。最终以均值算法进行汇总，算出该视频的最终评分</p>
+<p>使用方式：</p>
+<p>计算时需要保证编码后图像的分辨率与原始图像分辨率一致，如果不一致需要向上或者向下缩放编码图像，而不能缩放原始图像。</p>
+<h3 id="bd-rate">BD-Rate</h3>
+<p>比较两个编码器的RD曲线（Rate-Distortion）的差异：</p>
+<ul>
+<li>一种是相同质量下的码率差异，指标为BD-Rate。</li>
+<li>一种是相同码率下的质量差异，指标为BD-PSNR。</li>
+</ul>
+<p>BD-Rate是选取一个范围的的多个采样点（通常是4个），然后进行曲线拟合插值，最后计算出平均的指标差异。目前大部分测试数据的对比，都是基于BDRate指标的。</p>
+<h2 id="视频封装">视频封装</h2>
+<p>视频的封装格式定义的是多媒体数据的存储结构，包括如何组织和存储音频、视频、字幕、元数据等信息，以及怎么进行同步和时间标记。</p>
+<p>感觉封装其实可以理解为是一个柜子，并且对柜子里的不同抽屉里面能存放哪些数据以及怎么存放数据做了规定。\</p>
+<p>常见的封装格式有Mp4、Mkv，微软的AVI、苹果的MOV、Adobe的FLV、Google的Webm。</p>
+<p>不同的封装格式提供了一种统一的方式来存储和传输各种编码格式的多媒体数据。</p>
+<p>H264支持AnnexB和AVCC两种封装模式。</p>
+<ul>
+<li>
+<p>AnnexB模式是传统模式，有startcode，SPS和PPS在码流中分别作为一个NALU。</p>
+</li>
+<li>
+<p>AVCC模式没有startcode，SPS和PPS以及其它信息被封装在container中，每个frame前面4个字节是这个frame的长度。一般在mp4和mkv中使用AVCC。</p>
+</li>
+</ul>
+<h2 id="硬件编码和软件编码">硬件编码和软件编码</h2>
+<p>硬编码是通过专用的硬件编码器，比如GPU或者专用的视频编码芯片来进行的，硬件编码可以利用专为编码设计的电路从而提供更高的编码速度和更低的功耗，适用于实时性要求较高的应用比如云游戏、视频会议这些场景。硬编码也通常会在移动设备比如手机或者其他的专业视频设备中使用</p>
+<p>软编码是通过通用的计算设备，一般来讲就是用CPU编码。软编码的性能和功耗一般来讲要比硬件编码差，但是可以跨平台运行，容易升级和更新，编码的画质也会更好。一般用于需要更大灵活性和可定制性的应用，比如短视频录制、非实时的转码等。</p>
+<h2 id="码率和分辨率">码率和分辨率</h2>
+<p>码率提高和分辨率提高都会增大视频的体积，两者之间需要平衡。</p>
+<ul>
+<li>
+<p>在码率一定的情况下，提高分辨率可能会导致每个像素获得的比特数减少，从而降低整体感知质量。</p>
+</li>
+<li>
+<p>在分辨率一定的情况下，提高码率可以分配更多的比特给每个像素，从而提高每个像素的清晰度。</p>
+</li>
+</ul>
+<p>高分辨率主要是为了适应更大的屏幕尺寸，或者需要更多图像细节的任务。</p>
+<p>其实屏幕尺寸和分辨率之间的关系有点类似于分辨率和码率之间的关系。</p>
+<h2 id="一个视频文件能否倒放">一个视频文件能否倒放</h2>
+<p>一个文件不行，至少需要两个文件才可以。</p>
+<p>理论上方式有两种：</p>
+<ul>
+<li>
+<p>第一种是先顺序解码视频到一个yuv文件中，然后倒序读入内存进行编码。</p>
+</li>
+<li>
+<p>第二种是先遍历视频，获取一共有多少个GOP，跳到最后一个GOP的IDR帧，对这个GOP进行解码输出到yuv文件中，再逆序读出这个解码之后的yuv文件然后编码，这样最后一个GOP就变成了第一个GOP，按照从后往前的顺序依次类推就可以。</p>
+</li>
+</ul>
+<p>第一种方式简单粗暴好实现，但是对于磁盘存储空间的要求比较高。</p>
+<h2 id="h265hevc比h264avc做了哪些改进">H265(HEVC)比H264(AVC)做了哪些改进</h2>
+<ul>
+<li>
+<p>H265针对编码的各个环节都引入各自对应的单元。</p>
+<ul>
+<li>
+<p>与H264中宏块类似的是，在 H.265里面用的是一系列互不重叠的编码树单元CTU处理信息，CTU内部可以以四叉树结构递归向下划分成更小的正方形编码单元CU。CU可以支持最大64x64的尺寸，因而可以对高分辨率视频中的平坦和复杂区域做有针对性的CTU划分。</p>
+</li>
+<li>
+<p>预测单元PU是定义在CU上的一个矩形区域，用来存储和预测相关的所有信息如帧内预测方向、帧间预测的参考帧、和MV等。</p>
+</li>
+<li>
+<p>变换单元TU是变换和量化的基本单位，支持4种正方形的尺寸大小(4/8/16/32)。变换时采用RQT技术，基于四叉树结构进行自适应变换。大块的 TU 模式能够将能量更好地集中，小块的 TU 模式能够保存更多的图像细节。根据当前 CU 内残差特性，自适应选择变换块大小，可以在能量集中和细节保留两者做最优的折中。与传统的固定块大小变换相比，RQT 对编码效率贡献更大。</p>
+</li>
+<li>
+<p>CU划分成PU和TU，PU和TU之间存在交叉重叠关系，Inter预测时允许CU内的TU跨越PU边界，Intra预测时，TU不能跨越PU边界。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>在帧内预测模块，H265支持更多的帧内预测模式。H265的亮度分量支持35种帧内预测模式包括平面模式、DC模式和33种角度模式，色度分量有5种帧内预测模式包括平面模式、DC模式、水平、垂直方向模式和对应于亮度分量的帧内预测模式。</p>
+</li>
+<li>
+<p>在帧间预测模块，H265引入了更加复杂的ME方式，主要包括Merge和AMPV以及基于Merge的Skip模式。</p>
+<ul>
+<li>Merge：取相邻PU的运动参数作为当前PU的运动参数（利用空域相关性和时域相关性）</li>
+<li>AMVP得到的MV一方面为ME提供了搜索起点，另一方面也用于预测MV。AMVP根据周围块预测MV，MV=MVP+MVD(矢量差值)</li>
+</ul>
+</li>
+<li>
+<p>H265把变换和量化模块结合了起来，降低了计算复杂度，支持加权量化矩阵。</p>
+</li>
+<li>
+<p>在环路滤波模块，H265新增了采样点自适应偏移滤波SAO，通过解析去方块滤波后的像素的统计特性，为像素添加相应的偏移值，削弱振铃效应。</p>
+</li>
+<li>
+<p>因为H265的解码要比h264的解码复杂很多，所以提供了很多可以并行优化的思路。</p>
+</li>
+</ul>
+<h2 id="simd">SIMD</h2>
+<p>SIMD是一种并行计算技术，允许单一指令处理多个数据元素。SIMD指令集通常由处理器提供，用于加速向量化计算。视频编码中，SIMD可以用于加速压缩和解压算法。</p>
+<h2 id="h264中的差错控制">H264中的差错控制</h2>
+<p>Slice分割、Data Partition (DPA &gt; DPB &gt; DPC)、对SPS和PPS提供使用高传输优先级、差异化的熵编码（对重要的SPS和PPS采用指数哥伦布编码）</p>
+<p>FMO通过宏块分配映射把同一帧里的不同宏块划分到不同的Slice Group里，在同一个Slice Group里的MB按照普通的光栅扫描顺序编码。</p>
+<p>因为不管是Intra Coding还是Inter Coding都必须使用同一个Slice group的宏块数据，这样当一个Slice group里的某一个或者某几个宏块发生错误时候，因为相邻的宏块可能分布在不同的Slice group，就可以从其他正确接收的Slice group里拿到和丢失宏块相邻的宏块信息来进行错误掩盖。</p>
+<h2 id="svc">SVC</h2>
+<p>SVC：(Scalable Video Coding)可伸缩视频编码，编码器产生的码流包含一个或者多个子码流或者层，子码流可以有不同的码流、帧率和分辨率。基本层编码最低层的时域、空域和质量流；增强层以基本层作为起始点，对附加信息进行，从而在解码过程中重构更高层的质量、分辨率和时域层。通过解码基本层和相邻增强层，解码器能生成特定层的视频流。</p>
+<ul>
+<li>
+<p>时域分层：从码流中提取出有不同帧频的码流。</p>
+</li>
+<li>
+<p>空域分层：从码流中提取出有不同分辨率的码流。</p>
+</li>
+<li>
+<p>质量分层：从码流中提取出有不同质量的码流。</p>
+</li>
+</ul>
+<h3 id="应用场景">应用场景</h3>
+<p>监控：监控视频流产生两路，一路质量好的用于存储，一路低码率的用于预览。</p>
+<p>视频会议：会议终端利用SVC编出多种分辨率、分层质量的码流，会议中心替代传统的MCU二次编解码方法改成视频路由分解转发。也可以在丢包环境下利用时域分级，抛弃一些时域级别实现网络适应性。</p>
+<p>流媒体IPTV：服务器可以根据不同的网络情况丢弃质量层，保证视频的流畅。兼容不同网络环境和终端。</p>
+<h3 id="优缺点">优缺点</h3>
+<p>优点：分级码流优点是应用非常灵活，因为能根据需要产生不同的码流或者提取出不同的码流。使用SVC实现一次分层编码比用AVC编多次更高效。
+SFU从发布客户端复制音视频流的信息，然后分发到多个订阅客户端。典型的应用场景是1对多的直播服务。SFU是解决服务端性能问题的好方法，因为它不涉及视频解码和编码的计算费用，用最低的开销来转发各路媒体流，能实现海量的客户端接入。重终端，轻平台。</p>
+<p>缺点：因为SVC解码控制复杂不利于流式处理，硬件编解码器支持差，协议协商细节复杂，业界标准不统一。</p>
+<h2 id="rtc应用中提高实时性">RTC应用中提高实时性</h2>
+<p>因为编码主要的时间开销在运动预测过程中，如果在云游戏的场景下，可以得到游戏画面中物体的运动信息然后考虑用来辅助运动预测，或者说对搜索过程进行剪枝。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/multimedia/">Multimedia</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2024-01-23</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/knowledge/h264-encode/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/posts/knowledge/webrtc/remote-desktop-with-webrtc/" class="prev" rel="prev" title="远程桌面与WebRTC"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/posts/development/git-usage/" class="next" rel="next" title="Git 常用用法记录">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.0934b1fc0d3a766d41d3adf5e7a115875e66e98ebba408d965a41cf3d2cb4ab5.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.39a97596903cc57488c5bee6fde4825489cd0faf1c3a8ca3520f3616b0be4a44.js" integrity="sha256-Oal1lpA8xXSIxb7m/eSCVInND68cOoyjUg82FrC&#43;SkQ="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.bb7a899b9a263f64a0143c411db1db57bf00ce6b8fec49c1ef4c5566f7ebcac7.js" integrity="sha256-u3qJm5omP2SgFDxBHbHbV78AzmuP7EnB70xVZvfrysc="></script></body></html>

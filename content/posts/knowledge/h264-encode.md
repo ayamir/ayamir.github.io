@@ -1,12 +1,12 @@
 ---
-title: "H264编码"
-date: 2024-1-23T00:41:17+08:00
+title: "H264 Encode"
+date: 2024-01-23T01:05:20+08:00
 draft: false
 math: true
 keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
-url: "posts/knowledge/mm-base"
+url: "posts/knowledge/h264-encode"
 ---
 
 ## 编码框架
