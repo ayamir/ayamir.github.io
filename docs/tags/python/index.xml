@@ -1,28 +1,190 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Python on Ayamir&#39;s Blog</title>
-    <link>https://ayamir.github.io/tags/python/</link>
-    <description>Recent content in Python on Ayamir&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-    <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster>
-    <lastBuildDate>Mon, 29 Jan 2024 10:31:56 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>孤儿进程</title>
-      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
-      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
-      <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill</description>
-    </item>
-    <item>
-      <title>在 microsoft-edge-dev 上设置 Python selenium</title>
-      <link>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
-      <pubDate>Fri, 26 Mar 2021 21:43:35 +0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author>
-      <guid>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
-      <description>Get Correct Version 1 microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case. Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip. Extract it to you path like /usr/local/bin or $HOME/.local/bin. Write Code Following is a example. 1 2 3 4 5 6 7 8 9 10 11 12 13 from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location =</description>
-    </item>
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Python - 标签 - Ayamir&#39;s Blog</title>
+        <link>https://ayamir.github.io/tags/python/</link>
+        <description>Python - 标签 - Ayamir&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>孤儿进程</title>
+    <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+    <description><![CDATA[<h2 id="问题背景">问题背景</h2>
+<p>前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 <code>htop</code>，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。</p>
+<p></p>
+<p>但是结果是 Python 进程并没有变红，而是成为了 init 进程的子进程。</p>
+<h2 id="孤儿进程是怎么产生的">孤儿进程是怎么产生的</h2>
+<p>大二学 OS 学到父进程和子进程的概念的时候，还是只是以为父进程和子进程之间应该存在牢固的控制关系，父进程退出时子进程也应该默认退出。</p>
+<p>但是 OS 的实际行为不是这样，子进程和父进程只是说明了二者之间存在谁创建谁的关系，并不存在牢固的控制关系（而是类似于现实中的父子关系）。</p>
+<ul>
+<li>
+<p>父进程结束时子进程并没有结束，子进程成为孤儿进程，会被 init 进程收养</p>
+</li>
+<li>
+<p>父进程崩溃或异常终止</p>
+</li>
+<li>
+<p>并发和竞争条件导致父子进程的结束顺序错误</p>
+</li>
+</ul>
+<h2 id="如何避免孤儿进程的产生">如何避免孤儿进程的产生</h2>
+<p>其实就是需要在程序设计时，考虑到上述的这几种可能导致孤儿进程产生的原因，然后对异常情况进行注册和处理。对于开始时的这个引入问题而言，答案可以写成以下两个脚本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义一个函数来处理信号</span>
+</span></span><span class="line"><span class="cl">cleanup<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;捕捉到终止信号，正在终止 Python 进程...&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">kill</span> <span class="nv">$PYTHON_PID</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在接收到 SIGINT || SIGTERM || SIGKILL 时执行 cleanup 函数</span>
+</span></span><span class="line"><span class="cl"><span class="nb">trap</span> <span class="s1">&#39;cleanup&#39;</span> SIGINT SIGTERM
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动 Python 脚本并获取其进程 ID</span>
+</span></span><span class="line"><span class="cl">python example_python.py <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PYTHON_PID</span><span class="o">=</span><span class="nv">$!</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 等待 Python 进程结束</span>
+</span></span><span class="line"><span class="cl"><span class="nb">wait</span> <span class="nv">$PYTHON_PID</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">signal</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义信号处理函数</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">signal_handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Python 脚本接收到终止信号，正在退出...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设置 SIGINT SIGTERM 的处理器</span>
+</span></span><span class="line"><span class="cl"><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal_handler</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">signal_handler</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Python 脚本的主逻辑</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Python 脚本正在运行...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">pass</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过在父进程和子进程中都注册相应的事件，就可以保证 kill 作为父进程的 Shell 进程之后，作为子进程的 Python 进程也会终止。</p>
+<p>实际演示：<code>chmod +x example.sh example_python.py &amp;&amp; bash example.sh</code></p>
+<p></p>
+<p>执行 <code>SIGTERM</code> 信号的 kill 之后，父子进程都被终止。</p>
+<p></p>
+<p>需要注意的是，如果使用 <code>kill -9 $PARENT_PID</code> 的形式来杀死父进程的话，子进程并不会被杀死。</p>
+<p>因为 <code>9</code> 这个编号对应的是 <code>SIGKILL</code> 信号，<code>SIGKILL</code> 信号被设计为不能被捕捉、阻塞或忽略的。<code>SIGKILL</code> 的主要用途是允许操作系统或用户强制终止一个进程，即使该进程处于非响应状态。（类似的还有 <code>SIGSTOP</code> 信号，用于暂停一个进程的执行，也不能被捕捉、阻塞或忽略。）</p>
+<p>所以我们也无法在 Python 脚本中注册监听这个信号（强行注册 Python 脚本会无法运行）。</p>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>在 microsoft-edge-dev 上设置 Python selenium</title>
+    <link>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+    <pubDate>Fri, 26 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+    <description><![CDATA[<h2 id="get-correct-version">Get Correct Version</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">microsoft-edge-dev --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The output is <code>Microsoft Edge 91.0.831.1 dev</code> in my case.</p>
+<h2 id="get-corresponding-webdriver">Get Corresponding WebDriver</h2>
+<p>Find the corresponding version at <a href="https://msedgewebdriverstorage.z22.web.core.windows.net/" target="_blank" rel="noopener noreffer">msedgewebdriverstorage</a> and download the zip.</p>
+<p>Extract it to you path like <code>/usr/local/bin</code> or <code>$HOME/.local/bin</code>.</p>
+<h2 id="write-code">Write Code</h2>
+<p>Following is a example.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">msedge.selenium_tools</span> <span class="kn">import</span> <span class="n">EdgeOptions</span><span class="p">,</span> <span class="n">Edge</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">options</span> <span class="o">=</span> <span class="n">EdgeOptions</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">use_chromium</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">binary_location</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/usr/bin/microsoft-edge-dev&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">options</span><span class="o">.</span><span class="n">set_capability</span><span class="p">(</span><span class="s2">&#34;platform&#34;</span><span class="p">,</span> <span class="s2">&#34;LINUX&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">webdriver_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&#34;/home/ayamir/.local/bin/msedgewebdriver&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">browser</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">executable_path</span><span class="o">=</span><span class="n">webdriver_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;http://localhost:8000&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="s2">&#34;Django&#34;</span> <span class="ow">in</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="launch-it">Launch it</h2>
+<p></p>
+]]></description>
+</item>
+</channel>
 </rss>

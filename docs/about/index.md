@@ -12,15 +12,13 @@
 
 - 一套 Neovim 的[配置方案](https://github.com/ayamir/nvimdots)，与其他小伙伴维护至今已获得2.5K+ star 和 400+ fork （lua）
 
-研究生期间的方向跟做的东西被导师整的很乱，包括：
+研究生期间的方向很乱，包括：
 
 - 全景视频的分块传输和 Web 端播放[系统](https://github.com/ayamir/tiled-vr-dash-platform)（基于Dash、WebXR、WebGL）
 
 - 结合游戏引擎的物体级 ROI [编码增强](https://github.com/ayamir/openh264-differentiated-streaming)（基于Unity、WebRTC、OpenH264）
 
 - 基于 Unity 的 VR 开发，以及结合 VR 的 HCI 研究。
-
-读研的体验不尽如人意，顺从导师的项目需要让自己在半吊子的路上越走越远。
 
 尽管如此，本人不变的特性是喜欢 coding ，有代码审美，喜欢折腾并且经验丰富（比如自己修改 Linux 内核参数编译），愿意花时间在提高效率上。
 
