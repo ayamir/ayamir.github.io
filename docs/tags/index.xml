@@ -4,7 +4,19 @@
         <link>https://ayamir.github.io/tags/</link>
         <description>Tags - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>ABI</title>
+    <link>https://ayamir.github.io/tags/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/abi/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>C&#43;&#43;</title>
+    <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>OS</title>
     <link>https://ayamir.github.io/tags/os/</link>
     <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/os/</guid>
@@ -110,18 +122,6 @@
     <title>Heuristic</title>
     <link>https://ayamir.github.io/tags/heuristic/</link>
     <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/heuristic/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Panoramic Video</title>
-    <link>https://ayamir.github.io/tags/panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/panoramic-video/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>VR</title>
-    <link>https://ayamir.github.io/tags/vr/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/vr/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

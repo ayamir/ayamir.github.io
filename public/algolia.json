@@ -200,6 +200,27 @@
         "url": "posts/knowledge/360video/summary-for-vr-and-panoramic-video"
     },
     {
+        "title": "ABI是什么？",
+        "uri": "posts/knowledge/abi",
+        "content": "ABI      ABI  Application Binary Interface                                                                                                                                                    ABI    OS                                  ABI                OS                                                                                                                            ABI                 OS                              amd64   arm64                                                             OS    windows PE COFF   linux ELF  macos MACH O                          OS                                                                                              C                                       C                           template           ABI           ABI Compatible   ABI compatible                                             ABI                   OS                                            C        gcc  llvm clang  msvc                        clang             msvc   main                              extern  C                  C                         C",
+        "objectID": "posts/knowledge/abi",
+        "date": "2024-02-07T04:51:01.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "ABI",
+            "C++"
+        ],
+        "tags": [
+            "ABI",
+            "C++"
+        ],
+        "categories": [
+            "knowledge"
+        ],
+        "url": "posts/knowledge/abi"
+    },
+    {
         "title": "重学C++：类型推导",
         "uri": "posts/knowledge/cpp/auto",
         "content": "auto                              decltype                  decltype                                 decltype  variable            decltype variable       variable                  auto              decltype            auto                      auto const     C   Const     decltype const     C   Const        auto                  decltype",
