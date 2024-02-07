@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>虚拟地址空间 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="虚拟地址空间" />
+<meta property="og:description" content="什么是虚拟地址空间？ 虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。 虚拟地址空间的大小由地址总线的宽度也就" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/os/process/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-07T15:56:52+08:00" />
+<meta property="article:modified_time" content="2024-02-07T15:56:52+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="虚拟地址空间"/>
+<meta name="twitter:description" content="什么是虚拟地址空间？ 虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。 虚拟地址空间的大小由地址总线的宽度也就"/>
+<meta name="application-name" content="Ayamir&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/knowledge/os/process/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/cpp/abi/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "虚拟地址空间",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/ayamir.github.io\/posts\/knowledge\/os\/process\/"
+        },"genre": "posts","keywords": "OS","wordcount":  1333 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/os\/process\/","datePublished": "2024-02-07T15:56:52+08:00","dateModified": "2024-02-07T15:56:52+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Ayamir"},"author": {
+                "@type": "Person",
+                "name": "Ayamir"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Ayamir&#39;s Blog">Ayamir&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">虚拟地址空间</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="fa-regular fa-folder fa-fw"></i>knowledge</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-07">2024-02-07</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1333 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#什么是虚拟地址空间">什么是虚拟地址空间？</a></li>
+        <li><a href="#为什么需要虚拟地址空间">为什么需要虚拟地址空间？</a></li>
+        <li><a href="#32位的机器程序使用的空间大小能超过4gib吗">32位的机器，程序使用的空间大小能超过4GiB吗？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
+<p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
+<p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
+<ul>
+<li>
+<p>对于32位系统，进程的虚拟地址空间大小为：</p>
+<p>$$
+2^{32} bit = 4^{30} Byte = 4 GiB
+$$</p>
+</li>
+<li>
+<p>对于64位系统，进程的虚拟地址空间大小为：
+$$
+2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB
+$$</p>
+</li>
+</ul>
+<p>不过理论是理论，实际是实际。</p>
+<ul>
+<li>对于32位的<code>linux</code>系统而言，操作系统占用了空间中上面的1GiB（从<code>0xC0000000</code>到<code>0xFFFFFFFF</code>），程序可以使用的虚拟空间原则上只有3GiB（从<code>0x00000000</code>到<code>0xBFFFFFFF</code>），对于64位的OS跟进程各自占用128T的空间，分别在最高处和最低处。</li>
+<li>对于32位的<code>windows</code>系统而言，操作系统2GiB，程序2GiB（不过<code>windows</code>系统可以设置启动参数来将OS占用的虚拟地址空间大小缩小到1GiB）.</li>
+</ul>
+<p>进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：</p>
+<ul>
+<li>代码段(.text)：程序代码段</li>
+<li>数据段(.data)：已初始化的静态常量、全局变量</li>
+<li>BSS 段(.bss)：未初始化的静态变量、全局变量</li>
+<li>堆：动态分配的内存，从低地址开始向上增长；</li>
+<li>文件映射段：动态库、共享内存等，从低地址开始向上增长；</li>
+<li>栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 <code>8 MB</code>，从高地址开始向下增长。</li>
+</ul>
+<h2 id="为什么需要虚拟地址空间">为什么需要虚拟地址空间？</h2>
+<p>虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。</p>
+<h2 id="32位的机器程序使用的空间大小能超过4gib吗">32位的机器，程序使用的空间大小能超过4GiB吗？</h2>
+<p>如果指的是虚拟地址空间，那么答案是“否”。因为32位的CPU只能使用32位的指针，最大的寻址范围就到4GiB。</p>
+<p>如果指的是计算机的内存空间，答案为“是”。Intel从95年推出的Pentium Pro CPU开始采用36位的物理地址，可以访问达64GiB的物理内存。同时，Intel修改了页映射的方式，使得新的映射方式<strong>Physical Address Extension, PAE</strong>可以访问到更多的物理内存。</p>
+<ul>
+<li>
+<p>在<code>windows</code>下，进程可以拿一段连续的内存地址作为窗口，然后从高于4GiB的物理空间中申请多个大小等于窗口大小的物理空间并进行编号A, B, C等，用到哪部分就把窗口映射到哪部分。这一操作也叫做<strong>AWE</strong>(Address Windowing Extensions)。</p>
+</li>
+<li>
+<p>在<code>linux</code>下则使用<code>mmap</code>系统调用来实现。<code>mmap</code>系统调用的主要作用是使进程之间通过映射同一个普通文件来实现共享内存(IPC)。普通文件被映射到地址空间之后，进程可以像访问普通内存一样对文件进行访问，而不需要调用<code>write</code>, <code>read</code>函数。<code>mmap</code>本质上并不分配空间，只是将文件映射到进程地址空间（当然，会占掉虚拟内存空间），映射成功后就可以直接用<code>memcpy</code>等操作来写文件，因而用户对这段内存区域的修改就可以直接反映到内核空间（当然反过来也一样）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span> <span class="n">mmap</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">start</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">length</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prot</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="n">off_t</span> <span class="n">offset</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对映射空间所写的内容并不会立刻更新到文件中，而是有一段时间的延迟，内核会挑个时间进行写入操作。如果需要即使写入可以调用<code>msync</code>来强制同步。</p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/os/">OS</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2024-02-07</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/posts/knowledge/os/process/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div><div class="post-info-share">
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间" data-hashtags="OS"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-hashtag="OS"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/knowledge/os/process/" data-title="虚拟地址空间"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+        </div></div><div class="post-nav"><a href="/posts/knowledge/cpp/abi/" class="prev" rel="prev" title="ABI是什么？"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=0.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Ayamir\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Ayamir\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fa-solid fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.0934b1fc0d3a766d41d3adf5e7a115875e66e98ebba408d965a41cf3d2cb4ab5.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU="><link rel="stylesheet" href="/lib/animate/animate.min.df71851d4db7fd1f4289c30b3ea677bb3c82e84ae317f0ed908cc8efe8cdc5eb.css" integrity="sha256-33GFHU23/R9CicMLPqZ3uzyC6ErjF/DtkIzI7&#43;jNxes="><link rel="stylesheet" href="/lib/katex/katex.min.e790dd738ed6bd64cae6f6157a39c0b922bb51225a2fb1505ebcd0e07890d566.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY="><link rel="stylesheet" href="/lib/katex/copy-tex.min.fa822dbe23da4e6aa30e1938cb87cb2d420c8114180d5fd9cab44dbd089e6d63.css" integrity="sha256-&#43;oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM="><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.5a3d06d1b1f501f2093b356eda8275778f948abbf611429866909e5589f12b46.js" integrity="sha256-Wj0G0bH1AfIJOzVu2oJ1d4&#43;Uirv2EUKYZpCeVYnxK0Y="></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.2f033af4f644e0d220415d75f5a477838c5ec2bbb6adb30ddef6c21bde177440.js" integrity="sha256-LwM69PZE4NIgQV119aR3g4xewru2rbMN3vbCG94XdEA="></script><script src="/lib/lazysizes/lazysizes.min.7d35b4cbabcbdce184ea0d2224d452da34974dab0144d65c82ed428fb4ed343e.js" integrity="sha256-fTW0y6vL3OGE6g0iJNRS2jSXTasBRNZcgu1Cj7TtND4="></script><script src="/lib/clipboard/clipboard.min.8b1d1a31ffc3c9401a9dd809fcda5faa792f32d736cef393ee7a3646f7522d50.js" integrity="sha256-ix0aMf/DyUAandgJ/NpfqnkvMtc2zvOT7no2RvdSLVA="></script><script src="/lib/sharer/sharer.min.392d33340e3a16de9560a91fbf694d8487471790599e6b5d0c4f52ed0b9fa296.js" integrity="sha256-OS0zNA46Ft6VYKkfv2lNhIdHF5BZnmtdDE9S7QufopY="></script><script src="/lib/katex/katex.min.a9525e779e5807afad67d2f3274c5565302b70cc365d7c6315e791204526c0e9.js" integrity="sha256-qVJed55YB6&#43;tZ9LzJ0xVZTArcMw2XXxjFeeRIEUmwOk="></script><script src="/lib/katex/auto-render.min.1b9ddb6192ce6db4cb4c0de3ef4c5118f2b12989416f3bc367bf3d07ab121641.js" integrity="sha256-G53bYZLObbTLTA3j70xRGPKxKYlBbzvDZ789B6sSFkE="></script><script src="/lib/katex/copy-tex.min.7ad4aa6d2545e3e2f07bc30693f55a9dcd6c47e996bfea8e1bbddfc56c3da7de.js" integrity="sha256-etSqbSVF4&#43;Lwe8MGk/Vanc1sR&#43;mWv&#43;qOG73fxWw9p94="></script><script src="/lib/katex/mhchem.min.add54727de824e382d0922469c067386bbc13a494c07d8cdd41ea8ca0e49f2e5.js" integrity="sha256-rdVHJ96CTjgtCSJGnAZzhrvBOklMB9jN1B6oyg5J8uU="></script><script src="/sw.min.39a97596903cc57488c5bee6fde4825489cd0faf1c3a8ca3520f3616b0be4a44.js" integrity="sha256-Oal1lpA8xXSIxb7m/eSCVInND68cOoyjUg82FrC&#43;SkQ="></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"ayamir/ayamir.github.io"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"ZO1JYZIF7J","algoliaIndex":"ayamir_io","algoliaSearchKey":"2d94be64af0985c7d1980d1ed75ee698","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.bb7a899b9a263f64a0143c411db1db57bf00ce6b8fec49c1ef4c5566f7ebcac7.js" integrity="sha256-u3qJm5omP2SgFDxBHbHbV78AzmuP7EnB70xVZvfrysc="></script></body></html>

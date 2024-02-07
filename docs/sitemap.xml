@@ -2,16 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://ayamir.github.io/tags/abi/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/posts/knowledge/abi/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/c&#43;&#43;/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/categories/knowledge/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/posts/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/</loc><lastmod>2024-02-07T13:36:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/categories/knowledge/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/os/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/knowledge/os/process/</loc><lastmod>2024-02-07T15:56:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/abi/</loc><lastmod>2024-02-07T12:51:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/posts/knowledge/cpp/abi/</loc><lastmod>2024-02-07T12:51:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://ayamir.github.io/tags/c&#43;&#43;/</loc><lastmod>2024-02-07T12:51:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/categories/development/</loc><lastmod>2024-02-03T12:52:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://ayamir.github.io/tags/os/</loc><lastmod>2024-02-03T12:52:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/python/</loc><lastmod>2024-02-03T12:52:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/tags/shell/</loc><lastmod>2024-02-03T12:52:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://ayamir.github.io/posts/development/orphan-process/</loc><lastmod>2024-02-03T12:52:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

@@ -201,9 +201,9 @@
     },
     {
         "title": "ABI是什么？",
-        "uri": "posts/knowledge/abi",
+        "uri": "posts/knowledge/cpp/abi",
         "content": "ABI      ABI  Application Binary Interface                                                                                                                                                    ABI    OS                                  ABI                OS                                                                                                                            ABI                 OS                              amd64   arm64                                                             OS    windows PE COFF   linux ELF  macos MACH O                          OS                                                                                              C                                       C                           template           ABI           ABI Compatible   ABI compatible                                             ABI                   OS                                            C        gcc  llvm clang  msvc                        clang             msvc   main                              extern  C                  C                         C",
-        "objectID": "posts/knowledge/abi",
+        "objectID": "posts/knowledge/cpp/abi",
         "date": "2024-02-07T04:51:01.000Z",
         "draft": false,
         "math": true,
@@ -218,7 +218,7 @@
         "categories": [
             "knowledge"
         ],
-        "url": "posts/knowledge/abi"
+        "url": "posts/knowledge/cpp/abi"
     },
     {
         "title": "重学C++：类型推导",
@@ -439,6 +439,25 @@
             "knowledge"
         ],
         "url": "posts/knowledge/mm-base"
+    },
+    {
+        "title": "虚拟地址空间",
+        "uri": "posts/knowledge/os/virtual-memory-space",
+        "content": "32                     2  32  bit   4  30  Byte   4 GiB      64                     2  64 bit   16  30  GiB   16   20  TiB   16  10  PiB  16 EiB                     32  linux                  1GiB  0xC0000000 0xFFFFFFFF                  3GiB  0x00000000 0xBFFFFFFF    64  OS       128T                  32  windows         2GiB   2GiB   windows            OS              1GiB                                                      text             data                 BSS    bss                                                                                                 8 MB                                                                                                                                         32                 4GiB                          32  CPU    32              4GiB                       Intel 95    Pentium Pro CPU    36            64GiB         Intel                  Physical Address Extension  PAE               windows                          4GiB                            A  B  C                         AWE Address Windowing Extensions    linux    mmap        mmap                                  IPC                                            write  read   mmap                                                  memcpy                                              void   mmap void  start  sizet length  int prot   int flags  int fd  offt offset                                                             msync",
+        "objectID": "posts/knowledge/os/virtual-memory-space",
+        "date": "2024-02-07T07:56:52.000Z",
+        "draft": false,
+        "math": true,
+        "keywords": [
+            "OS"
+        ],
+        "tags": [
+            "OS"
+        ],
+        "categories": [
+            "knowledge"
+        ],
+        "url": "posts/knowledge/os/process"
     },
     {
         "title": "WebGL 基础知识",

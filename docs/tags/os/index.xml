@@ -4,7 +4,66 @@
         <link>https://ayamir.github.io/tags/os/</link>
         <description>OS - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/os/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/os/" rel="self" type="application/rss+xml" /><item>
+    <title>虚拟地址空间</title>
+    <link>https://ayamir.github.io/posts/knowledge/os/process/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process/</guid>
+    <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
+<p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
+<p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
+<ul>
+<li>
+<p>对于32位系统，进程的虚拟地址空间大小为：</p>
+<p>$$
+2^{32} bit = 4^{30} Byte = 4 GiB
+$$</p>
+</li>
+<li>
+<p>对于64位系统，进程的虚拟地址空间大小为：
+$$
+2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB
+$$</p>
+</li>
+</ul>
+<p>不过理论是理论，实际是实际。</p>
+<ul>
+<li>对于32位的<code>linux</code>系统而言，操作系统占用了空间中上面的1GiB（从<code>0xC0000000</code>到<code>0xFFFFFFFF</code>），程序可以使用的虚拟空间原则上只有3GiB（从<code>0x00000000</code>到<code>0xBFFFFFFF</code>），对于64位的OS跟进程各自占用128T的空间，分别在最高处和最低处。</li>
+<li>对于32位的<code>windows</code>系统而言，操作系统2GiB，程序2GiB（不过<code>windows</code>系统可以设置启动参数来将OS占用的虚拟地址空间大小缩小到1GiB）.</li>
+</ul>
+<p>进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：</p>
+<ul>
+<li>代码段(.text)：程序代码段</li>
+<li>数据段(.data)：已初始化的静态常量、全局变量</li>
+<li>BSS 段(.bss)：未初始化的静态变量、全局变量</li>
+<li>堆：动态分配的内存，从低地址开始向上增长；</li>
+<li>文件映射段：动态库、共享内存等，从低地址开始向上增长；</li>
+<li>栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 <code>8 MB</code>，从高地址开始向下增长。</li>
+</ul>
+<h2 id="为什么需要虚拟地址空间">为什么需要虚拟地址空间？</h2>
+<p>虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。</p>
+<h2 id="32位的机器程序使用的空间大小能超过4gib吗">32位的机器，程序使用的空间大小能超过4GiB吗？</h2>
+<p>如果指的是虚拟地址空间，那么答案是“否”。因为32位的CPU只能使用32位的指针，最大的寻址范围就到4GiB。</p>
+<p>如果指的是计算机的内存空间，答案为“是”。Intel从95年推出的Pentium Pro CPU开始采用36位的物理地址，可以访问达64GiB的物理内存。同时，Intel修改了页映射的方式，使得新的映射方式<strong>Physical Address Extension, PAE</strong>可以访问到更多的物理内存。</p>
+<ul>
+<li>
+<p>在<code>windows</code>下，进程可以拿一段连续的内存地址作为窗口，然后从高于4GiB的物理空间中申请多个大小等于窗口大小的物理空间并进行编号A, B, C等，用到哪部分就把窗口映射到哪部分。这一操作也叫做<strong>AWE</strong>(Address Windowing Extensions)。</p>
+</li>
+<li>
+<p>在<code>linux</code>下则使用<code>mmap</code>系统调用来实现。<code>mmap</code>系统调用的主要作用是使进程之间通过映射同一个普通文件来实现共享内存(IPC)。普通文件被映射到地址空间之后，进程可以像访问普通内存一样对文件进行访问，而不需要调用<code>write</code>, <code>read</code>函数。<code>mmap</code>本质上并不分配空间，只是将文件映射到进程地址空间（当然，会占掉虚拟内存空间），映射成功后就可以直接用<code>memcpy</code>等操作来写文件，因而用户对这段内存区域的修改就可以直接反映到内核空间（当然反过来也一样）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span> <span class="n">mmap</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">start</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">length</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prot</span> <span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="n">off_t</span> <span class="n">offset</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对映射空间所写的内容并不会立刻更新到文件中，而是有一段时间的延迟，内核会挑个时间进行写入操作。如果需要即使写入可以调用<code>msync</code>来强制同步。</p>
+</li>
+</ul>
+]]></description>
+</item>
+<item>
     <title>孤儿进程</title>
     <link>https://ayamir.github.io/posts/development/orphan-process/</link>
     <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>

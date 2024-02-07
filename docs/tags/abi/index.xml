@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/abi/" rel="self" type="application/rss+xml" /><item>
     <title>ABI是什么？</title>
-    <link>https://ayamir.github.io/posts/knowledge/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/abi/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
     <description><![CDATA[<h2 id="abi-是什么">ABI 是什么？</h2>
 <p>ABI: Application Binary Interface（应用<strong>二进制</strong>接口）。</p>
 <p>其实就是针对 <strong>编译器</strong> 和 <strong>链接器</strong> 的<strong>二进制级别</strong>的一些规范和约束，主要规范的内容有：</p>
