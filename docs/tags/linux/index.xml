@@ -153,7 +153,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <tr>
 <td class="org-right">1</td>
 <td class="org-right">001</td>
-<td class="org-left">&##x2013;x</td>
+<td class="org-left">--x</td>
 </tr>
 <tr>
 <td class="org-right">2</td>
@@ -219,9 +219,9 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </tr>
 </tbody>
 </table>
-<p>如果没有指定字符默认使用 all
-’+’表示添加一种权限
-’-’表示删除一种权限
+<p>如果没有指定字符默认使用<code>all</code>
+<code>+</code> 表示添加一种权限
+<code>-</code> 表示删除一种权限
 例如：</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <colgroup>
@@ -259,7 +259,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </tr>
 </tbody>
 </table>
-<p>’-R’=’&amp;##x2013;recursive’表示递归设置</p>
+<p><code>-R</code> 表示递归设置</p>
 </li>
 </ol>
 <h2 id="umask设置文件默认权限">umask：设置文件默认权限</h2>

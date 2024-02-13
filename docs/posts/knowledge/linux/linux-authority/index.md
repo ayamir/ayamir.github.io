@@ -135,7 +135,7 @@ chmod 支持两种标识方法
     <tr>
     <td class="org-right">1</td>
     <td class="org-right">001</td>
-    <td class="org-left">&##x2013;x</td>
+    <td class="org-left">--x</td>
     </tr>
 
     <tr>
@@ -215,9 +215,9 @@ chmod 支持两种标识方法
     </tbody>
     </table>
 
-    如果没有指定字符默认使用 all
-    &rsquo;+&rsquo;表示添加一种权限
-    &rsquo;-&rsquo;表示删除一种权限
+    如果没有指定字符默认使用`all`
+    `+` 表示添加一种权限
+    `-` 表示删除一种权限
     例如：
 
     <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -265,7 +265,7 @@ chmod 支持两种标识方法
     </tbody>
     </table>
 
-    &rsquo;-R&rsquo;=&rsquo;&##x2013;recursive&rsquo;表示递归设置
+    `-R` 表示递归设置
 
 ## umask：设置文件默认权限
 
