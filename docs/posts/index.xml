@@ -231,6 +231,14 @@ $$</p>
 <p>切换分支：<code>git checkout &lt;branch-name&gt;</code> / <code>git switch &lt;branch-name&gt;</code></p>
 <p>新建分支：<code>git checkout -b &lt;branch-name&gt;</code> / <code>git switch -c &lt;branch-name&gt;</code></p>
 <p>切换到一个 tag ：<code>git fetch --all --tags --prune</code> -&gt; <code>git tag</code> -&gt; 使用 <code>/</code> 快速搜索 -&gt; <code>git checkout tags/&lt;tag-name&gt; -b &lt;branch-name&gt;</code></p>
+<h2 id="commit-相关">commit 相关</h2>
+<p>undo 本地改动（还未 commit）：<code>git restore &lt;file-path&gt;</code></p>
+<p>修改 commit 消息（还未 push）：<code>git commit --amend</code></p>
+<p>undo 前 1 次 commit（还未 push）：<code>git reset --soft HEAD~</code></p>
+<p>undo 前 2 次 commit（还未 push）：<code>git reset --soft HEAD~2</code></p>
+<p>undo 某次 commit（已经 push）：<code>git revert &lt;commit-hash&gt;</code></p>
+<p>undo 某个区间内的 commit（已经 push）：</p>
+<p><code>git revert --no-commit &lt;left-commit-hash&gt;..&lt;right-commit-hash&gt;</code> （左开右闭） -&gt; <code>git commit</code></p>
 <h2 id="协作相关">协作相关</h2>
 <p>Review 并且 Commit 别人提出的 PR 的流程：</p>
 <ol>

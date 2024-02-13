@@ -2,7 +2,7 @@
     {
         "title": "Git 常用用法记录",
         "uri": "posts/development/git-usage",
-        "content": "Git                clone         branch   git clone   branch        submodule  git clone   recursive    clone      git submodule update   init   recursive checkout         git checkout   git switch      git checkout  b   git switch  c       tag  git fetch   all   tags   prune    git tag                 git checkout tags   b      Review    Commit       PR      git remote add git remote  v git fetch git checkout  b git commit  sm    git push HEAD",
+        "content": "Git                clone         branch   git clone   branch        submodule  git clone   recursive    clone      git submodule update   init   recursive checkout         git checkout   git switch      git checkout  b   git switch  c       tag  git fetch   all   tags   prune    git tag                 git checkout tags   b commit    undo         commit  git restore    commit       push  git commit   amend undo   1   commit    push  git reset   soft HEAD  undo   2   commit    push  git reset   soft HEAD 2 undo    commit    push  git revert undo        commit    push   git revert   no commit              git commit      Review    Commit       PR      git remote add git remote  v git fetch git checkout  b git commit  sm    git push HEAD",
         "objectID": "posts/development/git-usage",
         "date": "2024-01-23T01:50:29.000Z",
         "draft": false,

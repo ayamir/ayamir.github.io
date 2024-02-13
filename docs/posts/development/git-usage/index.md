@@ -19,6 +19,22 @@
 
 切换到一个 tag ：`git fetch --all --tags --prune` -> `git tag` -> 使用 `/` 快速搜索 -> `git checkout tags/<tag-name> -b <branch-name>`
 
+## commit 相关
+
+undo 本地改动（还未 commit）：`git restore <file-path>`
+
+修改 commit 消息（还未 push）：`git commit --amend`
+
+undo 前 1 次 commit（还未 push）：`git reset --soft HEAD~`
+
+undo 前 2 次 commit（还未 push）：`git reset --soft HEAD~2`
+
+undo 某次 commit（已经 push）：`git revert <commit-hash>`
+
+undo 某个区间内的 commit（已经 push）：
+
+`git revert --no-commit <left-commit-hash>..<right-commit-hash>` （左开右闭） -> `git commit`
+
 ## 协作相关
 
 Review 并且 Commit 别人提出的 PR 的流程：
