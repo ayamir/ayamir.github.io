@@ -8,8 +8,8 @@
             <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>虚拟地址空间</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/process/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
@@ -38,7 +38,7 @@ $$</p>
 <li>数据段(.data)：已初始化的静态常量、全局变量</li>
 <li>BSS 段(.bss)：未初始化的静态变量、全局变量</li>
 <li>堆：动态分配的内存，从低地址开始向上增长；</li>
-<li>文件映射段：动态库、共享内存等，从低地址开始向上增长；</li>
+<li>文件映射段：动态库、共享内存等，从高地址开始向下增长；</li>
 <li>栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 <code>8 MB</code>，从高地址开始向下增长。</li>
 </ul>
 <h2 id="为什么需要虚拟地址空间">为什么需要虚拟地址空间？</h2>

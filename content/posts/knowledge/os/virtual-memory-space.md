@@ -6,7 +6,7 @@ math: true
 keywords: ["OS"]
 tags: ["OS"]
 categories: ["knowledge"]
-url: "posts/knowledge/os/process"
+url: "posts/knowledge/os/virtual-memory-space"
 ---
 
 ## 什么是虚拟地址空间？
@@ -37,7 +37,7 @@ url: "posts/knowledge/os/process"
 - 数据段(.data)：已初始化的静态常量、全局变量
 - BSS 段(.bss)：未初始化的静态变量、全局变量
 - 堆：动态分配的内存，从低地址开始向上增长；
-- 文件映射段：动态库、共享内存等，从低地址开始向上增长；
+- 文件映射段：动态库、共享内存等，从高地址开始向下增长；
 - 栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 `8 MB`，从高地址开始向下增长。
 
 ## 为什么需要虚拟地址空间？
