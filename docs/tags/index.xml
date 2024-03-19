@@ -4,7 +4,13 @@
         <link>https://ayamir.github.io/tags/</link>
         <description>Tags - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>WebRTC</title>
+    <link>https://ayamir.github.io/tags/webrtc/</link>
+    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webrtc/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>OS</title>
     <link>https://ayamir.github.io/tags/os/</link>
     <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/os/</guid>
@@ -35,7 +41,7 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>git</title>
+    <title>Git</title>
     <link>https://ayamir.github.io/tags/git/</link>
     <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/git/</guid>
     <description><![CDATA[]]></description>
@@ -44,12 +50,6 @@
     <title>Multimedia</title>
     <link>https://ayamir.github.io/tags/multimedia/</link>
     <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/multimedia/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>WebRTC</title>
-    <link>https://ayamir.github.io/tags/webrtc/</link>
-    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webrtc/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
@@ -107,13 +107,13 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Content-based predict</title>
+    <title>Content-Based Predict</title>
     <link>https://ayamir.github.io/tags/content-based-predict/</link>
     <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/content-based-predict/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>Dynamic tiling</title>
+    <title>Dynamic Tiling</title>
     <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
     <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/dynamic-tiling/</guid>
     <description><![CDATA[]]></description>

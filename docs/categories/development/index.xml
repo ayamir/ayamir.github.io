@@ -1,10 +1,358 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>development - 分类 - Ayamir&#39;s Blog</title>
+        <title>Development - 分类 - Ayamir&#39;s Blog</title>
         <link>https://ayamir.github.io/categories/development/</link>
-        <description>development - 分类 - Ayamir&#39;s Blog</description>
+        <description>Development - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/development/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/development/" rel="self" type="application/rss+xml" /><item>
+    <title>WebRTC任务队列学习笔记</title>
+    <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
+    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+    <description><![CDATA[<h2 id="taskqueue">TaskQueue</h2>
+<p><code>TaskQueue</code>也即任务队列，不过这个类本身并没有与队列相关的任何代码，所以它是用来干什么的呢？</p>
+<p>我们直接来读代码（为了方便，我这里直接把方法的实现代码贴了出来）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">RTC_LOCKABLE</span> <span class="n">RTC_EXPORT</span> <span class="n">TaskQueue</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// TaskQueue priority levels. On some platforms these will map to thread
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// priorities, on others such as Mac and iOS, GCD queue priorities.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">using</span> <span class="n">Priority</span> <span class="o">=</span> <span class="o">::</span><span class="n">webrtc</span><span class="o">::</span><span class="n">TaskQueueFactory</span><span class="o">::</span><span class="n">Priority</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">explicit</span> <span class="nf">TaskQueue</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">webrtc</span><span class="o">::</span><span class="n">TaskQueueBase</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                     <span class="n">webrtc</span><span class="o">::</span><span class="n">TaskQueueDeleter</span><span class="o">&gt;</span> <span class="n">task_queue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">:</span> <span class="n">impl_</span><span class="p">(</span><span class="n">task_queue</span><span class="p">.</span><span class="n">release</span><span class="p">())</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">~</span><span class="n">TaskQueue</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">impl_</span><span class="o">-&gt;</span><span class="n">Delete</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Used for DCHECKing the current queue.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">bool</span> <span class="nf">IsCurrent</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">impl_</span><span class="o">-&gt;</span><span class="n">IsCurrent</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Returns non-owning pointer to the task queue implementation.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">webrtc</span><span class="o">::</span><span class="n">TaskQueueBase</span><span class="o">*</span> <span class="n">Get</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">impl_</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// TODO(tommi): For better debuggability, implement RTC_FROM_HERE.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// Ownership of the task is passed to PostTask.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">void</span> <span class="nf">PostTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">webrtc</span><span class="o">::</span><span class="n">QueuedTask</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">impl_</span><span class="o">-&gt;</span><span class="n">PostTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">task</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Schedules a task to execute a specified number of milliseconds from when
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// the call is made. The precision should be considered as &#34;best effort&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// and in some cases, such as on Windows when all high precision timers have
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// been used up, can be off by as much as 15 millseconds (although 8 would be
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// more likely). This can be mitigated by limiting the use of delayed tasks.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">void</span> <span class="nf">PostDelayedTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">webrtc</span><span class="o">::</span><span class="n">QueuedTask</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="kt">uint32_t</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">impl_</span><span class="o">-&gt;</span><span class="n">PostDelayedTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">task</span><span class="p">),</span> <span class="n">milliseconds</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// std::enable_if is used here to make sure that calls to PostTask() with
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// std::unique_ptr&lt;SomeClassDerivedFromQueuedTask&gt; would not end up being
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// caught by this template.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Closure</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_convertible</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Closure</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">webrtc</span><span class="o">::</span><span class="n">QueuedTask</span><span class="o">&gt;&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span> <span class="o">=</span> <span class="k">nullptr</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="n">PostTask</span><span class="p">(</span><span class="n">Closure</span><span class="o">&amp;&amp;</span> <span class="n">closure</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PostTask</span><span class="p">(</span><span class="n">webrtc</span><span class="o">::</span><span class="n">ToQueuedTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Closure</span><span class="o">&gt;</span><span class="p">(</span><span class="n">closure</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// See documentation above for performance expectations.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Closure</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;!</span><span class="n">std</span><span class="o">::</span><span class="n">is_convertible</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Closure</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">webrtc</span><span class="o">::</span><span class="n">QueuedTask</span><span class="o">&gt;&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span> <span class="o">=</span> <span class="k">nullptr</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="n">PostDelayedTask</span><span class="p">(</span><span class="n">Closure</span><span class="o">&amp;&amp;</span> <span class="n">closure</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PostDelayedTask</span><span class="p">(</span><span class="n">webrtc</span><span class="o">::</span><span class="n">ToQueuedTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Closure</span><span class="o">&gt;</span><span class="p">(</span><span class="n">closure</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">milliseconds</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">webrtc</span><span class="o">::</span><span class="n">TaskQueueBase</span><span class="o">*</span> <span class="k">const</span> <span class="n">impl_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">RTC_DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">TaskQueue</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>private</code>部分：</p>
+<p><code>TaskQueue</code>只有一个私有变量，也就是使用<code>TaskQueueBase</code>的裸指针指向的常量<code>impl_</code>，并且<code>TaskQueue</code>禁用了拷贝构造函数和赋值运算符。</p>
+<p>这里为什么存放的是裸指针呢，我猜主要是出于性能的考虑。</p>
+<p><code>public</code>部分：</p>
+<p><code>TaskQueue</code>的构造函数接受1个参数，也就是使用<code>unique_ptr</code>管理生命周期的对象，这个对象需要是实现了<code>TaskQueueBase</code>这一接口的对象。</p>
+<p><code>TaskQueue</code>有 2 个重要的方法，也就是<code>PostTask</code>和<code>PostDelayedTask</code>。</p>
+<ul>
+<li><code>PostTask</code>：将<code>task</code>加入到任务队列中进行即时处理；</li>
+<li><code>PostDelayedTask</code>：将<code>task</code>加入到任务队列中，过<code>milliseconds</code>毫秒处理。</li>
+</ul>
+<p>这 2 种方法都有 2 种重载形式。在webrtc的代码中，经常使用的是接受一个闭包也就是lambda表达式作为参数的这一重载形式。</p>
+<p>比如在<code>call/rtp_transport_controller_send.cc</code>中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">RtpTransportControllerSend</span><span class="o">::</span><span class="n">OnSentPacket</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">rtc</span><span class="o">::</span><span class="n">SentPacket</span><span class="o">&amp;</span> <span class="n">sent_packet</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">task_queue_</span><span class="p">.</span><span class="n">PostTask</span><span class="p">([</span><span class="k">this</span><span class="p">,</span> <span class="n">sent_packet</span><span class="p">]()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="o">&amp;</span><span class="n">task_queue_</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">SentPacket</span><span class="o">&gt;</span> <span class="n">packet_msg</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="n">transport_feedback_adapter_</span><span class="p">.</span><span class="n">ProcessSentPacket</span><span class="p">(</span><span class="n">sent_packet</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pacer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">UpdateOutstandingData</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">transport_feedback_adapter_</span><span class="p">.</span><span class="n">GetOutstandingData</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">packet_msg</span> <span class="o">&amp;&amp;</span> <span class="n">controller_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">PostUpdates</span><span class="p">(</span><span class="n">controller_</span><span class="o">-&gt;</span><span class="n">OnSentPacket</span><span class="p">(</span><span class="o">*</span><span class="n">packet_msg</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">RtpTransportControllerSend</span><span class="o">::</span><span class="n">OnReceivedPacket</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="n">ReceivedPacket</span><span class="o">&amp;</span> <span class="n">packet_msg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">task_queue_</span><span class="p">.</span><span class="n">PostTask</span><span class="p">([</span><span class="k">this</span><span class="p">,</span> <span class="n">packet_msg</span><span class="p">]()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="o">&amp;</span><span class="n">task_queue_</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">controller_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">PostUpdates</span><span class="p">(</span><span class="n">controller_</span><span class="o">-&gt;</span><span class="n">OnReceivedPacket</span><span class="p">(</span><span class="n">packet_msg</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>TaskQueue</code>的创建基本上都是采用工厂模式完成。</p>
+<p>从<code>TaskQueue</code>的实现代码中可以发现，它其实只是为实现了<code>TaskQueueBase</code>这一接口类的子类封装了一个统一的调用接口，实际上起到的是代理的作用。</p>
+<p>真正做事的或者说真正核心的代码应该是<code>TaskQueueBase</code>这个接口类的定义以及实现其纯虚函数的子类。</p>
+<h2 id="taskqueuebase">TaskQueueBase</h2>
+<p><code>TaskQueueBase</code>是WebRTC中用来实现异步执行任务的类，保证队列中的任务按照FIFO的顺序执行，不同任务的执行时间不会重叠。</p>
+<p>不过，同一个任务队列中的不同任务并不一定总是在相同的worker线程上执行。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">RTC_LOCKABLE</span> <span class="n">RTC_EXPORT</span> <span class="n">TaskQueueBase</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// Starts destruction of the task queue.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// On return ensures no task are running and no new tasks are able to start
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// on the task queue.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// Responsible for deallocation. Deallocation may happen syncrhoniously during
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// Delete or asynchronously after Delete returns.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// Code not running on the TaskQueue should not make any assumption when
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// TaskQueue is deallocated and thus should not call any methods after Delete.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// Code running on the TaskQueue should not call Delete, but can assume
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// TaskQueue still exists and may call other methods, e.g. PostTask.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Delete</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Schedules a task to execute. Tasks are executed in FIFO order.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// If |task-&gt;Run()| returns true, task is deleted on the task queue
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// before next QueuedTask starts executing.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// When a TaskQueue is deleted, pending tasks will not be executed but they
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// will be deleted. The deletion of tasks may happen synchronously on the
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// TaskQueue or it may happen asynchronously after TaskQueue is deleted.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// This may vary from one implementation to the next so assumptions about
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// lifetimes of pending tasks should not be made.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">PostTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">QueuedTask</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Schedules a task to execute a specified number of milliseconds from when
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// the call is made. The precision should be considered as &#34;best effort&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// and in some cases, such as on Windows when all high precision timers have
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// been used up, can be off by as much as 15 millseconds.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">PostDelayedTask</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">QueuedTask</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                               <span class="kt">uint32_t</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Returns the task queue that is running the current thread.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// Returns nullptr if this thread is not associated with any task queue.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">static</span> <span class="n">TaskQueueBase</span><span class="o">*</span> <span class="nf">Current</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="nf">IsCurrent</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Current</span><span class="p">()</span> <span class="o">==</span> <span class="k">this</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">class</span> <span class="nc">CurrentTaskQueueSetter</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ABSL_CONST_INIT</span> <span class="k">thread_local</span> <span class="n">TaskQueueBase</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">explicit</span> <span class="nf">CurrentTaskQueueSetter</span><span class="p">(</span><span class="n">TaskQueueBase</span><span class="o">*</span> <span class="n">task_queue</span><span class="p">)</span> <span class="o">:</span> <span class="n">previous_</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current</span> <span class="o">=</span> <span class="n">task_queue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">CurrentTaskQueueSetter</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current</span> <span class="o">=</span> <span class="n">previous_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">CurrentTaskQueueSetter</span><span class="p">(</span><span class="k">const</span> <span class="n">CurrentTaskQueueSetter</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CurrentTaskQueueSetter</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">CurrentTaskQueueSetter</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">TaskQueueBase</span><span class="o">*</span> <span class="k">const</span> <span class="n">previous_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// Users of the TaskQueue should call Delete instead of directly deleting
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// this object.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">virtual</span> <span class="o">~</span><span class="n">TaskQueueBase</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从代码中的注释可以看明白<code>PostTask</code>这一方法的作用，也就是我们上面所说的：把<code>task</code>加入到事件队列中，按照FIFO的顺序进行处理。</p>
+<p>需要注意的是，这里还有一个可访问性为<code>protected</code>的类：<code>CurrentTaskQueueSetter</code>，这个类的作用就像它的命名一样，用于设置当前的任务队列，也就是把任务队列绑定到当前线程上。</p>
+<ul>
+<li>构造时，用传入构造函数的任务队列更新当前线程存放的任务队列，并将更新前的任务队列暂存到当前线程的TLS(Thread Local Storage)中。</li>
+<li>析构时，用构造时暂存的任务队列更新当前线程存放的任务队列。</li>
+</ul>
+<p>WebRTC中有好几个实现了<code>TaskQueueBase</code>这一接口的类如<code>TaskQueueStdlib</code>, <code>TaskQueueLibevent</code>, <code>TaskQueueWin</code>, <code>SimulatedTaskQueue</code>等，它们的作用也各不相同。</p>
+<p>下面我们以<code>TaskQueueStdlib</code>为例，对实际的<code>PostTask</code>等函数是如何运行的一探究竟。</p>
+<h2 id="taskqueuestdlib">TaskQueueStdlib</h2>
+]]></description>
+</item>
+<item>
     <title>孤儿进程</title>
     <link>https://ayamir.github.io/posts/development/orphan-process/</link>
     <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>

@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Dynamic tiling - 标签 - Ayamir&#39;s Blog</title>
+        <title>Dynamic Tiling - 标签 - Ayamir&#39;s Blog</title>
         <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
-        <description>Dynamic tiling - 标签 - Ayamir&#39;s Blog</description>
+        <description>Dynamic Tiling - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/dynamic-tiling/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Popularity Aware 360-Degree Video Streaming</title>

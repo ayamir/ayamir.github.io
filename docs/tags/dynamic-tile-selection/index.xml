@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Dynamic tile selection - 标签 - Ayamir&#39;s Blog</title>
+        <title>Dynamic Tile Selection - 标签 - Ayamir&#39;s Blog</title>
         <link>https://ayamir.github.io/tags/dynamic-tile-selection/</link>
-        <description>Dynamic tile selection - 标签 - Ayamir&#39;s Blog</description>
+        <description>Dynamic Tile Selection - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/dynamic-tile-selection/" rel="self" type="application/rss+xml" /><item>
     <title>Note for RnnQoE</title>

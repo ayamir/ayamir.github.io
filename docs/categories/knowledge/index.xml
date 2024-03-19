@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>knowledge - 分类 - Ayamir&#39;s Blog</title>
+        <title>Knowledge - 分类 - Ayamir&#39;s Blog</title>
         <link>https://ayamir.github.io/categories/knowledge/</link>
-        <description>knowledge - 分类 - Ayamir&#39;s Blog</description>
+        <description>Knowledge - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
     <title>虚拟地址空间</title>

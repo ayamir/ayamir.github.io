@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Live video - 标签 - Ayamir&#39;s Blog</title>
+        <title>Live Video - 标签 - Ayamir&#39;s Blog</title>
         <link>https://ayamir.github.io/tags/live-video/</link>
-        <description>Live video - 标签 - Ayamir&#39;s Blog</description>
+        <description>Live Video - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/live-video/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Content Motion Viewport Prediction</title>
