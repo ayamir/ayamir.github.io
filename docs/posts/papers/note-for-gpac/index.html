@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Note for GPAC - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for GPAC" />
-<meta property="og:description" content="Dash客户端自适应逻辑 tile priority setup：根据定义的规则对tile进行优先级排名。 rate allocation：收集网络吞吐量信息和tile码率信息" />
+<meta property="og:description" content="Dash 客户端自适应逻辑 tile priority setup：根据定义的规则对 tile 进行优先级排名。 rate allocation：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-gpac/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-gpac/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-12-30T10:23:26+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Note for GPAC"/>
-<meta name="twitter:description" content="Dash客户端自适应逻辑 tile priority setup：根据定义的规则对tile进行优先级排名。 rate allocation：收集网络吞吐量信息和tile码率信息"/>
+<meta name="twitter:description" content="Dash 客户端自适应逻辑 tile priority setup：根据定义的规则对 tile 进行优先级排名。 rate allocation：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-gpac/" /><link rel="prev" href="https://ayamir.github.io/posts/papers/note-for-mpc/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note-for-gpac/" /><link rel="prev" href="http://localhost:1313/posts/papers/note-for-mpc/" /><link rel="next" href="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-gpac\/"
-        },"genre": "posts","keywords": "Immersive Video, DASH","wordcount":  577 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-gpac\/","datePublished": "2021-12-30T10:23:26+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note-for-gpac\/"
+        },"genre": "posts","keywords": "Immersive Video, DASH","wordcount":  507 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note-for-gpac\/","datePublished": "2021-12-30T10:23:26+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for GPAC</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-30">2021-12-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 577 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-30">2021-12-30</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 507 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
             </div>
             
@@ -112,7 +112,7 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#dash客户端自适应逻辑">Dash客户端自适应逻辑</a>
+        <li><a href="#dash-客户端自适应逻辑">Dash 客户端自适应逻辑</a>
           <ul>
             <li><a href="#tile-priority-setup">tile priority setup</a></li>
             <li><a href="#rate-allocation">Rate allocation</a></li>
@@ -122,28 +122,28 @@
     </li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="dash客户端自适应逻辑">Dash客户端自适应逻辑</h2>
+                </div><div class="content" id="content"><h2 id="dash-客户端自适应逻辑">Dash 客户端自适应逻辑</h2>
 <ol>
-<li><em>tile priority setup</em>：根据定义的规则对tile进行优先级排名。</li>
-<li><em>rate allocation</em>：收集网络吞吐量信息和tile码率信息，使用确定的tile优先级排名为其分配码率，努力最大化视频质量。</li>
+<li><em>tile priority setup</em>：根据定义的规则对 tile 进行优先级排名。</li>
+<li><em>rate allocation</em>：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。</li>
 <li><em>rate adaption</em>：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。</li>
 </ol>
 <h3 id="tile-priority-setup">tile priority setup</h3>
 <ol>
 <li>
-<p>Dash客户端加载带有SRD信息的MPD文件时，首先确定使用SRD描述的tile集合。</p>
+<p>Dash 客户端加载带有 SRD 信息的 MPD 文件时，首先确定使用 SRD 描述的 tile 集合。</p>
 </li>
 <li>
-<p>确定tile之间的编码依赖（尤其是使用HEVC编码的tile时）</p>
+<p>确定 tile 之间的编码依赖（尤其是使用 HEVC 编码的 tile 时）</p>
 </li>
 <li>
-<p>为每个独立的tile向媒体渲染器请求一个视频对象，并向其通知tile的SRD信息。</p>
+<p>为每个独立的 tile 向媒体渲染器请求一个视频对象，并向其通知 tile 的 SRD 信息。</p>
 </li>
 <li>
-<p>渲染器根据需要的显示大小调整SRD信息之后，执行视频对象的最终布局。</p>
+<p>渲染器根据需要的显示大小调整 SRD 信息之后，执行视频对象的最终布局。</p>
 </li>
 <li>
-<p>一旦tile集合被确定，客户端向每个tile分配优先级。（每次码率自适应执行的时候都需要分配tile优先级）</p>
+<p>一旦 tile 集合被确定，客户端向每个 tile 分配优先级。（每次码率自适应执行的时候都需要分配 tile 优先级）</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -156,12 +156,12 @@
 </ol>
 <h3 id="rate-allocation">Rate allocation</h3>
 <ol>
-<li>首先需要估计可用带宽（tile场景和非tile场景的估计不同）</li>
+<li>首先需要估计可用带宽（tile 场景和非 tile 场景的估计不同）</li>
 <li>在一个视频段播放过程中，客户端需要去下载多个段（并行-HTTP/2）</li>
 <li>带宽可以在下载单个段或多个段的平均指标中估计出来。</li>
-<li>一旦带宽估计完成，码率分配将tile根据其优先级进行分类。</li>
-<li>一开始所有的tile都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的tile的码率。</li>
-<li>一旦每个tile的码率分配完成，将为目标带宽等于所选比特率的每个tile调用常规速率自适应算法</li>
+<li>一旦带宽估计完成，码率分配将 tile 根据其优先级进行分类。</li>
+<li>一开始所有的 tile 都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的 tile 的码率。</li>
+<li>一旦每个 tile 的码率分配完成，将为目标带宽等于所选比特率的每个 tile 调用常规速率自适应算法</li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive Video</a>
@@ -172,14 +172,14 @@
                             <a class="link-to-markdown" href="/posts/papers/note-for-gpac/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-hashtags="Immersive Video,DASH"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-hashtags="Immersive Video,DASH"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note-for-gpac/" data-title="Note for GPAC"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/papers/note-for-mpc/" class="prev" rel="prev" title="Note for MPC"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/papers/note-for-content-assisted-prediction/" class="next" rel="next" title="Note for Content Assisted Prediction">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

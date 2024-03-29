@@ -1,25 +1,25 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>OS - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/os/</link>
+        <link>http://localhost:1313/tags/os/</link>
         <description>OS - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/os/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/os/" rel="self" type="application/rss+xml" /><item>
     <title>虚拟地址空间</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
+    <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
 <ul>
 <li>
-<p>对于32位系统，进程的虚拟地址空间大小为：</p>
+<p>对于 32 位系统，进程的虚拟地址空间大小为：</p>
 <p>$$
 2^{32} bit = 4^{30} Byte = 4 GiB
 $$</p>
 </li>
 <li>
-<p>对于64位系统，进程的虚拟地址空间大小为：
+<p>对于 64 位系统，进程的虚拟地址空间大小为：
 $$
 2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB
 $$</p>
@@ -27,8 +27,8 @@ $$</p>
 </ul>
 <p>不过理论是理论，实际是实际。</p>
 <ul>
-<li>对于32位的<code>linux</code>系统而言，操作系统占用了空间中上面的1GiB（从<code>0xC0000000</code>到<code>0xFFFFFFFF</code>），程序可以使用的虚拟空间原则上只有3GiB（从<code>0x00000000</code>到<code>0xBFFFFFFF</code>），对于64位的OS跟进程各自占用128T的空间，分别在最高处和最低处。</li>
-<li>对于32位的<code>windows</code>系统而言，操作系统2GiB，程序2GiB（不过<code>windows</code>系统可以设置启动参数来将OS占用的虚拟地址空间大小缩小到1GiB）.</li>
+<li>对于 32 位的<code>linux</code>系统而言，操作系统占用了空间中上面的 1GiB（从<code>0xC0000000</code>到<code>0xFFFFFFFF</code>），程序可以使用的虚拟空间原则上只有 3GiB（从<code>0x00000000</code>到<code>0xBFFFFFFF</code>），对于 64 位的 OS 跟进程各自占用 128T 的空间，分别在最高处和最低处。</li>
+<li>对于 32 位的<code>windows</code>系统而言，操作系统 2GiB，程序 2GiB（不过<code>windows</code>系统可以设置启动参数来将 OS 占用的虚拟地址空间大小缩小到 1GiB）.</li>
 </ul>
 <p>进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：</p>
 <ul>
@@ -41,12 +41,12 @@ $$</p>
 </ul>
 <h2 id="为什么需要虚拟地址空间">为什么需要虚拟地址空间？</h2>
 <p>虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。</p>
-<h2 id="32位的机器程序使用的空间大小能超过4gib吗">32位的机器，程序使用的空间大小能超过4GiB吗？</h2>
-<p>如果指的是虚拟地址空间，那么答案是“否”。因为32位的CPU只能使用32位的指针，最大的寻址范围就到4GiB。</p>
-<p>如果指的是计算机的内存空间，答案为“是”。Intel从95年推出的Pentium Pro CPU开始采用36位的物理地址，可以访问达64GiB的物理内存。同时，Intel修改了页映射的方式，使得新的映射方式<strong>Physical Address Extension, PAE</strong>可以访问到更多的物理内存。</p>
+<h2 id="32-位的机器程序使用的空间大小能超过-4gib-吗">32 位的机器，程序使用的空间大小能超过 4GiB 吗？</h2>
+<p>如果指的是虚拟地址空间，那么答案是“否”。因为 32 位的 CPU 只能使用 32 位的指针，最大的寻址范围就到 4GiB。</p>
+<p>如果指的是计算机的内存空间，答案为“是”。Intel 从 95 年推出的 Pentium Pro CPU 开始采用 36 位的物理地址，可以访问达 64GiB 的物理内存。同时，Intel 修改了页映射的方式，使得新的映射方式<strong>Physical Address Extension, PAE</strong>可以访问到更多的物理内存。</p>
 <ul>
 <li>
-<p>在<code>windows</code>下，进程可以拿一段连续的内存地址作为窗口，然后从高于4GiB的物理空间中申请多个大小等于窗口大小的物理空间并进行编号A, B, C等，用到哪部分就把窗口映射到哪部分。这一操作也叫做<strong>AWE</strong>(Address Windowing Extensions)。</p>
+<p>在<code>windows</code>下，进程可以拿一段连续的内存地址作为窗口，然后从高于 4GiB 的物理空间中申请多个大小等于窗口大小的物理空间并进行编号 A, B, C 等，用到哪部分就把窗口映射到哪部分。这一操作也叫做<strong>AWE</strong>(Address Windowing Extensions)。</p>
 </li>
 <li>
 <p>在<code>linux</code>下则使用<code>mmap</code>系统调用来实现。<code>mmap</code>系统调用的主要作用是使进程之间通过映射同一个普通文件来实现共享内存(IPC)。普通文件被映射到地址空间之后，进程可以像访问普通内存一样对文件进行访问，而不需要调用<code>write</code>, <code>read</code>函数。<code>mmap</code>本质上并不分配空间，只是将文件映射到进程地址空间（当然，会占掉虚拟内存空间），映射成功后就可以直接用<code>memcpy</code>等操作来写文件，因而用户对这段内存区域的修改就可以直接反映到内核空间（当然反过来也一样）。</p>
@@ -65,8 +65,8 @@ $$</p>
 </item>
 <item>
     <title>孤儿进程</title>
-    <link>https://ayamir.github.io/posts/development/orphan-process/</link>
-    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+    <link>http://localhost:1313/posts/development/orphan-process/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/orphan-process/</guid>
     <description><![CDATA[<h2 id="问题背景">问题背景</h2>
 <p>前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 <code>htop</code>，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。</p>
 <p></p>

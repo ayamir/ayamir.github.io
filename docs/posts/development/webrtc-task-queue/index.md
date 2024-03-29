@@ -83,14 +83,14 @@ class RTC_LOCKABLE RTC_EXPORT TaskQueue {
 
 `public`部分：
 
-`TaskQueue`的构造函数接受1个参数，也就是使用`unique_ptr`管理生命周期的对象，这个对象需要是实现了`TaskQueueBase`这一接口的对象。
+`TaskQueue`的构造函数接受 1 个参数，也就是使用`unique_ptr`管理生命周期的对象，这个对象需要是实现了`TaskQueueBase`这一接口的对象。
 
 `TaskQueue`有 2 个重要的方法，也就是`PostTask`和`PostDelayedTask`。
 
 + `PostTask`：将`task`加入到任务队列中进行即时处理；
 + `PostDelayedTask`：将`task`加入到任务队列中，过`milliseconds`毫秒处理。
 
-这 2 种方法都有 2 种重载形式。在webrtc的代码中，经常使用的是接受一个闭包也就是lambda表达式作为参数的这一重载形式。
+这 2 种方法都有 2 种重载形式。在 webrtc 的代码中，经常使用的是接受一个闭包也就是 lambda 表达式作为参数的这一重载形式。
 
 比如在`call/rtp_transport_controller_send.cc`中：
 
@@ -126,9 +126,9 @@ void RtpTransportControllerSend::OnReceivedPacket(
 
 ## TaskQueueBase
 
-`TaskQueueBase`是WebRTC中用来实现异步执行任务的类，保证队列中的任务按照FIFO的顺序执行，不同任务的执行时间不会重叠。
+`TaskQueueBase`是 WebRTC 中用来实现异步执行任务的类，保证队列中的任务按照 FIFO 的顺序执行，不同任务的执行时间不会重叠。
 
-不过，同一个任务队列中的不同任务并不一定总是在相同的worker线程上执行。
+不过，同一个任务队列中的不同任务并不一定总是在相同的 worker 线程上执行。
 
 ```c++
 class RTC_LOCKABLE RTC_EXPORT TaskQueueBase {
@@ -194,14 +194,14 @@ class RTC_LOCKABLE RTC_EXPORT TaskQueueBase {
 };
 ```
 
-从代码中的注释可以看明白`PostTask`这一方法的作用，也就是我们上面所说的：把`task`加入到事件队列中，按照FIFO的顺序进行处理。
+从代码中的注释可以看明白`PostTask`这一方法的作用，也就是我们上面所说的：把`task`加入到事件队列中，按照 FIFO 的顺序进行处理。
 
 需要注意的是，这里还有一个可访问性为`protected`的类：`CurrentTaskQueueSetter`，这个类的作用就像它的命名一样，用于设置当前的任务队列，也就是把任务队列绑定到当前线程上。
 
-+ 构造时，用传入构造函数的任务队列更新当前线程存放的任务队列，并将更新前的任务队列暂存到当前线程的TLS(Thread Local Storage)中。
++ 构造时，用传入构造函数的任务队列更新当前线程存放的任务队列，并将更新前的任务队列暂存到当前线程的 TLS(Thread Local Storage)中。
 + 析构时，用构造时暂存的任务队列更新当前线程存放的任务队列。
 
-WebRTC中有好几个实现了`TaskQueueBase`这一接口的类如`TaskQueueStdlib`, `TaskQueueLibevent`, `TaskQueueWin`, `SimulatedTaskQueue`等，它们的作用也各不相同。
+WebRTC 中有好几个实现了`TaskQueueBase`这一接口的类如`TaskQueueStdlib`, `TaskQueueLibevent`, `TaskQueueWin`, `SimulatedTaskQueue`等，它们的作用也各不相同。
 
 下面我们以`TaskQueueStdlib`为例，对实际的`PostTask`等函数是如何运行的一探究竟。
 

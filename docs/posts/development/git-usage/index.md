@@ -7,7 +7,7 @@
 
 克隆指定 branch ： `git clone --branch <branch-name> <remote-repo-url>`
 
-递归克隆（包括submodule）：`git clone --recursive`
+递归克隆（包括 submodule ）：`git clone --recursive`
 
 已经 clone 完的仓库：`git submodule update --init --recursive`
 

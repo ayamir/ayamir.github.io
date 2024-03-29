@@ -1,127 +1,127 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/</link>
+        <link>http://localhost:1313/tags/</link>
         <description>Tags - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/" rel="self" type="application/rss+xml" /><item>
     <title>WebRTC</title>
-    <link>https://ayamir.github.io/tags/webrtc/</link>
-    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webrtc/</guid>
+    <link>http://localhost:1313/tags/webrtc/</link>
+    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/webrtc/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>OS</title>
-    <link>https://ayamir.github.io/tags/os/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/os/</guid>
+    <link>http://localhost:1313/tags/os/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/os/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ABI</title>
-    <link>https://ayamir.github.io/tags/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/abi/</guid>
+    <link>http://localhost:1313/tags/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/abi/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>C&#43;&#43;</title>
-    <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
+    <link>http://localhost:1313/tags/c&#43;&#43;/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/c&#43;&#43;/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Python</title>
-    <link>https://ayamir.github.io/tags/python/</link>
-    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/python/</guid>
+    <link>http://localhost:1313/tags/python/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/python/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Shell</title>
-    <link>https://ayamir.github.io/tags/shell/</link>
-    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/shell/</guid>
+    <link>http://localhost:1313/tags/shell/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/shell/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Git</title>
-    <link>https://ayamir.github.io/tags/git/</link>
-    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/git/</guid>
+    <link>http://localhost:1313/tags/git/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/git/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Multimedia</title>
-    <link>https://ayamir.github.io/tags/multimedia/</link>
-    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/multimedia/</guid>
+    <link>http://localhost:1313/tags/multimedia/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/multimedia/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>QoE</title>
-    <link>https://ayamir.github.io/tags/qoe/</link>
-    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/qoe/</guid>
+    <link>http://localhost:1313/tags/qoe/</link>
+    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/qoe/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>QoE Metrics</title>
-    <link>https://ayamir.github.io/tags/qoe-metrics/</link>
-    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/qoe-metrics/</guid>
+    <link>http://localhost:1313/tags/qoe-metrics/</link>
+    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/qoe-metrics/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ML</title>
-    <link>https://ayamir.github.io/tags/ml/</link>
-    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/ml/</guid>
+    <link>http://localhost:1313/tags/ml/</link>
+    <pubDate>Mon, 07 Mar 2022 19:25:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/ml/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>WebGL</title>
-    <link>https://ayamir.github.io/tags/webgl/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webgl/</guid>
+    <link>http://localhost:1313/tags/webgl/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/webgl/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ABR</title>
-    <link>https://ayamir.github.io/tags/abr/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/abr/</guid>
+    <link>http://localhost:1313/tags/abr/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/abr/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Survey</title>
-    <link>https://ayamir.github.io/tags/survey/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/survey/</guid>
+    <link>http://localhost:1313/tags/survey/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/survey/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>WebXR</title>
-    <link>https://ayamir.github.io/tags/webxr/</link>
-    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/webxr/</guid>
+    <link>http://localhost:1313/tags/webxr/</link>
+    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/webxr/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Conda</title>
-    <link>https://ayamir.github.io/tags/conda/</link>
-    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/conda/</guid>
+    <link>http://localhost:1313/tags/conda/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/conda/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Jupyter</title>
-    <link>https://ayamir.github.io/tags/jupyter/</link>
-    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/jupyter/</guid>
+    <link>http://localhost:1313/tags/jupyter/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/jupyter/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Content-Based Predict</title>
-    <link>https://ayamir.github.io/tags/content-based-predict/</link>
-    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/content-based-predict/</guid>
+    <link>http://localhost:1313/tags/content-based-predict/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/content-based-predict/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Dynamic Tiling</title>
-    <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
-    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/dynamic-tiling/</guid>
+    <link>http://localhost:1313/tags/dynamic-tiling/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/dynamic-tiling/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Heuristic</title>
-    <link>https://ayamir.github.io/tags/heuristic/</link>
-    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/tags/heuristic/</guid>
+    <link>http://localhost:1313/tags/heuristic/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/tags/heuristic/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

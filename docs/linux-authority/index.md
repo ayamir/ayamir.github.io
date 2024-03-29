@@ -1,4 +1,4 @@
-# Linux权限相关命令解读
+# Linux 权限相关命令解读
 
 
 ## 文件和目录的权限
@@ -305,11 +305,11 @@ chmod 支持两种标识方法
 使用八进制表示法表示从文件模式属性中删除一个位掩码
 掩码的意思：用掩码来取消不同的文件模式
 
-    umask
+   plain umask
 
 可以看到输出为：
 
-    0022
+   plain 0022
 
 不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010
@@ -357,7 +357,7 @@ chmod 支持两种标识方法
 </tbody>
 </table>
 
-掩码中 1 对应位处的权限会被取消，0则不受影响
+掩码中 1 对应位处的权限会被取消，0 则不受影响
 所以会有这样的结果：
 
 ![img](https://i.loli.net/2021/10/09/rj8DkcipUN1Ro94.png)
@@ -369,11 +369,11 @@ chmod 支持两种标识方法
     设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
     设置程序 setuid：
     
-        chmod u+s program_name
+       plain chmod u+s program_name
     
     结果：
     
-        -rwsr-xr-x
+       plain -rwsr-xr-x
     
     可以看到第二组权限中第一个符号是 s
 2.  setgid 位:2000(8 进制)
@@ -381,22 +381,22 @@ chmod 支持两种标识方法
     设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
     对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有
     
-        chmod g+s dir_name
+       plain chmod g+s dir_name
     
     结果：
     
-        drwxrwsr-x
+       plain drwxrwsr-x
     
     可以看到第二组权限中最后一个符号是 s(替换了 x)
 3.  sticky 位:1000(8 进制)
     标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
     用来控制对共享目录的访问
     
-        chmod +t dir_name
+       plain chmod +t dir_name
     
     结果：
     
-        drwxrwxrwt
+       plain drwxrwxrwt
     
     可以看到第三组权限中最后一个符号是 t(替换了 x)
 
@@ -406,7 +406,7 @@ chmod 支持两种标识方法
 
 ### 使用 su 命令登录
 
-    su [-[l]] [user]
+   plain su [-[l]] [user]
 
 如果包含&ldquo;-l&rdquo;选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
 即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录
@@ -416,7 +416,7 @@ chmod 支持两种标识方法
 
 ### 使用 su 命令执行单个命令
 
-    su -c 'comand'
+   plain su -c 'comand'
 
 命令内容必须用 **&rsquo;&rsquo;** 引用起来（也可以是双引号）
 
@@ -431,7 +431,7 @@ chmod 支持两种标识方法
 1.  sudo 比 su 有更丰富的功能，而且可以配置
     通过修改配置文件来配置 sudo
     
-        EDITOR=vim visudo
+       plain EDITOR=vim visudo
     
     执行上面的命令可以用 vim 来编辑 sudo 的配置文件
     常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限
@@ -444,7 +444,7 @@ chmod 支持两种标识方法
 
 ### 用法
 
-    chown [owner][:[group]] file ...
+   plain chown [owner][:[group]] file ...
 
 第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改
 
@@ -503,7 +503,7 @@ chmod 支持两种标识方法
 
 ### 一般用法
 
-    passwd [user]
+   plain passwd [user]
 
 用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
 执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次

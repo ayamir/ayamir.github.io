@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Linux - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/linux/</link>
+        <link>http://localhost:1313/tags/linux/</link>
         <description>Linux - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/linux/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/linux/" rel="self" type="application/rss+xml" /><item>
     <title>修复 Archlinux 上出现的 GPGME Error</title>
-    <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
-    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
+    <link>http://localhost:1313/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+    <pubDate>Fri, 11 Jun 2021 08:50:43 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
     <description><![CDATA[<h2 id="delete-old-sync-files">Delete old sync files</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -49,8 +49,8 @@
 </item>
 <item>
     <title>Linux 权限相关命令解读</title>
-    <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
-    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
+    <link>http://localhost:1313/posts/knowledge/linux/linux-authority/</link>
+    <pubDate>Mon, 15 Mar 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/linux/linux-authority/</guid>
     <description><![CDATA[<h2 id="文件和目录的权限">文件和目录的权限</h2>
 <p>下图为使用<a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreffer">exa</a>命令的部分截图</p>
 <p></p>
@@ -265,11 +265,9 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <h2 id="umask设置文件默认权限">umask：设置文件默认权限</h2>
 <p>使用八进制表示法表示从文件模式属性中删除一个位掩码
 掩码的意思：用掩码来取消不同的文件模式</p>
-<pre><code>umask
-</code></pre>
+<p>plain umask</p>
 <p>可以看到输出为：</p>
-<pre><code>0022
-</code></pre>
+<p>plain 0022</p>
 <p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -314,11 +312,9 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 设置此位到一个可执行文件时，有效用户 ID 将从实际运行此程序的用户 ID 变成该程序拥有者的 ID
 设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
 设置程序 setuid：</p>
-<pre><code>chmod u+s program_name
-</code></pre>
+<p>plain chmod u+s program_name</p>
 <p>结果：</p>
-<pre><code>-rwsr-xr-x
-</code></pre>
+<p>plain -rwsr-xr-x</p>
 <p>可以看到第二组权限中第一个符号是 s</p>
 </li>
 <li>
@@ -326,35 +322,29 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 有效组 ID 从该用户的实际组 ID 更改为该文件所有者的组 ID
 设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
 对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有</p>
-<pre><code>chmod g+s dir_name
-</code></pre>
+<p>plain chmod g+s dir_name</p>
 <p>结果：</p>
-<pre><code>drwxrwsr-x
-</code></pre>
+<p>plain drwxrwsr-x</p>
 <p>可以看到第二组权限中最后一个符号是 s(替换了 x)</p>
 </li>
 <li>
 <p>sticky 位:1000(8 进制)
 标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
 用来控制对共享目录的访问</p>
-<pre><code>chmod +t dir_name
-</code></pre>
+<p>plain chmod +t dir_name</p>
 <p>结果：</p>
-<pre><code>drwxrwxrwt
-</code></pre>
+<p>plain drwxrwxrwt</p>
 <p>可以看到第三组权限中最后一个符号是 t(替换了 x)</p>
 </li>
 </ol>
 <h2 id="su以另一个用户身份运行-shell">su：以另一个用户身份运行 shell</h2>
 <h3 id="使用-su-命令登录">使用 su 命令登录</h3>
-<pre><code>su [-[l]] [user]
-</code></pre>
+<p>plain su [-[l]] [user]</p>
 <p>如果包含“-l”选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
 即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
 <p></p>
 <h3 id="使用-su-命令执行单个命令">使用 su 命令执行单个命令</h3>
-<pre><code>su -c 'comand'
-</code></pre>
+<p>plain su -c &lsquo;comand&rsquo;</p>
 <p>命令内容必须用 <strong>’’</strong> 引用起来（也可以是双引号）</p>
 <p></p>
 <h2 id="sudo以另一个用户身份执行命令">sudo：以另一个用户身份执行命令</h2>
@@ -363,8 +353,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <li>
 <p>sudo 比 su 有更丰富的功能，而且可以配置
 通过修改配置文件来配置 sudo</p>
-<pre><code>EDITOR=vim visudo
-</code></pre>
+<p>plain EDITOR=vim visudo</p>
 <p>执行上面的命令可以用 vim 来编辑 sudo 的配置文件
 常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限</p>
 </li>
@@ -375,8 +364,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </ol>
 <h2 id="chown更改文件所有者">chown：更改文件所有者</h2>
 <h3 id="用法">用法</h3>
-<pre><code>chown [owner][:[group]] file ...
-</code></pre>
+<p>plain chown [owner][:[group]] file &hellip;</p>
 <p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <colgroup>
@@ -412,8 +400,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <p>这个命令是历史遗留问题，在早期的 UNIX 版本中，chown 只能更改文件的所有者，而不能改变文件的所属群组，因此出现了这个命令，事实上现在的 chown 已经能实现 chgrp 的功能，因此没必要再使用这个命令（其使用方式几乎与 chown 命令相同）</p>
 <h2 id="passwd更改用户密码">passwd：更改用户密码</h2>
 <h3 id="一般用法">一般用法</h3>
-<pre><code>passwd [user]
-</code></pre>
+<p>plain passwd [user]</p>
 <p>用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
 执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
 拥有 root 用户权限的用户可以设置所有用户的密码</p>
@@ -423,8 +410,8 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </item>
 <item>
     <title>在 Linux 上手动设置 DNS</title>
-    <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
-    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
+    <link>http://localhost:1313/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+    <pubDate>Tue, 26 Jan 2021 21:43:35 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
     <description><![CDATA[<h2 id="arch-linux-dns-设置">Arch Linux DNS 设置</h2>
 <ol>
 <li>安装<code>dnsmasq</code></li>

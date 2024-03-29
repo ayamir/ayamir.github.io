@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>沉浸式推流中应用层的优化 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="沉浸式推流中应用层的优化" />
-<meta property="og:description" content="背景 大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需" />
+<meta property="og:description" content="背景 大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note10/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note10/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-11-15T10:13:18+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="沉浸式推流中应用层的优化"/>
-<meta name="twitter:description" content="背景 大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需"/>
+<meta name="twitter:description" content="背景 大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note10/" /><link rel="prev" href="https://ayamir.github.io/posts/papers/note9/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note11/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note10/" /><link rel="prev" href="http://localhost:1313/posts/papers/note9/" /><link rel="next" href="http://localhost:1313/posts/papers/note11/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note10\/"
-        },"genre": "posts","keywords": "Immersive Video","wordcount":  651 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note10\/","datePublished": "2021-11-15T10:13:18+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note10\/"
+        },"genre": "posts","keywords": "Immersive Video","wordcount":  592 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note10\/","datePublished": "2021-11-15T10:13:18+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">沉浸式推流中应用层的优化</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-15">2021-11-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 651 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-15">2021-11-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 592 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
             </div>
             
@@ -115,8 +115,8 @@
         <li><a href="#背景">背景</a></li>
         <li><a href="#解决方案">解决方案</a>
           <ul>
-            <li><a href="#使用多条持久的tcp连接">使用多条持久的TCP连接</a></li>
-            <li><a href="#使用http2协议的服务端push特性">使用HTTP/2协议的服务端push特性</a></li>
+            <li><a href="#使用多条持久的-tcp-连接">使用多条持久的 TCP 连接</a></li>
+            <li><a href="#使用-http2-协议的服务端-push-特性">使用 HTTP/2 协议的服务端 push 特性</a></li>
           </ul>
         </li>
       </ul>
@@ -124,17 +124,17 @@
   </ul>
 </nav></div>
                 </div><div class="content" id="content"><h2 id="背景">背景</h2>
-<p>大多数的HAS方案使用HTTP/1.1协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的HAS中，只需要1个GET请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。</p>
-<p>在基于VR的HAS方案中，播放1条视频片段就需要取得多种资源：1次GET请求需要同时请求基础的tile层和每个空间视频tile。使用4x4的tile方案时，客户端需要发起不少于17次GET请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。</p>
+<p>大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。</p>
+<p>在基于 VR 的 HAS 方案中，播放 1 条视频片段就需要取得多种资源：1 次 GET 请求需要同时请求基础的 tile 层和每个空间视频 tile。使用 4x4 的 tile 方案时，客户端需要发起不少于 17 次 GET 请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。</p>
 <h2 id="解决方案">解决方案</h2>
-<h3 id="使用多条持久的tcp连接">使用多条持久的TCP连接</h3>
-<p>大多数的现代浏览器都支持同时建立并维持多达6条TCP连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。</p>
-<p>类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的tile。</p>
-<h3 id="使用http2协议的服务端push特性">使用HTTP/2协议的服务端push特性</h3>
-<p>HTTP/2协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。</p>
-<p>服务端直接push短视频片段可以减少视频的启动时间和端到端延迟。</p>
-<p>并且，服务端push特性可以应用在基于tile的VR视频推流中，客户端可以向服务器同时请求一条视频片段的所有tile。</p>
-<p>服务端可以使用特制的请求处理器，允许客户端为每个tile定义一系列质量等级。</p>
+<h3 id="使用多条持久的-tcp-连接">使用多条持久的 TCP 连接</h3>
+<p>大多数的现代浏览器都支持同时建立并维持多达 6 条 TCP 连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。</p>
+<p>类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的 tile。</p>
+<h3 id="使用-http2-协议的服务端-push-特性">使用 HTTP/2 协议的服务端 push 特性</h3>
+<p>HTTP/2 协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。</p>
+<p>服务端直接 push 短视频片段可以减少视频的启动时间和端到端延迟。</p>
+<p>并且，服务端 push 特性可以应用在基于 tile 的 VR 视频推流中，客户端可以向服务器同时请求一条视频片段的所有 tile。</p>
+<p>服务端可以使用特制的请求处理器，允许客户端为每个 tile 定义一系列质量等级。</p>
 <p>因此可以将应用的启发式自适应的速率的决定传达给服务器，这允许客户端以期望的质量级别取得所有图块。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive Video</a>
@@ -144,14 +144,14 @@
                             <a class="link-to-markdown" href="/posts/papers/note10/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-hashtags="Immersive Video"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note10/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-hashtags="Immersive Video"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note10/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note10/" data-title="沉浸式推流中应用层的优化"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/papers/note9/" class="prev" rel="prev" title="沉浸式流媒体面临的挑战和启示"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/papers/note11/" class="next" rel="next" title="沉浸式流媒体传输的实际度量">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

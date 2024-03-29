@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Note for Content Assisted Prediction - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for Content Assisted Prediction" />
 <meta property="og:description" content="论文概况 Link：Content Assisted Viewport Prediction for Panoramic Video Streaming Level：IEEE CVPR 2019 CV4ARVR Keywords：Trajectory-based predict，C" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-06T15:17:33+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Note for Content Assisted Prediction"/>
@@ -15,7 +15,7 @@
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" /><link rel="prev" href="https://ayamir.github.io/posts/papers/note-for-gpac/" /><link rel="next" href="https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" /><link rel="prev" href="http://localhost:1313/posts/papers/note-for-gpac/" /><link rel="next" href="http://localhost:1313/posts/knowledge/360video/summary-for-vp/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-content-assisted-prediction\/"
-        },"genre": "posts","keywords": "Trajectory-based predict, Content-based predict","wordcount":  1655 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-content-assisted-prediction\/","datePublished": "2022-01-06T15:17:33+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note-for-content-assisted-prediction\/"
+        },"genre": "posts","keywords": "Trajectory-based predict, Content-based predict","wordcount":  1633 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note-for-content-assisted-prediction\/","datePublished": "2022-01-06T15:17:33+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for Content Assisted Prediction</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-06">2022-01-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1655 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-06">2022-01-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1633 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
             </div>
             
@@ -139,9 +139,9 @@
 <h2 id="主要工作">主要工作</h2>
 <h3 id="基于轨迹预测">基于轨迹预测</h3>
 <p>输入：历史窗口轨迹</p>
-<p>模型：64个神经元的单层LSTM，在输入层后面加上一个额外的减法层进行点归一化，以及一个加法层来恢复输出之前的值；用ADAM进行优化，MAE作为损失函数。</p>
+<p>模型：64 个神经元的单层 LSTM，在输入层后面加上一个额外的减法层进行点归一化，以及一个加法层来恢复输出之前的值；用 ADAM 进行优化，MAE 作为损失函数。</p>
 <h3 id="跨用户热图">跨用户热图</h3>
-<p>除了观看者自己的历史FOV轨迹之外，其他观看者对同一视频帧的观看方向也有启发性。</p>
+<p>除了观看者自己的历史 FOV 轨迹之外，其他观看者对同一视频帧的观看方向也有启发性。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -151,7 +151,7 @@
         alt="https://s2.loli.net/2022/01/06/EzGuo8kOIvHmeBi.png"
         title="image-20220106162133282" /></p>
 <p>对视频的每一帧，首先收集用户的观看方向（坐标使用原始的来自三个方向的欧拉角表示，而非经纬度）。</p>
-<p>接着将坐标投影到用经纬度表示的180x360像素的平面图上，对于图中的每个像素点，可以数出其被看到的次数；并对周围像素应用二维高斯光滑。</p>
+<p>接着将坐标投影到用经纬度表示的 180x360 像素的平面图上，对于图中的每个像素点，可以数出其被看到的次数；并对周围像素应用二维高斯光滑。</p>
 <p>上面的过程可以为视频生成热图：</p>
 <p><img
         class="lazyload"
@@ -162,7 +162,7 @@
         alt="https://s2.loli.net/2022/01/06/W3CmDI4rPYxqwiV.png"
         title="image-20220106161609759" /></p>
 <h3 id="视频帧的显著图">视频帧的显著图</h3>
-<p>鉴于观看相同的全景视频时跨用户行为的共性，进一步假设是内容促使多个观众观看公共区域，因此提取出每个帧的显著图可能会表明用户的RoI。</p>
+<p>鉴于观看相同的全景视频时跨用户行为的共性，进一步假设是内容促使多个观众观看公共区域，因此提取出每个帧的显著图可能会表明用户的 RoI。</p>
 <p>对特定的视频帧，应用经典的特征密集型方法——Ittykoch，它首先根据强度、边缘、颜色和方向将图像分解为多个特征通道，然后将它们组合成识别显著区域。</p>
 <p>除了在静态视频帧上检测显著性之外，进一步进行背景减法来减少不太可能感兴趣的区域：应用基于高斯混合的背景/前景分割算法，高级思想是在连续帧之间临时过滤变化的像素点。</p>
 <p>结合上面这两个过程可以为视频帧提取时间显著图。</p>
@@ -183,17 +183,17 @@
         data-sizes="auto"
         alt="https://s2.loli.net/2022/01/06/9oFZxtDnC6LaBTq.png"
         title="image-20220106163415294" /></p>
-<p>使用包含3个LSTM分支的深度学习模型来融合上述的几种预测方式的结果。</p>
-<p>基于轨迹的LSTM（图中绿色分支）从历史窗口 $hw$ 中接受 $n$ 个坐标的输入，接着预测未来窗口 $pw$ 中的 $m$ 个坐标，用 $trj_y_{i}$ 表示；</p>
-<p>基于热图的LSTM（图中蓝色分支）将每个预测步骤对应的视频帧的热图作为输入，并在 $pw$ 中输出第2组 $m$ 个坐标的预测，用 $ht_y_{i}$ 表示：</p>
-<p>对于每个热图，让其通过3个卷积层，每个卷积层后面都有一个最大池化层。然后，在此图像特征提取之后，应用展平步骤和1个密集层来回归坐标（经纬度表示）。</p>
-<p>基于显著图的LSTM采用与热图相似的架构，将显著图作为输入，在 $pw$ 中输出第3组 $m$ 个坐标的预测，用 $sal_y_{i}$ 表示。</p>
+<p>使用包含 3 个 LSTM 分支的深度学习模型来融合上述的几种预测方式的结果。</p>
+<p>基于轨迹的 LSTM（图中绿色分支）从历史窗口 $hw$ 中接受 $n$ 个坐标的输入，接着预测未来窗口 $pw$ 中的 $m$ 个坐标，用 $trj_y_{i}$ 表示；</p>
+<p>基于热图的 LSTM（图中蓝色分支）将每个预测步骤对应的视频帧的热图作为输入，并在 $pw$ 中输出第 2 组 $m$ 个坐标的预测，用 $ht_y_{i}$ 表示：</p>
+<p>对于每个热图，让其通过 3 个卷积层，每个卷积层后面都有一个最大池化层。然后，在此图像特征提取之后，应用展平步骤和 1 个密集层来回归坐标（经纬度表示）。</p>
+<p>基于显著图的 LSTM 采用与热图相似的架构，将显著图作为输入，在 $pw$ 中输出第 3 组 $m$ 个坐标的预测，用 $sal_y_{i}$ 表示。</p>
 <p>对热图和显著图的分支，应用 <code>TimeDistributed</code>层，以便其参数在预测步骤中保持一致。</p>
 <p>最终在每个预测步骤连接 $trj_y$ ， $ht_y$，和 $sal_y$ ，并产生一个最终输出 $y$ 。</p>
-<p>每个模型的损失函数采用MAE，优化函数采用ADAM。</p>
+<p>每个模型的损失函数采用 MAE，优化函数采用 ADAM。</p>
 <p>为每个分支的输出以及最终的输出都检查损失，单独和联合地去调整其参数。</p>
 <h2 id="评估">评估</h2>
-<p>使用2折的交叉验证。</p>
+<p>使用 2 折的交叉验证。</p>
 <h3 id="超参数">超参数</h3>
 <ol>
 <li>$pw$ 的大小：0.1s，1.0s，2.0s；</li>
@@ -214,8 +214,8 @@
 <li>所有模型的精度预测误差几乎是纬度预测误差的二倍，可能由于运动区域在水平方向的翻倍；</li>
 <li>线性回归模型只有在 $pw$ 很短的时候预测精确，随着 $pw$ 的增长，其预测精度会迅速下降；</li>
 <li>基于 LSTM 的轨迹模型始终优于所有 $pw$ 的基线模型，但更多的训练观众无助于显着提高准确性。</li>
-<li>跨用户的热图和显著图可以帮助长期的预测，可以提供合理的离线全视频FOV预测，并具有一致的性能（因为独立于 $pw$ ，并且不需要历史窗口 $hw$ 的轨迹输入），当 $pw$ 增长时，其预测精度超过了基于历史轨迹的模型；</li>
-<li>结合3种模型之后，可以平衡来自历史轨迹、跨用户兴趣和内容显著性的输入，不论 $pw$ 长或短都能产生优化的预测结果；</li>
+<li>跨用户的热图和显著图可以帮助长期的预测，可以提供合理的离线全视频 FOV 预测，并具有一致的性能（因为独立于 $pw$ ，并且不需要历史窗口 $hw$ 的轨迹输入），当 $pw$ 增长时，其预测精度超过了基于历史轨迹的模型；</li>
+<li>结合 3 种模型之后，可以平衡来自历史轨迹、跨用户兴趣和内容显著性的输入，不论 $pw$ 长或短都能产生优化的预测结果；</li>
 </ol>
 <h3 id="例外情况">例外情况</h3>
 <p><img
@@ -226,9 +226,9 @@
         data-sizes="auto"
         alt="https://s2.loli.net/2022/01/06/vZXq9GwS6c3Cgfk.png"
         title="image-20220106174601461" /></p>
-<p>M3在经度上的表现并不适用于上面图中标示的两个视频（Mega.Coaster和GTR.Drives.First.Ever）</p>
+<p>M3 在经度上的表现并不适用于上面图中标示的两个视频（Mega.Coaster 和 GTR.Drives.First.Ever）</p>
 <p>原因分析：</p>
-<p>这两个视频的共同特点是在驾驶路径的一侧具有高运动内容的驾驶内容，因此用户在观看这些视频时，大多数FOV始终以行驶轨迹为中心。因此用户不太可能改变其观看方向，这导致即使 $pw = 2.0s$ 时，单一基于轨迹的模型的预测精度也更高。相比之下，从对内容角度出发的分析无济于事，但可能会引入观众可能会忽略的变道，进而造成预测误差。</p>
+<p>这两个视频的共同特点是在驾驶路径的一侧具有高运动内容的驾驶内容，因此用户在观看这些视频时，大多数 FOV 始终以行驶轨迹为中心。因此用户不太可能改变其观看方向，这导致即使 $pw = 2.0s$ 时，单一基于轨迹的模型的预测精度也更高。相比之下，从对内容角度出发的分析无济于事，但可能会引入观众可能会忽略的变道，进而造成预测误差。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/trajectory-based-predict/">Trajectory-Based Predict</a>
                 </span><span><a href="/tags/content-based-predict/">Content-Based Predict</a>
@@ -238,14 +238,14 @@
                             <a class="link-to-markdown" href="/posts/papers/note-for-content-assisted-prediction/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-hashtags="Trajectory-based predict,Content-based predict"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-hashtag="Trajectory-based predict"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-hashtags="Trajectory-based predict,Content-based predict"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-hashtag="Trajectory-based predict"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note-for-content-assisted-prediction/" data-title="Note for Content Assisted Prediction"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/papers/note-for-gpac/" class="prev" rel="prev" title="Note for GPAC"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/knowledge/360video/summary-for-vp/" class="next" rel="next" title="全景视频中视口预测相关方法总结">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

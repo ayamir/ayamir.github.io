@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Note for OpTile - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for OpTile" />
 <meta property="og:description" content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming Level：ACM MM 17 Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size 背景知识 编码过程概述 对一帧" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-optile/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-optile/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-12-13T16:19:02+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Note for OpTile"/>
@@ -15,7 +15,7 @@
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-optile/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/mm-base/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-rnnQoE/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note-for-optile/" /><link rel="prev" href="http://localhost:1313/posts/knowledge/mm-base/" /><link rel="next" href="http://localhost:1313/posts/papers/note-for-rnnQoE/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-optile\/"
-        },"genre": "posts","keywords": "Immersive Video, Content-based division, Dynamic tiling","wordcount":  4725 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-optile\/","datePublished": "2021-12-13T16:19:02+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note-for-optile\/"
+        },"genre": "posts","keywords": "Immersive Video, Content-based division, Dynamic tiling","wordcount":  4684 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note-for-optile\/","datePublished": "2021-12-13T16:19:02+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for OpTile</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-13">2021-12-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4725 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-13">2021-12-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4684 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟</span>&nbsp;</div>
             </div>
             
@@ -424,15 +424,15 @@ $n$表示$t$中基本子矩形的数量。</p>
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216110120067.png"
         title="img" /></p>
-<p>将视频划分成1秒长的片段，之后为每个片段解决整数线性问题来确定最优的tile划分策略。</p>
+<p>将视频划分成 1 秒长的片段，之后为每个片段解决整数线性问题来确定最优的 tile 划分策略。</p>
 <ol>
-<li>使用MLP模型估计每个tile的存储开销。</li>
+<li>使用 MLP 模型估计每个 tile 的存储开销。</li>
 <li>根据视图的集合$d$及其对应的可能性分布$p$，来估计视图的下载开销$c^{(view)}$。</li>
-<li>构造矩阵$A$时，限制最大的tile大小为$12 \times 12$的基本子矩形（如果设置每个基本子矩形包含$64 \times 64$的像素，tile的最大尺寸即为$768 \times 768$的像素）。</li>
+<li>构造矩阵$A$时，限制最大的 tile 大小为$12 \times 12$的基本子矩形（如果设置每个基本子矩形包含$64 \times 64$的像素，tile 的最大尺寸即为$768 \times 768$的像素）。</li>
 <li>使用<a href="https://www.gnu.org/software/glpk/" target="_blank" rel="noopener noreffer">GNU Linear Programming Kit</a>来解决问题。</li>
 <li>将所有可能的解子矩形编码进一个二元向量$x$中来表示解。</li>
-<li>GLPK的解表明一个可能的解子矩形是否应该被放入解中。</li>
-<li>基于最终得到的解，划分片段并使用ffmepg以同样参数的x264格式进行编码。</li>
+<li>GLPK 的解表明一个可能的解子矩形是否应该被放入解中。</li>
+<li>基于最终得到的解，划分片段并使用 ffmepg 以同样参数的 x264 格式进行编码。</li>
 </ol>
 <h2 id="评估">评估</h2>
 <ul>
@@ -449,21 +449,21 @@ $n$表示$t$中基本子矩形的数量。</p>
 </li>
 <li>
 <p>评估准备</p>
-<p>下载5个使用ERP投影的视频，抽取出测试中用户看到的对应部分。</p>
+<p>下载 5 个使用 ERP 投影的视频，抽取出测试中用户看到的对应部分。</p>
 <p>每个视频都有$1920 \times 960$和$3840 \times 1920$的两种分辨率的版本。</p>
 <p>$1920 \times 960$视频的基本子矩形尺寸为$64 \times 64$的像素。</p>
 <p>$3840 \times 1920$视频的基本子矩形尺寸为$128 \times 128$的像素。</p>
-<p>将视频划分成1秒长的片段，对每个片段都产生出MLP所需的5元组特性。</p>
-<p>之后使用训练好的MLP模型来预测所有可能的tile的大小。</p>
+<p>将视频划分成 1 秒长的片段，对每个片段都产生出 MLP 所需的 5 元组特性。</p>
+<p>之后使用训练好的 MLP 模型来预测所有可能的 tile 的大小。</p>
 </li>
 <li>
 <p>数据选择</p>
 <ol>
 <li>
-<p>从数据集中随机选择出40个用户的集合。</p>
+<p>从数据集中随机选择出 40 个用户的集合。</p>
 </li>
 <li>
-<p>假设100°的水平和垂直FOV，并使用40个用户的头部方向来为每个片段产生$p_v$和$d_v$。</p>
+<p>假设 100°的水平和垂直 FOV，并使用 40 个用户的头部方向来为每个片段产生$p_v$和$d_v$。</p>
 <p>即：分块的决策基于每个片段的内容特征信息与用户的经验视图模式。</p>
 </li>
 </ol>
@@ -473,7 +473,7 @@ $n$表示$t$中基本子矩形的数量。</p>
 </li>
 <li>
 <p>对比实验：</p>
-<p>一组使用由ILP得出的结构进行分块；</p>
+<p>一组使用由 ILP 得出的结构进行分块；</p>
 <p>另外一组：</p>
 <ul>
 <li>
@@ -507,11 +507,11 @@ $n$表示$t$中基本子矩形的数量。</p>
         title="image-20211216152649700" /></p>
 <p>按照$\alpha = 0$方案分块之后的视频大小几乎与未分块之前的视频大小持平，有时甚至略微小于未分块前的视频大小。</p>
 <p>因为所有分块方案都使用相同的编码参数，所以重新编码带来的有损压缩并不会影响竞争的公平性。</p>
-<p>如果将$\alpha$的值调大，存储的大小会略微增大；固定分块大小的方案所得到的存储大小也会随tile变小而变大。</p>
+<p>如果将$\alpha$的值调大，存储的大小会略微增大；固定分块大小的方案所得到的存储大小也会随 tile 变小而变大。</p>
 <h3 id="客户端的下载大小">客户端的下载大小</h3>
 <ul>
 <li>
-<p>预测完美的情况——下载的tile没有任何浪费</p>
+<p>预测完美的情况——下载的 tile 没有任何浪费</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -520,7 +520,7 @@ $n$表示$t$中基本子矩形的数量。</p>
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216155616490.png"
         title="image-20211216155616490" /></p>
-<p>$\alpha= 1000$的情况下，OpTile的表现总是最好的。</p>
+<p>$\alpha= 1000$的情况下，OpTile 的表现总是最好的。</p>
 </li>
 <li>
 <p>正常预测的情况</p>
@@ -534,7 +534,7 @@ $n$表示$t$中基本子矩形的数量。</p>
         alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216161737364.png"
         title="image-20211216161737364" /></p>
 <p>相比于完美假设的预测，所有分块方案的下载大小都增大了。</p>
-<p>$\alpha = 1000$的方案在两个视频的情况下都取得了最小的下载大小。在剩下的3个视频中，OpTile方案的下载大小比起最优的固定分块大小方案不超过25%。</p>
+<p>$\alpha = 1000$的方案在两个视频的情况下都取得了最小的下载大小。在剩下的 3 个视频中，OpTile 方案的下载大小比起最优的固定分块大小方案不超过 25%。</p>
 <p>尽管固定分块大小的方案可能表现更好，但是这种表现随视频的改变而变化显著。</p>
 <p><strong>因为固定分块的方案没有考虑视频内容的特性与用户的观看行为。</strong></p>
 </li>
@@ -549,14 +549,14 @@ $n$表示$t$中基本子矩形的数量。</p>
                             <a class="link-to-markdown" href="/posts/papers/note-for-optile/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile" data-hashtags="Immersive Video,Content-based division,Dynamic tiling"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile" data-hashtags="Immersive Video,Content-based division,Dynamic tiling"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note-for-optile/" data-title="Note for OpTile"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/knowledge/mm-base/" class="prev" rel="prev" title="多媒体基础知识"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/papers/note-for-rnnQoE/" class="next" rel="next" title="Note for RnnQoE">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

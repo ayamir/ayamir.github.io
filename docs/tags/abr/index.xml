@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>ABR - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/abr/</link>
+        <link>http://localhost:1313/tags/abr/</link>
         <description>ABR - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/abr/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/abr/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
     <description><![CDATA[<h1 id="bitrate-adaptation-schemes">Bitrate Adaptation Schemes</h1>
 <h2 id="client-based">Client-based</h2>
 <p>Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.</p>
@@ -114,8 +114,8 @@
 </item>
 <item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
-    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
     <description><![CDATA[<h1 id="paper-overview">Paper Overview</h1>
 <p>Link: <a href="https://ieeexplore.ieee.org/document/8424813" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/document/8424813</a></p>
 <p>Level: IEEE Communications Surveys &amp; Tutorials 2019</p>
@@ -239,21 +239,21 @@
 </item>
 <item>
     <title>Note for srlABR Cross User</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
 <p>Level：IEEE Transactions on Broadcasting 2021</p>
 <p>Keywords：Cross-user vp, Sequetial RL ABR</p>
 <h2 id="主要工作">主要工作</h2>
 <ul>
-<li>使用跨用户注意力网络<code>CUAN</code>来做VP；</li>
-<li>使用<code>360SRL</code>来做ABR</li>
+<li>使用跨用户注意力网络<code>CUAN</code>来做 VP；</li>
+<li>使用<code>360SRL</code>来做 ABR</li>
 <li>将上面两者集成到了推流框架中；</li>
 </ul>
 <h2 id="vp">VP</h2>
 <h3 id="motivation">Motivation</h3>
-<p>形式化VP问题如下：</p>
+<p>形式化 VP 问题如下：</p>
 <p>给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；</p>
 <p>同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；</p>
 <p>目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &hellip;, t+T$ ；</p>
@@ -261,7 +261,7 @@
 $$
 \underset{F}{min} \sum^{t+T}_{k = t+1} {\parallel l^p_k - \hat{l}^p_k \parallel}_1
 $$</p>
-<p>现有的用<code>KNN</code>做的跨用户预测基于LR的模型，而LR的模型很容易产生偏差，所以为了增强<code>KNN</code>的性能，同时考虑单用户的历史视点轨迹和跨用户的视点轨迹。</p>
+<p>现有的用<code>KNN</code>做的跨用户预测基于 LR 的模型，而 LR 的模型很容易产生偏差，所以为了增强<code>KNN</code>的性能，同时考虑单用户的历史视点轨迹和跨用户的视点轨迹。</p>
 <ul>
 <li>提出一种注意力机制来自动提取来自其他用户视口的有用信息；</li>
 <li>对于与当前用户有相似偏好的用户轨迹信息给与更多的注意；</li>
@@ -289,7 +289,7 @@ $$</p>
 $$
 s^{pi}_{t+1} = z(f^{i}_{t+1}, l^{p}_{t+1}), i \in \lbrace 1, &hellip;, M \rbrace \cup \lbrace p \rbrace;
 $$
-$s^{th}_{t+1}$ 表示 $p^{th}$ 用户和 $i^{th}$ 用户之间的相似性；$z()$ 由内积运算建模（还可用其他方式建模比如多个FC层）；</p>
+$s^{th}_{t+1}$ 表示 $p^{th}$ 用户和 $i^{th}$ 用户之间的相似性；$z()$ 由内积运算建模（还可用其他方式建模比如多个 FC 层）；</p>
 <p>接着将相关系数规范化：
 $$
 {\alpha}^{pi}_{t+1} = \frac{e^{s^{pi}_{t+1}}}{\sum_{i \in \lbrace 1,&hellip; M \rbrace \cup {\lbrace p \rbrace}^{e^{s^{pi}_{t+1}}}}}
@@ -298,14 +298,14 @@ $$
 $$
 g^{p}_{t+1} = \sum_{i \in {\lbrace 1,&hellip;M \rbrace \cup \lbrace p \rbrace}} {\alpha}^{pi}_{t+1} \cdot f^{i}_{t+1}
 $$
-融合特征被最后用于VP。</p>
+融合特征被最后用于 VP。</p>
 </li>
 <li>
-<p>VP模块预测 ${(t+1)}^{th}$ 帧的视点位置</p>
+<p>VP 模块预测 ${(t+1)}^{th}$ 帧的视点位置</p>
 <p>$$
 \hat{l}^{p}_{t+1} = r(g^{p}_{t+1})
 $$
-函数 $r(\cdot)$ 由一层FC建模。值得注意的是，对应于未来 T 帧的视点是以滚动方式预测的。</p>
+函数 $r(\cdot)$ 由一层 FC 建模。值得注意的是，对应于未来 T 帧的视点是以滚动方式预测的。</p>
 </li>
 </ol>
 <h3 id="loss">Loss</h3>
@@ -316,10 +316,10 @@ $$</p>
 <h3 id="details">Details</h3>
 <ul>
 <li>使用<code>PyTorch</code>实现；</li>
-<li>函数 $h(\cdot)$ 由两个堆叠的<code>LSTM</code>层组成，两者都有32个神经元；</li>
-<li>函数 $r(\cdot)$ 包含一个带有32个神经元的FC层，接着是<code>Tanh</code>函数；</li>
-<li>历史视点和未来视点的长度设定为1秒和5秒；</li>
-<li>每次迭代从数据集中随机产生2048个样本；</li>
+<li>函数 $h(\cdot)$ 由两个堆叠的<code>LSTM</code>层组成，两者都有 32 个神经元；</li>
+<li>函数 $r(\cdot)$ 包含一个带有 32 个神经元的 FC 层，接着是<code>Tanh</code>函数；</li>
+<li>历史视点和未来视点的长度设定为 1 秒和 5 秒；</li>
+<li>每次迭代从数据集中随机产生 2048 个样本；</li>
 <li>所有训练变量的优化函数采用<code>Adam</code>；</li>
 <li>$\beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 10^{-8}$；</li>
 <li>$learning\ rate = 10^{-3}, training\ epoch = 50$；</li>
@@ -327,11 +327,11 @@ $$</p>
 <h2 id="abr">ABR</h2>
 <h3 id="formulation">Formulation</h3>
 <p>全景视频被切分成 $m$ 个长度为 $T$ 秒的视频片段，每个视频片段空间上划分成 $N$ 个分块，分别以 $M$ 个不同的码率等级编码。因此对于每段有 $N \times M$ 个可选的编码块。</p>
-<p>ABR的目标是为每个片段找到最优的码率集 $X = \lbrace x_{i, j} \rbrace \in Z^{N \times M}$ （ $x_{i, j} = 1$ 意味着为 $i^{th}$ 块选择 $j^{th}$ 的码率等级）：
+<p>ABR 的目标是为每个片段找到最优的码率集 $X = \lbrace x_{i, j} \rbrace \in Z^{N \times M}$ （ $x_{i, j} = 1$ 意味着为 $i^{th}$ 块选择 $j^{th}$ 的码率等级）：
 $$
 \underset{X}{max} \sum^{m}_{t=1} Q_t
 $$
-$Q_t$ 表示 $t^{th}$ 段的QoE分数，与以下几个方面有关：</p>
+$Q_t$ 表示 $t^{th}$ 段的 QoE 分数，与以下几个方面有关：</p>
 <ul>
 <li>
 <p>VIewport Quality：
@@ -351,7 +351,7 @@ $$</p>
 $$
 Q^3_t = \frac{1}{2} \sum^{N}_{i=1} \sum_{u \in U_i} p_i \cdot p_u \sum^{M}_{j=1} |x_{i,j} \cdot r_{i,j} - x_{u,j} \cdot r_{u,j}|
 $$
-$U_i$ 表示 $i^{th}$ 个分块的1跳邻居中的tile索引<a href="https://ieeexplore.ieee.org/document/8486606" target="_blank" rel="noopener noreffer">[1]</a>；</p>
+$U_i$ 表示 $i^{th}$ 个分块的 1 跳邻居中的 tile 索引<a href="https://ieeexplore.ieee.org/document/8486606" target="_blank" rel="noopener noreffer">[1]</a>；</p>
 </li>
 <li>
 <p>Rebuffering：
@@ -359,7 +359,7 @@ $$
 Q^4_t = max(\frac{\sum^{N}_{i=1} \sum^{M}_{j=1} x_{i,j} \cdot r_{i,j} \cdot T}{\xi_t} - b_{t-1}, 0)
 $$
 $\xi_t$ 表示网络吞吐量； $b_{t-1}$ 表示播放器的缓冲区占用率；</p>
-<p>最终的QoE可以由上面的指标定义：
+<p>最终的 QoE 可以由上面的指标定义：
 $$
 Q_t = Q^1_t - \eta_1 \cdot Q^2_t - \eta_2 \cdot Q^3_t - \eta_3 \cdot Q^4_t
 $$
@@ -367,22 +367,22 @@ $\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
 </li>
 </ul>
 <h3 id="sequential-rl-based-abr">Sequential RL-Based ABR</h3>
-<p>假设基于tile的全景推流ABR过程也是MDP。</p>
+<p>假设基于 tile 的全景推流 ABR 过程也是 MDP。</p>
 <p></p>
 <p>细节在<a href="https://ayamir.github.io/posts/note-for-360srl/" target="_blank" rel="noopener noreffer">360SRL</a>中已经说明清楚。</p>
 ]]></description>
 </item>
 <item>
     <title>Note for 360SRL</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
-    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-360srl/</link>
+    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-360srl/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/8784927" target="_blank" rel="noopener noreffer">360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming</a></p>
 <p>Level：ICME 2019</p>
 <p>Keywords：ABR、RL、Sequential decision</p>
 <h2 id="创新点">创新点</h2>
 <ul>
-<li>在MDP中，将N维决策空间内的一次决策转换为1维空间内的N次级联顺序决策处理来降低复杂度。</li>
+<li>在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。</li>
 </ul>
 <h2 id="问题定义">问题定义</h2>
 <p>原始的全景视频被划分成每段固定长度为 $T$ 的片段，</p>
@@ -392,7 +392,7 @@ $\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
 <p>${a_0, &hellip;, a_i, &hellip;, a_{N-1}}, i \in \lbrace 0, &hellip;, N-1 \rbrace, a_i \in \lbrace 0, &hellip;, M-1 \rbrace $</p>
 <p>分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</p>
 <p>用 $p_i \in [0, 1]$ 表示 $i^{th}$ 块的被看到的可能性。</p>
-<h2 id="顺序abr决策">顺序ABR决策</h2>
+<h2 id="顺序-abr-决策">顺序 ABR 决策</h2>
 <p></p>
 <h2 id="代理设计">代理设计</h2>
 <h3 id="状态">状态</h3>
@@ -436,13 +436,13 @@ $$</p>
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}&rsquo;); {\theta}&rsquo;)
 $$
 ${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
-<p>$r(\cdot)$ 是即时奖励函数，即上面公式5中的 $R_t$ ；</p>
+<p>$r(\cdot)$ 是即时奖励函数，即上面公式 5 中的 $R_t$ ；</p>
 <p>$\gamma \in [0, 1]$ 是折扣因子；</p>
-<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式7被重写为：
+<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式 7 被重写为：
 $$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}&rsquo;)
 $$
-利用公式6和公式8可以得出 $i^{th}$ 维的暂时损失函数：
+利用公式 6 和公式 8 可以得出 $i^{th}$ 维的暂时损失函数：
 $$
 l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
 $$
@@ -451,7 +451,7 @@ $$
 Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}&rsquo;)
 $$</p>
 <p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
-<p>观察公式9和公式10可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
+<p>观察公式 9 和公式 10 可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
 <p>为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：
 $$
 l^i_t = r^i_{extra} + Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
@@ -479,26 +479,26 @@ $$
 <h2 id="实现细节">实现细节</h2>
 <p></p>
 <p>特征从输入状态中通过特征提取网络提取出来。</p>
-<p>初始的4个输入通过带有128个过滤器的1维卷积层被传递，4个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这4个输入被喂给有128个神经元的全连接层；</p>
-<p>随后特征映射被连接成一个张量，接着是具有1024个神经元和256个神经元的前向网络；</p>
-<p>整个动作-价值网络的输出是M维的向量。</p>
+<p>初始的 4 个输入通过带有 128 个过滤器的 1 维卷积层被传递，4 个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这 4 个输入被喂给有 128 个神经元的全连接层；</p>
+<p>随后特征映射被连接成一个张量，接着是具有 1024 个神经元和 256 个神经元的前向网络；</p>
+<p>整个动作-价值网络的输出是 M 维的向量。</p>
 <p>特征提取层和前向网络层都使用 <code>Leaky-ReLU</code>作为激活函数，最后是层归一化层。</p>
 ]]></description>
 </item>
 <item>
     <title>Note for MPC</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
-    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-mpc/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
 <p>Level：ACM SIGCOMM 15</p>
 <p>Keywords：Model Predictive Control，ABR，DASH</p>
 <h2 id="motivation">Motivation</h2>
 <p>关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。</p>
-<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的MPC算法，并且预测误差很低，那么MPC方案可以优于传统的基于速率和基于缓冲区的策略。</p>
+<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制 MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。</p>
 <h2 id="背景">背景</h2>
 <ul>
-<li>播放器端为QoE需要考虑的问题：
+<li>播放器端为 QoE 需要考虑的问题：
 <ol>
 <li>最小化冲缓冲事件发生的次数；</li>
 <li>在吞吐量限制下尽可能传输码率较高的视频；</li>
@@ -529,8 +529,8 @@ $$
 <li>
 <p>播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；</p>
 <ul>
-<li>对于恒定码率CBR的情况，$d_k(R_k) = L \times R_k$；</li>
-<li>对于变化码率VBR的情况，$d_k \sim R_k$；</li>
+<li>对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$；</li>
+<li>对于变化码率 VBR 的情况，$d_k \sim R_k$；</li>
 </ul>
 </li>
 <li>
@@ -572,8 +572,8 @@ $$
 $$</p>
 </li>
 </ol>
-<h3 id="qoe最大化问题">QoE最大化问题</h3>
-<p>QoE的组成部分：</p>
+<h3 id="qoe-最大化问题">QoE 最大化问题</h3>
+<p>QoE 的组成部分：</p>
 <ol>
 <li>
 <p>平均视频质量：在所有块中每个块平均的质量，计算为：
@@ -597,7 +597,7 @@ $$</p>
 <p>启动延迟 $T_s$ ，假设 $T_s \ll B_{max}$ 。</p>
 </li>
 </ol>
-<p>对不同用户而言，上述4种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的QoE：
+<p>对不同用户而言，上述 4 种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的 QoE：
 $$
 QoE^K_1 = \sum^K_{k=1} q(R_k) - \lambda \sum^K_{k=1} | q(R_{k+1}) - q(R_k) | - \mu \sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+ - \mu_s T_s,\
 \lambda, \mu, \mu_s \nless 0
@@ -605,13 +605,13 @@ $$
 相对较小的 $\lambda$ 表示用户不太关心视频质量变化； $\lambda$ 越大表明越需要使视频质量变得光滑。</p>
 <p>相对较大的 $\mu$ 表示用户很在意重缓冲；</p>
 <p>在这里文章倾向于启动延迟很低，所以采用大 $\mu_s$ ；</p>
-<p>QoE的最大化：</p>
+<p>QoE 的最大化：</p>
 <p>输入：吞吐量迹 ${C_t, t \in [t_1, t_{K+1}]}$</p>
 <p>输出：码率选择 $R_1, &hellip;, R_K$；启动时间 $T_s$ ；</p>
 <p>需要注意：当最大化的决策发生在播放过程中时，启动时间便不再存在；</p>
 <p></p>
 <h3 id="算法">算法</h3>
-<p>上图中的QoE最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
+<p>上图中的 QoE 最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
 <p>$t_k$ 时刻播放器选择码率 $R_k$ ，只有过去的吞吐量 $\lbrace C_t, t \le t_k \rbrace$ 可知，未来的值 ${C_t, t &gt; t_k}$ 未知。</p>
 <p>但是，<em>吞吐量预测器</em>可以用于获取对吞吐量的预测，定义其为 $\lbrace \hat{C_t}, t &gt; t_k \rbrace$ 。</p>
 <p>基于这样的预测和缓冲区的信息（精确可知），<em>码率选择器</em>对下个块 $k$ 的码率选择可以表示为：
@@ -632,7 +632,7 @@ $$</p>
 <p></p>
 <h2 id="mpc-for-optimal-bitrate-adaptation">MPC for Optimal Bitrate Adaptation</h2>
 <h3 id="why-mpc">Why MPC</h3>
-<p>MPC天然适合码率自适应问题。</p>
+<p>MPC 天然适合码率自适应问题。</p>
 <ul>
 <li>
 <p><strong>Strawman solutions</strong></p>
@@ -641,16 +641,16 @@ $$</p>
 <li>Proportional-integral-derivation(PID) control.</li>
 <li>Markov Decision Process(MDP) based control.</li>
 </ol>
-<p>PID相较MDP而言计算起来更加简单，只能用于使系统稳定，不能显式地优化QoE目标；此外PID被设计用于有连续的时间和连续的状态空间的问题中，用于当前这种高度离散化的问题中会导致性能亏损和不稳定。</p>
-<p>应用MDP的话可以将吞吐量和缓冲区状态形式化为马氏过程，然后使用诸如值迭代和策略迭代等标准算法求出最优解。</p>
-<p>（然而，这有一个很强的假设，即吞吐量动态遵循马尔可夫过程，不清楚这在实践中是否成立。我们将MDP的潜在用途和吞吐量动态分析作为未来的工作。）</p>
+<p>PID 相较 MDP 而言计算起来更加简单，只能用于使系统稳定，不能显式地优化 QoE 目标；此外 PID 被设计用于有连续的时间和连续的状态空间的问题中，用于当前这种高度离散化的问题中会导致性能亏损和不稳定。</p>
+<p>应用 MDP 的话可以将吞吐量和缓冲区状态形式化为马氏过程，然后使用诸如值迭代和策略迭代等标准算法求出最优解。</p>
+<p>（然而，这有一个很强的假设，即吞吐量动态遵循马尔可夫过程，不清楚这在实践中是否成立。我们将 MDP 的潜在用途和吞吐量动态分析作为未来的工作。）</p>
 </li>
 <li>
 <p><strong>Case for MPC</strong></p>
 <p>理想情况下，如果给出未来吞吐量的完美数据，那么启动时间 $T_s$ 和最优码率选择 $R_1, &hellip; R_K$ 可以一下子就计算出来；</p>
 <p>实际情况中，虽然不能得到未来吞吐量的完美预测，但是我们可以假设吞吐量在较短的时间段 $[t_k, t_{k+N}]$ 内不会剧烈变化。</p>
-<p>基于此，可以使用当前视界中的预测来应用第1个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
-<p>而这种方案就称为MPC。MPC的一般好处在于，MPC可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
+<p>基于此，可以使用当前视界中的预测来应用第 1 个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
+<p>而这种方案就称为 MPC。MPC 的一般好处在于，MPC 可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
 </li>
 </ul>
 ]]></description>

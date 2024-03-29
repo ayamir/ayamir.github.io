@@ -1,23 +1,23 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>MPC - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/mpc/</link>
+        <link>http://localhost:1313/tags/mpc/</link>
         <description>MPC - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/mpc/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/mpc/" rel="self" type="application/rss+xml" /><item>
     <title>Note for MPC</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
-    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-mpc/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
 <p>Level：ACM SIGCOMM 15</p>
 <p>Keywords：Model Predictive Control，ABR，DASH</p>
 <h2 id="motivation">Motivation</h2>
 <p>关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。</p>
-<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的MPC算法，并且预测误差很低，那么MPC方案可以优于传统的基于速率和基于缓冲区的策略。</p>
+<p>文章引入了控制论中的方法，将各方面的影响因素形式化为<em>随机优化控制</em>问题，利用<strong>模型预测控制 MPC</strong>将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。</p>
 <h2 id="背景">背景</h2>
 <ul>
-<li>播放器端为QoE需要考虑的问题：
+<li>播放器端为 QoE 需要考虑的问题：
 <ol>
 <li>最小化冲缓冲事件发生的次数；</li>
 <li>在吞吐量限制下尽可能传输码率较高的视频；</li>
@@ -48,8 +48,8 @@
 <li>
 <p>播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；</p>
 <ul>
-<li>对于恒定码率CBR的情况，$d_k(R_k) = L \times R_k$；</li>
-<li>对于变化码率VBR的情况，$d_k \sim R_k$；</li>
+<li>对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$；</li>
+<li>对于变化码率 VBR 的情况，$d_k \sim R_k$；</li>
 </ul>
 </li>
 <li>
@@ -91,8 +91,8 @@ $$
 $$</p>
 </li>
 </ol>
-<h3 id="qoe最大化问题">QoE最大化问题</h3>
-<p>QoE的组成部分：</p>
+<h3 id="qoe-最大化问题">QoE 最大化问题</h3>
+<p>QoE 的组成部分：</p>
 <ol>
 <li>
 <p>平均视频质量：在所有块中每个块平均的质量，计算为：
@@ -116,7 +116,7 @@ $$</p>
 <p>启动延迟 $T_s$ ，假设 $T_s \ll B_{max}$ 。</p>
 </li>
 </ol>
-<p>对不同用户而言，上述4种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的QoE：
+<p>对不同用户而言，上述 4 种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的 QoE：
 $$
 QoE^K_1 = \sum^K_{k=1} q(R_k) - \lambda \sum^K_{k=1} | q(R_{k+1}) - q(R_k) | - \mu \sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+ - \mu_s T_s,\
 \lambda, \mu, \mu_s \nless 0
@@ -124,13 +124,13 @@ $$
 相对较小的 $\lambda$ 表示用户不太关心视频质量变化； $\lambda$ 越大表明越需要使视频质量变得光滑。</p>
 <p>相对较大的 $\mu$ 表示用户很在意重缓冲；</p>
 <p>在这里文章倾向于启动延迟很低，所以采用大 $\mu_s$ ；</p>
-<p>QoE的最大化：</p>
+<p>QoE 的最大化：</p>
 <p>输入：吞吐量迹 ${C_t, t \in [t_1, t_{K+1}]}$</p>
 <p>输出：码率选择 $R_1, &hellip;, R_K$；启动时间 $T_s$ ；</p>
 <p>需要注意：当最大化的决策发生在播放过程中时，启动时间便不再存在；</p>
 <p></p>
 <h3 id="算法">算法</h3>
-<p>上图中的QoE最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
+<p>上图中的 QoE 最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
 <p>$t_k$ 时刻播放器选择码率 $R_k$ ，只有过去的吞吐量 $\lbrace C_t, t \le t_k \rbrace$ 可知，未来的值 ${C_t, t &gt; t_k}$ 未知。</p>
 <p>但是，<em>吞吐量预测器</em>可以用于获取对吞吐量的预测，定义其为 $\lbrace \hat{C_t}, t &gt; t_k \rbrace$ 。</p>
 <p>基于这样的预测和缓冲区的信息（精确可知），<em>码率选择器</em>对下个块 $k$ 的码率选择可以表示为：
@@ -151,7 +151,7 @@ $$</p>
 <p></p>
 <h2 id="mpc-for-optimal-bitrate-adaptation">MPC for Optimal Bitrate Adaptation</h2>
 <h3 id="why-mpc">Why MPC</h3>
-<p>MPC天然适合码率自适应问题。</p>
+<p>MPC 天然适合码率自适应问题。</p>
 <ul>
 <li>
 <p><strong>Strawman solutions</strong></p>
@@ -160,120 +160,120 @@ $$</p>
 <li>Proportional-integral-derivation(PID) control.</li>
 <li>Markov Decision Process(MDP) based control.</li>
 </ol>
-<p>PID相较MDP而言计算起来更加简单，只能用于使系统稳定，不能显式地优化QoE目标；此外PID被设计用于有连续的时间和连续的状态空间的问题中，用于当前这种高度离散化的问题中会导致性能亏损和不稳定。</p>
-<p>应用MDP的话可以将吞吐量和缓冲区状态形式化为马氏过程，然后使用诸如值迭代和策略迭代等标准算法求出最优解。</p>
-<p>（然而，这有一个很强的假设，即吞吐量动态遵循马尔可夫过程，不清楚这在实践中是否成立。我们将MDP的潜在用途和吞吐量动态分析作为未来的工作。）</p>
+<p>PID 相较 MDP 而言计算起来更加简单，只能用于使系统稳定，不能显式地优化 QoE 目标；此外 PID 被设计用于有连续的时间和连续的状态空间的问题中，用于当前这种高度离散化的问题中会导致性能亏损和不稳定。</p>
+<p>应用 MDP 的话可以将吞吐量和缓冲区状态形式化为马氏过程，然后使用诸如值迭代和策略迭代等标准算法求出最优解。</p>
+<p>（然而，这有一个很强的假设，即吞吐量动态遵循马尔可夫过程，不清楚这在实践中是否成立。我们将 MDP 的潜在用途和吞吐量动态分析作为未来的工作。）</p>
 </li>
 <li>
 <p><strong>Case for MPC</strong></p>
 <p>理想情况下，如果给出未来吞吐量的完美数据，那么启动时间 $T_s$ 和最优码率选择 $R_1, &hellip; R_K$ 可以一下子就计算出来；</p>
 <p>实际情况中，虽然不能得到未来吞吐量的完美预测，但是我们可以假设吞吐量在较短的时间段 $[t_k, t_{k+N}]$ 内不会剧烈变化。</p>
-<p>基于此，可以使用当前视界中的预测来应用第1个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
-<p>而这种方案就称为MPC。MPC的一般好处在于，MPC可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
+<p>基于此，可以使用当前视界中的预测来应用第 1 个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
+<p>而这种方案就称为 MPC。MPC 的一般好处在于，MPC 可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
 </li>
 </ul>
 ]]></description>
 </item>
 <item>
     <title>Note for TBRA</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
-    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-tbra/</link>
+    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-tbra/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
 <p>Level：ACM MM 21</p>
 <p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
 <h2 id="创新点">创新点</h2>
 <h3 id="背景">背景</h3>
-<p>现有的固定的tile划分方式严重依赖viewport预测的精度，然而viewport预测的准确率往往变化极大，这导致基于tile的策略实际效果并不一定能实现其设计初衷：保证QoE的同时减少带宽浪费。</p>
-<p>考虑同样的viewport预测结果与不同的tile划分方式组合的结果：</p>
+<p>现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。</p>
+<p>考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：</p>
 <p></p>
 <p>从上图可以看到：</p>
 <ul>
-<li>如果采用$6 \times 6$的分块方式，就会浪费26，32两个tile的带宽，同时15，16，17作为本应在实际viewport中的tile并没有分配最高的优先级去请求。</li>
-<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的viewport有所出入，但是得益于tile分块较大，所有应该被请求的tile都得到了最高的优先级，用户的QoE得到了保证。</li>
+<li>如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。</li>
+<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。</li>
 </ul>
-<p>另一方面，基于tile的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/" target="_blank" rel="noopener noreffer">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
+<p>另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/" target="_blank" rel="noopener noreffer">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
 <h3 id="创新">创新</h3>
-<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的viewport预测性能和受限的移动设备的解码能力。</p>
+<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。</p>
 <h3 id="论文组织">论文组织</h3>
 <ol>
-<li>首先使用现实世界的轨迹分析了典型的viewport预测算法并确定了其性能的不确定性。</li>
-<li>接着讨论了不同的分块策略在tile选择和解码效率上的影响。</li>
-<li>自适应的分块策略可以适应viewport预测的错误，并能保证tile选择的质量。</li>
+<li>首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。</li>
+<li>接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。</li>
+<li>自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。</li>
 <li>为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。</li>
 <li>形式化了优化模型，讨论了自适应算法的细节。</li>
 <li>评估证明了方案的优越性。</li>
 </ol>
 <h2 id="motivation">Motivation</h2>
-<h3 id="分块策略对tile选择的影响">分块策略对tile选择的影响</h3>
-<p>实现4种轻量的viewport预测算法：线性回归LR、岭回归RR、支持向量回归、长短期记忆LSTM。</p>
-<p>设置历史窗口大小为2s，预测窗口大小为1s；viewport的宽度和高度分别为100°和90°。</p>
+<h3 id="分块策略对-tile-选择的影响">分块策略对 tile 选择的影响</h3>
+<p>实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。</p>
+<p>设置历史窗口大小为 2s，预测窗口大小为 1s；viewport 的宽度和高度分别为 100°和 90°。</p>
 <p>默认的分块策略为$6 \times 6$；头部移动数据集来自<a href="https://dl.acm.org/doi/10.1145/3204949.3208139" target="_blank" rel="noopener noreffer">公开数据集</a>。</p>
-<h4 id="viewport预测的不准确性">viewport预测的不准确性</h4>
+<h4 id="viewport-预测的不准确性">viewport 预测的不准确性</h4>
 <p>研究表明，用户的头部运动主要发生在水平方向而较少发生在垂直方向，所以只分析水平方向的预测。</p>
-<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的viewport预测采样。</p>
+<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的 viewport 预测采样。</p>
 <p>视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。</p>
 <ul>
 <li>
-<p>改变采样频率会直接影响viewport预测的精度，频率越低，精度越低。</p>
+<p>改变采样频率会直接影响 viewport 预测的精度，频率越低，精度越低。</p>
 </li>
 <li>
-<p>相机运动的viewport预测错误率比相机静止的明显更高。</p>
+<p>相机运动的 viewport 预测错误率比相机静止的明显更高。</p>
 </li>
 </ul>
 <h4 id="通过分块容忍预测错误">通过分块容忍预测错误</h4>
-<p>因为不管tile的哪个部分被包含在预测的viewport中，只要包含一部分就会请求整个tile，所以增大每个tile的尺寸能吸收预测错误。</p>
+<p>因为不管 tile 的哪个部分被包含在预测的 viewport 中，只要包含一部分就会请求整个 tile，所以增大每个 tile 的尺寸能吸收预测错误。</p>
 <p>实验验证：</p>
-<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持tile选择结果的相同质量。</p>
-<p>用$F_1$分数来表示tile选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
-<p>实验结果表明更大的tile尺寸更能容忍预测错误。</p>
+<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持 tile 选择结果的相同质量。</p>
+<p>用$F_1$分数来表示 tile 选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
+<p>实验结果表明更大的 tile 尺寸更能容忍预测错误。</p>
 <h3 id="分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</h3>
 <p>虽然当前的移动设备硬件性能发展迅速，但是实时的高码率高分辨率全景视频的解码任务还是充满挑战。</p>
 <p>分块对于编码的影响：</p>
 <ul>
-<li>tile越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
+<li>tile 越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
 </ul>
 <p>直接影响解码复杂性的因素：</p>
 <ul>
-<li>tile的数量。</li>
+<li>tile 的数量。</li>
 <li>视频的分辨率。</li>
 <li>用于解码的资源。</li>
 </ul>
-<p>固定其中1个因素改变另外2个因素来检查其对解码的影响：</p>
+<p>固定其中 1 个因素改变另外 2 个因素来检查其对解码的影响：</p>
 <p></p>
-<p>根据对图的观察可以得出这3个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
-<p>分别用$F_n(x), F_r(x), F_c(x)$表示tile数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
-<p>将这3个比值作为3个乘子建立分析模型：
+<p>根据对图的观察可以得出这 3 个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
+<p>分别用$F_n(x), F_r(x), F_c(x)$表示 tile 数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
+<p>将这 3 个比值作为 3 个乘子建立分析模型：
 $$
 D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
 $$
-上式表示计算整体的解码时间，其中tile数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
+上式表示计算整体的解码时间，其中 tile 数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
 <p>这个模型将用于帮助做出分块和码率适应的决策。</p>
 <p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
-<h2 id="tbra的设计">TBRA的设计</h2>
+<h2 id="tbra-的设计">TBRA 的设计</h2>
 <ul>
-<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示360°视频分块方式的集合；</li>
-<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中tile的数量；</li>
+<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示 360°视频分块方式的集合；</li>
+<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中 tile 的数量；</li>
 <li>当 $i &lt; j$ 时，假设 $|s_i| &lt; |s_j|$；</li>
-<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的tile $j$，$i \le 块的数量, j \le |s|$；</li>
-<li>目标是确定分块方式$s$，并为每个tile确定其码率$b_{i, j}$；</li>
+<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的 tile $j$，$i \le 块的数量, j \le |s|$；</li>
+<li>目标是确定分块方式$s$，并为每个 tile 确定其码率$b_{i, j}$；</li>
 </ul>
 <h3 id="分块自适应">分块自适应</h3>
 <h4 id="自适应的概念">自适应的概念</h4>
-<p>分块尺寸大小会导致viewport容错率和传输效率的变化。</p>
+<p>分块尺寸大小会导致 viewport 容错率和传输效率的变化。</p>
 <ul>
-<li>分块尺寸小，极端情况下每个像素点作为一个tile，viewport容错率最小，但是传输效率达到100%；</li>
-<li>分块尺寸大，极端情况下整个视频帧作为一个tile，viewport容错率最大，但是传输效率最小；</li>
+<li>分块尺寸小，极端情况下每个像素点作为一个 tile，viewport 容错率最小，但是传输效率达到 100%；</li>
+<li>分块尺寸大，极端情况下整个视频帧作为一个 tile，viewport 容错率最大，但是传输效率最小；</li>
 </ul>
 <p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
 <h4 id="分块选择">分块选择</h4>
-<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去n秒中方向 $d$ 的预测错误平均值；
+<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去 n 秒中方向 $d$ 的预测错误平均值；
 $$
 \overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
 $$
-预测区域的扩展被进一步用于tile选择，受过去预测精度的动态影响。</p>
-<p>下一步检查不同分块方式，进而找到QoE和传输效率之间的折中。</p>
-<p>对于每个分块方式，比较基于扩展的预测区域的tile选择的质量。使用2个比值作为QoE和传输效率的度量：
+预测区域的扩展被进一步用于 tile 选择，受过去预测精度的动态影响。</p>
+<p>下一步检查不同分块方式，进而找到 QoE 和传输效率之间的折中。</p>
+<p>对于每个分块方式，比较基于扩展的预测区域的 tile 选择的质量。使用 2 个比值作为 QoE 和传输效率的度量：
 $$
 Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
 $$</p>
@@ -281,17 +281,17 @@ $$</p>
 Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
 $$</p>
 <p></p>
-<p>这2个比值的tradeoff可以在上图中清晰地看出。</p>
+<p>这 2 个比值的 tradeoff 可以在上图中清晰地看出。</p>
 <p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
 $$
 Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
 $$
-$\phi_i$ 是viewport $i$ 的中心纬度坐标，它表明随着viewport的垂直移动，浪费率的权重会发生变化。（因为投影方式是ERP）</p>
+$\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的垂直移动，浪费率的权重会发生变化。（因为投影方式是 ERP）</p>
 <p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
 <h3 id="码率自适应">码率自适应</h3>
 <h4 id="视频质量">视频质量</h4>
-<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于tile是否在预测的viewport中。</p>
-<p>$q(b_{i, j})$ 是tile比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
+<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于 tile 是否在预测的 viewport 中。</p>
+<p>$q(b_{i, j})$ 是 tile 比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
 <p>第 $i$ 个视频块的质量等级可以定义为：</p>
 <p>$$
 Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
@@ -300,9 +300,9 @@ $$</p>
 $$
 subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
 $$
-$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时viewport的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
+$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时 viewport 的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
 <h4 id="质量变化">质量变化</h4>
-<p>连续视频块之间的强烈质量变化会损害QoE，定义质量变化作为响铃两个视频块之间质量的变化：
+<p>连续视频块之间的强烈质量变化会损害 QoE，定义质量变化作为响铃两个视频块之间质量的变化：
 $$
 Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
 $$</p>
@@ -324,23 +324,23 @@ $$
 Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
 $$</p>
 <p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
-<p>第二部分 $t_{miss}$ 表示下载缺失的tile所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的tile）。</p>
+<p>第二部分 $t_{miss}$ 表示下载缺失的 tile 所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的 tile）。</p>
 <h4 id="优化目标">优化目标</h4>
-<p>第 $i$ 个视频块的整体优化目标可以定义为前述3个指标的加权和：
+<p>第 $i$ 个视频块的整体优化目标可以定义为前述 3 个指标的加权和：
 $$
 Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
 $$
 各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
-<p>传统意义上使用所有视频块的平均QoE作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
-<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">基于MPC的框架</a>，在有限的范围内优化多个视频块的QoE，最终的目标函数可以形式化为：
+<p>传统意义上使用所有视频块的平均 QoE 作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
+<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">基于 MPC 的框架</a>，在有限的范围内优化多个视频块的 QoE，最终的目标函数可以形式化为：
 $$
 \underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
 $$
-因为短期内的viewport预测性能和网络状况可以很容易得到，QoE优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
-<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行QoE优化，直到最后一个窗口。</p>
-<p>使用基于MPC的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
+因为短期内的 viewport 预测性能和网络状况可以很容易得到，QoE 优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
+<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行 QoE 优化，直到最后一个窗口。</p>
+<p>使用基于 MPC 的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
 <h4 id="高效求解">高效求解</h4>
-<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE优化可以通过详尽搜索定期解决。</p>
+<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE 优化可以通过详尽搜索定期解决。</p>
 <p>但是因为优化过程需要高频调用，所以对于大的搜索空间还是充满挑战。</p>
 <p>为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：</p>
 <ul>
@@ -355,23 +355,23 @@ $$
 <p>不会主动耗尽缓冲区，无需让其处理吞吐量的波动。</p>
 </li>
 <li>
-<p>码率选择应该考虑tile的分类；</p>
-<p>tile的码率不应该低于同一个视频块中更低权重tile的码率： $b_{i, j} \ge b_{i, j&rsquo;}, \forall w_{i, j} &gt; w_{i, j&rsquo;}$ 。</p>
+<p>码率选择应该考虑 tile 的分类；</p>
+<p>tile 的码率不应该低于同一个视频块中更低权重 tile 的码率： $b_{i, j} \ge b_{i, j&rsquo;}, \forall w_{i, j} &gt; w_{i, j&rsquo;}$ 。</p>
 </li>
 <li>
-<p>属于相同类别的tile比特率选择应该是同一个等级；</p>
-<p>这使码率自适应在tile类的级别上执行而非单个tile的级别，大大减小了搜索空间的规模。</p>
+<p>属于相同类别的 tile 比特率选择应该是同一个等级；</p>
+<p>这使码率自适应在 tile 类的级别上执行而非单个 tile 的级别，大大减小了搜索空间的规模。</p>
 </li>
 <li>
-<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的tile应该有相同的结果。</p>
+<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的 tile 应该有相同的结果。</p>
 </li>
 </ul>
 <h3 id="tbra-workflow">TBRA workflow</h3>
 <p></p>
 <p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
 <p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
-<p>观察到tile自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
-<p>基于MPC的优化workflow还可以有效地解决码率自适应问题。</p>
+<p>观察到 tile 自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
+<p>基于 MPC 的优化 workflow 还可以有效地解决码率自适应问题。</p>
 ]]></description>
 </item>
 </channel>

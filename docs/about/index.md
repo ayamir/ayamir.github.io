@@ -10,13 +10,13 @@
 
 - 一个实现了拼单、拼车、群聊等功能的 [Android App](https://github.com/ayamir/DuoDuoPin) （java）
 
-- 一套 Neovim 的[配置方案](https://github.com/ayamir/nvimdots)，与其他小伙伴维护至今已获得2.5K+ star 和 400+ fork （lua）
+- 一套 Neovim 的[配置方案](https://github.com/ayamir/nvimdots)，与其他小伙伴维护至今已获得 2.5K+ star 和 400+ fork （lua）
 
 研究生期间的方向很乱，包括：
 
-- 全景视频的分块传输和 Web 端播放[系统](https://github.com/ayamir/tiled-vr-dash-platform)（基于Dash、WebXR、WebGL）
+- 全景视频的分块传输和 Web 端播放[系统](https://github.com/ayamir/tiled-vr-dash-platform)（基于 Dash、WebXR、WebGL）
 
-- 结合游戏引擎的物体级 ROI [编码增强](https://github.com/ayamir/openh264-differentiated-streaming)（基于Unity、WebRTC、OpenH264）
+- 结合游戏引擎的物体级 ROI [编码增强](https://github.com/ayamir/openh264-differentiated-streaming)（基于 Unity、WebRTC、OpenH264）
 
 - 基于 Unity 的 VR 开发，以及结合 VR 的 HCI 研究。
 

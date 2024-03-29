@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>重学C&#43;&#43;：标准库类模板Vector - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="重学C&#43;&#43;：标准库类模板Vector" />
 <meta property="og:description" content="常见的坑与用法 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。 使用()和{}对vector执行初始化含义" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/cpp/vector/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/knowledge/cpp/vector/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-10-28T15:35:17+08:00" />
 <meta property="article:modified_time" content="2024-02-05T18:37:27+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="重学C&#43;&#43;：标准库类模板Vector"/>
@@ -15,7 +15,7 @@
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/knowledge/cpp/vector/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/cpp/string/" /><link rel="next" href="https://ayamir.github.io/posts/knowledge/cpp/iterator/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/knowledge/cpp/vector/" /><link rel="prev" href="http://localhost:1313/posts/knowledge/cpp/string/" /><link rel="next" href="http://localhost:1313/posts/knowledge/cpp/iterator/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/knowledge\/cpp\/vector\/"
-        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  1811 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/cpp\/vector\/","datePublished": "2021-10-28T15:35:17+08:00","dateModified": "2024-02-05T18:37:27+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/knowledge\/cpp\/vector\/"
+        },"genre": "posts","keywords": "C\u002b\u002b","wordcount":  1772 ,
+        "url": "http:\/\/localhost:1313\/posts\/knowledge\/cpp\/vector\/","datePublished": "2021-10-28T15:35:17+08:00","dateModified": "2024-02-05T18:37:27+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">重学C&#43;&#43;：标准库类模板Vector</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="fa-regular fa-folder fa-fw"></i>Knowledge</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1811 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-28">2021-10-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1772 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
             </div>
             
@@ -148,7 +148,7 @@
 </div>
 </div></li>
 <li>
-<p>使用<code>{}</code>执行列表初始化时按照顺序遵守2个守则：</p>
+<p>使用<code>{}</code>执行列表初始化时按照顺序遵守 2 个守则：</p>
 <ol>
 <li>
 <p>如果<code>{}</code>内容可以用于初始化，则采用<code>{}</code>默认的初始化含义。</p>
@@ -235,9 +235,9 @@
 </li>
 <li>
 <p>Linux 为什么使用 2 倍扩容？</p>
-<p>Linux下主要使用glibc的ptmalloc来进行用户空间申请的，如果malloc的空间小于128KB，其内部通过brk()来扩张，如果大于128KB，通过mmap将内存映射到进程地址空间。</p>
-<p>Linux 引入了伙伴系统为内核提供了一种用于分配连续的页而建立的一种高效的分配策略，对固定分区和动态分区方式的折中。固定分区存在内部碎片，动态分区存在外部碎片，而且动态分区回收时的合并以及分配时的切片是比较耗时的。伙伴系统是将整个内存区域构建成基本大小basicSize的1倍、2倍、4倍、8倍、16倍等，即要求内存空间分区链均对应2的整次幂倍大小的空间，整齐划一，有规律的而不是乱糟糟的。</p>
-<p>在分配和释放空间时，可以通过log2(request/basicSize)向上取整的哈希算法快速找到对应内存块。通过伙伴系统管理空闲分区的了解，可以看到在伙伴系统中的每条空闲分区链中挂的都是2^i的页面大小，通过哈希思想进行空间分配与合并，非常高效。估计可能是这个原因SGI-STL选择以2倍方式进行扩容。</p>
+<p>Linux 下主要使用 glibc 的 ptmalloc 来进行用户空间申请的，如果 malloc 的空间小于 128KB，其内部通过 brk()来扩张，如果大于 128KB，通过 mmap 将内存映射到进程地址空间。</p>
+<p>Linux 引入了伙伴系统为内核提供了一种用于分配连续的页而建立的一种高效的分配策略，对固定分区和动态分区方式的折中。固定分区存在内部碎片，动态分区存在外部碎片，而且动态分区回收时的合并以及分配时的切片是比较耗时的。伙伴系统是将整个内存区域构建成基本大小 basicSize 的 1 倍、2 倍、4 倍、8 倍、16 倍等，即要求内存空间分区链均对应 2 的整次幂倍大小的空间，整齐划一，有规律的而不是乱糟糟的。</p>
+<p>在分配和释放空间时，可以通过 log2(request/basicSize)向上取整的哈希算法快速找到对应内存块。通过伙伴系统管理空闲分区的了解，可以看到在伙伴系统中的每条空闲分区链中挂的都是 2^i 的页面大小，通过哈希思想进行空间分配与合并，非常高效。估计可能是这个原因 SGI-STL 选择以 2 倍方式进行扩容。</p>
 </li>
 </ul>
 </li>
@@ -262,14 +262,14 @@
                             <a class="link-to-markdown" href="/posts/knowledge/cpp/vector/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-hashtags="C&#43;&#43;"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-hashtag="C&#43;&#43;"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-hashtags="C&#43;&#43;"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-hashtag="C&#43;&#43;"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/knowledge/cpp/vector/" data-title="重学C&#43;&#43;：标准库类模板Vector"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/knowledge/cpp/string/" class="prev" rel="prev" title="重学C&#43;&#43;：标准库类型string"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/knowledge/cpp/iterator/" class="next" rel="next" title="重学C&#43;&#43;：容器和迭代器">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

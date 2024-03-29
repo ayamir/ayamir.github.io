@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Note for Dante - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for Dante" />
-<meta property="og:description" content="论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686 Level: SIGCOMM 18 Keyword: UDP&#43;FOV-aware&#43;FEC 工作范围 目标 在给定序列的帧中，为每个tile设定FEC冗余，根据其被看到的可能性的加权最小化平均质量降低。 问题建模 输入" />
+<meta property="og:description" content="论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686 Level: SIGCOMM 18 Keyword: UDP&#43;FOV-aware&#43;FEC 工作范围 目标 在给定序列的帧中，为每个 tile设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。 问题建模 输入 估计" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-dante/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-dante/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-12-08T22:14:15+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Note for Dante"/>
-<meta name="twitter:description" content="论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686 Level: SIGCOMM 18 Keyword: UDP&#43;FOV-aware&#43;FEC 工作范围 目标 在给定序列的帧中，为每个tile设定FEC冗余，根据其被看到的可能性的加权最小化平均质量降低。 问题建模 输入"/>
+<meta name="twitter:description" content="论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686 Level: SIGCOMM 18 Keyword: UDP&#43;FOV-aware&#43;FEC 工作范围 目标 在给定序列的帧中，为每个 tile设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。 问题建模 输入 估计"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-dante/" /><link rel="prev" href="https://ayamir.github.io/posts/papers/note11/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-360ProbDASH/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note-for-dante/" /><link rel="prev" href="http://localhost:1313/posts/papers/note11/" /><link rel="next" href="http://localhost:1313/posts/papers/note-for-360ProbDASH/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-dante\/"
-        },"genre": "posts","keywords": "Immersive Video, UDP, Heuristic","wordcount":  1363 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-dante\/","datePublished": "2021-12-08T22:14:15+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note-for-dante\/"
+        },"genre": "posts","keywords": "Immersive Video, UDP, Heuristic","wordcount":  1272 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note-for-dante\/","datePublished": "2021-12-08T22:14:15+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for Dante</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-08">2021-12-08</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1363 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-08">2021-12-08</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1272 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
             </div>
             
@@ -116,7 +116,7 @@
         <li><a href="#工作范围">工作范围</a></li>
         <li><a href="#目标">目标</a></li>
         <li><a href="#问题建模">问题建模</a></li>
-        <li><a href="#fec冗余的自适应逻辑">FEC冗余的自适应逻辑</a></li>
+        <li><a href="#fec-冗余的自适应逻辑">FEC 冗余的自适应逻辑</a></li>
         <li><a href="#原型设计">原型设计</a></li>
         <li><a href="#实验评估">实验评估</a></li>
         <li><a href="#局限性">局限性</a></li>
@@ -138,18 +138,18 @@
         alt="https://s2.loli.net/2021/12/08/ZL9TOrxlYV3spiq.png"
         title="image.png" /></p>
 <h2 id="目标">目标</h2>
-<p>在给定序列的帧中，为<strong>每个tile</strong>设定FEC冗余，根据其被看到的可能性的加权最小化平均质量降低。</p>
+<p>在给定序列的帧中，为<strong>每个 tile</strong>设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。</p>
 <h2 id="问题建模">问题建模</h2>
 <ol>
 <li>
 <p>输入
-估计的丢包率$p$、发送速率$f$、有$n$个tile的$m$个帧($&lt;i, j&gt;$来表示第$i$个帧的第$j$个tile</p>
-<p>第$&lt;i, j&gt;$个tile的大小$v_{i, j}$、第$&lt;i, j&gt;$个tile被看到的可能性$\gamma_{i, j}$、</p>
-<p>如果第$&lt;i, j&gt;$ 个tile没有被恢复的质量降低率、最大延迟$T$</p>
+估计的丢包率$p$、发送速率$f$、有$n$个 tile 的$m$个帧($&lt;i, j&gt;$来表示第$i$个帧的第$j$个 tile</p>
+<p>第$&lt;i, j&gt;$个 tile 的大小$v_{i, j}$、第$&lt;i, j&gt;$个 tile 被看到的可能性$\gamma_{i, j}$、</p>
+<p>如果第$&lt;i, j&gt;$ 个 tile 没有被恢复的质量降低率、最大延迟$T$</p>
 </li>
 <li>
 <p>输出</p>
-<p>第$&lt;i, j&gt;$个tile的FEC冗余率$r_{i, j} = \frac{冗余包数量}{原始包数量}$</p>
+<p>第$&lt;i, j&gt;$个 tile 的 FEC 冗余率$r_{i, j} = \frac{冗余包数量}{原始包数量}$</p>
 </li>
 <li>
 <p>最优化问题的形式化
@@ -162,39 +162,39 @@ $$</p>
 <p>$$
 r_{i, j} \le 0
 $$</p>
-<p>（1）：最小化最终被看到的tile的质量衰减的加权和，权重按照被看到的可能性分配。</p>
-<p>（2）：经过重新编码的包和原始的包需要在T时刻之前发出。</p>
-<p>​      Dante将1个GOP(Group of Pictures)中的所有帧当作一批处理，$T$作为GOP的持续时间</p>
-<p>​      $f$：使用TCP Friendly Rate Control algorithm，基于估计的丢包率和网络延迟来计算得出</p>
+<p>（1）：最小化最终被看到的 tile 的质量衰减的加权和，权重按照被看到的可能性分配。</p>
+<p>（2）：经过重新编码的包和原始的包需要在 T 时刻之前发出。</p>
+<p>​      Dante 将 1 个 GOP(Group of Pictures)中的所有帧当作一批处理，$T$作为 GOP 的持续时间</p>
+<p>​      $f$：使用 TCP Friendly Rate Control algorithm，基于估计的丢包率和网络延迟来计算得出</p>
 <p>（3）：确保冗余率总是非负的。</p>
 </li>
 <li>
-<p>关键变量是$d_{i, j}(p, r)$：丢包率是p情况下，采用r作为冗余率的第$&lt;i, j&gt;$个tile的质量衰减
+<p>关键变量是$d_{i, j}(p, r)$：丢包率是 p 情况下，采用 r 作为冗余率的第$&lt;i, j&gt;$个 tile 的质量衰减
 $$
 d_{i, j}(p, r) = \delta_{i, j},\ if\ r &lt; \frac{1}{1-p}; 0, otherwise.
 $$</p>
-<p>假设帧中有k个原始包，质量衰减发生在丢失的包不能被恢复的情况下。</p>
-<p>FEC可以容忍 $r \cdot k$ 个丢包=&gt;即当 $p(r<em>k+k)$ 大于  $r</em>k$  时会发生质量衰减。</p>
+<p>假设帧中有 k 个原始包，质量衰减发生在丢失的包不能被恢复的情况下。</p>
+<p>FEC 可以容忍 $r \cdot k$ 个丢包=&gt;即当 $p(r<em>k+k)$ 大于  $r</em>k$  时会发生质量衰减。</p>
 </li>
 <li>
 <p>过多的丢包会导致依赖链上所有帧的质量衰减，因此考虑帧之间的依赖关系之后，可以重新计算质量衰减：</p>
 <p>$$
 d^{*}<em>{i, j}(p, r) = \sum</em>{0&lt;c\le i}w_{c, i}d_{c, j}(p, r)
 $$</p>
-<p>$w_{c, i}$ 编码帧i对帧c的依赖作为单独的第c个帧的质量衰减的权重；</p>
-<p>最终第i个帧的第j个tile的最终质量衰减就是所有依赖的质量衰减的和。</p>
+<p>$w_{c, i}$ 编码帧 i 对帧 c 的依赖作为单独的第 c 个帧的质量衰减的权重；</p>
+<p>最终第 i 个帧的第 j 个 tile 的最终质量衰减就是所有依赖的质量衰减的和。</p>
 </li>
 </ol>
-<h2 id="fec冗余的自适应逻辑">FEC冗余的自适应逻辑</h2>
+<h2 id="fec-冗余的自适应逻辑">FEC 冗余的自适应逻辑</h2>
 <ol>
 <li>
-<p>关于$d_{i, j}(p, r)$ ：因为是分段函数，所以其值会因为r和p的大小关系而急剧改变。</p>
-<p>利用背包问题的思想可以将其规约成NP完全问题：</p>
-<p>将每个tile看作是一个物品，共有m*n个。</p>
+<p>关于$d_{i, j}(p, r)$ ：因为是分段函数，所以其值会因为 r 和 p 的大小关系而急剧改变。</p>
+<p>利用背包问题的思想可以将其规约成 NP 完全问题：</p>
+<p>将每个 tile 看作是一个物品，共有 m*n 个。</p>
 <p><strong>如果$r_{i, j} &lt; \frac{1}{1-p}$ ，则表示不把第&lt;i,j&gt;和物品放入背包；否则就是将其放入背包。</strong></p>
-<p>公式1可以转化为：最大化所有物品二元变量的线性组合；</p>
-<p>公式2可以转化为：二元变量的另一个线性组合必须低于阈值约束。</p>
-<p>因此整个问题就能被完全转化为<strong>0-1背包</strong>问题</p>
+<p>公式 1 可以转化为：最大化所有物品二元变量的线性组合；</p>
+<p>公式 2 可以转化为：二元变量的另一个线性组合必须低于阈值约束。</p>
+<p>因此整个问题就能被完全转化为<strong>0-1 背包</strong>问题</p>
 </li>
 <li>
 <p>算法</p>
@@ -206,7 +206,7 @@ $$</p>
         data-sizes="auto"
         alt="https://s2.loli.net/2021/12/08/BaJvpEsklMQ5XPF.png"
         title="image.png" /></p>
-<p>整体上是背包问题的标准解法，能以线性复杂度（因为变量只是B)解决问题。</p>
+<p>整体上是背包问题的标准解法，能以线性复杂度（因为变量只是 B)解决问题。</p>
 </li>
 </ol>
 <h2 id="原型设计">原型设计</h2>
@@ -219,21 +219,21 @@ $$</p>
         alt="https://s2.loli.net/2021/12/08/z49bHnQDrfVsNCR.png"
         title="image.png" /></p>
 <ul>
-<li>使用基于TCP和UDP的两条连接来分别传输控制信息（双向：到客户端的播放会话的起至点和到服务端的网络信息反馈）和视频数据包</li>
-<li>服务端根据反馈的网络信息，在每个GOP的边界时刻运行算法1来确定下一个GOP的帧和tile的FEC冗余。
-确定之后服务端使用RS码来插入冗余包，和原始视频数据包一起重新编码，并使用基于TFRC的发送率发送数据。</li>
-<li>Dante的实现是对应用程序级比特率适配策略的补充，并且可以通过对视频播放器进行最小更改来替换现有的底层传输协议来部署。</li>
+<li>使用基于 TCP 和 UDP 的两条连接来分别传输控制信息（双向：到客户端的播放会话的起至点和到服务端的网络信息反馈）和视频数据包</li>
+<li>服务端根据反馈的网络信息，在每个 GOP 的边界时刻运行算法 1 来确定下一个 GOP 的帧和 tile 的 FEC 冗余。
+确定之后服务端使用 RS 码来插入冗余包，和原始视频数据包一起重新编码，并使用基于 TFRC 的发送率发送数据。</li>
+<li>Dante 的实现是对应用程序级比特率适配策略的补充，并且可以通过对视频播放器进行最小更改来替换现有的底层传输协议来部署。</li>
 </ul>
 <h2 id="实验评估">实验评估</h2>
 <ul>
 <li>
-<p>环境：使用Gilbert模型来模拟实现丢包事件（而非使用统一随机丢包）</p>
-<p>创造了两种网络条件good（丢包率0.5%）和bad（丢包率2%）</p>
+<p>环境：使用 Gilbert 模型来模拟实现丢包事件（而非使用统一随机丢包）</p>
+<p>创造了两种网络条件 good（丢包率 0.5%）和 bad（丢包率 2%）</p>
 </li>
 </ul>
 <h2 id="局限性">局限性</h2>
 <ul>
-<li>效果主要依赖于Viewport预测的结果是否准确</li>
+<li>效果主要依赖于 Viewport 预测的结果是否准确</li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive Video</a>
@@ -245,14 +245,14 @@ $$</p>
                             <a class="link-to-markdown" href="/posts/papers/note-for-dante/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante" data-hashtags="Immersive Video,UDP,Heuristic"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante" data-hashtags="Immersive Video,UDP,Heuristic"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note-for-dante/" data-title="Note for Dante"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/papers/note11/" class="prev" rel="prev" title="沉浸式流媒体传输的实际度量"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/papers/note-for-360ProbDASH/" class="next" rel="next" title="Note for 360ProbDASH">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

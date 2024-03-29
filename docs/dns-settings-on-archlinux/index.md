@@ -1,7 +1,7 @@
 # Dns Settings on Archlinux
 
 
-## Arch Linux DNS设置
+## Arch Linux DNS 设置
 
 1. 安装`dnsmasq`
 

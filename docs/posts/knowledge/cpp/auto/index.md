@@ -17,8 +17,8 @@
 
 1. `auto`用于变量初始化时的类型推导，`decltype`用于分析表达式的类型。
 2. `auto`对引用类型推导时实际上用的是引用对象的值。
-3. `auto`与`const`：详见[重学C++：Const二三事](https://ayamir.github.io/posts/const/)。
-4. `decltype`与`const`：详见[重学C++：Const二三事](https://ayamir.github.io/posts/const/)。
+3. `auto`与`const`：详见[重学 C++：Const 二三事](https://ayamir.github.io/posts/const/)。
+4. `decltype`与`const`：详见[重学 C++：Const 二三事](https://ayamir.github.io/posts/const/)。
 
 ## 建议
 

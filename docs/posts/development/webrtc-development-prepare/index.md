@@ -99,7 +99,7 @@ Google 官方给出了 Chromium 项目的[CLion 配置指南](https://chromium.g
 
 `Help`-> `Edit Custom VM Options`，在文件的末尾添加：
 
-```
+```plain
 -Xmx8g
 ```
 
@@ -107,7 +107,7 @@ Google 官方给出了 Chromium 项目的[CLion 配置指南](https://chromium.g
 
 `Help`->`Edit Custom Properties`，在文件的末尾添加：
 
-```
+```plain
 idea.max.intellisense.filesize=12500
 ```
 
@@ -130,7 +130,7 @@ source ~/google/webrtc-checkout/src/tools/gdb/gdbinit
 
 我这边成功开启 IDE 语法高亮和索引的姿势是这样的：
 
-```
+```plain
 cd webrtc-checkout/src
 python3 ./tools/clang/scripts/generate_compdb.py -p ./out/Default -o ./compile_commands.json --target_os=linux
 ```

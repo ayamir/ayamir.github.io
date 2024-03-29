@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Linux 权限相关命令解读 - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Linux 权限相关命令解读" />
 <meta property="og:description" content="文件和目录的权限 下图为使用exa命令的部分截图 上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ： 属性 文件类型 - 普通文件 d 目录文件 l 符号" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/knowledge/linux/linux-authority/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-15T21:43:35+08:00" />
 <meta property="article:modified_time" content="2024-02-13T16:24:57+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Linux 权限相关命令解读"/>
@@ -15,7 +15,7 @@
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/" /><link rel="next" href="https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/knowledge/linux/linux-authority/" /><link rel="prev" href="http://localhost:1313/posts/knowledge/linux/dns-settings-on-archlinux/" /><link rel="next" href="http://localhost:1313/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/knowledge\/linux\/linux-authority\/"
-        },"genre": "posts","keywords": "linux","wordcount":  2272 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/linux\/linux-authority\/","datePublished": "2021-03-15T21:43:35+08:00","dateModified": "2024-02-13T16:24:57+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/knowledge\/linux\/linux-authority\/"
+        },"genre": "posts","keywords": "linux","wordcount":  2285 ,
+        "url": "http:\/\/localhost:1313\/posts\/knowledge\/linux\/linux-authority\/","datePublished": "2021-03-15T21:43:35+08:00","dateModified": "2024-02-13T16:24:57+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Linux 权限相关命令解读</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="fa-regular fa-folder fa-fw"></i>Knowledge</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-15">2021-03-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2272 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-15">2021-03-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2285 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
             </div>
             
@@ -370,11 +370,9 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <h2 id="umask设置文件默认权限">umask：设置文件默认权限</h2>
 <p>使用八进制表示法表示从文件模式属性中删除一个位掩码
 掩码的意思：用掩码来取消不同的文件模式</p>
-<pre><code>umask
-</code></pre>
+<p>plain umask</p>
 <p>可以看到输出为：</p>
-<pre><code>0022
-</code></pre>
+<p>plain 0022</p>
 <p>不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出
 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -426,11 +424,9 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 设置此位到一个可执行文件时，有效用户 ID 将从实际运行此程序的用户 ID 变成该程序拥有者的 ID
 设置场景：应用于由 root 用户拥有的程序，当普通用户运行一个具有 setuid 位的程序时，这个程序会以超级用户的权限执行，因此可以访问普通用户无法访问到的文件和目录
 设置程序 setuid：</p>
-<pre><code>chmod u+s program_name
-</code></pre>
+<p>plain chmod u+s program_name</p>
 <p>结果：</p>
-<pre><code>-rwsr-xr-x
-</code></pre>
+<p>plain -rwsr-xr-x</p>
 <p>可以看到第二组权限中第一个符号是 s</p>
 </li>
 <li>
@@ -438,29 +434,24 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 有效组 ID 从该用户的实际组 ID 更改为该文件所有者的组 ID
 设置场景：当一个公共组下的成员需要访问共享目录下的所有文件时可以设置此位
 对一个目录设置 setgid 位，则该目录下新创建的文件将由该目录所在组所有</p>
-<pre><code>chmod g+s dir_name
-</code></pre>
+<p>plain chmod g+s dir_name</p>
 <p>结果：</p>
-<pre><code>drwxrwsr-x
-</code></pre>
+<p>plain drwxrwsr-x</p>
 <p>可以看到第二组权限中最后一个符号是 s(替换了 x)</p>
 </li>
 <li>
 <p>sticky 位:1000(8 进制)
 标记一个可执行文件是“不可交换的”，linux 中默认会忽略文件的 sticky 位，但是对目录设置 sticky 位，能阻止用户删除或者重命名文件，除非用户是这个目录的所有者，文件所有者或者 root
 用来控制对共享目录的访问</p>
-<pre><code>chmod +t dir_name
-</code></pre>
+<p>plain chmod +t dir_name</p>
 <p>结果：</p>
-<pre><code>drwxrwxrwt
-</code></pre>
+<p>plain drwxrwxrwt</p>
 <p>可以看到第三组权限中最后一个符号是 t(替换了 x)</p>
 </li>
 </ol>
 <h2 id="su以另一个用户身份运行-shell">su：以另一个用户身份运行 shell</h2>
 <h3 id="使用-su-命令登录">使用 su 命令登录</h3>
-<pre><code>su [-[l]] [user]
-</code></pre>
+<p>plain su [-[l]] [user]</p>
 <p>如果包含“-l”选项，得到的 shell session 会是 user 所指定的的用户的登录 shell
 即 user 所指定的用户的运行环境将会被加载，工作目录会更改为此用户的主目录</p>
 <p><img
@@ -472,8 +463,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
         alt="https://i.loli.net/2021/10/09/TpIV2iMqsaLfQcS.png"
         title="img" /></p>
 <h3 id="使用-su-命令执行单个命令">使用 su 命令执行单个命令</h3>
-<pre><code>su -c 'comand'
-</code></pre>
+<p>plain su -c &lsquo;comand&rsquo;</p>
 <p>命令内容必须用 <strong>’’</strong> 引用起来（也可以是双引号）</p>
 <p><img
         class="lazyload"
@@ -489,8 +479,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <li>
 <p>sudo 比 su 有更丰富的功能，而且可以配置
 通过修改配置文件来配置 sudo</p>
-<pre><code>EDITOR=vim visudo
-</code></pre>
+<p>plain EDITOR=vim visudo</p>
 <p>执行上面的命令可以用 vim 来编辑 sudo 的配置文件
 常用的场景是在将用户加入到 wheel 组之后使 wheel 组的用户能够访问 root 权限</p>
 </li>
@@ -501,8 +490,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </ol>
 <h2 id="chown更改文件所有者">chown：更改文件所有者</h2>
 <h3 id="用法">用法</h3>
-<pre><code>chown [owner][:[group]] file ...
-</code></pre>
+<p>plain chown [owner][:[group]] file &hellip;</p>
 <p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <colgroup>
@@ -545,8 +533,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 <p>这个命令是历史遗留问题，在早期的 UNIX 版本中，chown 只能更改文件的所有者，而不能改变文件的所属群组，因此出现了这个命令，事实上现在的 chown 已经能实现 chgrp 的功能，因此没必要再使用这个命令（其使用方式几乎与 chown 命令相同）</p>
 <h2 id="passwd更改用户密码">passwd：更改用户密码</h2>
 <h3 id="一般用法">一般用法</h3>
-<pre><code>passwd [user]
-</code></pre>
+<p>plain passwd [user]</p>
 <p>用来更改 user 用户的密码，如果想修改当前用户的密码则不需要指定 user
 执行之后会提示输入旧密码和新密码，新密码需要再确认输入一次
 拥有 root 用户权限的用户可以设置所有用户的密码</p>
@@ -567,14 +554,14 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
                             <a class="link-to-markdown" href="/posts/knowledge/linux/linux-authority/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-hashtags="linux"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-hashtag="linux"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-hashtags="linux"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-hashtag="linux"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/knowledge/linux/linux-authority/" data-title="Linux 权限相关命令解读"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/knowledge/linux/dns-settings-on-archlinux/" class="prev" rel="prev" title="在 Linux 上手动设置 DNS"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/" class="next" rel="next" title="在 microsoft-edge-dev 上设置 Python selenium">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>

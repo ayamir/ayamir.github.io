@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <title>Note for 360SRL - Ayamir&#39;s Blog</title><meta name="description" content="Welcome to Ayamir&#39;s blog."><meta property="og:title" content="Note for 360SRL" />
-<meta property="og:description" content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming Level：ICME 2019 Keywords：ABR、RL、Sequential decision 创新点 在M" />
+<meta property="og:description" content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming Level：ICME 2019 Keywords：ABR、RL、Sequential decision 创新点 在 MDP" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-360srl/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-360srl/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-13T12:08:36+08:00" />
 <meta property="article:modified_time" content="2023-06-01T02:10:37+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Note for 360SRL"/>
-<meta name="twitter:description" content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming Level：ICME 2019 Keywords：ABR、RL、Sequential decision 创新点 在M"/>
+<meta name="twitter:description" content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming Level：ICME 2019 Keywords：ABR、RL、Sequential decision 创新点 在 MDP"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Ayamir&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-360srl/" /><link rel="prev" href="https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/" /><link rel="next" href="https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/papers/note-for-360srl/" /><link rel="prev" href="http://localhost:1313/posts/knowledge/360video/summary-for-vp/" /><link rel="next" href="http://localhost:1313/posts/papers/note-for-srlABR-cross-user/" /><link rel="stylesheet" href="/css/page.min.3c64fa2243caf1a1a9f6f88aa692d72009f930caa2e1677ef98d74dc6469d3cf.css" integrity="sha256-PGT6IkPK8aGp9viKppLXIAn5MMqi4Wd&#43;&#43;Y103GRp088="><link rel="stylesheet" href="/css/home.min.683c773e1bfe70dd2cdfacd9b9a1d6eabdde03ab18da367beb1383e8fb2eaa63.css" integrity="sha256-aDx3Phv&#43;cN0s36zZuaHW6r3eA6sY2jZ76xOD6PsuqmM="><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -23,9 +23,9 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-360srl\/"
-        },"genre": "posts","keywords": "Immersive Video, ABR","wordcount":  1410 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/papers\/note-for-360srl\/","datePublished": "2022-01-13T12:08:36+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/papers\/note-for-360srl\/"
+        },"genre": "posts","keywords": "Immersive Video, ABR","wordcount":  1396 ,
+        "url": "http:\/\/localhost:1313\/posts\/papers\/note-for-360srl\/","datePublished": "2022-01-13T12:08:36+08:00","dateModified": "2023-06-01T02:10:37+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,7 +99,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Note for 360SRL</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="fa-regular fa-folder fa-fw"></i>Paper</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-13">2022-01-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1410 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-13">2022-01-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1396 字</span>&nbsp;
                     <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
             </div>
             
@@ -115,7 +115,7 @@
         <li><a href="#论文概况">论文概况</a></li>
         <li><a href="#创新点">创新点</a></li>
         <li><a href="#问题定义">问题定义</a></li>
-        <li><a href="#顺序abr决策">顺序ABR决策</a></li>
+        <li><a href="#顺序-abr-决策">顺序 ABR 决策</a></li>
         <li><a href="#代理设计">代理设计</a>
           <ul>
             <li><a href="#状态">状态</a></li>
@@ -135,7 +135,7 @@
 <p>Keywords：ABR、RL、Sequential decision</p>
 <h2 id="创新点">创新点</h2>
 <ul>
-<li>在MDP中，将N维决策空间内的一次决策转换为1维空间内的N次级联顺序决策处理来降低复杂度。</li>
+<li>在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。</li>
 </ul>
 <h2 id="问题定义">问题定义</h2>
 <p>原始的全景视频被划分成每段固定长度为 $T$ 的片段，</p>
@@ -145,7 +145,7 @@
 <p>${a_0, &hellip;, a_i, &hellip;, a_{N-1}}, i \in \lbrace 0, &hellip;, N-1 \rbrace, a_i \in \lbrace 0, &hellip;, M-1 \rbrace $</p>
 <p>分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</p>
 <p>用 $p_i \in [0, 1]$ 表示 $i^{th}$ 块的被看到的可能性。</p>
-<h2 id="顺序abr决策">顺序ABR决策</h2>
+<h2 id="顺序-abr-决策">顺序 ABR 决策</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -196,13 +196,13 @@ $$</p>
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}&rsquo;); {\theta}&rsquo;)
 $$
 ${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
-<p>$r(\cdot)$ 是即时奖励函数，即上面公式5中的 $R_t$ ；</p>
+<p>$r(\cdot)$ 是即时奖励函数，即上面公式 5 中的 $R_t$ ；</p>
 <p>$\gamma \in [0, 1]$ 是折扣因子；</p>
-<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式7被重写为：
+<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式 7 被重写为：
 $$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}&rsquo;)
 $$
-利用公式6和公式8可以得出 $i^{th}$ 维的暂时损失函数：
+利用公式 6 和公式 8 可以得出 $i^{th}$ 维的暂时损失函数：
 $$
 l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
 $$
@@ -211,7 +211,7 @@ $$
 Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}&rsquo;)
 $$</p>
 <p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
-<p>观察公式9和公式10可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
+<p>观察公式 9 和公式 10 可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
 <p>为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：
 $$
 l^i_t = r^i_{extra} + Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
@@ -260,9 +260,9 @@ $$
         alt="https://s2.loli.net/2022/01/15/LsGl5AMNDvxZSWQ.png"
         title="image-20220115115525696" /></p>
 <p>特征从输入状态中通过特征提取网络提取出来。</p>
-<p>初始的4个输入通过带有128个过滤器的1维卷积层被传递，4个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这4个输入被喂给有128个神经元的全连接层；</p>
-<p>随后特征映射被连接成一个张量，接着是具有1024个神经元和256个神经元的前向网络；</p>
-<p>整个动作-价值网络的输出是M维的向量。</p>
+<p>初始的 4 个输入通过带有 128 个过滤器的 1 维卷积层被传递，4 个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这 4 个输入被喂给有 128 个神经元的全连接层；</p>
+<p>随后特征映射被连接成一个张量，接着是具有 1024 个神经元和 256 个神经元的前向网络；</p>
+<p>整个动作-价值网络的输出是 M 维的向量。</p>
 <p>特征提取层和前向网络层都使用 <code>Leaky-ReLU</code>作为激活函数，最后是层归一化层。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/immersive-video/">Immersive Video</a>
@@ -273,14 +273,14 @@ $$
                             <a class="link-to-markdown" href="/posts/papers/note-for-360srl/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
         </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-hashtags="Immersive Video,ABR"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://ayamir.github.io/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-hashtags="Immersive Video,ABR"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-hashtag="Immersive Video"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-web><i class="fa-brands fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Myspace" data-sharer="myspace" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="分享到 Blogger" data-sharer="blogger" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL" data-description=""><i class="fa-brands fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="http://localhost:1313/posts/papers/note-for-360srl/" data-title="Note for 360SRL"><i class="fa-brands fa-evernote fa-fw"></i></a></span>
         </div></div><div class="post-nav"><a href="/posts/knowledge/360video/summary-for-vp/" class="prev" rel="prev" title="全景视频中视口预测相关方法总结"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
             <a href="/posts/papers/note-for-srlABR-cross-user/" class="next" rel="next" title="Note for srlABR Cross User">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
 </div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.124.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
         </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ayamir">Ayamir</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
 <script>
