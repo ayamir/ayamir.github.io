@@ -1,5 +1,12 @@
-# 什么是 RPC ？
-
+---
+title: "什么是 RPC ？"
+date: 2024-03-29T23:55:25+08:00
+draft: false
+math: false
+keywords: ["backend", "rpc"]
+tags: ["backend"]
+categories: ["knowledge"]
+---
 
 ## 是什么
 
@@ -51,4 +58,3 @@ message HelloReply {
 之后可以使用 tRPC 的命令行工具或者是 `Makefile` 来生成相应的桩代码，供实现实现逻辑的客户端和服务端代码进行调用。
 
 这里体现的其实就是前面所说的，RPC 只是一种对原本功能的一种分离，通过 IDL 确定好 C-S 之间的接口之后，C-S 都只需要调用协商好的接口，而原来的业务逻辑该怎么实现就怎么实现。
-

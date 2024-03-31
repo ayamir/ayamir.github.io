@@ -5,6 +5,61 @@
         <description>所有文章 | Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>什么是 RPC ？</title>
+    <link>http://localhost:1313/posts/what-is-rpc/</link>
+    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/what-is-rpc/</guid>
+    <description><![CDATA[<h2 id="是什么">是什么</h2>
+<p>RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。</p>
+<h2 id="为什么">为什么</h2>
+<p>RPC 的出现主要是为了满足现实世界中多机集群的业务分离， Client 端的业务和 Server 端的业务相互分离，目的是更强的性能、可扩展性和可维护性。</p>
+<p>RPC 在我看来就是传统的前后端 http RESTful 框架的更加 general 的版本，两者在思想上是一致的，只不过 RESTful 框架是把现实业务中的 <strong>前端的显示</strong> 和 <strong>后端的数据处理</strong> 进行分离，而 RPC 则是更为通用的一种考虑，只要项目的设计者认为某个功能使用 RPC 进行分离会带来如性能、可靠性、可维护性等非功能特性上的收益，那其实就可以引入 RPC 。RPC 能完成的功能性需求不使用 RPC 一般来说也能实现，RPC 的收益主要体现在非功能性需求上。</p>
+<h2 id="怎么做">怎么做</h2>
+<p>RPC 的核心是面向接口编程的思想，Server 端和 Client 端可以通过定义好语言无关的接口（函数签名），双方的过程调用就可以像调用同一文件中的不同函数一样进行。</p>
+<p>既然涉及到了不同主机，那么不可避免地会引入网络通信，而网络通信的本质其实就是需要规定好：消息如何编解码（或者说如何序列化和反序列化）、消息如何通过网络传输。</p>
+<p>因而 RPC 在实现上主要需要考虑两部分，第一个部分是<strong>通信协议</strong>，第二部分是<strong>编码协议</strong>，</p>
+<ul>
+<li>通信协议：HTTP/TCP/UDP</li>
+<li>编码协议：xml/json/protobuf</li>
+</ul>
+<p>目前主流的 RPC 框架在编码协议上基本上都使用 protobuf ，因为 protobuf 作为一种二进制数据可以带来比 xml/json 这种文本数据更高的压缩效率（当然，更加重要的前提条件是 RPC 传输的消息其实不太需要跟人打交道，也就无需可读性）。</p>
+<p>对于通信协议，不同的 RPC 框架可能根据自己的用途有着不同的选择，比如 gRPC 使用的是 HTTP/2，而 tRPC 则根据不同的传输形式（unary和stream）设计了不同的自定义的协议格式。</p>
+<h2 id="实际操作">实际操作</h2>
+<p>以 tRPC 的 helloworld 为例，首先需要做的是写 IDL(Interface Defined Language) ，也就是前面提到的 <code>proto</code> 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-proto" data-lang="proto"><span class="line"><span class="cl"><span class="kd">service</span> <span class="n">Greeter</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="k">rpc</span> <span class="n">Hello</span> <span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span> <span class="p">{}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="kd">message</span> <span class="nc">HelloRequest</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="kd">message</span> <span class="nc">HelloReply</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">msg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里首先定义了一个名为 <code>Greeter</code> 的服务，服务包含一个名为 <code>Hello</code> 的函数，其入参为 <code>HelloRequest</code> ，出参为 <code>HelloReply</code>。</p>
+<p>后面则定义了 <code>HelloRequest</code> 和 <code>HelloReply</code> 这两种消息的格式，需要注意的是这里的 <code>string msg = 1</code> 并不是将 <code>msg</code> 初始化为 1 的意思（当然，<code>string</code> 类型的数据就算要初始化也应该是 <code>&quot;1&quot;</code> 而不是 <code>1</code>），而是说 <code>msg</code> 这个成员是 <code>HelloReply</code> 和 <code>HelloRequest</code> 的第 <code>1</code> 个成员。</p>
+<p>之后可以使用 tRPC 的命令行工具或者是 <code>Makefile</code> 来生成相应的桩代码，供实现实现逻辑的客户端和服务端代码进行调用。</p>
+<p>这里体现的其实就是前面所说的，RPC 只是一种对原本功能的一种分离，通过 IDL 确定好 C-S 之间的接口之后，C-S 都只需要调用协商好的接口，而原来的业务逻辑该怎么实现就怎么实现。</p>
+]]></description>
+</item>
+<item>
     <title>WebRTC任务队列学习笔记</title>
     <link>http://localhost:1313/posts/development/webrtc-task-queue/</link>
     <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/webrtc-task-queue/</guid>
@@ -1416,93 +1471,6 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 <li><code>max_framerate_fps</code>: 视频的最大帧率，超过这个阈值的帧将会被丢弃。</li>
 </ul>
 <p><code>VideoSinkWants</code>可以被任何视频源应用，或者根据需要可以直接使用其基类<code>AdaptationVideoTraceSource</code>来执行自适应。</p>
-]]></description>
-</item>
-<item>
-    <title>Note for DQB</title>
-    <link>http://localhost:1313/posts/papers/note-for-dqb/</link>
-    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-dqb/</guid>
-    <description><![CDATA[<h1 id="整体概况">整体概况</h1>
-<p>Link：<a href="https://ieeexplore.ieee.org/document/9317771" target="_blank" rel="noopener noreffer">Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact</a>
-Level：IEEE TCSVT 2021</p>
-<p>DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。</p>
-<p>DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。
-这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。</p>
-<h1 id="model-的建立">Model 的建立</h1>
-<ol>
-<li>执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。</li>
-<li>结合剩下分块的感知质量可以完成单帧质量模型的建模。</li>
-<li>最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。</li>
-</ol>
-<h2 id="主观实验的设定">主观实验的设定</h2>
-<ol>
-<li>获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在）</li>
-<li>获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停）</li>
-<li>获取整个视频的感知质量（没有引入 DQB，所有分块质量相同）</li>
-</ol>
-<p>实验结果</p>
-<p></p>
-<h2 id="帧质量感知模型">帧质量感知模型</h2>
-<p>从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：</p>
-<p>$$
-d_n = Q_{H, n} - Q_{L, n}
-$$</p>
-<p>$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。
-这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。</p>
-<p>为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：</p>
-<p>$$
-D_n = Q_{H, n} - Q_{HL, n}
-$$</p>
-<p>$Q_{HL, n}$是实验 1 中评分得到的第$n$个帧的 FoV 内感知质量。</p>
-<p>在 6 个视频上的实验结果如下图：</p>
-<p></p>
-<p>可以看到二者的关系可以近似为线性相关，即：</p>
-<p>$$
-D_n = k_1 d_n
-$$</p>
-<p>$k_1$ 作为线性回归的参数，可以计算出来。</p>
-<p>但是对于不同取值的 $p_n$ ， $k_1$ 的取值也相当不同，两者之间的关系可以见下图：</p>
-<p></p>
-<p>数学表示可以建模为：</p>
-<p>$$
-k_1 = a_1 \cdot ln(a_2 \cdot p_n + a_3) \cdot sgn(p_n - P)
-$$</p>
-<p>$sgn$ 是符号函数，$a_1, a_2, a_3$ 可以从回归中计算出来， $P$ 表示低质量分块的比例。按照图中的回归结果，$P = 0.118$ 时，用户几乎没办法注意到低质量区域的存在。</p>
-<p>最终，由低质量区域暴露引起的感知质量降低 $D_n$ 可以计算为：</p>
-<p>$$
-D_n = a_1 \cdot ln(a_2 \cdot p_n + a_3) \cdot (Q_{H, n} - Q_{L, n}) \cdot sgn(p_n - P)
-$$</p>
-<p>那么实际的感知质量 $Q_n$ 可以计算为：</p>
-<p>$$
-Q_n = Q_{H, n} - D_n
-$$</p>
-<h2 id="时间池化">时间池化</h2>
-<p>可以采用下面两种方式之一完成</p>
-<h3 id="exp-minkowski-basedhttpsieeexploreieeeorgdocument6603210"><a href="https://ieeexplore.ieee.org/document/6603210" target="_blank" rel="noopener noreffer"><code>Exp Minkowski-Based</code></a></h3>
-<p>单个帧的感知质量由衰减指数加权，衰减指数表示在主观评估中观察到的<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/3299/1/Viewer-response-to-time-varying-video-quality/10.1117/12.320109.short?SSO=1" target="_blank" rel="noopener noreffer">近因效应</a>。</p>
-<p>最终整个视频的感知质量 $PQ$ 可以计算为：</p>
-<p>$$
-PQ = \Big[\frac{1}{N} \sum_{n=1}^{N} exp\big( \frac{n-N}{\delta} \big) \cdot {Q_n}^p \Big]^{1/p}
-$$</p>
-<p>$N$ 是整个视频的帧数。</p>
-<p>$p$ 是 <code>Minkowski</code>指数，高 $p$ 值强调了最高质量帧的影响。</p>
-<p>$\delta$ 是控制近因效应强度的指数时间常数，以帧的数量的形式给出，高 $\delta$ 值对应较弱的近因效应。</p>
-<p>$p$ 和 $\delta$ 的值可以通过对主观帧质量和视频序列的整体质量进行回归得到。</p>
-<h3 id="quality-contribution-basedhttpsieeexploreieeeorgdocument6235989"><a href="https://ieeexplore.ieee.org/document/6235989" target="_blank" rel="noopener noreffer"><code>Quality Contribution-Based</code></a></h3>
-<p>之前的研究表明，传统视频在时间维度上的感知质量降低主要与每帧的显示时长相关。</p>
-<p>FoV 自适应的全景视频也与之类似，感知质量与降低质量帧和高质量帧的持续时间相关。因此采用<code>Quality Contribution</code>的概念来描述每帧对视频感知质量的影响（考虑每帧的空间感知质量和显示时长）。</p>
-<p>时间池化是由相应的显示时长加权的每帧的质量贡献的函数，特别的，质量贡献是从 MOS 和显示持续时间之间初步找到的对数关系所导出的：</p>
-<p>$$
-C_n = Q_n \cdot (p_1 + p_2 \cdot log(T))
-$$</p>
-<p>$C_n$ 是第 $n$ 帧的贡献， $T$ 是每帧的显示时长， $T = Max(T, 33.3ms)$，即当帧率不低于 30fps 时，时间不连续性可以忽略。</p>
-<p>接着，二级时间池化法用于池化单帧的分布。这种方法将 FoV 内的帧以注视水平划分为短时帧组(GoFs)，并以 GoF 的质量作为长期时间池化的基本单位来评估感知质量。</p>
-<p>给出每帧的质量贡献之后，每个 GoF 的质量可以计算为</p>
-<p>$$
-Q_{GoF} = \frac{\sum_{n \in N} \big( C(n) \cdot T(n) \big)}{\sum_{n \in N} T(n)}
-$$</p>
-<p>接下来组合 GoF 的质量得到长期时间池化，即可以获得感知质量。</p>
-<p>质量严重受损的帧会影响相邻帧的感知质量，视频中质量最差的部分主要决定整个视频的感知质量。因此提出选择计算出的质量低于平均值 75%的 GoF，以此计算平均质量并作为整个视频的感知质量。</p>
 ]]></description>
 </item>
 </channel>
