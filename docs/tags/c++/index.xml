@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>C&#43;&#43; - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/c&#43;&#43;/</link>
+        <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
         <description>C&#43;&#43; - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/c&#43;&#43;/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/c&#43;&#43;/" rel="self" type="application/rss+xml" /><item>
     <title>ABI是什么？</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/abi/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
     <description><![CDATA[<h2 id="abi-是什么">ABI 是什么？</h2>
 <p>ABI: Application Binary Interface（应用<strong>二进制</strong>接口）。</p>
 <p>其实就是针对 <strong>编译器</strong> 和 <strong>链接器</strong> 的<strong>二进制级别</strong>的一些规范和约束，主要规范的内容有：</p>
@@ -34,8 +34,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/iterator/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -176,8 +176,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/vector/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑与用法">常见的坑与用法</h2>
 <ol>
 <li>
@@ -317,8 +317,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/string/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -464,8 +464,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/auto/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -498,8 +498,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：Const二三事</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/const/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -694,8 +694,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：引用和指针</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -864,8 +864,8 @@
 </item>
 <item>
     <title>重学C&#43;&#43;：类型系统基础</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
+    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>

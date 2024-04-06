@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Jupyter - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/jupyter/</link>
+        <link>https://ayamir.github.io/tags/jupyter/</link>
         <description>Jupyter - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/jupyter/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/jupyter/" rel="self" type="application/rss+xml" /><item>
     <title>在 Jupyter Notebook 中设置 Conda 环境</title>
-    <link>http://localhost:1313/posts/development/use-jupyter-notebook-in-conda-env/</link>
-    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/use-jupyter-notebook-in-conda-env/</guid>
+    <link>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</link>
+    <pubDate>Tue, 15 Feb 2022 17:19:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</guid>
     <description><![CDATA[<ol start="0">
 <li>
 <p>远程启动<code>jupyter notebool</code>：</p>

@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Multimedia - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/multimedia/</link>
+        <link>https://ayamir.github.io/tags/multimedia/</link>
         <description>Multimedia - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/multimedia/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/multimedia/" rel="self" type="application/rss+xml" /><item>
     <title>H264 Encode</title>
-    <link>http://localhost:1313/posts/knowledge/h264-encode/</link>
-    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/h264-encode/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
     <description><![CDATA[<h2 id="编码框架">编码框架</h2>
 <p>编码器包含两个方向的码流分支：</p>
 <p></p>
@@ -516,8 +516,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>多媒体基础知识</title>
-    <link>http://localhost:1313/posts/knowledge/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/mm-base/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
     <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
 <p></p>
 <h2 id="解协议">解协议</h2>

@@ -6,6 +6,7 @@ math: false
 keywords: ["backend", "rpc"]
 tags: ["backend"]
 categories: ["knowledge"]
+url: "posts/knowledge/backend/what-is-rpc"
 ---
 
 ## 是什么

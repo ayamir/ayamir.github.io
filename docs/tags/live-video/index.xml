@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Live Video - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/live-video/</link>
+        <link>https://ayamir.github.io/tags/live-video/</link>
         <description>Live Video - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/live-video/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/live-video/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Content Motion Viewport Prediction</title>
-    <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
-    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
 <p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>

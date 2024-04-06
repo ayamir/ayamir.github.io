@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Paper - 分类 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/categories/paper/</link>
+        <link>https://ayamir.github.io/categories/paper/</link>
         <description>Paper - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/categories/paper/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/paper/" rel="self" type="application/rss+xml" /><item>
     <title>Note for DQB</title>
-    <link>http://localhost:1313/posts/papers/note-for-dqb/</link>
-    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-dqb/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-dqb/</link>
+    <pubDate>Sun, 20 Mar 2022 22:09:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-dqb/</guid>
     <description><![CDATA[<h1 id="整体概况">整体概况</h1>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9317771" target="_blank" rel="noopener noreffer">Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact</a>
 Level：IEEE TCSVT 2021</p>
@@ -93,8 +93,8 @@ $$</p>
 </item>
 <item>
     <title>Note for Toward Immersive Experience</title>
-    <link>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</link>
-    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</link>
+    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p>Link: <a href="https://ieeexplore.ieee.org/document/9679801" target="_blank" rel="noopener noreffer">Toward Immersive Experience: Evaluation for Interactive Network Services</a></p>
 <p>Level: IEEE Network 2022</p>
@@ -236,8 +236,8 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </item>
 <item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
-    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
     <description><![CDATA[<h1 id="bitrate-adaptation-schemes">Bitrate Adaptation Schemes</h1>
 <h2 id="client-based">Client-based</h2>
 <p>Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.</p>
@@ -344,8 +344,8 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </item>
 <item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
-    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
     <description><![CDATA[<h1 id="paper-overview">Paper Overview</h1>
 <p>Link: <a href="https://ieeexplore.ieee.org/document/8424813" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/document/8424813</a></p>
 <p>Level: IEEE Communications Surveys &amp; Tutorials 2019</p>
@@ -469,8 +469,8 @@ ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of 
 </item>
 <item>
     <title>Note for Content Based Vp for Live Streaming (2)</title>
-    <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
-    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
     <description><![CDATA[<h1 id="liveobj">LiveObj</h1>
 <p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
 <ol>
@@ -626,8 +626,8 @@ $$
 </item>
 <item>
     <title>Content Based VP for Live Streaming (1)</title>
-    <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
-    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
+    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
     <description><![CDATA[<h1 id="livemotion">LiveMotion</h1>
 <h2 id="motivation">Motivation</h2>
 <p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
@@ -707,8 +707,8 @@ $$
 </item>
 <item>
     <title>Note for Popularity Aware 360-Degree Video Streaming</title>
-    <link>http://localhost:1313/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</link>
-    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</link>
+    <pubDate>Tue, 18 Jan 2022 16:07:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/abstract/document/9488856/" target="_blank" rel="noopener noreffer">Popularity-Aware 360-Degree Video Streaming</a></p>
 <p>Level：IEEE INFOCOM 2021</p>
@@ -866,8 +866,8 @@ $N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用�
 </item>
 <item>
     <title>Note for srlABR Cross User</title>
-    <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
 <p>Level：IEEE Transactions on Broadcasting 2021</p>
@@ -1001,8 +1001,8 @@ $\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
 </item>
 <item>
     <title>Note for 360SRL</title>
-    <link>http://localhost:1313/posts/papers/note-for-360srl/</link>
-    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-360srl/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
+    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/8784927" target="_blank" rel="noopener noreffer">360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming</a></p>
 <p>Level：ICME 2019</p>
@@ -1114,8 +1114,8 @@ $$
 </item>
 <item>
     <title>Note for Content Assisted Prediction</title>
-    <link>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</link>
-    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</link>
+    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming" target="_blank" rel="noopener noreffer">Content Assisted Viewport Prediction for Panoramic Video Streaming</a></p>
 <p>Level：IEEE CVPR 2019 CV4ARVR</p>
@@ -1175,8 +1175,8 @@ $$
 </item>
 <item>
     <title>Note for GPAC</title>
-    <link>http://localhost:1313/posts/papers/note-for-gpac/</link>
-    <pubDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-gpac/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-gpac/</link>
+    <pubDate>Thu, 30 Dec 2021 10:23:26 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-gpac/</guid>
     <description><![CDATA[<h2 id="dash-客户端自适应逻辑">Dash 客户端自适应逻辑</h2>
 <ol>
 <li><em>tile priority setup</em>：根据定义的规则对 tile 进行优先级排名。</li>
@@ -1215,8 +1215,8 @@ $$
 </item>
 <item>
     <title>Note for MPC</title>
-    <link>http://localhost:1313/posts/papers/note-for-mpc/</link>
-    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-mpc/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
 <p>Level：ACM SIGCOMM 15</p>
@@ -1385,8 +1385,8 @@ $$</p>
 </item>
 <item>
     <title>Note for TBRA</title>
-    <link>http://localhost:1313/posts/papers/note-for-tbra/</link>
-    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-tbra/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
+    <pubDate>Tue, 21 Dec 2021 10:11:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590" target="_blank" rel="noopener noreffer">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
 <p>Level：ACM MM 21</p>
@@ -1585,8 +1585,8 @@ $$
 </item>
 <item>
     <title>Note for Content Motion Viewport Prediction</title>
-    <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
-    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
 <p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>
@@ -1791,8 +1791,8 @@ $$</p>
 </item>
 <item>
     <title>Note for RnnQoE</title>
-    <link>http://localhost:1313/posts/papers/note-for-rnnQoE/</link>
-    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-rnnQoE/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
 View Generation and Dynamic Tile Selection</a></p>
@@ -2066,8 +2066,8 @@ $$</p>
 </item>
 <item>
     <title>Note for OpTile</title>
-    <link>http://localhost:1313/posts/papers/note-for-optile/</link>
-    <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-optile/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-optile/</link>
+    <pubDate>Mon, 13 Dec 2021 16:19:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-optile/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339" target="_blank" rel="noopener noreffer">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
 <p>Level：ACM MM 17</p>
@@ -2408,8 +2408,8 @@ $n$表示$t$中基本子矩形的数量。</p>
 </item>
 <item>
     <title>Note for RainbowDQN and Multitype Tiles</title>
-    <link>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
-    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
+    <pubDate>Sat, 11 Dec 2021 16:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Level：IEEE Transaction on multimedia 21</p>
 <p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
@@ -2906,8 +2906,8 @@ $$</p>
 </item>
 <item>
     <title>Note for 360ProbDASH</title>
-    <link>http://localhost:1313/posts/papers/note-for-360ProbDASH/</link>
-    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-360ProbDASH/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
+    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3123266.3123291" target="_blank" rel="noopener noreffer">360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming</a></p>
 <p>Level: ACM MM 17</p>
@@ -3233,8 +3233,8 @@ $$</p>
 </item>
 <item>
     <title>Note for Dante</title>
-    <link>http://localhost:1313/posts/papers/note-for-dante/</link>
-    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-dante/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-dante/</link>
+    <pubDate>Wed, 08 Dec 2021 22:14:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-dante/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
 <p>Level: SIGCOMM 18</p>
@@ -3329,8 +3329,8 @@ $$</p>
 </item>
 <item>
     <title>沉浸式流媒体传输的实际度量</title>
-    <link>http://localhost:1313/posts/papers/note11/</link>
-    <pubDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note11/</guid>
+    <link>https://ayamir.github.io/posts/papers/note11/</link>
+    <pubDate>Mon, 22 Nov 2021 15:21:59 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note11/</guid>
     <description><![CDATA[<h2 id="度量指标">度量指标</h2>
 <ol>
 <li>viewport 预测精度。

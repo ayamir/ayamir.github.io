@@ -1,13 +1,251 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Knowledge - 分类 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/categories/knowledge/</link>
+        <link>https://ayamir.github.io/categories/knowledge/</link>
         <description>Knowledge - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
+    <title>进程、线程和协程</title>
+    <link>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</guid>
+    <description><![CDATA[<h2 id="进程">进程</h2>
+<h3 id="是什么">是什么</h3>
+<p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
+<ul>
+<li>进程标识符 PID</li>
+<li>进程状态：就绪、运行、阻塞</li>
+<li>内存资源：
+<ul>
+<li>代码段、数据段、堆和栈</li>
+</ul>
+</li>
+<li>文件描述符 fd ：
+<ul>
+<li>stdin、stdout、stderr、以及进程打开的文件描述符列表比如本地文件以及网络连接等的 fd</li>
+</ul>
+</li>
+<li>寄存器：
+<ul>
+<li>PC、SP、还有其他的通用寄存器</li>
+</ul>
+</li>
+<li>进程控制信息：
+<ul>
+<li>父进程 ID ，子进程 ID ，以及信号处理器这些</li>
+</ul>
+</li>
+</ul>
+<h3 id="有什么用">有什么用</h3>
+<p>在拿进程和程序做对比的时候我们知道，进程就是运行着的程序（这里的运行指的是程序被加载到内存空间中然后开始按照程序指令执行，而不是指进程状态中的运行状态），受 OS 的调度，可以说我们写程序的目的就是要让 CPU 可以按照磁盘上的代码指令来执行操作，进程就是实现这一目的的过程。</p>
+<p>因为 OS 使用了虚拟内存这一概念，使得每个进程都认为自己是独占 OS 的，所以一个进程是不知道其他进程的存在的。因而如果面对需要多个进程协作完成一项任务的时候（其实这种情况的描述从逻辑上应该是自上到下的，先有的是一项任务，我们通过分析发现这两个任务需要写多个程序来完成），就会不可避免地引入进程间通信 IPC 。</p>
+<p>常用的进程间通信手段大概有 6 种：消息队列、共享内存、匿名管道、命名管道、信号量、Socket，这几种方式根据需求的不同都有自己的用武之地，不过我个人最习惯用的还是 Socket ，因为它具有最优的可扩展性（跨主机、跨语言），可记录性（可以使用 tcpdump/wireshark 抓包），也完美符合我对于通信这一名词想象（明确的通信双方、全双工的信道）。</p>
+<p>从我的实际项目经历中来看，我的 Unity 客户端实例需要把游戏运行过程中产生的 2D 轨迹数据输入给 Python 端的 AI 模型，并获取模型输出。对于这一场景，我的首选就是 Socket 通信，首先是因为 Socket 具备全双工的特性可以满足需求，其次是使用 Socket 可以在 AI 模型部署到其他主机上的时候也能正常运行。</p>
+<h2 id="线程">线程</h2>
+<h3 id="是什么-1">是什么</h3>
+<p>上面说到进程是 OS 资源分配的最小单位，这句话的下半句是：线程是操作系统调度的最小单位，这句话其实暗示了，线程和进程的概念对于单线程的进程而言是相同的。</p>
+<p>OS 在调度 CPU 的时候是以线程为单位的，也就说明线程其实也是一种 OS 级别的概念。对于 Linux 而言，线程和进程使用的是相同的数据结构 <code>task_struct</code> 来表示的，不过进程的创建使用的是 <code>fork()</code> 这一系统调用，而线程的创建用的是 <code>clone()</code> 这一系统调用。</p>
+<p>结合前半句话，说明 OS 在分配资源的时候分配不到线程这个层面上（单线程进程是特例），对于同一个进程的多个线程，他们之间共享进程的代码段、数据段和 fd 这些，不过每个线程都拥有自己独立的堆、栈空间。</p>
+<h3 id="有什么用-1">有什么用</h3>
+<p>因为每个进程都会拥有上面列出的这些资源，直接受到 OS 的控制，所以进程的创建和销毁不可避免地会涉及到相对比较大的时间开销。</p>
+<p>相比之下，线程因为可以直接继承并共享进程的部分资源，所以线程的创建和销毁要更加轻量。</p>
+<p>也正因如此，同一进程之间的多个线程之间只需要使用一些编程上的技法就可以完成通信，常用的就是各种锁、条件变量以及阻塞队列。</p>
+<h3 id="什么时候用多线程">什么时候用多线程</h3>
+<p>首先需要考虑的是能不能使用多线程。多线程的执行过程是 OS 调度 CPU 的多个核心来分别执行多个线程的过程，因而最适合使用多线程的任务一定具备：划分给各个线程之间的任务没有重叠、也无需通信（或者说没有依赖关系）的特性，每个任务都是 Compute-Intensive 的。</p>
+<p>从我的实际项目经历中来看，在把 GPU 显存中的 yuv 图像数据回读到内存中的时候，图像的不同部分之间是相互独立的，因而这个过程天然适合使用多线程来完成，主线程只需要等待多个线程读完数据之后执行下一步操作即可。</p>
+<p>其次需要考虑的是多线程能带来多大的收益。单线程和多线程的区别其实就是可以占有并利用的 CPU 核心数的区别，因此当任务的瓶颈不在于 CPU 的时候就需要考虑是否有使用多线程的必要。根据 Amdahl&rsquo;s law ，$S(n)=\frac{1}{(1-P)+\frac{P}{n}}$，当处理单元数趋向于无穷的时候，并行化所带来的加速比 $S(n)$ 将趋近于 $\frac{1}{1-P}$​ 。如果任务中可并行的部分比较小的情况下，可能就没有并行化的必要了。</p>
+<p></p>
+<h3 id="怎么用多线程">怎么用多线程</h3>
+<p>默认的多线程使用方式就是在需要多线程执行任务的时候创建线程，在任务执行完毕之后销毁线程（就是直接交给 OS 来进行线程的创建和销毁）。</p>
+<p>而实际上，我们常用的是线程池的方式，也就是在任务开始的时候我们就创建多个线程并且保存在一个线程池中，通过任务队列的形式确定将那个任务分配给哪个线程。这样做的方式其实就是把对线程的控制权从 OS 转移到程序员，避免了重复的线程创建和销毁带来的开销。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;condition_variable&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Task</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Task</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">)</span> <span class="o">:</span> <span class="n">func</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="nf">operator</span><span class="p">()()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">func</span><span class="p">();</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">func</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ThreadPool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">numThreads</span><span class="p">)</span> <span class="o">:</span> <span class="n">stop</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numThreads</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">queueMutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">condition</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span> <span class="k">return</span> <span class="n">stop</span> <span class="o">||</span> <span class="o">!</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">              <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">tasks</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tasks</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">          <span class="n">task</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">F</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">enqueue</span><span class="p">(</span><span class="n">F</span> <span class="o">&amp;&amp;</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">queueMutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">tasks</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">condition</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="o">~</span><span class="n">ThreadPool</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">queueMutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">stop</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">condition</span><span class="p">.</span><span class="n">notify_all</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="o">&amp;</span><span class="nl">worker</span> <span class="p">:</span> <span class="n">workers</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">worker</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">workers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">queueMutex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">condition</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="n">stop</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 示例任务函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">printHello</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello from thread &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ThreadPool</span> <span class="n">pool</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// 创建线程池，包含4个线程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 向线程池添加任务
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pool</span><span class="p">.</span><span class="n">enqueue</span><span class="p">([</span><span class="n">i</span><span class="p">]</span> <span class="p">{</span> <span class="n">printHello</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="协程">协程</h2>
+<h3 id="是什么-2">是什么</h3>
+<p>协程这一概念可以理解为“函数plus”，普通的函数只有两种行为：调用(Invoke)和返回(Return)。协程比函数多了一种行为：挂起(Suspend/Yield)。</p>
+<p>在只使用函数的情况下，程序的执行流可以只用一个栈就能模拟（调用函数时 push ，函数返回时 pop ），而引入协程之后，因为其具有挂起这一行为，所以需要额外的空间（比如堆）来暂存协程的上下文。</p>
+<h3 id="有什么用-2">有什么用</h3>
+<p>协程的作用可以用一句话来描述，即：协程就是用单线程的方式完成并发的任务逻辑。</p>
+<p>协程其实与进程和线程没有太近的“亲缘关系”，只是在作用上有着相近的效果，即宏观上看是并发执行的。以经典的生产者-消费者任务为例：</p>
+<ul>
+<li>多进程/多线程：至少需要一个生产者进程/线程，消费者进程/线程，两者之间可能需要使用一个单向管道作为数据缓冲区来提高性能（或者说控制管道大小来实现不同的任务逻辑）。</li>
+<li>协程：只需要一个线程，通过两个分别负责生产和消费的协程来完成，即：生产者协程生产一定数量之后挂起，并调用消费者协程。消费者协程消费完之后挂起，并调用生产者协程，如此交替往复进行。</li>
+</ul>
+<p>协程相比于上面提到的进程和线程，区别在于协程是运行在用户态的，或者说协程的控制权是掌握在程序员手中的，由程序员负责控制在什么时候把 CPU 的使用权交给哪个协程。</p>
+<h3 id="什么时候用协程">什么时候用协程</h3>
+<p>协程的使用情形其实很简单，即：你需要在只利用一个 CPU 核心的情况下完成并发任务的时候就是使用协程的时候。所以其实协程这个概念诞生的很早（1960年 Melvin Conway 解决COBOL 编译器的问题，使用协程技术只需要遍历一遍源代码）</p>
+<h3 id="怎么用">怎么用</h3>
+<p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。</p>
+<p>Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。</p>
+]]></description>
+</item>
+<item>
     <title>什么是 RPC ？</title>
-    <link>http://localhost:1313/posts/what-is-rpc/</link>
-    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/what-is-rpc/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
     <description><![CDATA[<h2 id="是什么">是什么</h2>
 <p>RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。</p>
 <h2 id="为什么">为什么</h2>
@@ -61,8 +299,8 @@
 </item>
 <item>
     <title>虚拟地址空间</title>
-    <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
@@ -120,8 +358,8 @@ $$</p>
 </item>
 <item>
     <title>ABI是什么？</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/abi/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
     <description><![CDATA[<h2 id="abi-是什么">ABI 是什么？</h2>
 <p>ABI: Application Binary Interface（应用<strong>二进制</strong>接口）。</p>
 <p>其实就是针对 <strong>编译器</strong> 和 <strong>链接器</strong> 的<strong>二进制级别</strong>的一些规范和约束，主要规范的内容有：</p>
@@ -148,8 +386,8 @@ $$</p>
 </item>
 <item>
     <title>H264 Encode</title>
-    <link>http://localhost:1313/posts/knowledge/h264-encode/</link>
-    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/h264-encode/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
     <description><![CDATA[<h2 id="编码框架">编码框架</h2>
 <p>编码器包含两个方向的码流分支：</p>
 <p></p>
@@ -658,8 +896,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>远程桌面与WebRTC</title>
-    <link>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
-    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
     <description><![CDATA[<h1 id="关于远程桌面">关于远程桌面</h1>
 <p>远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。</p>
 <h1 id="远程桌面技术的实现">远程桌面技术的实现</h1>
@@ -731,8 +969,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebRTC 中关于视频自适应的相关设置</title>
-    <link>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</link>
-    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
     <description><![CDATA[<h1 id="概况">概况</h1>
 <p><code>WebRTC</code>提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。</p>
 <p>视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。</p>
@@ -785,8 +1023,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 样例的解释</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
     <description><![CDATA[<h1 id="context">Context</h1>
 <ol>
 <li>Create an <code>HTML5</code> canvas</li>
@@ -1330,8 +1568,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 样例</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
     <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
 <p>WebGL application code is a combination of JavaScript and OpenGL Shader Language.</p>
 <ul>
@@ -1529,8 +1767,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 中的管线</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p></p>
 <h1 id="javascript">JavaScript</h1>
@@ -1594,8 +1832,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 基础知识</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
     <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>
 <p>There are x, y, z axes in WebGL, where the z axis signifies <strong>depth</strong>.
 The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1).
@@ -1692,8 +1930,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>VR 和 全景视频的区别总结</title>
-    <link>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
     <description><![CDATA[<p>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
 <h2 id="全景视频">全景视频</h2>
 <ol>
@@ -1742,8 +1980,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>全景视频中视口预测相关方法总结</title>
-    <link>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="视口预测是什么">视口预测是什么？</h2>
 <p>视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。</p>
 <p>相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。</p>
@@ -1834,8 +2072,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>多媒体基础知识</title>
-    <link>http://localhost:1313/posts/knowledge/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/mm-base/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
     <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
 <p></p>
 <h2 id="解协议">解协议</h2>
@@ -1953,8 +2191,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/iterator/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2095,8 +2333,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/vector/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑与用法">常见的坑与用法</h2>
 <ol>
 <li>
@@ -2236,8 +2474,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/string/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2383,8 +2621,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/auto/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2417,8 +2655,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：Const二三事</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/const/</link>
-    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/const/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2613,8 +2851,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：引用和指针</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</link>
-    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+    <pubDate>Tue, 26 Oct 2021 15:49:49 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2777,221 +3015,6 @@ $$</p>
 </li>
 <li>
 <p>面对复杂的指针或引用的声明语句时，从变量名开始自右向左阅读来弄清楚其真实含义。</p>
-</li>
-</ol>
-]]></description>
-</item>
-<item>
-    <title>重学C&#43;&#43;：类型系统基础</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</link>
-    <pubDate>Mon, 18 Oct 2021 19:32:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</guid>
-    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
-<ol>
-<li>
-<p><code>int</code>, <code>short</code>, <code>long</code>, <code>long long</code>都是带符号的，在前面添加<code>unsigned</code>就能得到无符号类型。</p>
-</li>
-<li>
-<p>字符型被分为 3 种：<code>char</code>, <code>signed char</code>, <code>unsigned char</code>，前两种并不等价。
-虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。</p>
-</li>
-<li>
-<p>有符号类型在与无符号类型运算时会隐式转换为无符号类型。</p>
-</li>
-<li>
-<p>虽然变量初始化时候使用了<code>=</code>号，但是初始化和变量赋值并不相同。</p>
-</li>
-<li>
-<p>变量默认初始化：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">变量类型</th>
-<th style="text-align:center">位置在函数内部</th>
-<th style="text-align:center">位置在函数外部</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">内置类型</td>
-<td style="text-align:center">undefined</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">自定义类型</td>
-<td style="text-align:center">由类决定</td>
-<td style="text-align:center">由类决定</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">default_initialize</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 输出必定是0
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 输出是随机值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">default_initialize</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>如果在函数体内部试图初始化一个<code>extern</code>标记的变量会引发错误。</p>
-</li>
-<li>
-<p>在嵌套作用域中，内层作用域中的<strong>定义</strong>可以覆盖外层作用域中<strong>声明</strong>的变量。</p>
-<p>可以显式使用<strong>域操作符</strong><code>::</code>来指明使用哪层的变量。</p>
-</li>
-</ol>
-<h2 id="必须要理解的点">必须要理解的点</h2>
-<ol>
-<li>
-<p>字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。</p>
-</li>
-<li>
-<p>变量的组成部分：类型和值。说白了就是一个定性一个定量。</p>
-<p>类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。</p>
-<p>值在实际代码运行过程中则被各种函数使用参与运算。</p>
-</li>
-<li>
-<p>变量声明和定义：</p>
-<p>声明的意思就是：我要用这个变量。</p>
-<p>定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">声明</th>
-<th style="text-align:center">定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">规定变量的类型和名字</td>
-<td style="text-align:center">✅</td>
-<td style="text-align:center">✅</td>
-</tr>
-<tr>
-<td style="text-align:center">申请空间</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">✅</td>
-</tr>
-<tr>
-<td style="text-align:center">初始化</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">✅</td>
-</tr>
-<tr>
-<td style="text-align:center">执行多次</td>
-<td style="text-align:center">✅</td>
-<td style="text-align:center"></td>
-</tr>
-</tbody>
-</table>
-<p>用<code>extern</code>标记<strong>未初始化</strong>的变量来表明只对变量作声明：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>      <span class="c1">//只声明不定义
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>             <span class="c1">//声明并且定义
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">extern</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//声明并且定义
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Q：为什么会有声明和定义这两个概念？</p>
-<p>A：因为 C++支持<em>分离式编译</em>机制，这允许程序被分割成若干个文件，每个文件可以被独立编译。如果要在多个文件中使用同一个变量，就必须要将声明和定义分离。变量的定义必须且只能出现在一个文件中，其他用到这个变量的文件必须对其进行声明，且绝对不能进行重复定义。</p>
-</li>
-<li>
-<p>名字的作用域：</p>
-<p>同一个名字在不同的作用域中可以指向不同的实体。</p>
-<p>名字的有效区域始于<strong>声明</strong>语句，以<strong>声明</strong>语句所在的作用域末端结束。</p>
-</li>
-</ol>
-<h2 id="建议">建议</h2>
-<ol>
-<li>
-<p>明确数值不可能为负时使用<code>unsigned</code>类型。</p>
-</li>
-<li>
-<p>使用<code>int</code>执行整数运算，范围不够时使用<code>long long</code>。</p>
-</li>
-<li>
-<p>使用<code>double</code>执行浮点数运算。</p>
-</li>
-<li>
-<p>算术表达式中不要使用<code>bool</code>和<code>char</code>。</p>
-</li>
-<li>
-<p>避免写出依赖实现环境的代码，否则代码不可移植。</p>
-</li>
-<li>
-<p>避免有符号类型和无符号类型之间的隐式类型转换。</p>
-</li>
-<li>
-<p>C++11 中引入了<strong>列表初始化</strong>，例如：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 传统的初始化方式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">units_sold</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 现代的初始化方式
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">units_sold</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">units_sold</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>列表初始化在用于内置类型变量时，如果初始值存在<em>丢失信息</em>的风险，编译器会报错。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">long</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926536</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="n">pi</span><span class="p">},</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="n">pi</span><span class="p">};</span>   <span class="c1">// 错误：没有执行类型转换，因为可能丢失信息
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">a</span><span class="p">(</span><span class="n">pi</span><span class="p">),</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pi</span><span class="p">;</span>     <span class="c1">// 正确：执行了隐式类型转化，丢失了信息
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div></li>
-<li>
-<p>对每个内置类型的变量都执行<strong>显式默认初始化</strong>以防止 undefined 行为。</p>
-</li>
-<li>
-<p>在变量第一次使用的地方进行<strong>定义</strong>操作。</p>
 </li>
 </ol>
 ]]></description>
