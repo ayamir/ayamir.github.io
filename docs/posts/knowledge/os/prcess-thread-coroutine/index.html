@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-04-06T19:23:04+08:00" />
-<meta property="article:modified_time" content="2024-04-06T22:45:31+08:00" />
+<meta property="article:modified_time" content="2024-04-07T09:45:25+08:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="进程、线程和协程"/>
 <meta name="twitter:description" content="进程 是什么 学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中： 进程标识符 PID 进"/>
 <meta name="application-name" content="Ayamir&#39;s blog">
@@ -24,8 +24,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/ayamir.github.io\/posts\/knowledge\/os\/prcess-thread-coroutine\/"
-        },"genre": "posts","keywords": "os","wordcount":  2791 ,
-        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/os\/prcess-thread-coroutine\/","datePublished": "2024-04-06T19:23:04+08:00","dateModified": "2024-04-06T22:45:31+08:00","publisher": {
+        },"genre": "posts","keywords": "os","wordcount":  3323 ,
+        "url": "https:\/\/ayamir.github.io\/posts\/knowledge\/os\/prcess-thread-coroutine\/","datePublished": "2024-04-06T19:23:04+08:00","dateModified": "2024-04-07T09:45:25+08:00","publisher": {
             "@type": "Organization",
             "name": "Ayamir"},"author": {
                 "@type": "Person",
@@ -99,8 +99,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">进程、线程和协程</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/ayamir" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>Ayamir</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/knowledge/"><i class="fa-regular fa-folder fa-fw"></i>Knowledge</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2791 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-06">2024-04-06</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3323 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -134,6 +134,7 @@
             <li><a href="#怎么用">怎么用</a></li>
           </ul>
         </li>
+        <li><a href="#总结">总结</a></li>
       </ul>
     </li>
   </ul>
@@ -191,9 +192,11 @@
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240406212828943.png"
         title="image-20240406212828943" /></p>
+<p>实际任务中使用的线程数量应该结合<strong>可以利用的系统资源（CPU 和内存）<strong>和</strong>相应任务的性能瓶颈</strong>两方面考虑，这里之所以要强调是可以利用的资源是因为我们需要从 OS 的角度来考虑，如果当前进程使用了 CPU 的全部核心，那么 OS 上的其他任务就不能得到及时响应，当然因为线程本身需要独立的堆栈空间，所以线程的理论上限需要考虑内存大小。另一方面，多线程本质上只是在提高当前任务对于 CPU 的使用率，但是一个任务的执行不可能只用到 CPU ，还会用到内存以及可能涉及 IO 操作。就算是不涉及锁的并行读操作，也需要考虑 IO 可以利用的总线带宽大小，所以对于这样的任务使用多线程并行化带来的性能提升曲线应该会随着线程数的增多而呈现先升后降的趋势。还是以我上面遇到的问题为例，从 GPU 显存回读数据到内存中的操作就会受到 PCIe 总线带宽的限制，如果线程数过多就会造成多个线程对于总线的争用，这样就会导致性能下降。</p>
 <h3 id="怎么用多线程">怎么用多线程</h3>
 <p>默认的多线程使用方式就是在需要多线程执行任务的时候创建线程，在任务执行完毕之后销毁线程（就是直接交给 OS 来进行线程的创建和销毁）。</p>
 <p>而实际上，我们常用的是线程池的方式，也就是在任务开始的时候我们就创建多个线程并且保存在一个线程池中，通过任务队列的形式确定将那个任务分配给哪个线程。这样做的方式其实就是把对线程的控制权从 OS 转移到程序员，避免了重复的线程创建和销毁带来的开销。</p>
+<p>下面是使用 C++ 实现的一个简单的线程池：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -377,10 +380,16 @@
 <h3 id="怎么用">怎么用</h3>
 <p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。</p>
 <p>Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。</p>
+<h2 id="总结">总结</h2>
+<p>从进程到线程再到协程的概念，其使用层级是逐级向上的。</p>
+<ul>
+<li>如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。</li>
+<li>如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/os/">OS</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2024-04-06</span>
+                <span>更新于 2024-04-07</span>
             </div><div class="post-info-mod"><span>
                             <a class="link-to-markdown" href="/posts/knowledge/os/prcess-thread-coroutine/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
