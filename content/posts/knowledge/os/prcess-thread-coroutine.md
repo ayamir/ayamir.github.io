@@ -6,7 +6,7 @@ math: true
 keywords: ["进程", "线程", "协程"]
 tags: ["os"]
 categories: ["knowledge"]
-url: "posts/knowledge/os/process-and-thread"
+url: "posts/knowledge/os/prcess-thread-coroutine"
 ---
 
 ## 进程
@@ -130,7 +130,7 @@ public:
 
 private:
   std::vector<std::thread> workers;
-  std::queue<std::function<void()>> tasks;
+  std::queue<Task> tasks;
   std::mutex queueMutex;
   std::condition_variable condition;
   bool stop;

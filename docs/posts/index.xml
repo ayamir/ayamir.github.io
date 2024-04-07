@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
             <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>进程、线程和协程</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</link>
-    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</guid>
     <description><![CDATA[<h2 id="进程">进程</h2>
 <h3 id="是什么">是什么</h3>
 <p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
@@ -200,7 +200,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">workers</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span> <span class="n">tasks</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">queueMutex</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">condition</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="n">stop</span><span class="p">;</span>
