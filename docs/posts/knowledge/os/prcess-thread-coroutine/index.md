@@ -1,13 +1,5 @@
----
-title: "进程、线程和协程"
-date: 2024-04-06T19:23:04+08:00
-draft: false
-math: true
-keywords: ["进程", "线程", "协程"]
-tags: ["os"]
-categories: ["knowledge"]
-url: "posts/knowledge/os/prcess-thread-coroutine"
----
+# 进程、线程和协程
+
 
 ## 进程
 
@@ -192,3 +184,4 @@ Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runti
 
 - 如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。
 - 如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。
+

@@ -122,7 +122,7 @@ public:
 
 private:
   std::vector<std::thread> workers;
-  std::queue<std::function<void()>> tasks;
+  std::queue<Task> tasks;
   std::mutex queueMutex;
   std::condition_variable condition;
   bool stop;
