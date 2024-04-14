@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>QoE Metrics - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/qoe-metrics/</link>
+        <link>https://ayamir.github.io/tags/qoe-metrics/</link>
         <description>QoE Metrics - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/qoe-metrics/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/qoe-metrics/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Toward Immersive Experience</title>
-    <link>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</link>
-    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</guid>
+    <link>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</link>
+    <pubDate>Wed, 09 Mar 2022 11:20:37 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p>Link: <a href="https://ieeexplore.ieee.org/document/9679801" target="_blank" rel="noopener noreffer">Toward Immersive Experience: Evaluation for Interactive Network Services</a></p>
 <p>Level: IEEE Network 2022</p>

@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Backend - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/backend/</link>
+        <link>https://ayamir.github.io/tags/backend/</link>
         <description>Backend - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/backend/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/backend/" rel="self" type="application/rss+xml" /><item>
     <title>什么是 RPC ？</title>
-    <link>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</link>
-    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
     <description><![CDATA[<h2 id="是什么">是什么</h2>
 <p>RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。</p>
 <h2 id="为什么">为什么</h2>

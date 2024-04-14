@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>OS - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/os/</link>
+        <link>https://ayamir.github.io/tags/os/</link>
         <description>OS - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/os/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/os/" rel="self" type="application/rss+xml" /><item>
     <title>同步、异步、阻塞、非阻塞</title>
-    <link>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</link>
-    <pubDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</link>
+    <pubDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</guid>
     <description><![CDATA[<h2 id="概念">概念</h2>
 <p>同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：</p>
 <ul>
@@ -79,8 +79,8 @@
 </item>
 <item>
     <title>进程、线程和协程</title>
-    <link>http://localhost:1313/posts/knowledge/os/process-and-thread/</link>
-    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/process-and-thread/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</guid>
     <description><![CDATA[<h2 id="进程">进程</h2>
 <h3 id="是什么">是什么</h3>
 <p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
@@ -127,9 +127,11 @@
 <p>从我的实际项目经历中来看，在把 GPU 显存中的 yuv 图像数据回读到内存中的时候，图像的不同部分之间是相互独立的，因而这个过程天然适合使用多线程来完成，主线程只需要等待多个线程读完数据之后执行下一步操作即可。</p>
 <p>其次需要考虑的是多线程能带来多大的收益。单线程和多线程的区别其实就是可以占有并利用的 CPU 核心数的区别，因此当任务的瓶颈不在于 CPU 的时候就需要考虑是否有使用多线程的必要。根据 Amdahl&rsquo;s law ，$S(n)=\frac{1}{(1-P)+\frac{P}{n}}$，当处理单元数趋向于无穷的时候，并行化所带来的加速比 $S(n)$ 将趋近于 $\frac{1}{1-P}$​ 。如果任务中可并行的部分比较小的情况下，可能就没有并行化的必要了。</p>
 <p></p>
+<p>实际任务中使用的线程数量应该结合<strong>可以利用的系统资源（CPU 和内存）<strong>和</strong>相应任务的性能瓶颈</strong>两方面考虑，这里之所以要强调是可以利用的资源是因为我们需要从 OS 的角度来考虑，如果当前进程使用了 CPU 的全部核心，那么 OS 上的其他任务就不能得到及时响应，当然因为线程本身需要独立的堆栈空间，所以线程的理论上限需要考虑内存大小。另一方面，多线程本质上只是在提高当前任务对于 CPU 的使用率，但是一个任务的执行不可能只用到 CPU ，还会用到内存以及可能涉及 IO 操作。就算是不涉及锁的并行读操作，也需要考虑 IO 可以利用的总线带宽大小，所以对于这样的任务使用多线程并行化带来的性能提升曲线应该会随着线程数的增多而呈现先升后降的趋势。还是以我上面遇到的问题为例，从 GPU 显存回读数据到内存中的操作就会受到 PCIe 总线带宽的限制，如果线程数过多就会造成多个线程对于总线的争用，这样就会导致性能下降。</p>
 <h3 id="怎么用多线程">怎么用多线程</h3>
 <p>默认的多线程使用方式就是在需要多线程执行任务的时候创建线程，在任务执行完毕之后销毁线程（就是直接交给 OS 来进行线程的创建和销毁）。</p>
 <p>而实际上，我们常用的是线程池的方式，也就是在任务开始的时候我们就创建多个线程并且保存在一个线程池中，通过任务队列的形式确定将那个任务分配给哪个线程。这样做的方式其实就是把对线程的控制权从 OS 转移到程序员，避免了重复的线程创建和销毁带来的开销。</p>
+<p>下面是使用 C++ 实现的一个简单的线程池：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -273,7 +275,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">workers</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span> <span class="n">tasks</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">queueMutex</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">condition</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="n">stop</span><span class="p">;</span>
@@ -313,12 +315,18 @@
 <h3 id="怎么用">怎么用</h3>
 <p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。</p>
 <p>Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。</p>
+<h2 id="总结">总结</h2>
+<p>从进程到线程再到协程的概念，其使用层级是逐级向上的。</p>
+<ul>
+<li>如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。</li>
+<li>如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。</li>
+</ul>
 ]]></description>
 </item>
 <item>
     <title>虚拟地址空间</title>
-    <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
@@ -376,8 +384,8 @@ $$</p>
 </item>
 <item>
     <title>孤儿进程</title>
-    <link>http://localhost:1313/posts/development/orphan-process/</link>
-    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/orphan-process/</guid>
+    <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
     <description><![CDATA[<h2 id="问题背景">问题背景</h2>
 <p>前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 <code>htop</code>，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。</p>
 <p></p>

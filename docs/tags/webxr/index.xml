@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>WebXR - 标签 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/tags/webxr/</link>
+        <link>https://ayamir.github.io/tags/webxr/</link>
         <description>WebXR - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/webxr/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/webxr/" rel="self" type="application/rss+xml" /><item>
     <title>使用 WebXR 完成基于分块的全景视频自适应码率播放器</title>
-    <link>http://localhost:1313/posts/development/webxr-for-panoramic-video/</link>
-    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/webxr-for-panoramic-video/</guid>
+    <link>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</link>
+    <pubDate>Fri, 25 Feb 2022 11:04:23 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</guid>
     <description><![CDATA[<p>最近几天一直在用<code>WebXR</code>的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。</p>
 <p>首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用 WebXR 提供的 API）</p>
 <h2 id="分块播放">分块播放</h2>

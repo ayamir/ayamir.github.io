@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Knowledge - 分类 - Ayamir&#39;s Blog</title>
-        <link>http://localhost:1313/categories/knowledge/</link>
+        <link>https://ayamir.github.io/categories/knowledge/</link>
         <description>Knowledge - 分类 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/categories/knowledge/" rel="self" type="application/rss+xml" /><item>
     <title>同步、异步、阻塞、非阻塞</title>
-    <link>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</link>
-    <pubDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</link>
+    <pubDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</guid>
     <description><![CDATA[<h2 id="概念">概念</h2>
 <p>同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：</p>
 <ul>
@@ -79,8 +79,8 @@
 </item>
 <item>
     <title>进程、线程和协程</title>
-    <link>http://localhost:1313/posts/knowledge/os/process-and-thread/</link>
-    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/process-and-thread/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</guid>
     <description><![CDATA[<h2 id="进程">进程</h2>
 <h3 id="是什么">是什么</h3>
 <p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
@@ -127,9 +127,11 @@
 <p>从我的实际项目经历中来看，在把 GPU 显存中的 yuv 图像数据回读到内存中的时候，图像的不同部分之间是相互独立的，因而这个过程天然适合使用多线程来完成，主线程只需要等待多个线程读完数据之后执行下一步操作即可。</p>
 <p>其次需要考虑的是多线程能带来多大的收益。单线程和多线程的区别其实就是可以占有并利用的 CPU 核心数的区别，因此当任务的瓶颈不在于 CPU 的时候就需要考虑是否有使用多线程的必要。根据 Amdahl&rsquo;s law ，$S(n)=\frac{1}{(1-P)+\frac{P}{n}}$，当处理单元数趋向于无穷的时候，并行化所带来的加速比 $S(n)$ 将趋近于 $\frac{1}{1-P}$​ 。如果任务中可并行的部分比较小的情况下，可能就没有并行化的必要了。</p>
 <p></p>
+<p>实际任务中使用的线程数量应该结合<strong>可以利用的系统资源（CPU 和内存）<strong>和</strong>相应任务的性能瓶颈</strong>两方面考虑，这里之所以要强调是可以利用的资源是因为我们需要从 OS 的角度来考虑，如果当前进程使用了 CPU 的全部核心，那么 OS 上的其他任务就不能得到及时响应，当然因为线程本身需要独立的堆栈空间，所以线程的理论上限需要考虑内存大小。另一方面，多线程本质上只是在提高当前任务对于 CPU 的使用率，但是一个任务的执行不可能只用到 CPU ，还会用到内存以及可能涉及 IO 操作。就算是不涉及锁的并行读操作，也需要考虑 IO 可以利用的总线带宽大小，所以对于这样的任务使用多线程并行化带来的性能提升曲线应该会随着线程数的增多而呈现先升后降的趋势。还是以我上面遇到的问题为例，从 GPU 显存回读数据到内存中的操作就会受到 PCIe 总线带宽的限制，如果线程数过多就会造成多个线程对于总线的争用，这样就会导致性能下降。</p>
 <h3 id="怎么用多线程">怎么用多线程</h3>
 <p>默认的多线程使用方式就是在需要多线程执行任务的时候创建线程，在任务执行完毕之后销毁线程（就是直接交给 OS 来进行线程的创建和销毁）。</p>
 <p>而实际上，我们常用的是线程池的方式，也就是在任务开始的时候我们就创建多个线程并且保存在一个线程池中，通过任务队列的形式确定将那个任务分配给哪个线程。这样做的方式其实就是把对线程的控制权从 OS 转移到程序员，避免了重复的线程创建和销毁带来的开销。</p>
+<p>下面是使用 C++ 实现的一个简单的线程池：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -273,7 +275,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">workers</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span> <span class="n">tasks</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">queueMutex</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">condition</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="n">stop</span><span class="p">;</span>
@@ -313,12 +315,18 @@
 <h3 id="怎么用">怎么用</h3>
 <p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。</p>
 <p>Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。</p>
+<h2 id="总结">总结</h2>
+<p>从进程到线程再到协程的概念，其使用层级是逐级向上的。</p>
+<ul>
+<li>如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。</li>
+<li>如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。</li>
+</ul>
 ]]></description>
 </item>
 <item>
     <title>什么是 RPC ？</title>
-    <link>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</link>
-    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
     <description><![CDATA[<h2 id="是什么">是什么</h2>
 <p>RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。</p>
 <h2 id="为什么">为什么</h2>
@@ -372,8 +380,8 @@
 </item>
 <item>
     <title>虚拟地址空间</title>
-    <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
@@ -431,8 +439,8 @@ $$</p>
 </item>
 <item>
     <title>ABI是什么？</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/abi/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
     <description><![CDATA[<h2 id="abi-是什么">ABI 是什么？</h2>
 <p>ABI: Application Binary Interface（应用<strong>二进制</strong>接口）。</p>
 <p>其实就是针对 <strong>编译器</strong> 和 <strong>链接器</strong> 的<strong>二进制级别</strong>的一些规范和约束，主要规范的内容有：</p>
@@ -459,8 +467,8 @@ $$</p>
 </item>
 <item>
     <title>H264 Encode</title>
-    <link>http://localhost:1313/posts/knowledge/h264-encode/</link>
-    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/h264-encode/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
     <description><![CDATA[<h2 id="编码框架">编码框架</h2>
 <p>编码器包含两个方向的码流分支：</p>
 <p></p>
@@ -969,8 +977,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>远程桌面与WebRTC</title>
-    <link>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
-    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
     <description><![CDATA[<h1 id="关于远程桌面">关于远程桌面</h1>
 <p>远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。</p>
 <h1 id="远程桌面技术的实现">远程桌面技术的实现</h1>
@@ -1042,8 +1050,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebRTC 中关于视频自适应的相关设置</title>
-    <link>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</link>
-    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+    <pubDate>Thu, 15 Sep 2022 20:48:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
     <description><![CDATA[<h1 id="概况">概况</h1>
 <p><code>WebRTC</code>提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。</p>
 <p>视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。</p>
@@ -1096,8 +1104,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 样例的解释</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
     <description><![CDATA[<h1 id="context">Context</h1>
 <ol>
 <li>Create an <code>HTML5</code> canvas</li>
@@ -1641,8 +1649,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 样例</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:31 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
     <description><![CDATA[<h1 id="structure-of-webgl-application">Structure of WebGL Application</h1>
 <p>WebGL application code is a combination of JavaScript and OpenGL Shader Language.</p>
 <ul>
@@ -1840,8 +1848,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 中的管线</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
     <description><![CDATA[<h1 id="overview">Overview</h1>
 <p></p>
 <h1 id="javascript">JavaScript</h1>
@@ -1905,8 +1913,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>WebGL 基础知识</title>
-    <link>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</link>
-    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+    <pubDate>Thu, 03 Mar 2022 10:31:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
     <description><![CDATA[<h1 id="coordinate-system">Coordinate System</h1>
 <p>There are x, y, z axes in WebGL, where the z axis signifies <strong>depth</strong>.
 The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1).
@@ -2002,15 +2010,9 @@ There are various buffers:</p>
 ]]></description>
 </item>
 <item>
-    <title>为 Nginx 启用 HTTPS</title>
-    <link>http://localhost:1313/posts/knowledge/linux/enable-https-for-nginx/</link>
-    <pubDate>Fri, 11 Feb 2022 20:43:46 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/linux/enable-https-for-nginx/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
     <title>VR 和 全景视频的区别总结</title>
-    <link>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
-    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+    <pubDate>Mon, 17 Jan 2022 17:02:51 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
     <description><![CDATA[<p>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。</p>
 <h2 id="全景视频">全景视频</h2>
 <ol>
@@ -2059,8 +2061,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>全景视频中视口预测相关方法总结</title>
-    <link>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</link>
-    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+    <pubDate>Fri, 07 Jan 2022 23:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
     <description><![CDATA[<h2 id="视口预测是什么">视口预测是什么？</h2>
 <p>视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。</p>
 <p>相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。</p>
@@ -2151,8 +2153,8 @@ There are various buffers:</p>
 </item>
 <item>
     <title>多媒体基础知识</title>
-    <link>http://localhost:1313/posts/knowledge/mm-base/</link>
-    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/mm-base/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+    <pubDate>Mon, 13 Dec 2021 10:03:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
     <description><![CDATA[<h1 id="媒体处理过程">媒体处理过程</h1>
 <p></p>
 <h2 id="解协议">解协议</h2>
@@ -2270,8 +2272,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：容器和迭代器</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/iterator/</link>
-    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/iterator/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+    <pubDate>Thu, 28 Oct 2021 17:09:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2412,8 +2414,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类模板Vector</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/vector/</link>
-    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/vector/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+    <pubDate>Thu, 28 Oct 2021 15:35:17 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
     <description><![CDATA[<h2 id="常见的坑与用法">常见的坑与用法</h2>
 <ol>
 <li>
@@ -2553,8 +2555,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：标准库类型string</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/string/</link>
-    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/string/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+    <pubDate>Thu, 28 Oct 2021 10:31:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2700,8 +2702,8 @@ $$</p>
 </item>
 <item>
     <title>重学C&#43;&#43;：类型推导</title>
-    <link>http://localhost:1313/posts/knowledge/cpp/auto/</link>
-    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/auto/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+    <pubDate>Tue, 26 Oct 2021 21:14:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
     <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
 <ol>
 <li>
@@ -2729,6 +2731,202 @@ $$</p>
 <ol>
 <li><code>auto</code>尽量只在类型较长但比较清晰时使用。</li>
 <li><code>decltype</code>尽量不要使用。</li>
+</ol>
+]]></description>
+</item>
+<item>
+    <title>重学C&#43;&#43;：Const二三事</title>
+    <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+    <pubDate>Tue, 26 Oct 2021 15:53:11 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
+    <description><![CDATA[<h2 id="常见的坑">常见的坑</h2>
+<ol>
+<li>
+<p>仅用<code>const</code>修饰的对象只在单个文件中有效，如果想在多个文件之间共享<code>const</code>对象，必须在对象<strong>定义</strong>的前面加<code>extern</code>。</p>
+</li>
+<li>
+<p>允许为一个常量引用绑定非常量的对象、字面量和表达式。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>      <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r4</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>        <span class="c1">// 错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r5</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">r5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 正确
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">r1</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>                 <span class="c1">// 错误
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>指向常量的指针和常量指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">err_numb</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">cur_err</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">err_numb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">mut_pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="k">const</span> <span class="n">pi_pointer</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">pi</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从声明语句的变量符号开始，自右向左看：</p>
+<p><code>cur_err</code>首先是一个不可变对象，其次是一个指向<code>int</code>类型可变对象的指针。</p>
+<p><code>mut_pi_pointer</code>首先是一个可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+<p><code>pi_pointer</code>首先是一个不可变对象，其次是一个指向<code>double</code>类型不可变对象的指针。</p>
+</li>
+<li>
+<p>当<code>typedef</code>遇到<code>const</code>时容易出现错误理解：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pstring</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">pstring</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">pstring</span> <span class="o">*</span><span class="n">ps</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>pstring</code>是<code>char *</code>的别名，即指向<code>char</code>的指针。</p>
+<p><code>const</code>修饰的是<code>pstring</code>，因此<code>cstr</code>是：初始化值为<code>nullptr</code>的<strong>不可变指针</strong>。</p>
+<p>错误理解会用<code>char *</code>替换掉<code>pstring</code>，即：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样从<code>cstr</code>开始自右向左读的话，<code>cstr</code>就会被理解成：指向<strong>字符常量</strong>的<strong>可变指针</strong>。</p>
+</li>
+<li>
+<p><code>constexpr</code>属于顶层<code>const</code>，因此<code>constexpr</code>修饰指针意味着指针本身不可变。</p>
+</li>
+<li>
+<p><code>auto</code>默认会去除顶层<code>const</code>，保留底层<code>const</code>，如果需要顶层<code>const</code>则需要显式加入。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cr</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>       <span class="c1">// b是一个初始化值为0的可变int对象 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cr</span><span class="p">;</span>       <span class="c1">// c同b
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>       <span class="c1">// d是一个初始化为指向可变int类对象i的可变指针对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>      <span class="c1">// e是一个初始化为指向不可变int类对象ci的可变指针对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span> <span class="c1">// f是一个初始化值为0的不可变int对象
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>decltype</code>不会去除顶层<code>const</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// x的类型是const int
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="必须要理解的点">必须要理解的点</h2>
+<ol>
+<li>
+<p><code>const</code>对象在创建时必须进行初始化。</p>
+</li>
+<li>
+<p>常量引用即对<code>const</code>对象的引用。</p>
+</li>
+<li>
+<p>常量引用绑定<em>不可变对象</em>和<em>可变对象</em>时含义不同。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">可变对象</th>
+<th style="text-align:center">不可变对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">用常量引用绑定</td>
+<td style="text-align:center">可以</td>
+<td style="text-align:center">必须</td>
+</tr>
+<tr>
+<td style="text-align:center">常量引用的含义</td>
+<td style="text-align:center">不能通过此引用改变对象的值</td>
+<td style="text-align:center">不可以改变对象的值</td>
+</tr>
+</tbody>
+</table>
+<p>常量引用绑定到可变对象上：对原有可操作性质的窄化，减少操作肯定不会引发错误，所以是允许的。</p>
+<p>非常量引用绑定到不可变对象上：对原有可操作性质的拓宽，增加不允许的操作会出错、，所以不可变对象必须使用常量引用。</p>
+</li>
+<li>
+<p>因为指针是对象，而引用不是对象，所以<code>const</code>和指针的组合有 2 种情况，<code>const</code>和引用的组合只有 1 种情况。</p>
+<ul>
+<li>指针
+<ul>
+<li>指向常量的指针（pointer to const）：不能通过此指针修改对应的量。</li>
+<li>常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。</li>
+</ul>
+</li>
+<li>引用
+<ul>
+<li>常量引用：不能通过此引用修改对应的量。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>顶层<code>const</code>表示指针本身是常量，推广之后可以指任意对象是常量；</p>
+<p>底层<code>const</code>表示指针指向的对象是常量，推广之后主要于指针和引用等复合类型的基本类型部分有关。</p>
+</li>
+<li>
+<p><strong>常量表达式</strong>指：值不会改变，在编译过程中就能得到计算结果的表达式。</p>
+</li>
+<li>
+<p>为什么需要<code>constexpr</code>？</p>
+<p>因为实际中很难判断一个初始值是否为常量表达式。</p>
+<p>使用<code>constexpr</code>相当于把验证变量的值是否是一个常量表达式的工作交给了编译器。</p>
+<p>用<code>constexpr</code>声明的变量一定是一个变量，并且必须用常量表达式来初始化。</p>
+</li>
+</ol>
+<h2 id="建议">建议</h2>
+<ol>
+<li>如果认定变量是一个常量表达式，那就将其声明成<code>constexpr</code>类型。</li>
 </ol>
 ]]></description>
 </item>
