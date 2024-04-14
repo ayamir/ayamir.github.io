@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Trajectory-Based Predict - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/trajectory-based-predict/</link>
+        <link>http://localhost:1313/tags/trajectory-based-predict/</link>
         <description>Trajectory-Based Predict - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/trajectory-based-predict/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/trajectory-based-predict/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Content Assisted Prediction</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</link>
-    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</link>
+    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming" target="_blank" rel="noopener noreffer">Content Assisted Viewport Prediction for Panoramic Video Streaming</a></p>
 <p>Level：IEEE CVPR 2019 CV4ARVR</p>
@@ -67,8 +67,8 @@
 </item>
 <item>
     <title>Note for RnnQoE</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
-    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-rnnQoE/</link>
+    <pubDate>Thu, 16 Dec 2021 19:53:10 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-rnnQoE/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9580281" target="_blank" rel="noopener noreffer">QoE-driven Mobile 360 Video Streaming: Predictive
 View Generation and Dynamic Tile Selection</a></p>
@@ -342,8 +342,8 @@ $$</p>
 </item>
 <item>
     <title>Note for 360ProbDASH</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
-    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-360ProbDASH/</link>
+    <pubDate>Thu, 09 Dec 2021 10:20:15 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-360ProbDASH/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link: <a href="https://dl.acm.org/doi/10.1145/3123266.3123291" target="_blank" rel="noopener noreffer">360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming</a></p>
 <p>Level: ACM MM 17</p>

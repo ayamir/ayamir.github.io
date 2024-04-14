@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Git - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/git/</link>
+        <link>http://localhost:1313/tags/git/</link>
         <description>Git - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/git/" rel="self" type="application/rss+xml" /><item>
     <title>Git 常用用法记录</title>
-    <link>https://ayamir.github.io/posts/development/git-usage/</link>
-    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+    <link>http://localhost:1313/posts/development/git-usage/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/git-usage/</guid>
     <description><![CDATA[<p>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。</p>
 <h2 id="clone-相关">clone 相关</h2>
 <p>克隆指定 branch ： <code>git clone --branch &lt;branch-name&gt; &lt;remote-repo-url&gt;</code></p>

@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Cross-User Vp - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/cross-user-vp/</link>
+        <link>http://localhost:1313/tags/cross-user-vp/</link>
         <description>Cross-User Vp - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/cross-user-vp/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/cross-user-vp/" rel="self" type="application/rss+xml" /><item>
     <title>Note for srlABR Cross User</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
 <p>Level：IEEE Transactions on Broadcasting 2021</p>

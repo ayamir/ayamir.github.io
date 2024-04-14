@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Content-Based Predict - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/content-based-predict/</link>
+        <link>http://localhost:1313/tags/content-based-predict/</link>
         <description>Content-Based Predict - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/content-based-predict/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/content-based-predict/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Content Based Vp for Live Streaming (2)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
-    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
+    <pubDate>Tue, 25 Jan 2022 11:59:24 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
     <description><![CDATA[<h1 id="liveobj">LiveObj</h1>
 <p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
 <ol>
@@ -163,8 +163,8 @@ $$
 </item>
 <item>
     <title>Content Based VP for Live Streaming (1)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
-    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
+    <pubDate>Sat, 22 Jan 2022 18:03:09 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
     <description><![CDATA[<h1 id="livemotion">LiveMotion</h1>
 <h2 id="motivation">Motivation</h2>
 <p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
@@ -244,8 +244,8 @@ $$
 </item>
 <item>
     <title>Note for Content Assisted Prediction</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</link>
-    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</link>
+    <pubDate>Thu, 06 Jan 2022 15:17:33 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming" target="_blank" rel="noopener noreffer">Content Assisted Viewport Prediction for Panoramic Video Streaming</a></p>
 <p>Level：IEEE CVPR 2019 CV4ARVR</p>
@@ -305,8 +305,8 @@ $$
 </item>
 <item>
     <title>Note for Content Motion Viewport Prediction</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
-    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
+    <pubDate>Mon, 20 Dec 2021 10:47:18 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914" target="_blank" rel="noopener noreffer">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
 <p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>

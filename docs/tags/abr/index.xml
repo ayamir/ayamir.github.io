@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>ABR - 标签 - Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/tags/abr/</link>
+        <link>http://localhost:1313/tags/abr/</link>
         <description>ABR - 标签 - Ayamir&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="https://ayamir.github.io/tags/abr/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/abr/" rel="self" type="application/rss+xml" /><item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
-    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+    <pubDate>Sun, 27 Feb 2022 10:39:45 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
     <description><![CDATA[<h1 id="bitrate-adaptation-schemes">Bitrate Adaptation Schemes</h1>
 <h2 id="client-based">Client-based</h2>
 <p>Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.</p>
@@ -114,8 +114,8 @@
 </item>
 <item>
     <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
-    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+    <pubDate>Sat, 26 Feb 2022 11:26:06 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
     <description><![CDATA[<h1 id="paper-overview">Paper Overview</h1>
 <p>Link: <a href="https://ieeexplore.ieee.org/document/8424813" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/document/8424813</a></p>
 <p>Level: IEEE Communications Surveys &amp; Tutorials 2019</p>
@@ -239,8 +239,8 @@
 </item>
 <item>
     <title>Note for srlABR Cross User</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
-    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
+    <pubDate>Sat, 15 Jan 2022 18:46:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/9234071" target="_blank" rel="noopener noreffer">Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network</a></p>
 <p>Level：IEEE Transactions on Broadcasting 2021</p>
@@ -374,8 +374,8 @@ $\eta_*$ 是可调节的参数，与不同的用户偏好对应。</p>
 </item>
 <item>
     <title>Note for 360SRL</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
-    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-360srl/</link>
+    <pubDate>Thu, 13 Jan 2022 12:08:36 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-360srl/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://ieeexplore.ieee.org/document/8784927" target="_blank" rel="noopener noreffer">360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming</a></p>
 <p>Level：ICME 2019</p>
@@ -487,8 +487,8 @@ $$
 </item>
 <item>
     <title>Note for MPC</title>
-    <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
-    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+    <link>http://localhost:1313/posts/papers/note-for-mpc/</link>
+    <pubDate>Thu, 23 Dec 2021 10:39:32 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/papers/note-for-mpc/</guid>
     <description><![CDATA[<h2 id="论文概况">论文概况</h2>
 <p>Link：<a href="https://dl.acm.org/doi/10.1145/2785956.2787486" target="_blank" rel="noopener noreffer">A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP</a></p>
 <p>Level：ACM SIGCOMM 15</p>

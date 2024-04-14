@@ -1,15 +1,88 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Ayamir&#39;s Blog</title>
-        <link>https://ayamir.github.io/</link>
+        <link>http://localhost:1313/</link>
         <description>Welcome to Ayamir&#39;s blog.</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>miracle_l@bupt.edu.cn (Ayamir)</managingEditor>
-            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</lastBuildDate>
-            <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
+            <webMaster>miracle_l@bupt.edu.cn (Ayamir)</webMaster><lastBuildDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</lastBuildDate>
+            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>同步、异步、阻塞、非阻塞</title>
+    <link>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</link>
+    <pubDate>Sat, 13 Apr 2024 23:39:22 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</guid>
+    <description><![CDATA[<h2 id="概念">概念</h2>
+<p>同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：</p>
+<ul>
+<li>
+<p>同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。</p>
+</li>
+<li>
+<p>异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。</p>
+</li>
+<li>
+<p>阻塞就是在调用结果返回之前，当前线程会被挂起。</p>
+</li>
+<li>
+<p>非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。</p>
+</li>
+</ul>
+<p>那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。</p>
+<h2 id="同步和异步">同步和异步</h2>
+<p>同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。</p>
+<p>同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。</p>
+<p>以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：</p>
+<ul>
+<li>
+<p>如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。</p>
+</li>
+<li>
+<p>不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。</p>
+</li>
+</ul>
+<p>在这个例子中我们可以发现：</p>
+<ul>
+<li>
+<p>如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。</p>
+</li>
+<li>
+<p>如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。</p>
+</li>
+</ul>
+<p>如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。</p>
+<p>这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。</p>
+<p>从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。</p>
+<p>以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 <code>goimports</code> ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。</p>
+<p>为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 + 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。</p>
+<h2 id="阻塞和非阻塞">阻塞和非阻塞</h2>
+<p>阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。</p>
+<p>还是以上面的例子来说：</p>
+<ul>
+<li>
+<p>阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），</p>
+</li>
+<li>
+<p>非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。</p>
+</li>
+</ul>
+<p>对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 <code>fcntl</code> 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）</p>
+<p>对于 TCP 而言，其对应的发送和接收的 API 是 <code>send</code>/<code>recv</code>，而 <code>send</code>/<code>recv</code> 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。</p>
+<p>如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：</p>
+<ul>
+<li>
+<p>如果 socket 是阻塞模式，继续调用 <code>send</code> 会将程序阻塞在 <code>send</code> 处，不会执行之后的逻辑。</p>
+</li>
+<li>
+<p>如果 socket 是非阻塞模式，继续调用 <code>send</code> 会直接返回错误，然后执行之后的逻辑（通常使用非阻塞模式我们会获取 <code>send</code> 调用的返回值并在循环中判断）。</p>
+</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>其实总的来看，在实际的编码过程中我们没必要严格区分这两种概念，因为它们之间的区别并不是左与右，正与负这种关系。概念还是需要与实际的例子相结合才有相辅相成的意义。</p>
+]]></description>
+</item>
+<item>
     <title>进程、线程和协程</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</link>
-    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process-and-thread/</guid>
+    <link>http://localhost:1313/posts/knowledge/os/process-and-thread/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/process-and-thread/</guid>
     <description><![CDATA[<h2 id="进程">进程</h2>
 <h3 id="是什么">是什么</h3>
 <p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
@@ -246,8 +319,8 @@
 </item>
 <item>
     <title>什么是 RPC ？</title>
-    <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
-    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
+    <link>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</link>
+    <pubDate>Fri, 29 Mar 2024 23:55:25 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</guid>
     <description><![CDATA[<h2 id="是什么">是什么</h2>
 <p>RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。</p>
 <h2 id="为什么">为什么</h2>
@@ -301,8 +374,8 @@
 </item>
 <item>
     <title>WebRTC任务队列学习笔记</title>
-    <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
-    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+    <link>http://localhost:1313/posts/development/webrtc-task-queue/</link>
+    <pubDate>Tue, 19 Mar 2024 19:32:57 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/webrtc-task-queue/</guid>
     <description><![CDATA[<h2 id="taskqueue">TaskQueue</h2>
 <p><code>TaskQueue</code>也即任务队列，不过这个类本身并没有与队列相关的任何代码，所以它是用来干什么的呢？</p>
 <p>我们直接来读代码（为了方便，我这里直接把方法的实现代码贴了出来）：</p>
@@ -649,8 +722,8 @@
 </item>
 <item>
     <title>虚拟地址空间</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
-    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
+    <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
+    <pubDate>Wed, 07 Feb 2024 15:56:52 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
     <description><![CDATA[<h2 id="什么是虚拟地址空间">什么是虚拟地址空间？</h2>
 <p>虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。</p>
 <p>虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：</p>
@@ -708,8 +781,8 @@ $$</p>
 </item>
 <item>
     <title>ABI是什么？</title>
-    <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
-    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
+    <link>http://localhost:1313/posts/knowledge/cpp/abi/</link>
+    <pubDate>Wed, 07 Feb 2024 12:51:01 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/cpp/abi/</guid>
     <description><![CDATA[<h2 id="abi-是什么">ABI 是什么？</h2>
 <p>ABI: Application Binary Interface（应用<strong>二进制</strong>接口）。</p>
 <p>其实就是针对 <strong>编译器</strong> 和 <strong>链接器</strong> 的<strong>二进制级别</strong>的一些规范和约束，主要规范的内容有：</p>
@@ -736,8 +809,8 @@ $$</p>
 </item>
 <item>
     <title>孤儿进程</title>
-    <link>https://ayamir.github.io/posts/development/orphan-process/</link>
-    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+    <link>http://localhost:1313/posts/development/orphan-process/</link>
+    <pubDate>Mon, 29 Jan 2024 10:31:56 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/orphan-process/</guid>
     <description><![CDATA[<h2 id="问题背景">问题背景</h2>
 <p>前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 <code>htop</code>，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。</p>
 <p></p>
@@ -863,8 +936,8 @@ $$</p>
 </item>
 <item>
     <title>Git 常用用法记录</title>
-    <link>https://ayamir.github.io/posts/development/git-usage/</link>
-    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+    <link>http://localhost:1313/posts/development/git-usage/</link>
+    <pubDate>Tue, 23 Jan 2024 09:50:29 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/development/git-usage/</guid>
     <description><![CDATA[<p>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。</p>
 <h2 id="clone-相关">clone 相关</h2>
 <p>克隆指定 branch ： <code>git clone --branch &lt;branch-name&gt; &lt;remote-repo-url&gt;</code></p>
@@ -908,8 +981,8 @@ $$</p>
 </item>
 <item>
     <title>H264 Encode</title>
-    <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
-    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
+    <link>http://localhost:1313/posts/knowledge/h264-encode/</link>
+    <pubDate>Tue, 23 Jan 2024 01:05:20 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/h264-encode/</guid>
     <description><![CDATA[<h2 id="编码框架">编码框架</h2>
 <p>编码器包含两个方向的码流分支：</p>
 <p></p>
@@ -1418,8 +1491,8 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 </item>
 <item>
     <title>远程桌面与WebRTC</title>
-    <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
-    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+    <link>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+    <pubDate>Thu, 15 Jun 2023 18:21:02 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
     <description><![CDATA[<h1 id="关于远程桌面">关于远程桌面</h1>
 <p>远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。</p>
 <h1 id="远程桌面技术的实现">远程桌面技术的实现</h1>
@@ -1487,176 +1560,6 @@ SFU 从发布客户端复制音视频流的信息，然后分发到多个订阅�
 <p>从技术上讲，基于 WebRTC 开发远程桌面应用相当合理，开源可控，还有谷歌背书，WebRTC 本身在不停地与时俱进，作为上层应用开发的远程桌面也可以及时享受到 WebRTC 带来的改进。</p>
 <p>从业务上讲，WebRTC 本身具有的功能可以解决上面所说的 VNC 和 RDP 的诸多问题，不过就功能的丰富性而言，可能跟微软的 RDP 还差一些，但是 WebRTC 基于音视频的解决方案本身可以优化的上限还是挺高的，毕竟随着人们需求的上升，高分辨率、高帧率也会成为未来远程桌面应用必不可少的功能需求。</p>
 <p>本篇博客从非技术层面探讨了远程桌面技术的当下两大主流技术，以及 WebRTC 应用于远程桌面业务下的可行性。下篇博客将从技术层面详细分析 WebRTC 与远程桌面业务的契合程度及可能的解决方案，就先从核心功能开始吧！</p>
-]]></description>
-</item>
-<item>
-    <title>在Linux下如何搭建WebRTC的开发环境</title>
-    <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
-    <pubDate>Sun, 23 Apr 2023 21:28:38 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
-    <description><![CDATA[<p>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。</p>
-<h2 id="准备工作">准备工作</h2>
-<ol>
-<li>网络：可以科学上网的梯子</li>
-<li>IDE：VSCode 或者 CLion</li>
-</ol>
-<h2 id="安装depot_tools">安装<code>depot_tools</code></h2>
-<p>Google 有自己的一套用于管理 Chromium 项目的工具，名叫<code>depot_tools</code>，其中有包括<code>git</code>在内的一系列工具和脚本。</p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 创建google目录用于存储google相关的代码</span>
-</span></span><span class="line"><span class="cl">mkdir ~/google
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ~/google
-</span></span><span class="line"><span class="cl"><span class="c1"># clone depot_tools</span>
-</span></span><span class="line"><span class="cl">git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>克隆完成之后需要将<code>depot_tools</code>的路径加到<code>PATH</code>中，Linux 上添加环境变量最简单的方式是修改<code>~/.profile</code>，这种方式与你的登录 shell 是什么没有关系，不管是<code>fish</code>还是<code>bash</code>还是<code>zsh</code>都会吃这种方式：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># ~/.profile</span>
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">GOOGLE_BIN</span><span class="o">=</span><span class="nv">$HOME</span>/google/depot_tools
-</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$GOOGLE_BIN</span>:<span class="nv">$PATH</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>但是这种方式需要你注销重新登录。</p>
-<h2 id="克隆代码">克隆代码</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir webrtc-checkout
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> webrtc-checkout
-</span></span><span class="line"><span class="cl">fetch --nohooks webrtc
-</span></span><span class="line"><span class="cl">gclient sync
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。</p>
-<p>克隆期间可能会因为网络问题中断，重新执行<code>gclient sync</code>即可，直到所有的模块都克隆完毕。</p>
-<p>按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> src
-</span></span><span class="line"><span class="cl">git checkout master
-</span></span><span class="line"><span class="cl">git new-branch &lt;branch-name&gt;
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="编译-webrtc">编译 WebRTC</h2>
-<p>关于 WebRTC 的版本可以在<a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener noreffer">Chromium Dash</a>查到：</p>
-
-<p>如上图所示，113 分支是当前的稳定分支，对应的 tag 是<code>branch-heads/5672</code>：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> ~/google/webrtc-checkout/src
-</span></span><span class="line"><span class="cl">git checkout branch-heads/5672
-</span></span><span class="line"><span class="cl">git switch -c m113
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>创建本地分支之后就可以用<code>gn</code>生成<code>ninja</code>文件了：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">gn gen out/Default --root<span class="o">=</span><span class="s2">&#34;.&#34;</span> --args<span class="o">=</span><span class="s1">&#39;is_debug=true target_os=&#34;linux&#34; target_cpu=&#34;x64&#34; rtc_include_tests=false rtc_use_h264=true rtc_enable_protobuf=false is_clang=true symbol_level=0 enable_iterator_debugging=false is_component_build=false use_rtti=true rtc_use_x11=true use_custom_libcxx=false treat_warnings_as_errors=false use_ozone=true&#39;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这里使用了<code>clang</code>并且启用了<code>h264</code>，详细的<code>gn</code>参数可以参考<a href="https://www.chromium.org/developers/gn-build-configuration/" target="_blank" rel="noopener noreffer">gn-build-configuration</a>和项目根目录下的<code>webrtc.gni</code>文件。</p>
-<p>之后使用<code>autoninja</code>进行编译，编译时会吃满你 PC 的所有核心，编译时间取决于你 PC 的配置：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">autoninja -C out/Default
-</span></span></code></pre></td></tr></table>
-</div>
-</div>
-<p>可以看到默认生成了几个样例的可执行文件。</p>
-
-<p>cd 到<code>obj</code>目录下可以看到<code>libwebrtc.a</code>文件，就是编译链接之后最终生成的可以引用的库文件。</p>
-<h2 id="搭建开发环境">搭建开发环境</h2>
-<p>Google 官方给出了 Chromium 项目的<a href="https://chromium.googlesource.com/chromium/src.git/&#43;/master/docs/clion.md#Building_Running_and-Debugging-within-CLion" target="_blank" rel="noopener noreffer">CLion 配置指南</a>，所以只需要照猫画虎给 WebRTC 配置一下。</p>
-<h3 id="配置-clion-属性">配置 CLion 属性</h3>
-<p>因为整个项目比较大，所以需要调大 CLion 的 VM 内存和 intellisence 支持的文件大小：</p>
-<p><code>Help</code>-&gt; <code>Edit Custom VM Options</code>，在文件的末尾添加：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">-Xmx8g
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>表示给 VM 设定<code>8G</code>的可用内存，这样基本上不用担心使用过程因为内存不足而 CLion 性能不够了。</p>
-<p><code>Help</code>-&gt;<code>Edit Custom Properties</code>，在文件的末尾添加：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">idea.max.intellisense.filesize=12500
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>表示为大小为<code>12500KB</code>也就是<code>12M</code>以下的文件提供 intellisense 支持。</p>
-<h3 id="配置-gdb">配置 gdb</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">vim ~/.gdbinit
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 添加下面一行</span>
-</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/google/webrtc-checkout/src/tools/gdb/gdbinit
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>之后在 CLion 中的<code>Settings</code>-&gt;<code>Toolchain</code>-&gt;<code>Debugger</code>选择系统自带的 gdb：<code>/usr/bin/gdb</code>即可。</p>
-<h3 id="配置-intellisense">配置 intellisense</h3>
-<p>因为 WebRTC 用的是<code>gn</code>+<code>ninja</code>作为构建工具，而<code>CLion</code>目前只支持<code>cmake</code>，所以当要求配置<code>CMakeLists.txt</code>时直接无视即可。网络上有说用<code>gn_to_cmake.py</code>这个脚本的，但是我没看懂这东西的功能，反正是不能生成<code>CMakeLists.txt</code>，只是生成一个<code>json</code>文件，并不能用于 CLion 的索引。</p>
-<p>我这边成功开启 IDE 语法高亮和索引的姿势是这样的：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">cd webrtc-checkout/src
-</span></span><span class="line"><span class="cl">python3 ./tools/clang/scripts/generate_compdb.py -p ./out/Default -o ./compile_commands.json --target_os=linux
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这一步会生成 CLion 可以自动识别的<code>compile_commands.json</code>文件，从而可以正确索引项目的代码并提供代码补全功能。</p>
-
-<p>之后每次启动项目 CLion 就会自动索引项目文件，就可以愉快地看代码和写代码啦！</p>
 ]]></description>
 </item>
 </channel>
