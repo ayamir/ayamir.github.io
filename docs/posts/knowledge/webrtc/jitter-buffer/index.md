@@ -1,13 +1,5 @@
----
-title: "Jitter Buffer学习理解（上）"
-date: 2024-04-18T17:33:24+08:00
-draft: false
-math: true
-keywords: ["webrtc"]
-tags: ["WebRTC"]
-categories: ["knowledge"]
-url: "posts/knowledge/webrtc/jitter-buffer"
----
+# Jitter Buffer学习理解（上）
+
 
 ## Jitter Buffer 是什么
 
@@ -1453,3 +1445,4 @@ bool FrameBuffer::InsertFrame(std::unique_ptr<EncodedFrame> frame) {
 ```
 
 视频帧的`FrameBuffer`按照可解码的顺序建立完毕，之后就可以根据 Jitter Delay 来交付给解码器解码了。至此，Buffer 的功能分析完毕，下篇学习分析 Jitter Buffer 的核心算法，也就是 Jitter 的计算过程。
+
