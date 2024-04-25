@@ -3115,8 +3115,7 @@
 </div>
 </div><h2 id="协程">协程</h2>
 <h3 id="是什么-2">是什么</h3>
-<p>协程这一概念可以理解为“函数plus”，普通的函数只有两种行为：调用(Invoke)和返回(Return)。协程比函数多了一种行为：挂起(Suspend/Yield)。</p>
-<p>在只使用函数的情况下，程序的执行流可以只用一个栈就能模拟（调用函数时 push ，函数返回时 pop ），而引入协程之后，因为其具有挂起这一行为，所以需要额外的空间（比如堆）来暂存协程的上下文。</p>
+<p>协程这一概念可以理解为“函数plus”，普通的函数只有两种行为：调用(Invoke)和返回(Return)。协程比函数多了两种行为：挂起(Yield)和恢复(Resume)。在只使用函数的情况下，程序的执行流可以只用一个栈就能模拟（调用函数时 push ，函数返回时 pop ），而引入协程之后，因为其具有挂起这一行为，所以需要额外的空间（比如堆）来暂存协程的上下文。</p>
 <h3 id="有什么用-2">有什么用</h3>
 <p>协程的作用可以用一句话来描述，即：协程就是用单线程的方式完成并发的任务逻辑。</p>
 <p>协程其实与进程和线程没有太近的“亲缘关系”，只是在作用上有着相近的效果，即宏观上看是并发执行的。以经典的生产者-消费者任务为例：</p>
@@ -3126,15 +3125,226 @@
 </ul>
 <p>协程相比于上面提到的进程和线程，区别在于协程是运行在用户态的，或者说协程的控制权是掌握在程序员手中的，由程序员负责控制在什么时候把 CPU 的使用权交给哪个协程。</p>
 <h3 id="什么时候用协程">什么时候用协程</h3>
-<p>协程的使用情形其实很简单，即：你需要在只利用一个 CPU 核心的情况下完成并发任务的时候就是使用协程的时候。所以其实协程这个概念诞生的很早（1960年 Melvin Conway 解决COBOL 编译器的问题，使用协程技术只需要遍历一遍源代码）</p>
-<h3 id="怎么用">怎么用</h3>
-<p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。</p>
-<p>Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。</p>
+<p>协程的使用情形其实很简单，即：你需要以<strong>同步且并发</strong>的方式来完成任务的时候就是使用协程的时候。协程从根本上来讲就是同步且阻塞的，程序员决定什么时候把CPU的使用权交给哪个协程，而多线程的调度是受OS内核调度的，其触发点来自于不可预见的硬件时钟中断，要想实现同步调用就必须使用锁/条件变量这种技术来确保<strong>线程安全</strong>（不论多个线程以什么次序被调用完成任务时的结果都应该是一致的），所以加重了程序员的心智负担和代码的维护成本。</p>
+<h3 id="协程类型">协程类型</h3>
+<p>协程根据存储运行上下文的方式主要分为：有栈协程和无栈协程。首先需要声明这里的“栈”指的不是函数的调用栈的意思，因为对于大多数语言来说，一个函数调用另一个函数时总是需要调用栈的。这里说的栈指的是用来保存协程运行状态的额外空间。<strong>有栈和无栈的区别不是说需不需要额外空间（不可能不需要），而是说协程有没有独属于自己的用来保存运行上下文的额外空间</strong>。感慨一句，计算机学科的很多人就是喜欢发明一些概念，而且还喜欢用一些比较耳熟能详的简略的词来描述它们，让人在理解的时候不得不去做概念辨析。</p>
+<h4 id="有栈协程">有栈协程</h4>
+<p>前面说过，协程因为比函数多了yield和resume两种状态，所以正常来说就需要一个额外的空间来保存协程在yield执行之前的上下文，不然当CPU使用权再次交给这个协程的时候，怎么能从上一次协程让出CPU的地方继续执行呢？有栈协程就是这种提供额外空间来保存运行上下文的协程。有栈协程的主要代表是goroutine，也就是说，当用<code>go</code>关键词修饰一个函数的时候，这个函数就变成了一个有栈协程。这个额外空间的大小是个典型的优化问题，分多了浪费，分少了溢出，go runtime实现了一个协程栈扩容的机制来解决这个问题。</p>
+<h4 id="无栈协程">无栈协程</h4>
+<p>无栈协程不利用额外空间能完成协程的任务吗？答案当然是不能，没有额外空间怎么确定上下文呢？那这里的无栈是什么意思呢？其实就是说，这个协程没有属于自己的、独立的额外空间来存储上下文，其上下文信息需要保存在另外一个地方，协程的挂起和恢复过程的本质就是：<strong>由协程不同挂起点组成的状态机的状态转移过程</strong>。</p>
+<p>无栈协程的典型关键字就是async/await，在C#/Rust/JavaScript中都是用的它们，底层原理都是编译器/解释器基于关键字的声明位置生成一个专属于这个协程的状态机。从下面的一个示例实现可以看出无栈协程的本质：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// 协程的结构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">fn</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yield</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yield</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 无栈协程其实就是这么实现的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">fn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">state_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="nf">resume</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">state_</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">fn1</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">fn2</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">fn3</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="nf">fn1</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="nf">fn2</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="nf">fn3</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>无栈协程相比于有栈协程最大的不自由的点在于：不能在非async的上下文中使用await，因为无栈协程的状态需要保存在async的上下文中，而有栈协程则可以在任意嵌套的位置进行挂起操作。比如在JavaScript中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">ele</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Uncaught SyntaxError:
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// await is only valid in async function
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">handleEle</span><span class="p">(</span><span class="nx">ele</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="怎么用">怎么用</h3>
+<p>目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供，不过最新版本的<code>g++</code>做了支持：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;coroutine&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;future&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Result</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="nc">promise_type</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Result</span> <span class="nf">get_return_object</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">suspend_never</span> <span class="n">initial_suspend</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">suspend_never</span> <span class="n">final_suspend</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">return_void</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">unhandled_exception</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">coroutine_handle</span><span class="o">&lt;&gt;</span> <span class="n">coroutine_handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">AWaitableObject</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AWaitableObject</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">bool</span> <span class="nf">await_ready</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span><span class="k">return</span> <span class="nb">false</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="nf">await_resume</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">await_suspend</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">coroutine_handle</span><span class="o">&lt;&gt;</span> <span class="n">handle</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">coroutine_handle</span> <span class="o">=</span> <span class="n">handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Result</span> <span class="nf">CoroutineFunction</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;start coroutine</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">co_await</span> <span class="n">AWaitableObject</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;finish coroutine</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;start </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">coro</span> <span class="o">=</span> <span class="n">CoroutineFunction</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;coroutine co_await</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">coroutine_handle</span><span class="p">.</span><span class="n">resume</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用最新版本的<code>g++</code>编译运行：如果是<code>macOS</code>需要把<code>g++</code>改成<code>g++-13</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">g++ coroutine.cc -g -o coroutine -fcoroutines -std<span class="o">=</span>c++20
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p></p>
 <h2 id="总结">总结</h2>
 <p>从进程到线程再到协程的概念，其使用层级是逐级向上的。</p>
 <ul>
 <li>如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。</li>
-<li>如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。</li>
+<li>如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+协程挂起和恢复的逻辑来完成宏观上的并发操作。</li>
 </ul>
 ]]></description>
 </item>

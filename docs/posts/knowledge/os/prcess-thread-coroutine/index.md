@@ -153,9 +153,7 @@ int main() {
 
 ### 是什么
 
-协程这一概念可以理解为“函数plus”，普通的函数只有两种行为：调用(Invoke)和返回(Return)。协程比函数多了一种行为：挂起(Suspend/Yield)。
-
-在只使用函数的情况下，程序的执行流可以只用一个栈就能模拟（调用函数时 push ，函数返回时 pop ），而引入协程之后，因为其具有挂起这一行为，所以需要额外的空间（比如堆）来暂存协程的上下文。
+协程这一概念可以理解为“函数plus”，普通的函数只有两种行为：调用(Invoke)和返回(Return)。协程比函数多了两种行为：挂起(Yield)和恢复(Resume)。在只使用函数的情况下，程序的执行流可以只用一个栈就能模拟（调用函数时 push ，函数返回时 pop ），而引入协程之后，因为其具有挂起这一行为，所以需要额外的空间（比如堆）来暂存协程的上下文。
 
 ### 有什么用
 
@@ -170,18 +168,137 @@ int main() {
 
 ### 什么时候用协程
 
-协程的使用情形其实很简单，即：你需要在只利用一个 CPU 核心的情况下完成并发任务的时候就是使用协程的时候。所以其实协程这个概念诞生的很早（1960年 Melvin Conway 解决COBOL 编译器的问题，使用协程技术只需要遍历一遍源代码）
+协程的使用情形其实很简单，即：你需要以**同步且并发**的方式来完成任务的时候就是使用协程的时候。协程从根本上来讲就是同步且阻塞的，程序员决定什么时候把CPU的使用权交给哪个协程，而多线程的调度是受OS内核调度的，其触发点来自于不可预见的硬件时钟中断，要想实现同步调用就必须使用锁/条件变量这种技术来确保**线程安全**（不论多个线程以什么次序被调用完成任务时的结果都应该是一致的），所以加重了程序员的心智负担和代码的维护成本。
+
+### 协程类型
+
+协程根据存储运行上下文的方式主要分为：有栈协程和无栈协程。首先需要声明这里的“栈”指的不是函数的调用栈的意思，因为对于大多数语言来说，一个函数调用另一个函数时总是需要调用栈的。这里说的栈指的是用来保存协程运行状态的额外空间。**有栈和无栈的区别不是说需不需要额外空间（不可能不需要），而是说协程有没有独属于自己的用来保存运行上下文的额外空间**。感慨一句，计算机学科的很多人就是喜欢发明一些概念，而且还喜欢用一些比较耳熟能详的简略的词来描述它们，让人在理解的时候不得不去做概念辨析。
+
+#### 有栈协程
+
+前面说过，协程因为比函数多了yield和resume两种状态，所以正常来说就需要一个额外的空间来保存协程在yield执行之前的上下文，不然当CPU使用权再次交给这个协程的时候，怎么能从上一次协程让出CPU的地方继续执行呢？有栈协程就是这种提供额外空间来保存运行上下文的协程。有栈协程的主要代表是goroutine，也就是说，当用`go`关键词修饰一个函数的时候，这个函数就变成了一个有栈协程。这个额外空间的大小是个典型的优化问题，分多了浪费，分少了溢出，go runtime实现了一个协程栈扩容的机制来解决这个问题。
+
+#### 无栈协程
+
+无栈协程不利用额外空间能完成协程的任务吗？答案当然是不能，没有额外空间怎么确定上下文呢？那这里的无栈是什么意思呢？其实就是说，这个协程没有属于自己的、独立的额外空间来存储上下文，其上下文信息需要保存在另外一个地方，协程的挂起和恢复过程的本质就是：**由协程不同挂起点组成的状态机的状态转移过程**。
+
+无栈协程的典型关键字就是async/await，在C#/Rust/JavaScript中都是用的它们，底层原理都是编译器/解释器基于关键字的声明位置生成一个专属于这个协程的状态机。从下面的一个示例实现可以看出无栈协程的本质：
+
+```c++
+// 协程的结构
+void fn() {
+  int a, b, c;
+  a = b + c;
+  yield();
+  b = a + c;
+  yield();
+  c = a + b;
+}
+// 无栈协程其实就是这么实现的
+class fn {
+  int a, b, c;
+  int state_ = 0;
+  void resume() {
+    switch(state_) {
+      case 0:
+        return fn1();
+      case 1:
+        return fn2();
+      case 2:
+        return fn3();
+    }
+  }
+  void fn1() {
+    a = b + c;
+  }
+  void fn2() {
+    b = a + c;
+  }
+  void fn3() {
+    c = a + b;
+  }
+};
+```
+
+无栈协程相比于有栈协程最大的不自由的点在于：不能在非async的上下文中使用await，因为无栈协程的状态需要保存在async的上下文中，而有栈协程则可以在任意嵌套的位置进行挂起操作。比如在JavaScript中：
+
+```javascript
+async function fn(array) {
+  array.forEach(ele => {
+    // Uncaught SyntaxError:
+    // await is only valid in async function
+    let res = await handleEle(ele)
+  })
+}
+```
 
 ### 怎么用
 
-目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供。
+目前 C++ 的协程只是在 C++20 中提供了机制，标准库的实现可能会在下一个版本 C++23 中提供，不过最新版本的`g++`做了支持：
 
-Go 中的 Goroutine 其实并不受程序员调度，其挂起行为由 Go runtime 调度。
+```c++
+#include <iostream>
+#include <thread>
+#include <coroutine>
+#include <future>
+#include <chrono>
+#include <functional>
+
+struct Result{
+  struct promise_type {
+    Result get_return_object() { return {}; }
+    std::suspend_never initial_suspend() { return {}; }
+    std::suspend_never final_suspend() noexcept { return {}; }
+    void return_void() {}
+    void unhandled_exception() {}
+  };
+};
+
+std::coroutine_handle<> coroutine_handle;
+
+struct AWaitableObject
+{
+	AWaitableObject() {}
+	bool await_ready() const {return false;}
+	int await_resume() { return 0; }
+	void await_suspend(std::coroutine_handle<> handle){
+        coroutine_handle = handle;
+  }
+};
+
+
+Result CoroutineFunction()
+{
+  std::cout<<"start coroutine\n";
+	int ret = co_await AWaitableObject(); 
+  std::cout<<"finish coroutine\n";
+}
+
+
+
+int main()
+{
+    std::cout<<"start \n"; 
+    auto coro = CoroutineFunction();
+    std::cout<<"coroutine co_await\n"; 
+    coroutine_handle.resume();
+
+    return 0;
+}
+```
+
+使用最新版本的`g++`编译运行：如果是`macOS`需要把`g++`改成`g++-13`
+
+```shell
+g++ coroutine.cc -g -o coroutine -fcoroutines -std=c++20
+```
+
+![image-20240425172537664](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240425172537664.png)
 
 ## 总结
 
 从进程到线程再到协程的概念，其使用层级是逐级向上的。
 
 - 如果希望程序可以充分利用多核资源来实现 CPU 密集型操作的并行加速，那可以使用多线程，通过使用锁/条件变量等方式来完成线程之间的协作。
-- 如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+异步的逻辑来完成宏观上的并发操作。
+- 如果不满 OS 的任务/线程调度策略，那可以在程序中使用并调度协程，用单线程+协程挂起和恢复的逻辑来完成宏观上的并发操作。
 
