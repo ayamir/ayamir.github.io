@@ -6,6 +6,7 @@ keywords: ["linux"]
 tags: ["linux"]
 categories: ["knowledge"]
 url: "posts/knowledge/linux/how-to-fix-GPGME-error"
+summary: "这篇博客主要描述了解决 Archlinux 上 GPGME Error 问题的方法。"
 ---
 
 ## Delete old sync files

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for 360SRL - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,16 +21,11 @@
   content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming
 Level：ICME 2019
 Keywords：ABR、RL、Sequential decision
-创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，
-每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，
-因此对每个片段，有 $N \times M$ 种可选的编码块。
-为了保证播放时的流畅性，需要确定最优的预取集合：
-${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $
-分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。" />
+" />
 <meta name="keywords"
   content='ABR, RL' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-360srl/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-360srl/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -39,16 +34,11 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
   content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming
 Level：ICME 2019
 Keywords：ABR、RL、Sequential decision
-创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，
-每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，
-因此对每个片段，有 $N \times M$ 种可选的编码块。
-为了保证播放时的流畅性，需要确定最优的预取集合：
-${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $
-分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -57,16 +47,11 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
   content="论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming
 Level：ICME 2019
 Keywords：ABR、RL、Sequential decision
-创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，
-每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，
-因此对每个片段，有 $N \times M$ 种可选的编码块。
-为了保证播放时的流畅性，需要确定最优的预取集合：
-${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $
-分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-360srl/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-360srl/" />
 <meta property="og:site_name" content="Note for 360SRL" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -88,7 +73,7 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -110,7 +95,7 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -118,7 +103,7 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -144,7 +129,7 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -152,11 +137,11 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-360srl/">Note for 360SRL</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-360srl/">Note for 360SRL</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -166,9 +151,9 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:23:12 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:23:12 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -243,7 +228,7 @@ ${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;,
 <p>每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，</p>
 <p>因此对每个片段，有 $N \times M$ 种可选的编码块。</p>
 <p>为了保证播放时的流畅性，需要确定最优的预取集合：</p>
-<p>${a_0, &hellip;, a_i, &hellip;, a_{N-1}}, i \in \lbrace 0, &hellip;, N-1 \rbrace, a_i \in \lbrace 0, &hellip;, M-1 \rbrace $</p>
+<p>${a<em>0, &hellip;, a_i, &hellip;, a</em>{N-1}}, i \in \lbrace 0, &hellip;, N-1 \rbrace, a_i \in \lbrace 0, &hellip;, M-1 \rbrace $</p>
 <p>分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</p>
 <p>用 $p_i \in [0, 1]$ 表示 $i^{th}$ 块的被看到的可能性。</p>
 <h2 id="顺序-abr-决策">顺序 ABR 决策</h2>
@@ -282,32 +267,32 @@ R_t = w_1 \cdot q^{avg}_t - w_2 \cdot q^{s_v}_t - w_3 \cdot q^{t_v}_t - w_4 \cdo
 $$</p>
 <h2 id="训练方法">训练方法</h2>
 <p>使用<code>DQN</code>作为基本的算法来学习动作-价值函数 $Q(s_t, a_t; \theta)$ ，其中 $\theta$ 作为参数，对应的贪心策略为 $\pi(s_t; \theta) = \underset{\theta}{argmax} Q(s_t, a_t; \theta)$ 。</p>
-<p><code>DQN</code>网络的关键想法是更新最小化损失函数的方向上的参数：
-$$
+<p><code>DQN</code>网络的关键想法是更新最小化损失函数的方向上的参数：</p>
+<p>$$
 L(\theta) = E[y_t - Q(s_t, a_t; \theta)]
 $$</p>
 <p>$$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}&rsquo;); {\theta}&rsquo;)
-$$
-${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
+$$</p>
+<p>${\theta}&rsquo;$ 表示固定且分离的目标网络的参数；</p>
 <p>$r(\cdot)$ 是即时奖励函数，即上面公式 5 中的 $R_t$ ；</p>
 <p>$\gamma \in [0, 1]$ 是折扣因子；</p>
-<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式 7 被重写为：
-$$
+<p>为了缓解过拟合，引入 <code>double-DQN</code> 的结构，所以公式 7 被重写为：</p>
+<p>$$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}&rsquo;)
-$$
-利用公式 6 和公式 8 可以得出 $i^{th}$ 维的暂时损失函数：
-$$
+$$</p>
+<p>利用公式 6 和公式 8 可以得出 $i^{th}$ 维的暂时损失函数：</p>
+<p>$$
 l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
-$$
-其中 $Q_{target}$ 满足：</p>
+$$</p>
+<p>其中 $Q_{target}$ 满足：</p>
 <p>$$
 Q_{target} = r_t + {\gamma}_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}&rsquo;)
 $$</p>
 <p>${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。</p>
 <p>观察公式 9 和公式 10 可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。</p>
-<p>为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：
-$$
+<p>为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：</p>
+<p>$$
 l^i_t = r^i_{extra} + Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, &hellip;N-1]
 $$</p>
 <p>$$
@@ -319,15 +304,15 @@ r^i_{extra} =
 \end{cases}
 $$</p>
 <p>通过设定一个观看概率的阈值 $P$ ，对观看概率低于 $P$ 但选择了高码率的分块施加 $-a^i_t$ 的奖励。</p>
-<p>因此最终的平均损失可以形式化为：
-$$
+<p>因此最终的平均损失可以形式化为：</p>
+<p>$$
 l^{avg}_t = \frac{1}{N} \sum^{N-1}_{i=0} l^i_t
-$$
-接着使用梯度下降法来更新模型，学习率设定为 $\alpha$：
-$$
+$$</p>
+<p>接着使用梯度下降法来更新模型，学习率设定为 $\alpha$：</p>
+<p>$$
 \theta \larr \theta + \alpha \triangledown l^{avg}_t
-$$
-同时，在训练阶段利用经验回放法来提高<code>360SRL</code>的泛化性。</p>
+$$</p>
+<p>同时，在训练阶段利用经验回放法来提高<code>360SRL</code>的泛化性。</p>
 <p><img src="https://s2.loli.net/2022/01/15/l6J8GHucdqjPfer.png" alt="image-20220115114808192"></p>
 <p><img src="https://s2.loli.net/2022/01/15/Ssyuc7a5z4JTAHN.png" alt="image-20220115114819951"></p>
 <h2 id="实现细节">实现细节</h2>
@@ -336,8 +321,7 @@ $$
 <p>初始的 4 个输入通过带有 128 个过滤器的 1 维卷积层被传递，4 个输入核心大小分别为 $1 \times m$ 、 $1 \times M$ 、 $1 \times N$ 、 $1 \times M$ ，后续这 4 个输入被喂给有 128 个神经元的全连接层；</p>
 <p>随后特征映射被连接成一个张量，接着是具有 1024 个神经元和 256 个神经元的前向网络；</p>
 <p>整个动作-价值网络的输出是 M 维的向量。</p>
-<p>特征提取层和前向网络层都使用 <code>Leaky-ReLU</code>作为激活函数，最后是层归一化层。</p>
-</article>
+<p>特征提取层和前向网络层都使用 <code>Leaky-ReLU</code>作为激活函数，最后是层归一化层。</p></article>
               </div>
             </div>
           </div>
@@ -346,13 +330,13 @@ $$
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -372,7 +356,7 @@ $$
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -393,7 +377,7 @@ $$
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

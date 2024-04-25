@@ -7,6 +7,7 @@ keywords: ["WebGL"]
 tags: ["WebGL"]
 categories: ["knowledge"]
 url: "posts/knowledge/webgl/webgl-pipeline"
+summary: "这篇博客主要学习总结了 WebGL 的管线相关的知识。"
 ---
 
 # Overview

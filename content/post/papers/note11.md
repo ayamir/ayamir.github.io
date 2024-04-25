@@ -9,14 +9,16 @@ categories: ["paper"]
 url: "posts/papers/note11"
 ---
 
-##  度量指标
+## 度量指标
 
 1. viewport 预测精度。
-   + 使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。
+   - 使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。
 2. 视频质量。
-   + viewport 内部的 tile 质量（1～5）。
-   + tile 在最高质量层之上花费的时间。
-   + 根据用户视线的分布而提出的加权质量度量。
+   - viewport 内部的 tile 质量（1～5）。
+   - tile 在最高质量层之上花费的时间。
+   - 根据用户视线的分布而提出的加权质量度量。
+
+<!--more-->
 
 ## 度量参数
 

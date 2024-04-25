@@ -5,11 +5,10 @@ draft: false
 math: true
 keywords: ["C++"]
 tags: ["C++"]
-categories:  ["knowledge"]
+categories: ["knowledge"]
 url: "posts/knowledge/cpp/string"
+summary: "这篇博客主要讨论了 C++ 中的 string 类型的用法。"
 ---
-
-
 
 ## 常见的坑
 
@@ -64,14 +63,14 @@ url: "posts/knowledge/cpp/string"
    ```C++
    #include <iostream>
    #include <cctype>
-   
+
    using std::string;
-   
+
    string str{"Some String"};
    for (auto c : str) {
        std::cout << c << std::endl;
    }
-   
+
    // 使用引用来改变原字符串内容
    for (auto &c : str) {
        c = std::toupper(c);
@@ -94,10 +93,7 @@ url: "posts/knowledge/cpp/string"
 
    ```C++
    using std::string;
-   
+
    string a = "Hello, world!";
    string::size_type index_of_space = a.find(" ");
    ```
-
-   
-

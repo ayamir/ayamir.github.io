@@ -7,6 +7,7 @@ keywords: ["WebGL"]
 tags: ["WebGL"]
 categories: ["knowledge"]
 url: "posts/knowledge/webgl/webgl-samples"
+summary: "这篇博客主要学习总结了 WebGL 的一些使用样例。"
 ---
 
 # Structure of WebGL Application
@@ -23,7 +24,7 @@ WebGL application code is a combination of JavaScript and OpenGL Shader Language
 ## 2D coordinates
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <body>
     <canvas width="300" height="300" id="my_canvas"></canvas>
@@ -49,7 +50,7 @@ WebGL application code is a combination of JavaScript and OpenGL Shader Language
       gl.bufferData(
         gl.ARRAY_BUFFER,
         new Float32Array(vertices),
-        gl.STATIC_DRAW
+        gl.STATIC_DRAW,
       );
       // Unbind the buffer
       gl.bindBuffer(gl.ARRAY_BUFFER, null);

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>重学C&#43;&#43;：容器和迭代器 - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -18,70 +18,31 @@
 
     
     <meta name="description"
-  content="常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。
-string虽然不是容器，但是支持很多容器的操作。
-容器不为空时：begin()返回的是容器中第一个元素的位置；end()返回的是容器中最后一个元素的后一个位置。
-容器为空时：begin()和end()返回的都是最后一个元素的后一个位置。
-任何可能改变容器大小的操作都会使容器的迭代器失效。
-必须要理解的点 和指针类似的是，迭代器支持对对象的间接访问。
-和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如begin(), end()。
-所有迭代器都支持的运算：
-运算符 例子 含义 * *iter 返回迭代器iter指向元素的引用 -&amp;gt; iter-&amp;gt;mem 解引用iter并获取该元素名为mem的成员，即(*iter).mem &#43;&#43; &#43;&#43;iter 令iter指向当前元素的后一个元素 &amp;ndash; --iter 令iter指向当前元素的前一个元素 == iter1 == iter2 如果两个迭代器指向相同的元素返回true，否则返回false != iter1 != iter2 上面例子的反面 迭代器的类型有两种：iterator和const_iterator。
-vector&amp;lt;int&amp;gt;::iterator itv; // 可用于读写vector&amp;lt;int&amp;gt;中的元素 string::iterator its; // 可用于读写string对象中的元素 vector&amp;lt;int&amp;gt;::const_iterator citv; // 只能读取元素 string::const_iterator cits; // 只能读取元素 begin()和end()返回哪一种取决于对象本身是否被const修饰。
-C&#43;&#43;11 中引入了cbegin()和cend()来专门返回const_iterator。
-认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。
-vector和string的迭代器支持的额外的运算：
-运算 含义 iter &#43; n 运算得到一个新迭代器，指向当前元素的后 n 个元素的位置 iter - n 运算得到一个新迭代器，指向当前元素的前 n 个元素的位置 iter &#43;= n 运算得到的新迭代器赋值给iter iter -= n 同上 iter1 - iter2 两个迭代器之间的距离，可正可负 &amp;gt;, &amp;lt;, &amp;lt;=, &amp;gt;= 同两类型的下标运算符中的数字的关系，位置靠前的较小 建议 一般不在意迭代器的类型，因此使用auto来标注。 循环结束的判断条件习惯使用迭代器和!" />
+  content="这篇博客主要讨论了 C&#43;&#43; 中的容器和迭代器。" />
 <meta name="keywords"
   content='C&#43;&#43;' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/knowledge/cpp/iterator/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/cpp/iterator/" />
 
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="重学C&#43;&#43;：容器和迭代器 - Ayamir&#39;s blog" />
 <meta name="twitter:description"
-  content="常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。
-string虽然不是容器，但是支持很多容器的操作。
-容器不为空时：begin()返回的是容器中第一个元素的位置；end()返回的是容器中最后一个元素的后一个位置。
-容器为空时：begin()和end()返回的都是最后一个元素的后一个位置。
-任何可能改变容器大小的操作都会使容器的迭代器失效。
-必须要理解的点 和指针类似的是，迭代器支持对对象的间接访问。
-和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如begin(), end()。
-所有迭代器都支持的运算：
-运算符 例子 含义 * *iter 返回迭代器iter指向元素的引用 -&amp;gt; iter-&amp;gt;mem 解引用iter并获取该元素名为mem的成员，即(*iter).mem &#43;&#43; &#43;&#43;iter 令iter指向当前元素的后一个元素 &amp;ndash; --iter 令iter指向当前元素的前一个元素 == iter1 == iter2 如果两个迭代器指向相同的元素返回true，否则返回false != iter1 != iter2 上面例子的反面 迭代器的类型有两种：iterator和const_iterator。
-vector&amp;lt;int&amp;gt;::iterator itv; // 可用于读写vector&amp;lt;int&amp;gt;中的元素 string::iterator its; // 可用于读写string对象中的元素 vector&amp;lt;int&amp;gt;::const_iterator citv; // 只能读取元素 string::const_iterator cits; // 只能读取元素 begin()和end()返回哪一种取决于对象本身是否被const修饰。
-C&#43;&#43;11 中引入了cbegin()和cend()来专门返回const_iterator。
-认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。
-vector和string的迭代器支持的额外的运算：
-运算 含义 iter &#43; n 运算得到一个新迭代器，指向当前元素的后 n 个元素的位置 iter - n 运算得到一个新迭代器，指向当前元素的前 n 个元素的位置 iter &#43;= n 运算得到的新迭代器赋值给iter iter -= n 同上 iter1 - iter2 两个迭代器之间的距离，可正可负 &amp;gt;, &amp;lt;, &amp;lt;=, &amp;gt;= 同两类型的下标运算符中的数字的关系，位置靠前的较小 建议 一般不在意迭代器的类型，因此使用auto来标注。 循环结束的判断条件习惯使用迭代器和!" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+  content="这篇博客主要讨论了 C&#43;&#43; 中的容器和迭代器。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="重学C&#43;&#43;：容器和迭代器 - Ayamir&#39;s blog">
 <meta property="og:description"
-  content="常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。
-string虽然不是容器，但是支持很多容器的操作。
-容器不为空时：begin()返回的是容器中第一个元素的位置；end()返回的是容器中最后一个元素的后一个位置。
-容器为空时：begin()和end()返回的都是最后一个元素的后一个位置。
-任何可能改变容器大小的操作都会使容器的迭代器失效。
-必须要理解的点 和指针类似的是，迭代器支持对对象的间接访问。
-和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如begin(), end()。
-所有迭代器都支持的运算：
-运算符 例子 含义 * *iter 返回迭代器iter指向元素的引用 -&amp;gt; iter-&amp;gt;mem 解引用iter并获取该元素名为mem的成员，即(*iter).mem &#43;&#43; &#43;&#43;iter 令iter指向当前元素的后一个元素 &amp;ndash; --iter 令iter指向当前元素的前一个元素 == iter1 == iter2 如果两个迭代器指向相同的元素返回true，否则返回false != iter1 != iter2 上面例子的反面 迭代器的类型有两种：iterator和const_iterator。
-vector&amp;lt;int&amp;gt;::iterator itv; // 可用于读写vector&amp;lt;int&amp;gt;中的元素 string::iterator its; // 可用于读写string对象中的元素 vector&amp;lt;int&amp;gt;::const_iterator citv; // 只能读取元素 string::const_iterator cits; // 只能读取元素 begin()和end()返回哪一种取决于对象本身是否被const修饰。
-C&#43;&#43;11 中引入了cbegin()和cend()来专门返回const_iterator。
-认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。
-vector和string的迭代器支持的额外的运算：
-运算 含义 iter &#43; n 运算得到一个新迭代器，指向当前元素的后 n 个元素的位置 iter - n 运算得到一个新迭代器，指向当前元素的前 n 个元素的位置 iter &#43;= n 运算得到的新迭代器赋值给iter iter -= n 同上 iter1 - iter2 两个迭代器之间的距离，可正可负 &amp;gt;, &amp;lt;, &amp;lt;=, &amp;gt;= 同两类型的下标运算符中的数字的关系，位置靠前的较小 建议 一般不在意迭代器的类型，因此使用auto来标注。 循环结束的判断条件习惯使用迭代器和!" />
-<meta property="og:url" content="http://localhost:1313/posts/knowledge/cpp/iterator/" />
+  content="这篇博客主要讨论了 C&#43;&#43; 中的容器和迭代器。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/cpp/iterator/" />
 <meta property="og:site_name" content="重学C&#43;&#43;：容器和迭代器" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -103,7 +64,7 @@ vector和string的迭代器支持的额外的运算：
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -125,7 +86,7 @@ vector和string的迭代器支持的额外的运算：
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -133,7 +94,7 @@ vector和string的迭代器支持的额外的运算：
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -159,7 +120,7 @@ vector和string的迭代器支持的额外的运算：
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -167,11 +128,11 @@ vector和string的迭代器支持的额外的运算：
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/knowledge/cpp/iterator/">重学C&#43;&#43;：容器和迭代器</a>
+                    <a href="https://ayamir.github.io/posts/knowledge/cpp/iterator/">重学C&#43;&#43;：容器和迭代器</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -181,9 +142,9 @@ vector和string的迭代器支持的额外的运算：
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:11:02 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:11:02 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -370,13 +331,13 @@ vector和string的迭代器支持的额外的运算：
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -396,7 +357,7 @@ vector和string的迭代器支持的额外的运算：
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -417,7 +378,7 @@ vector和string的迭代器支持的额外的运算：
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 
 

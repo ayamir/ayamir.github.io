@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for TBRA - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,16 +21,11 @@
   content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
 Level：ACM MM 21
 Keywords：Adaptive tiling and bitrate，Mobile streaming
-创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。
-考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：
-从上图可以看到：
-如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。
-创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。
-论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。" />
+" />
 <meta name="keywords"
   content='Adaptive tiling and bitrate, Tile-based, Mobile' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-tbra/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-tbra/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -39,16 +34,11 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
   content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
 Level：ACM MM 21
 Keywords：Adaptive tiling and bitrate，Mobile streaming
-创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。
-考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：
-从上图可以看到：
-如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。
-创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。
-论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -57,16 +47,11 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
   content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
 Level：ACM MM 21
 Keywords：Adaptive tiling and bitrate，Mobile streaming
-创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。
-考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：
-从上图可以看到：
-如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。
-创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。
-论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-tbra/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-tbra/" />
 <meta property="og:site_name" content="Note for TBRA" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -88,7 +73,7 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -110,7 +95,7 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -118,7 +103,7 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -144,7 +129,7 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -152,11 +137,11 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-tbra/">Note for TBRA</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-tbra/">Note for TBRA</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -166,9 +151,9 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:31:15 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:31:15 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -212,33 +197,6 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
                         </path>
                       </svg>
                       Immersive Video
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/dynamic-tiling">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Dynamic tiling
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/mobile-device">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Mobile device
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/mpc">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      MPC
                     </a>
                     
                     
@@ -313,11 +271,11 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 <p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png" alt="image-20211221170105101"></p>
 <p>根据对图的观察可以得出这 3 个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
 <p>分别用$F_n(x), F_r(x), F_c(x)$表示 tile 数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
-<p>将这 3 个比值作为 3 个乘子建立分析模型：
-$$
+<p>将这 3 个比值作为 3 个乘子建立分析模型：</p>
+<p>$$
 D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
-$$
-上式表示计算整体的解码时间，其中 tile 数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
+$$</p>
+<p>上式表示计算整体的解码时间，其中 tile 数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
 <p>这个模型将用于帮助做出分块和码率适应的决策。</p>
 <p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
 <h2 id="tbra-的设计">TBRA 的设计</h2>
@@ -337,14 +295,14 @@ $$
 </ul>
 <p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
 <h4 id="分块选择">分块选择</h4>
-<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去 n 秒中方向 $d$ 的预测错误平均值；
-$$
+<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去 n 秒中方向 $d$ 的预测错误平均值；</p>
+<p>$$
 \overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
-$$
-预测区域的扩展被进一步用于 tile 选择，受过去预测精度的动态影响。</p>
+$$</p>
+<p>预测区域的扩展被进一步用于 tile 选择，受过去预测精度的动态影响。</p>
 <p>下一步检查不同分块方式，进而找到 QoE 和传输效率之间的折中。</p>
-<p>对于每个分块方式，比较基于扩展的预测区域的 tile 选择的质量。使用 2 个比值作为 QoE 和传输效率的度量：
-$$
+<p>对于每个分块方式，比较基于扩展的预测区域的 tile 选择的质量。使用 2 个比值作为 QoE 和传输效率的度量：</p>
+<p>$$
 Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
 $$</p>
 <p>$$
@@ -352,11 +310,11 @@ Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ view
 $$</p>
 <p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png" alt="image-20211222105900626"></p>
 <p>这 2 个比值的 tradeoff 可以在上图中清晰地看出。</p>
-<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
-$$
+<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：</p>
+<p>$$
 Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
-$$
-$\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的垂直移动，浪费率的权重会发生变化。（因为投影方式是 ERP）</p>
+$$</p>
+<p>$\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的垂直移动，浪费率的权重会发生变化。（因为投影方式是 ERP）</p>
 <p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
 <h3 id="码率自适应">码率自适应</h3>
 <h4 id="视频质量">视频质量</h4>
@@ -366,14 +324,14 @@ $\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的�
 <p>$$
 Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
 $$</p>
-<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers">主观视频质量模型</a>：
-$$
+<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers">主观视频质量模型</a>：</p>
+<p>$$
 subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
-$$
-$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时 viewport 的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
+$$</p>
+<p>$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时 viewport 的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
 <h4 id="质量变化">质量变化</h4>
-<p>连续视频块之间的强烈质量变化会损害 QoE，定义质量变化作为响铃两个视频块之间质量的变化：
-$$
+<p>连续视频块之间的强烈质量变化会损害 QoE，定义质量变化作为响铃两个视频块之间质量的变化：</p>
+<p>$$
 Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
 $$</p>
 <h4 id="重缓冲时间">重缓冲时间</h4>
@@ -385,28 +343,28 @@ $$</p>
 <li>下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；</li>
 <li>每个视频块的长度为 $L$ ；</li>
 </ul>
-<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：
-$$
+<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：</p>
+<p>$$
 B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
-$$
-下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
+$$</p>
+<p>下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
 <p>$$
 Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
 $$</p>
 <p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
 <p>第二部分 $t_{miss}$ 表示下载缺失的 tile 所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的 tile）。</p>
 <h4 id="优化目标">优化目标</h4>
-<p>第 $i$ 个视频块的整体优化目标可以定义为前述 3 个指标的加权和：
-$$
+<p>第 $i$ 个视频块的整体优化目标可以定义为前述 3 个指标的加权和：</p>
+<p>$$
 Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
-$$
-各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
+$$</p>
+<p>各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
 <p>传统意义上使用所有视频块的平均 QoE 作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
-<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486">基于 MPC 的框架</a>，在有限的范围内优化多个视频块的 QoE，最终的目标函数可以形式化为：
-$$
+<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486">基于 MPC 的框架</a>，在有限的范围内优化多个视频块的 QoE，最终的目标函数可以形式化为：</p>
+<p>$$
 \underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
-$$
-因为短期内的 viewport 预测性能和网络状况可以很容易得到，QoE 优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
+$$</p>
+<p>因为短期内的 viewport 预测性能和网络状况可以很容易得到，QoE 优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
 <p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行 QoE 优化，直到最后一个窗口。</p>
 <p>使用基于 MPC 的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
 <h4 id="高效求解">高效求解</h4>
@@ -441,8 +399,7 @@ $$
 <p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
 <p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
 <p>观察到 tile 自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
-<p>基于 MPC 的优化 workflow 还可以有效地解决码率自适应问题。</p>
-</article>
+<p>基于 MPC 的优化 workflow 还可以有效地解决码率自适应问题。</p></article>
               </div>
             </div>
           </div>
@@ -451,13 +408,13 @@ $$
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -477,7 +434,7 @@ $$
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -498,7 +455,7 @@ $$
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

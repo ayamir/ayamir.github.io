@@ -7,6 +7,7 @@ keywords: ["OS"]
 tags: ["OS"]
 categories: ["knowledge"]
 url: "posts/knowledge/os/virtual-memory-space"
+summary: "这篇博客主要学习了虚拟地址空间的概念以及相关的用法。"
 ---
 
 ## 什么是虚拟地址空间？

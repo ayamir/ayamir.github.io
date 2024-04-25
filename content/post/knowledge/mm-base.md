@@ -1,5 +1,5 @@
 ---
-title: "多媒体基础知识"
+title: "音视频基础知识"
 date: 2021-12-13T10:03:17+08:00
 draft: false
 math: true
@@ -7,6 +7,7 @@ keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
 url: "posts/knowledge/mm-base"
+summary: "这篇博客主要总结学习了音视频相关的基础知识。"
 ---
 
 # 媒体处理过程

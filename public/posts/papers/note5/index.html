@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>自适应360度视频推流挑战 - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -20,18 +20,11 @@
     <meta name="description"
   content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
 沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
-目前主要面临的挑战有以下 4 个：
-Viewport 预测 背景 HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。
-分类 内容不可知的方式基于历史信息对 viewport 进行预测。 内容感知的方式需要视频内容信息来预测未来的 viewport。 内容不可知方式 分类 平均线性回归 LR 航位推算 DR 聚类 机器学习 ML 编解码器体系结构 现有成果 Qian&amp;rsquo;s work——LR 使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。
-当预测后 0.5s、1s、2s 加权线性回归表现更好 Petrangeli&amp;rsquo;s work——LR 将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。
-结合观察者头部的移动，将可变比特率分配给可见和不可见区域。
-作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。
-Mavlankar and Girod&amp;rsquo;s work——运动向量 使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。
-La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。" />
+" />
 <meta name="keywords"
   content='Immersive Video' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note5/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note5/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -39,18 +32,11 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 <meta name="twitter:description"
   content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
 沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
-目前主要面临的挑战有以下 4 个：
-Viewport 预测 背景 HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。
-分类 内容不可知的方式基于历史信息对 viewport 进行预测。 内容感知的方式需要视频内容信息来预测未来的 viewport。 内容不可知方式 分类 平均线性回归 LR 航位推算 DR 聚类 机器学习 ML 编解码器体系结构 现有成果 Qian&amp;rsquo;s work——LR 使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。
-当预测后 0.5s、1s、2s 加权线性回归表现更好 Petrangeli&amp;rsquo;s work——LR 将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。
-结合观察者头部的移动，将可变比特率分配给可见和不可见区域。
-作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。
-Mavlankar and Girod&amp;rsquo;s work——运动向量 使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。
-La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -58,18 +44,11 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 <meta property="og:description"
   content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
 沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
-目前主要面临的挑战有以下 4 个：
-Viewport 预测 背景 HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。
-分类 内容不可知的方式基于历史信息对 viewport 进行预测。 内容感知的方式需要视频内容信息来预测未来的 viewport。 内容不可知方式 分类 平均线性回归 LR 航位推算 DR 聚类 机器学习 ML 编解码器体系结构 现有成果 Qian&amp;rsquo;s work——LR 使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。
-当预测后 0.5s、1s、2s 加权线性回归表现更好 Petrangeli&amp;rsquo;s work——LR 将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。
-结合观察者头部的移动，将可变比特率分配给可见和不可见区域。
-作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。
-Mavlankar and Girod&amp;rsquo;s work——运动向量 使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。
-La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note5/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note5/" />
 <meta property="og:site_name" content="自适应360度视频推流挑战" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -91,7 +70,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -113,7 +92,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -121,7 +100,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -147,7 +126,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -155,11 +134,11 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note5/">自适应360度视频推流挑战</a>
+                    <a href="https://ayamir.github.io/posts/papers/note5/">自适应360度视频推流挑战</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -169,9 +148,9 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:27:08 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:27:08 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -351,7 +330,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 <li>之后将 LSTM 和 CNN 特性耦合起来，用于下一次的用户注视信息预测。</li>
 </ul>
 <h5 id="fans-work">Fan&rsquo;s work</h5>
-<p>用户更容易被运动的物体吸引，因此除了显著性图之外，Fan 等人也考虑了使用预训练  的 CNN 来估计用户未来注视点的内容运动图。</p>
+<p>用户更容易被运动的物体吸引，因此除了显著性图之外，Fan 等人也考虑了使用预训练 的 CNN 来估计用户未来注视点的内容运动图。</p>
 <ul>
 <li>由于可能存在多个运动，这让预测变得不可靠，因此运动贴图的开发还需要进一步的研究。</li>
 </ul>
@@ -694,8 +673,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 <h3 id="总结-4">总结</h3>
 <p>相比于点播式流媒体，360 度直播推流面临多个挑战，例如在事先不知情的情况下处理用户导航、视频的首次流式传输以及实时视频的转码。在多用户场景中，这些挑战更为棘手。</p>
 <p>关于处理多个用户的观看模式，可伸缩的多播可以用于在低带宽和高带宽网络上以接近于按需推流的质量等级。</p>
-<p>基于 ROI 的 tile 拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p>
-</article>
+<p>基于 ROI 的 tile 拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p></article>
               </div>
             </div>
           </div>
@@ -704,13 +682,13 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -730,7 +708,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -751,7 +729,7 @@ La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角�
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

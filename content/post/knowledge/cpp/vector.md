@@ -6,6 +6,7 @@ keywords: ["C++"]
 tags: ["C++"]
 categories: ["knowledge"]
 url: "posts/knowledge/cpp/vector"
+summary: "这篇博客主要讨论了 C++ 中的 vector 类型的用法。"
 ---
 
 ## 常见的坑与用法

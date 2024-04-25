@@ -5,8 +5,9 @@ draft: false
 math: true
 keywords: ["C++"]
 tags: ["C++"]
-categories:  ["knowledge"]
+categories: ["knowledge"]
 url: "posts/knowledge/cpp/const"
+summary: "这篇博客主要讨论了 C++ 中 Const 相关的用法。"
 ---
 
 ## 常见的坑
@@ -31,7 +32,7 @@ url: "posts/knowledge/cpp/const"
    ```C++
    int err_numb = 0;
    const double pi = 3.1415;
-   
+
    int *const cur_err = &err_numb;
    const double *mut_pi_pointer = &pi;
    const double *const pi_pointer = &pi;
@@ -44,7 +45,7 @@ url: "posts/knowledge/cpp/const"
    `mut_pi_pointer`首先是一个可变对象，其次是一个指向`double`类型不可变对象的指针。
 
    `pi_pointer`首先是一个不可变对象，其次是一个指向`double`类型不可变对象的指针。
-   
+
 4. 当`typedef`遇到`const`时容易出现错误理解：
 
    ```C++
@@ -72,7 +73,7 @@ url: "posts/knowledge/cpp/const"
    ```C++
    int i = 0;
    const int ci = i, &cr = ci;
-   auto b = ci;       // b是一个初始化值为0的可变int对象 
+   auto b = ci;       // b是一个初始化值为0的可变int对象
    auto c = cr;       // c同b
    auto d = &i;       // d是一个初始化为指向可变int类对象i的可变指针对象
    auto e = &ci;      // e是一个初始化为指向不可变int类对象ci的可变指针对象
@@ -105,12 +106,12 @@ url: "posts/knowledge/cpp/const"
 
 4. 因为指针是对象，而引用不是对象，所以`const`和指针的组合有 2 种情况，`const`和引用的组合只有 1 种情况。
 
-   + 指针
-     + 指向常量的指针（pointer to const）：不能通过此指针修改对应的量。
-     + 常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。
-   + 引用
-     + 常量引用：不能通过此引用修改对应的量。
-   
+   - 指针
+     - 指向常量的指针（pointer to const）：不能通过此指针修改对应的量。
+     - 常量指针（const pointer）：指针本身的值不可变，即不能用指针指向其他对象，这种不可重新绑定的特性类似于引用。
+   - 引用
+     - 常量引用：不能通过此引用修改对应的量。
+
 5. 顶层`const`表示指针本身是常量，推广之后可以指任意对象是常量；
 
    底层`const`表示指针指向的对象是常量，推广之后主要于指针和引用等复合类型的基本类型部分有关。

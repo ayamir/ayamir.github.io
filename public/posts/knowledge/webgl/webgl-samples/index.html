@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>WebGL 样例 - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -18,34 +18,31 @@
 
     
     <meta name="description"
-  content="Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.
-JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0." />
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。" />
 <meta name="keywords"
   content='WebGL' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/knowledge/webgl/webgl-samples/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/" />
 
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="WebGL 样例 - Ayamir&#39;s blog" />
 <meta name="twitter:description"
-  content="Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.
-JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0." />
-<meta name="twitter:site" content="http://localhost:1313/" />
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="WebGL 样例 - Ayamir&#39;s blog">
 <meta property="og:description"
-  content="Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.
-JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0." />
-<meta property="og:url" content="http://localhost:1313/posts/knowledge/webgl/webgl-samples/" />
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/" />
 <meta property="og:site_name" content="WebGL 样例" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -67,7 +64,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -89,7 +86,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -97,7 +94,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -123,7 +120,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -131,11 +128,11 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/knowledge/webgl/webgl-samples/">WebGL 样例</a>
+                    <a href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/">WebGL 样例</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -145,9 +142,9 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:17:48 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:17:48 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -209,7 +206,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
 <p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/webgl_application_structure.jpg" alt="WebGL Application Structure"></p>
 <h1 id="samples">Samples</h1>
 <h2 id="2d-coordinates">2D coordinates</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!doctype html&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">height</span><span class="o">=</span><span class="s">&#34;300&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;my_canvas&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
@@ -235,7 +232,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">      <span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// Unbind the buffer
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
@@ -307,13 +304,13 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -333,7 +330,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -354,7 +351,7 @@ JavaScript is required to communicate with the CPU. OpenGL Shader Language is re
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

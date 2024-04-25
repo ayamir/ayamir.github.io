@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for OpTile - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,16 +21,11 @@
   content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
 Level：ACM MM 17
 Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
-背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
-当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
-编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
-对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
-目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
-ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
+" />
 <meta name="keywords"
   content='Immersive Video' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-optile/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-optile/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -39,16 +34,11 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
   content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
 Level：ACM MM 17
 Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
-背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
-当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
-编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
-对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
-目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
-ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -57,16 +47,11 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
   content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
 Level：ACM MM 17
 Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
-背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
-当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
-编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
-对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
-目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
-ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-optile/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-optile/" />
 <meta property="og:site_name" content="Note for OpTile" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -88,7 +73,7 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -110,7 +95,7 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -118,7 +103,7 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -144,7 +129,7 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -152,11 +137,11 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-optile/">Note for OpTile</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-optile/">Note for OpTile</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -166,9 +151,9 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:30:32 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:30:32 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -212,24 +197,6 @@ ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$�
                         </path>
                       </svg>
                       Immersive Video
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/content-based-division">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Content-based division
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/dynamic-tiling">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Dynamic tiling
                     </a>
                     
                     
@@ -574,8 +541,7 @@ $n$表示$t$中基本子矩形的数量。</p>
 <p>尽管固定分块大小的方案可能表现更好，但是这种表现随视频的改变而变化显著。</p>
 <p><strong>因为固定分块的方案没有考虑视频内容的特性与用户的观看行为。</strong></p>
 </li>
-</ul>
-</article>
+</ul></article>
               </div>
             </div>
           </div>
@@ -584,13 +550,13 @@ $n$表示$t$中基本子矩形的数量。</p>
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -610,7 +576,7 @@ $n$表示$t$中基本子矩形的数量。</p>
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -631,7 +597,7 @@ $n$表示$t$中基本子矩形的数量。</p>
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 
 

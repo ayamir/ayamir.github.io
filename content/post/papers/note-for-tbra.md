@@ -4,7 +4,7 @@ date: 2021-12-21T10:11:23+08:00
 draft: false
 math: true
 keywords: ["Adaptive tiling and bitrate", "Tile-based", "Mobile"]
-tags: ["Immersive Video", "Dynamic tiling", "Mobile device", "MPC"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-tbra"
 ---
@@ -16,6 +16,8 @@ Link：[TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streamin
 Level：ACM MM 21
 
 Keywords：Adaptive tiling and bitrate，Mobile streaming
+
+<!--more-->
 
 ## 创新点
 
@@ -29,8 +31,8 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 
 从上图可以看到：
 
-+ 如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。
-+ 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。
+- 如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。
+- 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。
 
 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：[note-for-optile](https://ayamir.github.io/2021/12/note-for-optile/)），而这样的性能需求对于移动设备而言是不可忽略的。
 
@@ -65,9 +67,9 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 
 视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。
 
-+ 改变采样频率会直接影响 viewport 预测的精度，频率越低，精度越低。
+- 改变采样频率会直接影响 viewport 预测的精度，频率越低，精度越低。
 
-+ 相机运动的 viewport 预测错误率比相机静止的明显更高。
+- 相机运动的 viewport 预测错误率比相机静止的明显更高。
 
 #### 通过分块容忍预测错误
 
@@ -87,13 +89,13 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 
 分块对于编码的影响：
 
-+ tile 越小，帧内和帧间内容的相关区域就越小，编码效率越低。
+- tile 越小，帧内和帧间内容的相关区域就越小，编码效率越低。
 
 直接影响解码复杂性的因素：
 
-+ tile 的数量。
-+ 视频的分辨率。
-+ 用于解码的资源。
+- tile 的数量。
+- 视频的分辨率。
+- 用于解码的资源。
 
 固定其中 1 个因素改变另外 2 个因素来检查其对解码的影响：
 
@@ -104,9 +106,11 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 分别用$F_n(x), F_r(x), F_c(x)$表示 tile 数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。
 
 将这 3 个比值作为 3 个乘子建立分析模型：
+
 $$
 D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
 $$
+
 上式表示计算整体的解码时间，其中 tile 数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。
 
 这个模型将用于帮助做出分块和码率适应的决策。
@@ -115,11 +119,11 @@ $$
 
 ## TBRA 的设计
 
-+ $S = \lbrace s_1, s_2, ... \rbrace$ 表示 360°视频分块方式的集合；
-+ 对于分块方式$s_i$，$|s_i|$ 表示这种方案中 tile 的数量；
-+ 当 $i < j$ 时，假设 $|s_i| < |s_j|$；
-+ 对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的 tile $j$，$i \le 块的数量, j \le |s|$；
-+ 目标是确定分块方式$s$，并为每个 tile 确定其码率$b_{i, j}$；
+- $S = \lbrace s_1, s_2, ... \rbrace$ 表示 360°视频分块方式的集合；
+- 对于分块方式$s_i$，$|s_i|$ 表示这种方案中 tile 的数量；
+- 当 $i < j$ 时，假设 $|s_i| < |s_j|$；
+- 对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的 tile $j$，$i \le 块的数量, j \le |s|$；
+- 目标是确定分块方式$s$，并为每个 tile 确定其码率$b_{i, j}$；
 
 ### 分块自适应
 
@@ -127,22 +131,25 @@ $$
 
 分块尺寸大小会导致 viewport 容错率和传输效率的变化。
 
-+ 分块尺寸小，极端情况下每个像素点作为一个 tile，viewport 容错率最小，但是传输效率达到 100%；
-+ 分块尺寸大，极端情况下整个视频帧作为一个 tile，viewport 容错率最大，但是传输效率最小；
+- 分块尺寸小，极端情况下每个像素点作为一个 tile，viewport 容错率最小，但是传输效率达到 100%；
+- 分块尺寸大，极端情况下整个视频帧作为一个 tile，viewport 容错率最大，但是传输效率最小；
 
 优化的目标就是在这两种极端条件中找到折中的最优解。
 
 #### 分块选择
 
 以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去 n 秒中方向 $d$ 的预测错误平均值；
+
 $$
 \overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
 $$
+
 预测区域的扩展被进一步用于 tile 选择，受过去预测精度的动态影响。
 
 下一步检查不同分块方式，进而找到 QoE 和传输效率之间的折中。
 
 对于每个分块方式，比较基于扩展的预测区域的 tile 选择的质量。使用 2 个比值作为 QoE 和传输效率的度量：
+
 $$
 Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
 $$
@@ -156,9 +163,11 @@ $$
 这 2 个比值的 tradeoff 可以在上图中清晰地看出。
 
 使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：
+
 $$
 Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
 $$
+
 $\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的垂直移动，浪费率的权重会发生变化。（因为投影方式是 ERP）
 
 检查完所有的方式之后，最终选择惩罚最小的分块方式。
@@ -173,21 +182,22 @@ $q(b_{i, j})$ 是 tile 比特率选择 $b_{i, j}$ 与用户实际感知到的质
 
 第 $i$ 个视频块的质量等级可以定义为：
 
-
 $$
 Q^{(1)}\_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
 $$
 
-
 使用最新研究的[主观视频质量模型](https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers)：
+
 $$
 subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
 $$
+
 $M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时 viewport 的移动速度；$\gamma = 0.172, \delta = -0.267$
 
 #### 质量变化
 
 连续视频块之间的强烈质量变化会损害 QoE，定义质量变化作为响铃两个视频块之间质量的变化：
+
 $$
 Q^{(2)}\_i = |Q^{(1)}\_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
 $$
@@ -196,23 +206,23 @@ $$
 
 参数设置：
 
-+ $C_i$ 表示下载视频块 $i$ 的预计吞吐量；
-+ $B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；
-+ $B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；
-+ 下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；
-+ 每个视频块的长度为 $L$ ；
+- $C_i$ 表示下载视频块 $i$ 的预计吞吐量；
+- $B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；
+- $B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；
+- 下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；
+- 每个视频块的长度为 $L$ ；
 
 缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：
+
 $$
 B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
 $$
-下载第 $i$ 个视频块时的重缓冲时间可以计算为：
 
+下载第 $i$ 个视频块时的重缓冲时间可以计算为：
 
 $$
 Q^{(3)}\_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
 $$
-
 
 第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；
 
@@ -221,17 +231,21 @@ $$
 #### 优化目标
 
 第 $i$ 个视频块的整体优化目标可以定义为前述 3 个指标的加权和：
+
 $$
 Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
 $$
+
 各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。
 
 传统意义上使用所有视频块的平均 QoE 作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。
 
 为了处理预测长期吞吐量和用户行为的难度，采用[基于 MPC 的框架](https://dl.acm.org/doi/10.1145/2785956.2787486)，在有限的范围内优化多个视频块的 QoE，最终的目标函数可以形式化为：
+
 $$
 \underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
 $$
+
 因为短期内的 viewport 预测性能和网络状况可以很容易得到，QoE 优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；
 
 接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行 QoE 优化，直到最后一个窗口。
@@ -246,7 +260,7 @@ $$
 
 为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：
 
-+ 解码时间需要被约束；
+- 解码时间需要被约束；
 
   解码时间应该短于回放长度。
 
@@ -254,19 +268,19 @@ $$
 
   基于解码时间的分析模型，由于解码复杂度和分辨率的单调性，可以找到设备能够限定时间内解码的最大质量水平，这会将码率选择限制在有界搜索空间内。
 
-+ 码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；
+- 码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；
 
   不会主动耗尽缓冲区，无需让其处理吞吐量的波动。
 
-+ 码率选择应该考虑 tile 的分类；
+- 码率选择应该考虑 tile 的分类；
 
   tile 的码率不应该低于同一个视频块中更低权重 tile 的码率： $b_{i, j} \ge b_{i, j'}, \forall w_{i, j} > w_{i, j'}$ 。
 
-+ 属于相同类别的 tile 比特率选择应该是同一个等级；
+- 属于相同类别的 tile 比特率选择应该是同一个等级；
 
   这使码率自适应在 tile 类的级别上执行而非单个 tile 的级别，大大减小了搜索空间的规模。
 
-+ 当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的 tile 应该有相同的结果。
+- 当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的 tile 应该有相同的结果。
 
 ### TBRA workflow
 

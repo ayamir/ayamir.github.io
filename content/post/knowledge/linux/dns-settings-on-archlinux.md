@@ -6,6 +6,7 @@ keywords: ["linux"]
 tags: ["linux"]
 categories: ["knowledge"]
 url: "posts/knowledge/linux/dns-settings-on-archlinux"
+summary: "这篇博客主要描述了在 Archlinux 上手动设置 DNS 的方式。"
 ---
 
 ## Arch Linux DNS 设置

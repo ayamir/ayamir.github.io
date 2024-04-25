@@ -4,7 +4,7 @@ date: 2022-01-25T11:59:24+08:00
 draft: false
 math: true
 keywords: ["VP"]
-tags: ["Content-based predict"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-content-based-vp-for-live-streaming-2"
 ---
@@ -19,6 +19,8 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-2"
 为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。
 
 **基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。**
+
+<!--more-->
 
 ## 用户观看行为分析
 
@@ -39,6 +41,7 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-2"
 给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, ..., o_k]$ ，其中每个 $o_i(i = 1, ..., k)$ 表示物体的中心坐标： $o_i = <o^{(x)}\_i, o^{(y)}\_i>$ 。
 
 最终的预测中心点坐标可以计算出来：
+
 $$
 C_x = \frac{1}{k} \sum^{k}\_{i=1} o^{(x)}\_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i
 $$
@@ -67,10 +70,10 @@ $$
 
 ![image-20220129213505720](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png)
 
-+ *Object Detection*：处理视频帧并检测目标；
-+ *User View Estimation*：分析用户反馈并用*Velocity*的方式估计`FoV`；
-+ *Object tracking*：追踪用户观看的目标；
-+ *RL-based modeling*：接受估计出的`FoV`和被追踪的目标，最终更新每个分块的状态（选中或未选中）
+- _Object Detection_：处理视频帧并检测目标；
+- _User View Estimation_：分析用户反馈并用*Velocity*的方式估计`FoV`；
+- _Object tracking_：追踪用户观看的目标；
+- _RL-based modeling_：接受估计出的`FoV`和被追踪的目标，最终更新每个分块的状态（选中或未选中）
 
 ### Object Detection and Tracking
 
@@ -98,14 +101,17 @@ $$
 出发点是**不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。**
 
 将上面的观察形式化为一个策略学习过程 $M$：
+
 $$
 M = <S, A, P_{s, a, s'}, R>
 $$
+
 其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s'}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s'$ ，$R$ 表示奖励函数。
 
 系统的目标是通过设定不同的 $P_{s, a, s'}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。
 
 状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：
+
 $$
 v = E[Q_{s, a} | S_t = s]
 $$
@@ -128,10 +134,10 @@ $$
 
 特别的，为每个分块都创建一个 $Q$ 表，对于每个 $Q$ 表有 4 种类型：
 
-+ *object only*;
-+ *object and viewport*;
-+ *viewport only*;
-+ *no objects or viewport*;
+- _object only_;
+- _object and viewport_;
+- _viewport only_;
+- _no objects or viewport_;
 
 将这 4 种类型和 2 种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的 8 个选项组合；
 
@@ -223,13 +229,17 @@ $$
 最终的分数向量 $S$ 计算为每个 $A$ 和 唯一的 $P$ 之间的相关性。结果也受相应的 $W$ 和 $L$ 的影响而调整。
 
 假设余弦相似性函数为 $\rho$ ，那么 $A$ 和 $P$ 中的每个 $a_i$ 和 $p_i$ 的计算可以表示为：
+
 $$
 {\rho}\_i (a_i, p_i) = Phrase2Vec(a_i, p_i)
 $$
+
 设定每个向量中包含 5 个元素，分数向量 $S$ 计算为：
+
 $$
 S = L \cdot W \cdot \sum {\rho} (A, P)
 $$
+
 对应于 25 个分块，最终的分数向量中包含 25 个元素。 $s_k$ 表示 $k_{th}$ 分块的分数值，详细算法：
 
 ![image-20220204004335458](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png)

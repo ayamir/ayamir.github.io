@@ -4,15 +4,18 @@ date: 2022-02-26T11:26:06+08:00
 draft: false
 math: true
 keywords: ["ABR"]
-tags: ["ABR", "Survey"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1"
 ---
+
 # Paper Overview
 
 Link: https://ieeexplore.ieee.org/document/8424813
 
 Level: IEEE Communications Surveys & Tutorials 2019
+
+<!--more-->
 
 # Background
 
@@ -64,14 +67,14 @@ A robust HAS scheme should achieve 3 main objectives:
 
 A streaming session consists of 2 states: buffer-filling state and steady state.
 
-+ The buffer-filling state aims to fill the playback buffer and reach a certain threshold where the playback can be initiated or resumed.
+- The buffer-filling state aims to fill the playback buffer and reach a certain threshold where the playback can be initiated or resumed.
 
-+ The steady state is to keep the buffer level above a minimum threshold despite bandwidth fluctuation or interruptions. The steady state consists of 2 activity periods referred to as ON and OFF. 
+- The steady state is to keep the buffer level above a minimum threshold despite bandwidth fluctuation or interruptions. The steady state consists of 2 activity periods referred to as ON and OFF.
 
   The client requests a segment every $T_s$ time units, where $T_s$ represents the content time duration of each segment, and sum of ON and OFF period durations equals $T_s$.
 
-  + ON period: client downloads the current segment and notes the achieved throughput value that will be later used in selecting the appropriate bitrate for future segments.
-  + OFF period: client becomes idle temporarily.
+  - ON period: client downloads the current segment and notes the achieved throughput value that will be later used in selecting the appropriate bitrate for future segments.
+  - OFF period: client becomes idle temporarily.
 
 ![image-20220226213824241](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220226213824241.png)
 
@@ -93,8 +96,8 @@ There are different cases during competition process.
 
 The correlation between video bitrate and its perceptual quality is non-linear.
 
-+ Different video content types have unique characteristics.
-+ Differences of inter-stream and intra-stream video scene complexity across content.
+- Different video content types have unique characteristics.
+- Differences of inter-stream and intra-stream video scene complexity across content.
 
 ![image-20220226232232112](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220226232232112.png)
 
@@ -125,8 +128,8 @@ Technical factors include the algorithms, parameters, and hardware/software used
 
 Specifically, factors are:
 
-+ Server side: encoding parameters, video qualities and segment size.
-+ Client side: adaptation parameters and environment that clients reside in.
+- Server side: encoding parameters, video qualities and segment size.
+- Client side: adaptation parameters and environment that clients reside in.
 
 ### QoE measurement
 

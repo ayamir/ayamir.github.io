@@ -4,7 +4,7 @@ date: 2022-01-22T18:03:09+08:00
 draft: false
 math: true
 keywords: ["VP"]
-tags: ["Content-based predict"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 ---
@@ -21,6 +21,8 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 
 细节可以参见：[note-for-content-motion-viewport-prediction](https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/).
 
+<!--more-->
+
 # LiveDeep
 
 受限于`Motion`识别算法，前面提出的`LiveMotion`只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。
@@ -35,9 +37,9 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 
 `LiveDeep`的设计原则：
 
-1. *online*：在线训练在线预测；
-2. *lifelong*：模型在整个视频播放会话中更新；
-3. *real-time*：预测带来的处理延迟不能影响推流延迟；
+1. _online_：在线训练在线预测；
+2. _lifelong_：模型在整个视频播放会话中更新；
+3. _real-time_：预测带来的处理延迟不能影响推流延迟；
 
 `CNN`的设计：
 
@@ -83,13 +85,13 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 
 在传统的监督训练中，训练时间取决于可接受的最低损失值和 epoch 的值。为了满足实时性，`LiveDeep`采用较高的最低损失值和较低的最大 epoch 值。
 
-+ ***High acceptable loss value***：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的 CNN 更高：设定为 0.2。
+- **_High acceptable loss value_**：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的 CNN 更高：设定为 0.2。
 
-+ ***The number of epochs***：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。
+- **_The number of epochs_**：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。
 
-+ ***The batch size***：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。
+- **_The batch size_**：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。
 
-+ ***Dynamic learning rate***：
+- **_Dynamic learning rate_**：
 
   ![image-20220129001002629](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png)
 
@@ -104,6 +106,3 @@ url: "posts/papers/note-for-content-based-vp-for-live-streaming-1"
 ## 混合模型
 
 将`CNN`模块得到的输出作为主要的结果，接着结合`LSTM`模块的输出结果作为最终的预测结果。
-
-
-

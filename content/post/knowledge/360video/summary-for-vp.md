@@ -4,9 +4,10 @@ date: 2022-01-07T23:08:36+08:00
 draft: false
 math: true
 keywords: ["Immersive Video", "Viewport predict"]
-tags: ["Viewport predict"]
+tags: ["Immersive Video"]
 categories: ["knowledge"]
 url: "posts/knowledge/360video/summary-for-vp"
+summary: "这篇博客主要总结了全景视频中视口预测相关方法。"
 ---
 
 ## 视口预测是什么？

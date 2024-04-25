@@ -17,9 +17,11 @@ Level：ICME 2019
 
 Keywords：ABR、RL、Sequential decision
 
+<!--more-->
+
 ## 创新点
 
-+ 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。
+- 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。
 
 ## 问题定义
 
@@ -29,9 +31,9 @@ Keywords：ABR、RL、Sequential decision
 
 因此对每个片段，有 $N \times M$ 种可选的编码块。
 
-为了保证播放时的流畅性，需要确定最优的预取集合： 
+为了保证播放时的流畅性，需要确定最优的预取集合：
 
-${a_0, ..., a_i, ..., a_{N-1}}, i \in \lbrace 0, ..., N-1 \rbrace, a_i \in \lbrace 0, ..., M-1 \rbrace $
+${a*0, ..., a_i, ..., a*{N-1}}, i \in \lbrace 0, ..., N-1 \rbrace, a_i \in \lbrace 0, ..., M-1 \rbrace $
 
 分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。
 
@@ -47,7 +49,7 @@ ${a_0, ..., a_i, ..., a_{N-1}}, i \in \lbrace 0, ..., N-1 \rbrace, a_i \in \lbra
 
 对于 $i^{th}$ 维，输入状态包括原始的环境状态 $s_t$ ；
 
-与之前维度的动作集合相关的信号： $u^{i}\_{s_t} = \lbrace Th, C_i, p_{0:i-1}, q_{0:i-1}, b_t, p_i, S_i, Q_{t-1} \rbrace$ 
+与之前维度的动作集合相关的信号： $u^{i}\_{s_t} = \lbrace Th, C_i, p_{0:i-1}, q_{0:i-1}, b_t, p_i, S_i, Q_{t-1} \rbrace$
 
 $Th$ ：表示过去 m 次下载一个段的平均吞吐量；
 
@@ -65,7 +67,7 @@ $Q_{t-1}$ 记录了最后一个段中 $N$ 个分块的平均视频质量；
 
 ### 动作
 
-动作空间离散，代理输出定义为价值函数：$f(u^i_{s_t}, a^i_t)$ 
+动作空间离散，代理输出定义为价值函数：$f(u^i_{s_t}, a^i_t)$
 
 表示所选状态的价值 $a^i_t \in \lbrace 0, ..., M-1 \rbrace$ 处于状态 $u_{s_t}^i$ .
 
@@ -74,7 +76,6 @@ $Q_{t-1}$ 记录了最后一个段中 $N$ 个分块的平均视频质量；
 回报定义为下列因素的加权和：
 
 平均视频质量 $q^{avg}\_t$，空间视频质量方差 $q^{s\_v}\_t$，时间视频质量方差 $q^{t\_v}\_t$ ，重缓冲时间 $T^r_t$
-
 
 $$
 q^{avg}\_t = \frac{1}{\sum^{N-1}\_{i=0} p_i} \cdot \sum^{N-1}\_{i=0} p_i \cdot q_{i, a_i}
@@ -96,13 +97,12 @@ $$
 R_t = w_1 \cdot q^{avg}_t - w_2 \cdot q^{s\_v}_t - w_3 \cdot q^{t\_v}_t - w_4 \cdot T^r_t
 $$
 
-
-
 ## 训练方法
 
 使用`DQN`作为基本的算法来学习动作-价值函数 $Q(s_t, a_t; \theta)$ ，其中 $\theta$ 作为参数，对应的贪心策略为 $\pi(s_t; \theta) = \underset{\theta}{argmax} Q(s_t, a_t; \theta)$ 。
 
 `DQN`网络的关键想法是更新最小化损失函数的方向上的参数：
+
 $$
 L(\theta) = E[y_t - Q(s_t, a_t; \theta)]
 $$
@@ -110,6 +110,7 @@ $$
 $$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \pi(s_{t+1}; {\theta}'); {\theta}')
 $$
+
 ${\theta}'$ 表示固定且分离的目标网络的参数；
 
 $r(\cdot)$ 是即时奖励函数，即上面公式 5 中的 $R_t$ ；
@@ -117,32 +118,35 @@ $r(\cdot)$ 是即时奖励函数，即上面公式 5 中的 $R_t$ ；
 $\gamma \in [0, 1]$ 是折扣因子；
 
 为了缓解过拟合，引入 `double-DQN` 的结构，所以公式 7 被重写为：
+
 $$
 y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, {\pi}(s_{t+1}; \theta); {\theta}')
 $$
+
 利用公式 6 和公式 8 可以得出 $i^{th}$ 维的暂时损失函数：
+
 $$
 l^i_t = Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, ...N-1]
 $$
-其中 $Q_{target}$ 满足：
 
+其中 $Q_{target}$ 满足：
 
 $$
 Q_{target} = r_t + {\gamma}\_u \cdot Q(u^0_{s_{t+1}}, \pi(u^0_{s_{t+1}}; 0); {\theta}')
 $$
-
 
 ${\gamma}_u$ 和 ${\gamma}_b$ 分别代表”Top MDP“和”Bottom MDP“的折扣因子，训练中设定 ${\gamma}_b = 1$ 。
 
 观察公式 9 和公式 10 可以看出每维都有相同的目标函数，意味着无法区别每个独立维度的动作 $a^i_t$ 对 $r_t$ 的贡献。
 
 为了克服限制，根据某个分块的动作 $a^i_t$ 与其观看概率成正比的先验知识，向 $l^i_t$ 添加一个额外的 $r^i_{extra}$ ：
+
 $$
 l^i_t = r^i_{extra} + Q_{target} - Q(u^i_{s_t}, a^i_t; \theta), \forall i \in [0, ...N-1]
 $$
 
 $$
-r^i_{extra} = 
+r^i_{extra} =
 \begin{cases}
 0, p_i > P ;
 \\
@@ -153,13 +157,17 @@ $$
 通过设定一个观看概率的阈值 $P$ ，对观看概率低于 $P$ 但选择了高码率的分块施加 $-a^i_t$ 的奖励。
 
 因此最终的平均损失可以形式化为：
+
 $$
 l^{avg}\_t = \frac{1}{N} \sum^{N-1}_{i=0} l^i_t
 $$
+
 接着使用梯度下降法来更新模型，学习率设定为 $\alpha$：
+
 $$
 \theta \larr \theta + \alpha \triangledown l^{avg}_t
 $$
+
 同时，在训练阶段利用经验回放法来提高`360SRL`的泛化性。
 
 ![image-20220115114808192](https://s2.loli.net/2022/01/15/l6J8GHucdqjPfer.png)
@@ -179,4 +187,3 @@ $$
 整个动作-价值网络的输出是 M 维的向量。
 
 特征提取层和前向网络层都使用 `Leaky-ReLU`作为激活函数，最后是层归一化层。
-

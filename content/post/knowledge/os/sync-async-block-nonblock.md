@@ -7,6 +7,7 @@ keywords: ["同步", "异步", "阻塞", "非阻塞"]
 tags: ["OS"]
 categories: ["knowledge"]
 url: "posts/knowledge/os/sync-async-block-nonblock"
+summary: "这篇博客主要讨论了同步、异步、阻塞和非阻塞这几个编程中常见的概念。"
 ---
 
 ## 概念

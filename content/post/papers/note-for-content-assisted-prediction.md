@@ -4,7 +4,7 @@ date: 2022-01-06T15:17:33+08:00
 draft: false
 math: true
 keywords: ["Immersive Video", "Jointly Predict"]
-tags: ["Trajectory-based predict", "Content-based predict"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-content-assisted-prediction"
 ---
@@ -16,6 +16,8 @@ Link：[Content Assisted Viewport Prediction for Panoramic Video Streaming](http
 Level：IEEE CVPR 2019 CV4ARVR
 
 Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion
+
+<!--more-->
 
 ## 主要工作
 

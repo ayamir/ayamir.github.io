@@ -7,6 +7,7 @@ keywords: ["WebRTC", "thread", "task"]
 tags: ["WebRTC"]
 categories: ["development"]
 url: "posts/development/webrtc-task-queue"
+summary: "这篇博客主要学习了 WebRTC 中的任务队列的实现方式和使用方式。"
 ---
 
 ## TaskQueue
@@ -95,8 +96,8 @@ class RTC_LOCKABLE RTC_EXPORT TaskQueue {
 
 `TaskQueue`有 2 个重要的方法，也就是`PostTask`和`PostDelayedTask`。
 
-+ `PostTask`：将`task`加入到任务队列中进行即时处理；
-+ `PostDelayedTask`：将`task`加入到任务队列中，过`milliseconds`毫秒处理。
+- `PostTask`：将`task`加入到任务队列中进行即时处理；
+- `PostDelayedTask`：将`task`加入到任务队列中，过`milliseconds`毫秒处理。
 
 这 2 种方法都有 2 种重载形式。在 webrtc 的代码中，经常使用的是接受一个闭包也就是 lambda 表达式作为参数的这一重载形式。
 
@@ -206,12 +207,11 @@ class RTC_LOCKABLE RTC_EXPORT TaskQueueBase {
 
 需要注意的是，这里还有一个可访问性为`protected`的类：`CurrentTaskQueueSetter`，这个类的作用就像它的命名一样，用于设置当前的任务队列，也就是把任务队列绑定到当前线程上。
 
-+ 构造时，用传入构造函数的任务队列更新当前线程存放的任务队列，并将更新前的任务队列暂存到当前线程的 TLS(Thread Local Storage)中。
-+ 析构时，用构造时暂存的任务队列更新当前线程存放的任务队列。
+- 构造时，用传入构造函数的任务队列更新当前线程存放的任务队列，并将更新前的任务队列暂存到当前线程的 TLS(Thread Local Storage)中。
+- 析构时，用构造时暂存的任务队列更新当前线程存放的任务队列。
 
 WebRTC 中有好几个实现了`TaskQueueBase`这一接口的类如`TaskQueueStdlib`, `TaskQueueLibevent`, `TaskQueueWin`, `SimulatedTaskQueue`等，它们的作用也各不相同。
 
 下面我们以`TaskQueueStdlib`为例，对实际的`PostTask`等函数是如何运行的一探究竟。
 
 ## TaskQueueStdlib
-

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Linux 权限相关命令解读 - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -18,82 +18,31 @@
 
     
     <meta name="description"
-  content="文件和目录的权限 下图为使用exa命令的部分截图
-上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ：
-剩下的 9 个位置上的字符称为 文件模式 ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限
-id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多个用户组成 文件和目录的访问权限由其所有者授予群组或者用户
-下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果
-uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称
-许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users 现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组
-chmod：更改文件模式 chmod 支持两种标识方法
-八进制表示法
-常用的模式有 7,6,5,4,0
-符号表示法
-如果没有指定字符默认使用all &#43; 表示添加一种权限 - 表示删除一种权限 例如：
--R 表示递归设置
-umask：设置文件默认权限 使用八进制表示法表示从文件模式属性中删除一个位掩码 掩码的意思：用掩码来取消不同的文件模式
-plain umask
-可以看到输出为：
-plain 0022
-不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010" />
+  content="这篇博客主要描述了解决 Linux 上与用户权限相关的命令解读。" />
 <meta name="keywords"
   content='linux' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/knowledge/linux/linux-authority/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" />
 
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Linux 权限相关命令解读 - Ayamir&#39;s blog" />
 <meta name="twitter:description"
-  content="文件和目录的权限 下图为使用exa命令的部分截图
-上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ：
-剩下的 9 个位置上的字符称为 文件模式 ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限
-id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多个用户组成 文件和目录的访问权限由其所有者授予群组或者用户
-下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果
-uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称
-许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users 现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组
-chmod：更改文件模式 chmod 支持两种标识方法
-八进制表示法
-常用的模式有 7,6,5,4,0
-符号表示法
-如果没有指定字符默认使用all &#43; 表示添加一种权限 - 表示删除一种权限 例如：
--R 表示递归设置
-umask：设置文件默认权限 使用八进制表示法表示从文件模式属性中删除一个位掩码 掩码的意思：用掩码来取消不同的文件模式
-plain umask
-可以看到输出为：
-plain 0022
-不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+  content="这篇博客主要描述了解决 Linux 上与用户权限相关的命令解读。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Linux 权限相关命令解读 - Ayamir&#39;s blog">
 <meta property="og:description"
-  content="文件和目录的权限 下图为使用exa命令的部分截图
-上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ：
-剩下的 9 个位置上的字符称为 文件模式 ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限
-id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多个用户组成 文件和目录的访问权限由其所有者授予群组或者用户
-下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果
-uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称
-许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users 现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组
-chmod：更改文件模式 chmod 支持两种标识方法
-八进制表示法
-常用的模式有 7,6,5,4,0
-符号表示法
-如果没有指定字符默认使用all &#43; 表示添加一种权限 - 表示删除一种权限 例如：
--R 表示递归设置
-umask：设置文件默认权限 使用八进制表示法表示从文件模式属性中删除一个位掩码 掩码的意思：用掩码来取消不同的文件模式
-plain umask
-可以看到输出为：
-plain 0022
-不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010" />
-<meta property="og:url" content="http://localhost:1313/posts/knowledge/linux/linux-authority/" />
+  content="这篇博客主要描述了解决 Linux 上与用户权限相关的命令解读。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/linux/linux-authority/" />
 <meta property="og:site_name" content="Linux 权限相关命令解读" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -115,7 +64,7 @@ plain 0022
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -137,7 +86,7 @@ plain 0022
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -145,7 +94,7 @@ plain 0022
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -171,7 +120,7 @@ plain 0022
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -179,11 +128,11 @@ plain 0022
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/knowledge/linux/linux-authority/">Linux 权限相关命令解读</a>
+                    <a href="https://ayamir.github.io/posts/knowledge/linux/linux-authority/">Linux 权限相关命令解读</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -193,9 +142,9 @@ plain 0022
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:15:35 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:15:35 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -401,7 +350,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </ol>
 <h2 id="chown更改文件所有者">chown：更改文件所有者</h2>
 <h3 id="用法">用法</h3>
-<p>plain chown [owner][:[group]] file &hellip;</p>
+<p>plain chown [owner]:[group]] file &hellip;</p>
 <p>第一个参数决定 chown 命令更改的是文件所有者还是文件所属群组，或者对两者都更改</p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
@@ -431,13 +380,13 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -457,7 +406,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -478,7 +427,7 @@ groups 后的内容说明了用户还属于哪些组，说明了其对应的编�
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 
 

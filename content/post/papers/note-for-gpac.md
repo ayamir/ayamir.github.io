@@ -4,16 +4,18 @@ date: 2021-12-30T10:23:26+08:00
 draft: false
 math: true
 keywords: ["Immersive Video", "DASH", "Tile"]
-tags: ["Immersive Video", "DASH"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-gpac"
 ---
 
 ## Dash 客户端自适应逻辑
 
-1. *tile priority setup*：根据定义的规则对 tile 进行优先级排名。
-2. *rate allocation*：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。
-3. *rate adaption*：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。
+1. _tile priority setup_：根据定义的规则对 tile 进行优先级排名。
+2. _rate allocation_：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。
+3. _rate adaption_：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。
+
+<!--more-->
 
 ### tile priority setup
 

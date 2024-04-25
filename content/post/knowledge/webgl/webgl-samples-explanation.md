@@ -7,6 +7,7 @@ keywords: ["WebGL"]
 tags: ["WebGL"]
 categories: ["knowledge"]
 url: "posts/knowledge/webgl/webgl-samples-explanation"
+summary: "这篇博客主要学习总结了 WebGL 的一些使用样例。"
 ---
 
 # Context

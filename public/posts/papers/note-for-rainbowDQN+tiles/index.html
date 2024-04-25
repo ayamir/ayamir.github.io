@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for RainbowDQN and Multitype Tiles - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -20,25 +20,11 @@
     <meta name="description"
   content="论文概况 Level：IEEE Transaction on multimedia 21
 Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
-问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。
-基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。
-用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。
-根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。
-FOV 中的 tile 被分配更高的码率；
-OOS 按照与$V$的距离逐步降低质量等级$q_i$；
-Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。
-传输的 tile 在同步完成之后交给渲染器渲染。
-播放器根据各项指标计算可以评估播放性能：
-$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。
-传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。
-传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$
-带宽评估 收集每个 tile 的下载日志来评估带宽。
-使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。
-第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} &#43; (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。" />
+" />
 <meta name="keywords"
   content='Immersive Video' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -46,25 +32,11 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
 <meta name="twitter:description"
   content="论文概况 Level：IEEE Transaction on multimedia 21
 Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
-问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。
-基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。
-用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。
-根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。
-FOV 中的 tile 被分配更高的码率；
-OOS 按照与$V$的距离逐步降低质量等级$q_i$；
-Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。
-传输的 tile 在同步完成之后交给渲染器渲染。
-播放器根据各项指标计算可以评估播放性能：
-$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。
-传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。
-传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$
-带宽评估 收集每个 tile 的下载日志来评估带宽。
-使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。
-第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} &#43; (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -72,25 +44,11 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
 <meta property="og:description"
   content="论文概况 Level：IEEE Transaction on multimedia 21
 Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system
-问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。
-基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。
-用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。
-根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。
-FOV 中的 tile 被分配更高的码率；
-OOS 按照与$V$的距离逐步降低质量等级$q_i$；
-Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。
-传输的 tile 在同步完成之后交给渲染器渲染。
-播放器根据各项指标计算可以评估播放性能：
-$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。
-传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。
-传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$
-带宽评估 收集每个 tile 的下载日志来评估带宽。
-使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。
-第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} &#43; (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/" />
 <meta property="og:site_name" content="Note for RainbowDQN and Multitype Tiles" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -112,7 +70,7 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -134,7 +92,7 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -142,7 +100,7 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -168,7 +126,7 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -176,11 +134,11 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/">Note for RainbowDQN and Multitype Tiles</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/">Note for RainbowDQN and Multitype Tiles</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -190,9 +148,9 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:30:38 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:30:38 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -222,7 +180,7 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
                         </div>
                       </div>
                     </details-menu>
-                      5108 Words
+                      5114 Words
                     
 
                   </div>
@@ -236,24 +194,6 @@ $&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质
                         </path>
                       </svg>
                       Immersive Video
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/drl">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      DRL
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/rainbow-dqn">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Rainbow-DQN
                     </a>
                     
                     
@@ -312,11 +252,11 @@ $$</p>
 <p>使用<a href="https://zhuanlan.zhihu.com/p/32335746">指数加权移动平均算法 EWMA</a>使评估结果光滑，来应对网络波动。</p>
 </li>
 <li>
-<p>第$t$次评估结果使用$B_t$表示，用下式计算：
-$$
+<p>第$t$次评估结果使用$B_t$表示，用下式计算：</p>
+<p>$$
 B_t = \beta B_{t-1} + (1-\beta)b_t
-$$
-$b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。</p>
+$$</p>
+<p>$b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。</p>
 </li>
 <li>
 <p>$t=0$时，$B_0$被初始化为 0；所以在初始的$t$比较小的时候，$B_t$与理想值相比就很小。</p>
@@ -334,8 +274,8 @@ $t$较小的时候，分母会放大$B_t$；$t$较大时，分母趋近于 1，�
 <ol>
 <li>
 <p>3D 虚拟相机用于渲染视频，处于全景视频球面上的某条轨道，其坐标可以表示为$(\theta, \phi)$，可以直接从系统中获取。</p>
-<p>相机始终朝向球的中心，所以用户的 FOV 中心坐标$(\theta^{&rsquo;}, \phi^{&rsquo;})$可以用$(\theta, \phi)$表示：
-$$
+<p>相机始终朝向球的中心，所以用户的 FOV 中心坐标$(\theta^{&rsquo;}, \phi^{&rsquo;})$可以用$(\theta, \phi)$表示：</p>
+<p>$$
 \begin{cases}
 \theta^{&rsquo;} = (\theta + \pi)\ mod\ 2\pi,\ 0 \le \theta \le 2\pi
 \
@@ -344,27 +284,27 @@ $$
 $$</p>
 </li>
 <li>
-<p>2D 网格中 tile 坐标$(u, v)$可以通过球面坐标使用 ERP 投影获得
-$$
+<p>2D 网格中 tile 坐标$(u, v)$可以通过球面坐标使用 ERP 投影获得</p>
+<p>$$
 \begin{cases}
 u = \frac{\theta^{&rsquo;}}{2\pi} \cdot W, 0 \le u \le W.
 \
 v = \frac{\phi^{&rsquo;}}{\pi} \cdot H, 0 \le v \le H.
 \end{cases}
-$$
-$W$和$H$分别表示使用 ERP 投影得到的矩形宽度和高度</p>
+$$</p>
+<p>$W$和$H$分别表示使用 ERP 投影得到的矩形宽度和高度</p>
 </li>
 <li>
 <p>短期的 FOV 预测基于目前和历史的 FOV 信息。</p>
-<p>使用$(U_t, V_t)$表示$t$时刻的 FOV 中心位置；$U_{t1:t2}$和$V_{t1:t2}$分别表示从$t1$到$t2$过程中$U$和$V$的序列；
-$$
+<p>使用$(U_t, V_t)$表示$t$时刻的 FOV 中心位置；$U_{t1:t2}$和$V_{t1:t2}$分别表示从$t1$到$t2$过程中$U$和$V$的序列；</p>
+<p>$$
 \begin{cases}
 \hat{U}<em>{t+T_f} = f_U (U</em>{t-T_p:t}).
 \
 \hat{V}<em>{t+T_f} = f_V (V</em>{t-T_p:t}).
 \end{cases}
-$$
-$T_p$是过去记录的滑动窗口；$T_f$是短期的预测窗口；$f_U$和$f_V$分别对应$U$和$V$方向上的映射函数；</p>
+$$</p>
+<p>$T_p$是过去记录的滑动窗口；$T_f$是短期的预测窗口；$f_U$和$f_V$分别对应$U$和$V$方向上的映射函数；</p>
 <p>因为是时间序列回归模型，所以映射函数使用 LSTM。</p>
 </li>
 </ol>
@@ -373,11 +313,11 @@ $T_p$是过去记录的滑动窗口；$T_f$是短期的预测窗口；$f_U$和$f
 <ol>
 <li>
 <p>FOV 质量$Q$</p>
-<p>第$t$次的 FOV 质量评估表示为$Q_t$：
-$$
+<p>第$t$次的 FOV 质量评估表示为$Q_t$：</p>
+<p>$$
 Q_t = \frac{\beta Q_{t-1} + (1-\beta) \frac{1}{k} \cdot \sum_{j=1}^{k} max{q_j, q_b}}{1 - \beta^t}
-$$
-$q_j$表示第$j$条 FOV tile 流的质量；$k$表示 FOV 内 tile 的数量；</p>
+$$</p>
+<p>$q_j$表示第$j$条 FOV tile 流的质量；$k$表示 FOV 内 tile 的数量；</p>
 <p>为了避免评估结果的大幅波动，使用了 EWMA 来光滑结果。</p>
 <p>当第$j$条 tile 流因为缓冲区不足不能成功播放时，$q_j = q_{Base}$（这表明了 Base tile 在提高 QoE 中的作用）。</p>
 </li>
@@ -385,32 +325,32 @@ $q_j$表示第$j$条 FOV tile 流的质量；$k$表示 FOV 内 tile 的数量；
 <p>重缓冲频率$F$</p>
 <p>在基于 tile 的传输中，每条流都属于一个缓冲区。所以当 FOV 中 tile 的缓冲区处于饥饿状态时，重缓冲就会发生。</p>
 <p>重缓冲频率描述了 FOV 内的 tile 流在一段时间内的重新缓冲频率。</p>
-<p>第$t$次重缓冲频率的评估表示为$F_t$：
-$$
+<p>第$t$次重缓冲频率的评估表示为$F_t$：</p>
+<p>$$
 F_t = \frac{\beta F_{t-\tau} + (1-\beta) \frac{f_t}{\tau}}{1 - \beta^{\tau}}
-$$
-$f_t$表示播放失败的次数；$\tau$表示一段时间；</p>
+$$</p>
+<p>$f_t$表示播放失败的次数；$\tau$表示一段时间；</p>
 </li>
 </ol>
 <h3 id="传输效率评估">传输效率评估</h3>
-<p>第$t$次传输效率评估表示为$E_t$，$E_t$通过传输的 FOV 内 tile 占总 tile 的比率来计算：
-$$
+<p>第$t$次传输效率评估表示为$E_t$，$E_t$通过传输的 FOV 内 tile 占总 tile 的比率来计算：</p>
+<p>$$
 E_t = \frac{\beta E_{t-1} + (1-\beta) \frac{total^{FOV}}{total^{ALL}}}{1 - \beta^t}
-$$
-$total^{FOV}$表示 FOV 内 tile 的数据量；$total^{ALL}$表示 tile 的总共数据量；</p>
+$$</p>
+<p>$total^{FOV}$表示 FOV 内 tile 的数据量；$total^{ALL}$表示 tile 的总共数据量；</p>
 <p>效率计算并不在传输过程中完成，因为需要获取哪些 tile 在 FOV 中的信息，效率评估滞后于播放过程。</p>
 <h3 id="问题形式化-1">问题形式化</h3>
-<p>传输控制的任务：确定所有 tile 流的质量等级$\chi$和缓冲区大小$\psi$。
-$$
+<p>传输控制的任务：确定所有 tile 流的质量等级$\chi$和缓冲区大小$\psi$。</p>
+<p>$$
 \chi = &lt;q_1, q_2, &hellip;, q_N&gt;
 \
 \psi = &lt;l_1, l_2, &hellip;, l_N&gt;
 \
 &lt;Q, F, E&gt; = \xi (B, V, \chi, \psi)
-$$
-$\chi$和$\psi$与带宽$B$和 Viewport 轨迹$V$一起作用于系统$\xi$，最终影响 FOV 质量$Q$，重缓冲频率$F$和传输效率$E$。</p>
-<p>进一步，将目标形式化为获得每条 tile 流的$q_i$和$l_i$通过限制 QoE 满足可接受的范围、在此基础上最大化传输效率：
-$$
+$$</p>
+<p>$\chi$和$\psi$与带宽$B$和 Viewport 轨迹$V$一起作用于系统$\xi$，最终影响 FOV 质量$Q$，重缓冲频率$F$和传输效率$E$。</p>
+<p>进一步，将目标形式化为获得每条 tile 流的$q_i$和$l_i$通过限制 QoE 满足可接受的范围、在此基础上最大化传输效率：</p>
+<p>$$
 \underset{\chi, \psi}{argmax} \sum_{t=0}^{+\infty} E_t,
 $$</p>
 <p>$$
@@ -514,12 +454,12 @@ $$</p>
 <p>距离的变化区间内存在一个临界点，临界点之内的划分为 FOV，之外的划分为 OOS</p>
 <ul>
 <li>
-<p>度量距离的方式：
-$$
+<p>度量距离的方式：</p>
+<p>$$
 \Delta Dis_U = min{|\omega_i - \hat{U}|, |1+\omega_i - \hat{U}|}
 $$</p>
-<p>（这里为何不直接使用$|\omega_i - \hat{U}|$？）
-$$
+<p>（这里为何不直接使用$|\omega_i - \hat{U}|$？）</p>
+<p>$$
 Dis_i =
 \begin{cases}
 {\sqrt{({\Delta Dis_{U}})^2 + {(\mu_i - \hat{V})}^2},\  \frac{R}{H} \le \hat{V} \le 1 - \frac{R}{H}}
@@ -545,14 +485,15 @@ $$</p>
 <li>
 <p>聚合 tile 的决策</p>
 <ul>
-<li>使用 2 个变量：$K$作为 FOV 和非 FOV 的 tile 的带宽分配比率；$Len$作为 tile 缓冲区的大小。
+<li>
+<p>使用 2 个变量：$K$作为 FOV 和非 FOV 的 tile 的带宽分配比率；$Len$作为 tile 缓冲区的大小。</p>
 <ul>
 <li>
 <p>$K$确定之后，分配给 FOV 内 tile 的带宽被均匀分配（可否非均匀分配）</p>
 <p>$K$不直接与网络状况相关因此可以保持控制的稳定性</p>
 </li>
 <li>
-<p>$Len$：所有传输的 tile 的缓冲区长度$l_i$都被设为$Len$  （文中并没有这样做的原因解释）</p>
+<p>$Len$：所有传输的 tile 的缓冲区长度$l_i$都被设为$Len$ （文中并没有这样做的原因解释）</p>
 </li>
 </ul>
 </li>
@@ -624,8 +565,8 @@ $$</p>
 <li>
 <p>奖励函数</p>
 <p>因为 QoE 的各项指标权重难以确定，没有使用传统的基于加权的方式。</p>
-<p>设定了<strong>能接受的 QoE 范围</strong>和<strong>在此基础上最大化的传输效率</strong>作为最后的<strong>性能</strong>指标，形式化之后如下：
-$$
+<p>设定了<strong>能接受的 QoE 范围</strong>和<strong>在此基础上最大化的传输效率</strong>作为最后的<strong>性能</strong>指标，形式化之后如下：</p>
+<p>$$
 Reward =
 \begin{cases}
 -INF,\ F \ge F^{max}
@@ -645,42 +586,36 @@ $$</p>
 </li>
 <li>
 <p>模型设计
-基于 Rainbow-DQN 模型：</p>
-<ul>
-<li>
-<p>输入是 5 元组$&lt;K, Len, Q, F, E&gt;$。</p>
-</li>
-<li>
-<p>神经网络使用 64 维的 3 隐层模型。</p>
-</li>
-<li>
-<p>为了提高鲁棒性，神经网络的第 3 层使用 Dueling DQN 的方式，将 Q 值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
-$$
-Q(s, a) = V(s) + A(s, a)
-$$</p>
-<p>$V(s)$表示系统处于状态$s$时的性能；$A(s,a)$表示系统处于状态$s$时动作$a$带来的性能；</p>
-</li>
-<li>
-<p>为了避免价值过高估计，使用 Double DQN 的方式，设计了两个独立的神经网络：评估网络和目标网络。</p>
-<p>评估网络用于动作选择；目标网络是评估网络从最后一个 episode 的拷贝用于动作评估。</p>
-</li>
-<li>
-<p>为了缓解神经网络的不稳定性（更快收敛），使用大小为$v$的回放池来按照时间序列保存客户端的经验。</p>
-<p>因为网络带宽和 FOV 轨迹在短期内存在特定的规律性，回放池中有相似状态和相似采样时间的样本更加重要，出现了优先级</p>
-<p>所以使用优先经验回放 PER，而优先级使用时间查分误差 TD-error 定义
-$$
-\delta_i = r_{i+1} + \gamma Q(s_{i+1}, arg\underset{a}{max}Q(s_{i+1}, a; \theta_i); \theta_i^{&rsquo;}) - Q(s_i, a_i; \theta_i)
-$$</p>
-<p>$r_i$是奖励；$\gamma$是折扣因子</p>
-</li>
-<li>
-<p>损失函数使用均方误差定义
-$$
-J = \frac{1}{v} \sum_{i=1}^{v} \omega_i(\delta_i)^2
-$$</p>
-<p>$\omega_i$是回放缓冲中第 i 个样本的重要性采样权重</p>
-</li>
-</ul>
+基于 Rainbow-DQN 模型：* 输入是 5 元组$&lt;K, Len, Q, F, E&gt;$。* 神经网络使用 64 维的 3 隐层模型。</p>
+<pre><code>* 为了提高鲁棒性，神经网络的第 3 层使用 Dueling DQN 的方式，将 Q 值$Q(s, a)$分解为状态价值$V(s)$和优势函数$A(s,a)$：
+  $$
+  Q(s, a) = V(s) + A(s, a)
+  $$
+
+  $V(s)$表示系统处于状态$s$时的性能；$A(s,a)$表示系统处于状态$s$时动作$a$带来的性能；
+
+* 为了避免价值过高估计，使用 Double DQN 的方式，设计了两个独立的神经网络：评估网络和目标网络。
+
+  评估网络用于动作选择；目标网络是评估网络从最后一个 episode 的拷贝用于动作评估。
+
+* 为了缓解神经网络的不稳定性（更快收敛），使用大小为$v$的回放池来按照时间序列保存客户端的经验。
+
+  因为网络带宽和 FOV 轨迹在短期内存在特定的规律性，回放池中有相似状态和相似采样时间的样本更加重要，出现了优先级
+
+  所以使用优先经验回放 PER，而优先级使用时间查分误差 TD-error 定义
+  $$
+  \delta_i = r_{i+1} + \gamma Q(s_{i+1}, arg\underset{a}{max}Q(s_{i+1}, a; \theta_i); \theta_i^{'}) - Q(s_i, a_i; \theta_i)
+  $$
+
+  $r_i$是奖励；$\gamma$是折扣因子
+
+* 损失函数使用均方误差定义
+  $$
+  J = \frac{1}{v} \sum_{i=1}^{v} \omega_i(\delta_i)^2
+  $$
+
+  $\omega_i$是回放缓冲中第 i 个样本的重要性采样权重
+</code></pre>
 </li>
 </ol>
 <h2 id="实验验证">实验验证</h2>
@@ -739,8 +674,8 @@ $$</p>
 <li>
 <p>DRL360：使用 DRL 来优化多项 QoE 指标</p>
 <p>实现三种系统、使用随机网络带宽和 FOV 轨迹。</p>
-<p>使用 DRL360 中提出的方式测量 QoE：
-$$
+<p>使用 DRL360 中提出的方式测量 QoE：</p>
+<p>$$
 V_{QoE} = \eta_1 Q - \eta_2 F - \eta_3 A
 $$</p>
 <p>$A$是 viewport 随时间的平均变化，反映 FOV 质量 Q 的变化；</p>
@@ -754,8 +689,7 @@ $$</p>
 </li>
 </ul>
 </li>
-</ol>
-</article>
+</ol></article>
               </div>
             </div>
           </div>
@@ -764,13 +698,13 @@ $$</p>
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -790,7 +724,7 @@ $$</p>
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -811,7 +745,7 @@ $$</p>
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

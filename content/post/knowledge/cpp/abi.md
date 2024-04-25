@@ -7,6 +7,7 @@ keywords: ["ABI", "C++"]
 tags: ["ABI", "C++"]
 categories: ["knowledge"]
 url: "posts/knowledge/cpp/abi"
+summary: "这篇博客主要学习了 ABI 这一概念以及其相关的用法。"
 ---
 
 ## ABI 是什么？

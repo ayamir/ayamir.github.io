@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>远程桌面与WebRTC - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -18,58 +18,31 @@
 
     
     <meta name="description"
-  content="关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。
-远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：
-音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：
-基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。
-基于其技术原理，VNC 有以下优点：
-跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：
-因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。
-相比于 VNC，RDP 的实现原理还是比较复杂的：
-首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。
-TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T." />
+  content="这篇博客主要分析了远程桌面的原理以及不同的实现方式。" />
 <meta name="keywords"
   content='WebRTC' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/" />
 
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="远程桌面与WebRTC - Ayamir&#39;s blog" />
 <meta name="twitter:description"
-  content="关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。
-远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：
-音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：
-基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。
-基于其技术原理，VNC 有以下优点：
-跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：
-因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。
-相比于 VNC，RDP 的实现原理还是比较复杂的：
-首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。
-TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T." />
-<meta name="twitter:site" content="http://localhost:1313/" />
+  content="这篇博客主要分析了远程桌面的原理以及不同的实现方式。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="远程桌面与WebRTC - Ayamir&#39;s blog">
 <meta property="og:description"
-  content="关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。
-远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：
-音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：
-基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。
-基于其技术原理，VNC 有以下优点：
-跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：
-因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。
-相比于 VNC，RDP 的实现原理还是比较复杂的：
-首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。
-TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T." />
-<meta property="og:url" content="http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/" />
+  content="这篇博客主要分析了远程桌面的原理以及不同的实现方式。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/" />
 <meta property="og:site_name" content="远程桌面与WebRTC" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -91,7 +64,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -113,7 +86,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -121,7 +94,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -147,7 +120,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -155,11 +128,11 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/">远程桌面与WebRTC</a>
+                    <a href="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/">远程桌面与WebRTC</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -169,9 +142,9 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:19:34 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:19:34 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -300,13 +273,13 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -326,7 +299,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -347,7 +320,7 @@ TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输�
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

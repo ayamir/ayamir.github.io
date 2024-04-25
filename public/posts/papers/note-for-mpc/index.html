@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for MPC - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,18 +21,11 @@
   content="论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP
 Level：ACM SIGCOMM 15
 Keywords：Model Predictive Control，ABR，DASH
-Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。
-文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。
-背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化
-将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；
-每个片段以不同码率编码，$R$ 作为所有可用码率的集合；
-播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；
-对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：
-$q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；" />
+" />
 <meta name="keywords"
   content='DASH, Control-Theoretic' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-mpc/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-mpc/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -41,18 +34,11 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
   content="论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP
 Level：ACM SIGCOMM 15
 Keywords：Model Predictive Control，ABR，DASH
-Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。
-文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。
-背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化
-将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；
-每个片段以不同码率编码，$R$ 作为所有可用码率的集合；
-播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；
-对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：
-$q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -61,18 +47,11 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
   content="论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP
 Level：ACM SIGCOMM 15
 Keywords：Model Predictive Control，ABR，DASH
-Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。
-文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。
-背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化
-将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；
-每个片段以不同码率编码，$R$ 作为所有可用码率的集合；
-播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；
-对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：
-$q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-mpc/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-mpc/" />
 <meta property="og:site_name" content="Note for MPC" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -94,7 +73,7 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -116,7 +95,7 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -124,7 +103,7 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -150,7 +129,7 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -158,11 +137,11 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-mpc/">Note for MPC</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-mpc/">Note for MPC</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -172,9 +151,9 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:24:27 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:24:27 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -305,8 +284,8 @@ $q(\cdot):R \rightarrow \R_&#43;$ 是一个不减函数，是选择的码率 $R_
 <p>播放过程形式化</p>
 <p>在 $t_k$ 时刻，视频播放器开始下载第 $k$ 个块，这个块的下载时间可以计算为： $d_k(R_k) / C_k$； $C_k$ 表示下载过程中经历的平均下载速度；</p>
 <p>一旦第 $k$ 个块下载完毕，播放器等待 $\Delta t_k$ 时间并在 $t_{k+1}$ 时刻下载下一个块 $k+1$ ；</p>
-<p>假设等待时间 $\Delta t_k$ 很短并且不会导致重缓冲事件，用 $C_t$ 表示 $t$ 时刻的网络吞吐量：
-$$
+<p>假设等待时间 $\Delta t_k$ 很短并且不会导致重缓冲事件，用 $C_t$ 表示 $t$ 时刻的网络吞吐量：</p>
+<p>$$
 t_{k+1} = t_k + \frac{d_k(R_k)}{C_k} + \Delta t_k
 $$</p>
 <p>$$
@@ -315,15 +294,15 @@ $$</p>
 <p>$B(t)$ 的变化取决于下载的块和播放的块的数量：</p>
 <p>在第 $k$ 个块下载完毕之后缓冲区占用增长 $L$ 秒；用户观看一个块之后缓冲区占用减少 $L$ 秒；</p>
 <p>$B_k = B(t_k)$ 表示播放器开始下载第 $k$ 个块时的缓冲区占用；</p>
-<p>缓冲区占用的动态变化可以表示为：
-$$
+<p>缓冲区占用的动态变化可以表示为：</p>
+<p>$$
 B_{k+1} = \big( (B_k - \frac{d_k(R_k)}{C_k})_+ + L - \Delta t_k \big)_+
-$$
-其中 $(x)_+ = max\lbrace x, 0 \rbrace $ 确保其非负；</p>
+$$</p>
+<p>其中 $(x)_+ = max\lbrace x, 0 \rbrace $ 确保其非负；</p>
 <p>如果 $B_k &lt; d_k(R_k) / C_k$ ，表示缓冲区在播放器还在下载第 $k$ 个块时变空，而这会导致重缓冲事件；</p>
 <p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211224175749570.png" alt="Buffer dynamics"></p>
-<p>等待时间 $\Delta t_k$ 的确定也称为<em>块调度</em>问题，本文中假设播放器在第 $k$ 个块下载完毕之后尽可能快地去下载第 $k+1$ 个块（除了缓冲区满了的情况，播放器等待缓冲区中的块被消耗之后再下载新的块）：
-$$
+<p>等待时间 $\Delta t_k$ 的确定也称为<em>块调度</em>问题，本文中假设播放器在第 $k$ 个块下载完毕之后尽可能快地去下载第 $k+1$ 个块（除了缓冲区满了的情况，播放器等待缓冲区中的块被消耗之后再下载新的块）：</p>
+<p>$$
 \Delta t_k = \Big( \big( B_k - \frac{d_k(R_k)}{C_k} \big)_+ + L - B_max \Big)_+
 $$</p>
 </li>
@@ -332,20 +311,20 @@ $$</p>
 <p>QoE 的组成部分：</p>
 <ol>
 <li>
-<p>平均视频质量：在所有块中每个块平均的质量，计算为：
-$$
+<p>平均视频质量：在所有块中每个块平均的质量，计算为：</p>
+<p>$$
 \frac{1}{K} \sum^K_{k=1} q(B_k)
 $$</p>
 </li>
 <li>
-<p>平均质量变化：相邻块之间质量变化的平均值，计算为：
-$$
+<p>平均质量变化：相邻块之间质量变化的平均值，计算为：</p>
+<p>$$
 \frac{1}{K-1} \sum^{K-1}_{k=1} | q(R_{k+1}) - q(R_k) |
 $$</p>
 </li>
 <li>
-<p>重缓冲总计时间：对每个块而言，当轮到其被消耗时但下载块的过程还没完成即出现了重缓冲，总时间计算为：
-$$
+<p>重缓冲总计时间：对每个块而言，当轮到其被消耗时但下载块的过程还没完成即出现了重缓冲，总时间计算为：</p>
+<p>$$
 \sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+
 $$</p>
 </li>
@@ -353,12 +332,12 @@ $$</p>
 <p>启动延迟 $T_s$ ，假设 $T_s \ll B_{max}$ 。</p>
 </li>
 </ol>
-<p>对不同用户而言，上述 4 种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的 QoE：
-$$
+<p>对不同用户而言，上述 4 种因素的重要程度不同。使用上述分量的加权，定义视频块 $1$ 到 $K$ 的 QoE：</p>
+<p>$$
 QoE^K_1 = \sum^K_{k=1} q(R_k) - \lambda \sum^K_{k=1} | q(R_{k+1}) - q(R_k) | - \mu \sum^K_{k=1} (\frac{d_k(R_k)}{C_k} - B_k)_+ - \mu_s T_s,\
 \lambda, \mu, \mu_s \nless 0
-$$
-相对较小的 $\lambda$ 表示用户不太关心视频质量变化； $\lambda$ 越大表明越需要使视频质量变得光滑。</p>
+$$</p>
+<p>相对较小的 $\lambda$ 表示用户不太关心视频质量变化； $\lambda$ 越大表明越需要使视频质量变得光滑。</p>
 <p>相对较大的 $\mu$ 表示用户很在意重缓冲；</p>
 <p>在这里文章倾向于启动延迟很低，所以采用大 $\mu_s$ ；</p>
 <p>QoE 的最大化：</p>
@@ -370,14 +349,14 @@ $$
 <p>上图中的 QoE 最大化问题是一种随机优化控制问题，随机性源自可获得的吞吐量 $C_t$ 。</p>
 <p>$t_k$ 时刻播放器选择码率 $R_k$ ，只有过去的吞吐量 $\lbrace C_t, t \le t_k \rbrace$ 可知，未来的值 ${C_t, t &gt; t_k}$ 未知。</p>
 <p>但是，<em>吞吐量预测器</em>可以用于获取对吞吐量的预测，定义其为 $\lbrace \hat{C_t}, t &gt; t_k \rbrace$ 。</p>
-<p>基于这样的预测和缓冲区的信息（精确可知），<em>码率选择器</em>对下个块 $k$ 的码率选择可以表示为：
-$$
+<p>基于这样的预测和缓冲区的信息（精确可知），<em>码率选择器</em>对下个块 $k$ 的码率选择可以表示为：</p>
+<p>$$
 R_k = f \big( B_k, \lbrace \hat{C_t}, t &gt; t_k \rbrace, \lbrace R_i, i &lt; k \rbrace \big)
-$$
-文章只关注码率自适应算法，假设已经得到了预测值，并根据预期预测误差对其进行了表征，即：</p>
+$$</p>
+<p>文章只关注码率自适应算法，假设已经得到了预测值，并根据预期预测误差对其进行了表征，即：</p>
 <p>我们着重于 $f(\cdot)$ 的设计以及预测误差对比较控制算法性能的影响。</p>
-<p>现有的两类自适应算法：基于速率和基于缓冲区，分别可以表示为：
-$$
+<p>现有的两类自适应算法：基于速率和基于缓冲区，分别可以表示为：</p>
+<p>$$
 R_k = f \big( \lbrace \hat{C_t}, t &gt; t_k \rbrace, \lbrace R_i, i &lt; k \rbrace \big)
 $$</p>
 <p>$$
@@ -408,8 +387,7 @@ $$</p>
 <p>基于此，可以使用当前视界中的预测来应用第 1 个码率 $R_k$ ，之后将视界向前移动到 $[t_{k+1}, t_{k+N+1}]$ 。</p>
 <p>而这种方案就称为 MPC。MPC 的一般好处在于，MPC 可以利用预测在约束条件下在线优化动态系统中的复杂控制目标。</p>
 </li>
-</ul>
-</article>
+</ul></article>
               </div>
             </div>
           </div>
@@ -418,13 +396,13 @@ $$</p>
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -444,7 +422,7 @@ $$</p>
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -465,7 +443,7 @@ $$</p>
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

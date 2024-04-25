@@ -4,16 +4,16 @@
     <title>QoE Metrics on Ayamir&#39;s blog</title>
     <link>http://localhost:1313/tags/qoe-metrics/</link>
     <description>Recent content in QoE Metrics on Ayamir&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.1</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Apr 2024 22:26:12 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/qoe-metrics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for Toward Immersive Experience</title>
       <link>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</link>
       <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate>
       <guid>http://localhost:1313/posts/papers/note-for-toward-immersive-experience/</guid>
-      <description>Overview Link: Toward Immersive Experience: Evaluation for Interactive Network Services&#xA;Level: IEEE Network 2022&#xA;Keywords: QoE Metrics&#xA;Background Compared with traditional QoE for regular video/audio services, the existing work on IE is still in its infancy. This work aims at providing systematic and comprehensive research on IE for interactive network services, mainly studying the following three fundamental and challenging issues.&#xA;What is the essential difference between IE and traditional QoE? Which categories of factors mainly influence IE?</description>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://ieeexplore.ieee.org/document/9679801&#34;&gt;Toward Immersive Experience: Evaluation for Interactive Network Services&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: IEEE Network 2022&lt;/p&gt;&#xA;&lt;p&gt;Keywords: QoE Metrics&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

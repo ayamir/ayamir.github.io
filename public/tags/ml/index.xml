@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ML on Ayamir&#39;s blog</title>
-    <link>http://localhost:1313/tags/ml/</link>
+    <link>https://ayamir.github.io/tags/ml/</link>
     <description>Recent content in ML on Ayamir&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.1</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ml/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 21:58:17 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/ml/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MLflow 的用法</title>
-      <link>http://localhost:1313/posts/development/note-for-mlflow/</link>
+      <link>https://ayamir.github.io/posts/development/note-for-mlflow/</link>
       <pubDate>Mon, 07 Mar 2022 19:25:46 +0800</pubDate>
-      <guid>http://localhost:1313/posts/development/note-for-mlflow/</guid>
+      <guid>https://ayamir.github.io/posts/development/note-for-mlflow/</guid>
       <description>Overview MLflow是一个用于管理机器学习全生命周期的框架。&#xA;其主要的作用是：&#xA;完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflow Tracking 以一种可复现重用的方式包装 ML 代码——MLflow Projects 简化模型部署的难度——MLflow Models 提供中心化的模型存储来管理全生命周期——MLflow Model Registry 现在主要用到的是第三个，所以先记录Models的用法&#xA;MLflow Models MLflow Models本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。&#xA;这种格式定义了一种惯例来让我们以不同的flavor保存模型进而可以被下游工具所理解。&#xA;存储格式 每个MLflow Model是一个包含任意文件的目录，根目录之下有一个MLmodel文件，用于定义多个flavor。&#xA;flavor是MLflow Model的关键概念，抽象上是部署工具可以用来理解模型的一种约定。&#xA;MLflow定义了其所有内置部署工具都支持的几种标准flavor，比如描述如何将模型作为Python函数运行的python_function flavor。&#xA;目录结构示例如下：&#xA;MLmode文件内容示例如下：&#xA;这个模型可以用于任何支持pytorch或python_function flavor的工具，例如可以使用如下的命令用python_function来 serve 一个有python_function flavor的模型：&#xA;mlflow models serve -m my_model Model Signature 模型的输入输出要么是column-based，要么是tensor-based。&#xA;column-based inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the MLflow data type. tensor-based inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the numpy data type.</description>
     </item>
   </channel>

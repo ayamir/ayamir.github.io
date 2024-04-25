@@ -466,16 +466,21 @@
           <div class="col-12 d-inline-block">
             <div class="d-inline-block mb-1">
               <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/">Note for Content Assisted Prediction</a>
+                <a href="https://ayamir.github.io/posts/development/Immersive-Video-Deploy/">部署 Immersive Video OMAF-Sample</a>
               </h3>
             </div>
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming">Content Assisted Viewport Prediction for Panoramic Video Streaming</a></p>
-<p>Level：IEEE CVPR 2019 CV4ARVR</p>
-<p>Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion</p>
+                原仓库地址：Immersive-Video-Sample
+修改之后的仓库：Immersive-Video-Sample
+Server 端搭建 修改 Dockerfile 手动设置 wget 和 git 的 http_proxy
+旧 package 目录 not found，修改为新 package 目录
+因为找不到 glog 库因此加入软链接操作
+ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0 重新编译内核 运行脚本时显示 libnuma 错误因此推断与 numa 设置有关
+执行numactl -H显示只有一个 node，报错输出显示需要至少两个 numa 节点
+查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数
+手动下载 Linux 内核源代码到/usr/src/目录 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz 解压 tar xpvf linux-5.11.1.tar.gz 复制现有内核配置 cd linux-5.11.1 &amp;&amp; cp -v /boot/config-$(uname -r) .config 安装必要的包 sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev 进入内核配置界面 sudo make menuconfig 按下/键分别查询CONFIG_NUMA和CONFIG_NUMA_EMU位置 手动勾选对应选项之后保存退出 重新编译并等待安装结束 sudo make -j $(nproc) &amp;&amp; sudo make modules_install &amp;&amp; sudo make install 修改grub启动参数加入 fake numa 配置 sudo vim /etc/default/grub 找到对应行并修改为
               </div>
             </div>
 
@@ -488,389 +493,15 @@
                     d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
                   </path>
                 </svg>
-                Immersive Video
+                Immersive-Video
               </a>
               
               
 
               Created
-              <relative-time datetime=" Thu, 06 Jan 2022 15:17:33 &#43;0800" class="no-wrap"
-                title=" Thu, 06 Jan 2022 15:17:33 &#43;0800">
-                Thu, 06 Jan 2022 15:17:33 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-gpac/">Note for GPAC</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="dash-客户端自适应逻辑">Dash 客户端自适应逻辑</h2>
-<ol>
-<li><em>tile priority setup</em>：根据定义的规则对 tile 进行优先级排名。</li>
-<li><em>rate allocation</em>：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。</li>
-<li><em>rate adaption</em>：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。</li>
-</ol>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Thu, 30 Dec 2021 10:23:26 &#43;0800" class="no-wrap"
-                title=" Thu, 30 Dec 2021 10:23:26 &#43;0800">
-                Thu, 30 Dec 2021 10:23:26 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-tbra/">Note for TBRA</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
-<p>Level：ACM MM 21</p>
-<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Tue, 21 Dec 2021 10:11:23 &#43;0800" class="no-wrap"
-                title=" Tue, 21 Dec 2021 10:11:23 &#43;0800">
-                Tue, 21 Dec 2021 10:11:23 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/">Note for Content Motion Viewport Prediction</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://dl.acm.org/doi/abs/10.1145/3328914">Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking</a></p>
-<p>Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019</p>
-<p>Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Mon, 20 Dec 2021 10:47:18 &#43;0800" class="no-wrap"
-                title=" Mon, 20 Dec 2021 10:47:18 &#43;0800">
-                Mon, 20 Dec 2021 10:47:18 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-rnnQoE/">Note for RnnQoE</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://ieeexplore.ieee.org/document/9580281">QoE-driven Mobile 360 Video Streaming: Predictive
-View Generation and Dynamic Tile Selection</a></p>
-<p>Level：ICCC 2021</p>
-<p>Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Thu, 16 Dec 2021 19:53:10 &#43;0800" class="no-wrap"
-                title=" Thu, 16 Dec 2021 19:53:10 &#43;0800">
-                Thu, 16 Dec 2021 19:53:10 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-optile/">Note for OpTile</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
-<p>Level：ACM MM 17</p>
-<p>Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Mon, 13 Dec 2021 16:19:02 &#43;0800" class="no-wrap"
-                title=" Mon, 13 Dec 2021 16:19:02 &#43;0800">
-                Mon, 13 Dec 2021 16:19:02 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/">Note for RainbowDQN and Multitype Tiles</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Level：IEEE Transaction on multimedia 21</p>
-<p>Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Sat, 11 Dec 2021 16:14:15 &#43;0800" class="no-wrap"
-                title=" Sat, 11 Dec 2021 16:14:15 &#43;0800">
-                Sat, 11 Dec 2021 16:14:15 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-360ProbDASH/">Note for 360ProbDASH</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link: <a href="https://dl.acm.org/doi/10.1145/3123266.3123291">360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming</a></p>
-<p>Level: ACM MM 17</p>
-<p>Keyword:</p>
-<p>Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Thu, 09 Dec 2021 10:20:15 &#43;0800" class="no-wrap"
-                title=" Thu, 09 Dec 2021 10:20:15 &#43;0800">
-                Thu, 09 Dec 2021 10:20:15 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note-for-dante/">Note for Dante</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="论文概况">论文概况</h2>
-<p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
-<p>Level: SIGCOMM 18</p>
-<p>Keyword: UDP+FOV-aware+FEC</p>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Wed, 08 Dec 2021 22:14:15 &#43;0800" class="no-wrap"
-                title=" Wed, 08 Dec 2021 22:14:15 &#43;0800">
-                Wed, 08 Dec 2021 22:14:15 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/papers/note11/">沉浸式流媒体传输的实际度量</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                <h2 id="度量指标">度量指标</h2>
-<ol>
-<li>viewport 预测精度。
-<ul>
-<li>使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。</li>
-</ul>
-</li>
-<li>视频质量。
-<ul>
-<li>viewport 内部的 tile 质量（1～5）。</li>
-<li>tile 在最高质量层之上花费的时间。</li>
-<li>根据用户视线的分布而提出的加权质量度量。</li>
-</ul>
-</li>
-</ol>
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/immersive-video">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                Immersive Video
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Mon, 22 Nov 2021 15:21:59 &#43;0800" class="no-wrap"
-                title=" Mon, 22 Nov 2021 15:21:59 &#43;0800">
-                Mon, 22 Nov 2021 15:21:59 &#43;0800
+              <relative-time datetime=" Sat, 09 Oct 2021 15:31:46 &#43;0800" class="no-wrap"
+                title=" Sat, 09 Oct 2021 15:31:46 &#43;0800">
+                Sat, 09 Oct 2021 15:31:46 &#43;0800
               </relative-time>
             </div>
           </div>
@@ -880,10 +511,10 @@ View Generation and Dynamic Tile Selection</a></p>
       <div class="paginate-container">
         <div class="BtnGroup">
           
-          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="/tags/immersive-video/">Previous</a>
+          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="/tags/immersive-video/page/3/">Previous</a>
           
           
-          <a rel="nofollow" class="btn btn-outline BtnGroup-item" href="/tags/immersive-video/page/3/">Next</a>
+          <button class="btn btn-outline BtnGroup-item" disabled="disabled">Next</button>
           
         </div>
       </div>

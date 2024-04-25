@@ -7,6 +7,7 @@ keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
 url: "posts/knowledge/h264-encode"
+summary: "这篇博客主要总结了与 h264 编码相关的知识。"
 ---
 
 ## 编码框架

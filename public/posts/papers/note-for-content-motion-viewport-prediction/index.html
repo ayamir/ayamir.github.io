@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for Content Motion Viewport Prediction - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,14 +21,11 @@
   content="论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking
 Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019
 Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model
-Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：
-VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；
-其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。
-$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。" />
+" />
 <meta name="keywords"
   content='Content motion, Viewport prediction, Live video' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -37,14 +34,11 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
   content="论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking
 Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019
 Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model
-Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：
-VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；
-其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。
-$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -53,14 +47,11 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
   content="论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking
 Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019
 Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model
-Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：
-VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；
-其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。
-$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/" />
 <meta property="og:site_name" content="Note for Content Motion Viewport Prediction" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -82,7 +73,7 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -104,7 +95,7 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -112,7 +103,7 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -138,7 +129,7 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -146,11 +137,11 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/">Note for Content Motion Viewport Prediction</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/">Note for Content Motion Viewport Prediction</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -160,9 +151,9 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:29:35 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:29:35 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -206,24 +197,6 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
                         </path>
                       </svg>
                       Immersive Video
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/content-based-predict">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Content-based predict
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/live-video">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Live video
                     </a>
                     
                     
@@ -335,11 +308,11 @@ $1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以
 <li>就物理形状而言更“重要”的物体。</li>
 </ul>
 <p>这两种类型的物体大多包含最密集和最大量的特征，因此通过所有特征的重心来计算预测用户视图的中心。</p>
-<p>对于剩余的特征列表：$\vec{F} = [f_1, f_2, f_3, &hellip;, f_k]$，其中$f_i(i = 1 &hellip; k)$表示特征$f_i = &lt;f^{(x)}_i, f^{(y)}_i&gt;$的像素点坐标，则预测出的 viewport 中心坐标可以计算出来：
-$$
+<p>对于剩余的特征列表：$\vec{F} = [f_1, f_2, f_3, &hellip;, f_k]$，其中$f_i(i = 1 &hellip; k)$表示特征$f_i = &lt;f^{(x)}_i, f^{(y)}_i&gt;$的像素点坐标，则预测出的 viewport 中心坐标可以计算出来：</p>
+<p>$$
 l_x = \frac{1}{k} \sum^k_{i=1} f^{(x)}_i;\ l_y = \frac{1}{k} \sum^k_{i=1} f^{(y)}_i.
-$$
-考虑到即使预测的 viewport 中包含用户观看的物体，预测得到的 viewport 也可能会与实际的 viewport 存在差异。</p>
+$$</p>
+<p>考虑到即使预测的 viewport 中包含用户观看的物体，预测得到的 viewport 也可能会与实际的 viewport 存在差异。</p>
 <p>所以预测的 viewport 可能比实际的 viewport 要大，所以使用缩放因子$S_c$来产生预测的 viewport。</p>
 <p>给出用户 viewport 的大小$S_{user}$，预测的 viewport 可以通过$S_{pre} = S_c \cdot S_{user}$计算出来。</p>
 </li>
@@ -353,12 +326,13 @@ $$
 <p>如果没有检测到运动的物体，则用户很可能是在观看静止的物体，这会导致基于运动目标的 viewport 预测失败。</p>
 <p>在这种场景中，可以认为视频内容已经不再是决定用户 viewport 的因素，而只取决于用户自身的行为。</p>
 <p>因此采用基于速度的方式来预测 viewport。（这样的决策可以在运动检测模块没有检测到运动物体时就做出）</p>
-<p>一旦从反馈路径上得到用户信息，可以产生用户 viewport 位置向量：$\vec{L} = [l_1, l_2, l_3, &hellip;, l_M]$，其中$l_i$表示第$i$个帧中用户 viewport 的位置，$M$表示视频播放缓冲区中的帧数。那么可以计算 viewport 速度：
-$$
+<p>一旦从反馈路径上得到用户信息，可以产生用户 viewport 位置向量：$\vec{L} = [l_1, l_2, l_3, &hellip;, l_M]$，其中$l_i$表示第$i$个帧中用户 viewport 的位置，$M$表示视频播放缓冲区中的帧数。那么可以计算 viewport 速度：</p>
+<p>$$
 \vec{V} = \frac{\vec{(l_2 - l_1)} + \vec{(l_3 - l_2)} &hellip;.(l_M - l_{M-1})}{M-1} = \frac{(\vec{l_M - l_1})}{M-1}
-$$
-下一帧的预测位置$L_{M=1}$也可以计算出来：
-$$
+$$</p>
+<pre><code>下一帧的预测位置$L_{M=1}$也可以计算出来：
+</code></pre>
+<p>$$
 l_{M+1} = l_M + \vec{V}
 $$</p>
 </li>
@@ -366,12 +340,12 @@ $$</p>
 <p>预测视图与实际视图的不匹配</p>
 <p>一旦运动追踪策略检测到用户实际的视图和预测的视图不同，就会触发恢复机制去追踪用户实际在看着的物体。</p>
 <p>可以使用运动追踪方式确定用户实际观察的物体的速度。</p>
-<p>给出前一帧匹配的特征$\vec{FA} = [fA_1, fA_2, fA_3, &hellip;, fA_p]$和当前帧的特征$\vec{FB} = [fB_1, fB_2, fB_3, &hellip;, fB_p]$，可以计算出速度：
-$$
-V_x = \frac{1}{p} (\sum^p_{i=1} fB^{(x)}_i - \sum^p_{i=1}fA^{(x)}_i),\
+<p>给出前一帧匹配的特征$\vec{FA} = [fA_1, fA_2, fA_3, &hellip;, fA_p]$和当前帧的特征$\vec{FB} = [fB_1, fB_2, fB_3, &hellip;, fB_p]$，可以计算出速度：</p>
+<p>$$
+V_x = \frac{1}{p} (\sum^p_{i=1} fB^{(x)}_i - \sum^p_{i=1}fA^{(x)}_i),<br>
 V_y = \frac{1}{p} (\sum^p_{i=1} fB^{(y)}_i - \sum^p_{i=1}fA^{(y)}_i),
-$$
-假设预测的 viewpoint 是$(l_x, l_y)$，修改之后的 viewpoint 是$(l_x + V_x,\ l_y + V_y)$。</p>
+$$</p>
+<p>假设预测的 viewpoint 是$(l_x, l_y)$，修改之后的 viewpoint 是$(l_x + V_x,\ l_y + V_y)$。</p>
 </li>
 </ol>
 <h3 id="动态-viewport-更新">动态 viewport 更新</h3>
@@ -395,8 +369,8 @@ $$
 <p>用户的 viewport 可以通过反馈信息得出$P(X)$；用户观看静态特征可以表示为$P(X|Y)$；用户观看动态特征可以表示为$P(X|Z)$。</p>
 </li>
 <li>
-<p>$P(X|Y, Z)$可以计算为：
-$$
+<p>$P(X|Y, Z)$可以计算为：</p>
+<p>$$
 P(X|Y, Z) = \frac{P(Y|X) \cdot P(Z|X) \cdot P(X)}{P(Y, Z)}
 $$</p>
 </li>
@@ -432,8 +406,7 @@ $$</p>
 </ol>
 <p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211220221933915.png" alt="image-20211220221933915"></p>
 </li>
-</ol>
-</article>
+</ol></article>
               </div>
             </div>
           </div>
@@ -442,13 +415,13 @@ $$</p>
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -468,7 +441,7 @@ $$</p>
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -489,7 +462,7 @@ $$</p>
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

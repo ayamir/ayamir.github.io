@@ -4,16 +4,16 @@
     <title>Rainbow-DQN on Ayamir&#39;s blog</title>
     <link>http://localhost:1313/tags/rainbow-dqn/</link>
     <description>Recent content in Rainbow-DQN on Ayamir&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo 0.125.1</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Apr 2024 22:25:09 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/rainbow-dqn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for RainbowDQN and Multitype Tiles</title>
       <link>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
       <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
       <guid>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
-      <description>论文概况 Level：IEEE Transaction on multimedia 21&#xA;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&#xA;问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。&#xA;基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。&#xA;用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。&#xA;根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。&#xA;FOV 中的 tile 被分配更高的码率；&#xA;OOS 按照与$V$的距离逐步降低质量等级$q_i$；&#xA;Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。&#xA;传输的 tile 在同步完成之后交给渲染器渲染。&#xA;播放器根据各项指标计算可以评估播放性能：&#xA;$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。&#xA;传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。&#xA;传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$&#xA;带宽评估 收集每个 tile 的下载日志来评估带宽。&#xA;使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。&#xA;第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} + (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。</description>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Level：IEEE Transaction on multimedia 21&lt;/p&gt;&#xA;&lt;p&gt;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

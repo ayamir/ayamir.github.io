@@ -4,8 +4,9 @@ date: 2021-10-26T21:14:32+08:00
 draft: false
 keywords: ["C++"]
 tags: ["C++"]
-categories:  ["knowledge"]
+categories: ["knowledge"]
 url: "posts/knowledge/cpp/auto"
+summary: "这篇博客主要讨论了 C++ 中类型推导相关的关键字和用法。"
 ---
 
 ## 常见的坑

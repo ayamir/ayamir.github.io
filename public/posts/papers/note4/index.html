@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>沉浸式流媒体网络问题的相关解决方案 - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,21 +21,11 @@
   content="概况 现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。
 传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。
 边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。
-解决方案 360 度视频的边缘协助推流 背景 主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。
-在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。
-Hou&amp;rsquo;s work 提出边缘/云服务器渲染可以使计算更加轻便，可以让无线 VR/AR 体验可行并且便携。
-Zhang&amp;rsquo;s work 为 VR 多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。
-进一步陈述了一种服务器选择算法，它基于 QoS 和玩家移动的影响确保所有 VR 玩家之间的公平性。
-Lo&amp;rsquo;s work 考虑了为 360 度视频渲染提供边缘协助的设备的异质性。
-边缘服务器将 HEVC tile 流转码为 viewport 视频流并传输到多个客户端。 最优化算法根据视频质量、HMD 类型和带宽动态决定边缘节点服务哪个客户端。 边缘缓存策略 背景 传统视频的缓冲方案并不能直接应用到 360 度视频上。
-为了在启用边缘缓存的网络中促进 360 度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。
-边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。
-Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流行内容提出了一种缓存策略。
-与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。 Papaioannou&amp;rsquo;s work 提出了基于 tile 分辨率和需求统计信息的缓存策略，用最少的错误，提高要求 tile 的和缓存 tile 这两种版本的 viewport 覆盖率。" />
+" />
 <meta name="keywords"
   content='Immersive Video' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note4/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note4/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -44,21 +34,11 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
   content="概况 现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。
 传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。
 边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。
-解决方案 360 度视频的边缘协助推流 背景 主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。
-在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。
-Hou&amp;rsquo;s work 提出边缘/云服务器渲染可以使计算更加轻便，可以让无线 VR/AR 体验可行并且便携。
-Zhang&amp;rsquo;s work 为 VR 多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。
-进一步陈述了一种服务器选择算法，它基于 QoS 和玩家移动的影响确保所有 VR 玩家之间的公平性。
-Lo&amp;rsquo;s work 考虑了为 360 度视频渲染提供边缘协助的设备的异质性。
-边缘服务器将 HEVC tile 流转码为 viewport 视频流并传输到多个客户端。 最优化算法根据视频质量、HMD 类型和带宽动态决定边缘节点服务哪个客户端。 边缘缓存策略 背景 传统视频的缓冲方案并不能直接应用到 360 度视频上。
-为了在启用边缘缓存的网络中促进 360 度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。
-边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。
-Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流行内容提出了一种缓存策略。
-与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。 Papaioannou&amp;rsquo;s work 提出了基于 tile 分辨率和需求统计信息的缓存策略，用最少的错误，提高要求 tile 的和缓存 tile 这两种版本的 viewport 覆盖率。" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -67,21 +47,11 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
   content="概况 现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。
 传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。
 边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。
-解决方案 360 度视频的边缘协助推流 背景 主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。
-在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。
-Hou&amp;rsquo;s work 提出边缘/云服务器渲染可以使计算更加轻便，可以让无线 VR/AR 体验可行并且便携。
-Zhang&amp;rsquo;s work 为 VR 多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。
-进一步陈述了一种服务器选择算法，它基于 QoS 和玩家移动的影响确保所有 VR 玩家之间的公平性。
-Lo&amp;rsquo;s work 考虑了为 360 度视频渲染提供边缘协助的设备的异质性。
-边缘服务器将 HEVC tile 流转码为 viewport 视频流并传输到多个客户端。 最优化算法根据视频质量、HMD 类型和带宽动态决定边缘节点服务哪个客户端。 边缘缓存策略 背景 传统视频的缓冲方案并不能直接应用到 360 度视频上。
-为了在启用边缘缓存的网络中促进 360 度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。
-边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。
-Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流行内容提出了一种缓存策略。
-与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。 Papaioannou&amp;rsquo;s work 提出了基于 tile 分辨率和需求统计信息的缓存策略，用最少的错误，提高要求 tile 的和缓存 tile 这两种版本的 viewport 覆盖率。" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note4/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note4/" />
 <meta property="og:site_name" content="沉浸式流媒体网络问题的相关解决方案" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -103,7 +73,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -125,7 +95,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -133,7 +103,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -159,7 +129,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -167,11 +137,11 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note4/">沉浸式流媒体网络问题的相关解决方案</a>
+                    <a href="https://ayamir.github.io/posts/papers/note4/">沉浸式流媒体网络问题的相关解决方案</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -181,9 +151,9 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:27:01 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:27:01 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -419,8 +389,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
 <li>确定多个用户可能的需求来公平地分配可用的网络资源。</li>
 <li>分析跨用户的行为来精确传输要求的子帧到终端用户。</li>
 <li>由于侧信道攻击，保护 VR 帧传输到多个终端用户。</li>
-</ol>
-</article>
+</ol></article>
               </div>
             </div>
           </div>
@@ -429,13 +398,13 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -455,7 +424,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -476,7 +445,7 @@ Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

@@ -4,8 +4,9 @@ date: 2021-10-18T19:32:22+08:00
 draft: false
 keywords: ["C++"]
 tags: ["C++"]
-categories:  ["knowledge"]
+categories: ["knowledge"]
 url: "posts/knowledge/cpp/Cpp-Types"
+summary: "这篇博客主要讨论了 C++ 中的类型系统。"
 ---
 
 ## 常见的坑
@@ -14,7 +15,6 @@ url: "posts/knowledge/cpp/Cpp-Types"
 
 2. 字符型被分为 3 种：`char`, `signed char`, `unsigned char`，前两种并不等价。
    虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。
-   
 3. 有符号类型在与无符号类型运算时会隐式转换为无符号类型。
 
 4. 虽然变量初始化时候使用了`=`号，但是初始化和变量赋值并不相同。
@@ -28,18 +28,18 @@ url: "posts/knowledge/cpp/Cpp-Types"
 
    ```C++
    #include <iostream>
-   
+
    int default_initialize(int a) {
        // 输出必定是0
        std::cout << a << std::endl;
        int b;
        return b;
    }
-   
+
    int main() {
        int a;
        // 输出是随机值
-       std::cout << default_initialize(a) << std::endl; 
+       std::cout << default_initialize(a) << std::endl;
    }
    ```
 
@@ -48,7 +48,6 @@ url: "posts/knowledge/cpp/Cpp-Types"
 7. 在嵌套作用域中，内层作用域中的**定义**可以覆盖外层作用域中**声明**的变量。
 
    可以显式使用**域操作符**`::`来指明使用哪层的变量。
-   
 
 ## 必须要理解的点
 
@@ -68,10 +67,10 @@ url: "posts/knowledge/cpp/Cpp-Types"
 
    |                      | 声明 | 定义 |
    | :------------------: | :--: | :--: |
-   | 规定变量的类型和名字 |  ✅   |  ✅   |
-   |       申请空间       |      |  ✅   |
-   |        初始化        |      |  ✅   |
-   |       执行多次       |  ✅   |      |
+   | 规定变量的类型和名字 |  ✅  |  ✅  |
+   |       申请空间       |      |  ✅  |
+   |        初始化        |      |  ✅  |
+   |       执行多次       |  ✅  |      |
 
    用`extern`标记**未初始化**的变量来表明只对变量作声明：
 
@@ -90,7 +89,6 @@ url: "posts/knowledge/cpp/Cpp-Types"
    同一个名字在不同的作用域中可以指向不同的实体。
 
    名字的有效区域始于**声明**语句，以**声明**语句所在的作用域末端结束。
-   
 
 ## 建议
 
@@ -128,4 +126,3 @@ url: "posts/knowledge/cpp/Cpp-Types"
 8. 对每个内置类型的变量都执行**显式默认初始化**以防止 undefined 行为。
 
 9. 在变量第一次使用的地方进行**定义**操作。
-

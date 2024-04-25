@@ -3,7 +3,7 @@ title: "Note for OpTile"
 date: 2021-12-13T16:19:02+08:00
 draft: false
 keywords: ["Immersive Video"]
-tags: ["Immersive Video", "Content-based division", "Dynamic tiling"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-optile"
 ---
@@ -15,6 +15,8 @@ Link：[OpTile: Toward Optimal Tiling in 360-degree Video Streaming](https://dl.
 Level：ACM MM 17
 
 Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
+
+<!--more-->
 
 ## 背景知识
 
@@ -176,9 +178,9 @@ $$
   因此最终的问题可以形式化为一个整数线性程序：
 
   ![image-20211216212347330](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216212347330.png)
-  
+
   - $c^{(stor)}$
-  
+
     可以理解为存储一段$\Delta t$时间长的片段的子矩形的存储开销；
 
   - $c^{(view)}$
@@ -272,30 +274,30 @@ $$
 
 ## 评估
 
-+ 度量指标
+- 度量指标
 
   1. 服务端存储需求。
   2. 客户端需要下载的字节数。
 
-+ 数据来源
+- 数据来源
 
   数据集：[dash.ipv6.enstb.fr](http://dash.ipv6.enstb.fr/headMovements/)
 
-+ 评估准备
+- 评估准备
 
   下载 5 个使用 ERP 投影的视频，抽取出测试中用户看到的对应部分。
-  
+
   每个视频都有$1920 \times 960$和$3840 \times 1920$的两种分辨率的版本。
-  
+
   $1920 \times 960$视频的基本子矩形尺寸为$64 \times 64$的像素。
-  
+
   $3840 \times 1920$视频的基本子矩形尺寸为$128 \times 128$的像素。
-  
+
   将视频划分成 1 秒长的片段，对每个片段都产生出 MLP 所需的 5 元组特性。
-  
+
   之后使用训练好的 MLP 模型来预测所有可能的 tile 的大小。
-  
-+ 数据选择
+
+- 数据选择
 
   1. 从数据集中随机选择出 40 个用户的集合。
 
@@ -303,19 +305,19 @@ $$
 
      即：分块的决策基于每个片段的内容特征信息与用户的经验视图模式。
 
-+ 参数设定：$\alpha = 0,1,1000$.
+- 参数设定：$\alpha = 0,1,1000$.
 
-+ 对比实验：
+- 对比实验：
 
   一组使用由 ILP 得出的结构进行分块；
 
   另外一组：
 
-  + $1920 \times 960$的视频片段分别使用$64 \times 64$，$128 \times 128$，$256 \times 256$，$512 \times 512$的方案固定大小分块。
+  - $1920 \times 960$的视频片段分别使用$64 \times 64$，$128 \times 128$，$256 \times 256$，$512 \times 512$的方案固定大小分块。
 
-  + $3840 \times 1920$的视频片段分别使用$128 \times 128$，$256 \times 256$，$512 \times 512$，$1024 \times 1024$的方案固定大小分块。
+  - $3840 \times 1920$的视频片段分别使用$128 \times 128$，$256 \times 256$，$512 \times 512$，$1024 \times 1024$的方案固定大小分块。
 
-+ 划分结果对比
+- 划分结果对比
 
   ![image-20211216152224127](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216152224127.png)
 
@@ -331,22 +333,22 @@ $$
 
 ### 客户端的下载大小
 
-+ 预测完美的情况——下载的 tile 没有任何浪费
+- 预测完美的情况——下载的 tile 没有任何浪费
 
   ![image-20211216155616490](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216155616490.png)
 
   $\alpha= 1000$的情况下，OpTile 的表现总是最好的。
 
-+ 正常预测的情况
+- 正常预测的情况
 
   预测的方法：假设用户的头部方向不会改变，预测的位置即为按照当前方向几秒之后的位置。
 
   ![image-20211216161737364](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216161737364.png)
 
   相比于完美假设的预测，所有分块方案的下载大小都增大了。
-  
+
   $\alpha = 1000$的方案在两个视频的情况下都取得了最小的下载大小。在剩下的 3 个视频中，OpTile 方案的下载大小比起最优的固定分块大小方案不超过 25%。
-  
+
   尽管固定分块大小的方案可能表现更好，但是这种表现随视频的改变而变化显著。
-  
+
   **因为固定分块的方案没有考虑视频内容的特性与用户的观看行为。**

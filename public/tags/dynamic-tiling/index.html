@@ -143,7 +143,7 @@
                 </path>
               </svg>
               Posts
-              <span class="Counter">67</span>
+              <span class="Counter">65</span>
             </a>
           </nav>
           <div class="profile-color-modes js-promo-color-modes-banner-profile isInitialToggle">
@@ -430,7 +430,7 @@
         </path>
       </svg>
       Posts
-      <span class="Counter ">67</span>
+      <span class="Counter ">65</span>
     </a>
   </nav>
 </div>
@@ -472,20 +472,10 @@
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                论文概况 Link：Popularity-Aware 360-Degree Video Streaming
-Level：IEEE INFOCOM 2021
-Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization
-Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）
-而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。
-用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。
-Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。
-除了常规的分块之外， $M$ 个宏块也被建构出来。
-每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。
-整个推流过程可以看作是一系列连续的下载任务。
-客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。
-用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。
-QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$
-$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；
+                <h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/abstract/document/9488856/">Popularity-Aware 360-Degree Video Streaming</a></p>
+<p>Level：IEEE INFOCOM 2021</p>
+<p>Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization</p>
               </div>
             </div>
 
@@ -531,15 +521,10 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
-Level：ACM MM 21
-Keywords：Adaptive tiling and bitrate，Mobile streaming
-创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。
-考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：
-从上图可以看到：
-如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。
-创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。
-论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。
+                <h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
+<p>Level：ACM MM 21</p>
+<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
               </div>
             </div>
 
@@ -603,15 +588,10 @@ Keywords：Adaptive tiling and bitrate，Mobile streaming
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
-Level：ACM MM 17
-Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
-背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
-当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
-编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
-对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
-目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
-ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。
+                <h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
+<p>Level：ACM MM 17</p>
+<p>Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size</p>
               </div>
             </div>
 

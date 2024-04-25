@@ -4,7 +4,7 @@ date: 2022-03-09T11:20:37+08:00
 draft: false
 math: true
 keywords: ["QoE Metrics"]
-tags: ["QoE Metrics"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-toward-immersive-experience"
 ---
@@ -17,13 +17,15 @@ Level: IEEE Network 2022
 
 Keywords: QoE Metrics
 
+<!--more-->
+
 # Background
 
 Compared with traditional QoE for regular video/audio services, the existing work on IE is still in its infancy. This work aims at providing systematic and comprehensive research on IE for interactive network services, mainly studying the following three fundamental and challenging issues.
 
-+ *What is the essential difference between IE and traditional QoE?*
-+ *Which categories of factors mainly influence IE?*
-+ *How to evaluate IE in an efficient and intelligent manner?*
+- _What is the essential difference between IE and traditional QoE?_
+- _Which categories of factors mainly influence IE?_
+- _How to evaluate IE in an efficient and intelligent manner?_
 
 # IE versus traditional QoE
 
@@ -31,25 +33,25 @@ Compared with traditional QoE for regular video/audio services, the existing wor
 
 Existing concepts of IE can be classified into two categories.
 
-+ The subjective sense of being surrounded or experiencing multi-sensory stimulation when interacting with the virtual environment.
-+ The user's psychological state of deep involvement, engagement, absorption, or engrossment.
+- The subjective sense of being surrounded or experiencing multi-sensory stimulation when interacting with the virtual environment.
+- The user's psychological state of deep involvement, engagement, absorption, or engrossment.
 
 Traditional QoE:
 
-+ A subjective measure from the user perspective of the overall value of the provided service and application.
+- A subjective measure from the user perspective of the overall value of the provided service and application.
 
 We can summary two significant points as follows to distinguish IE and traditional QoE:
 
-+ Both IE and traditional QoE are devoted to characterizing user's subjective experience for network services.
-+ In terms of application scenarios, IE concentrates on the evaluation of network services equipped with interactive characteristics while traditional QoE is generally appropriate for regular audio/video services.
+- Both IE and traditional QoE are devoted to characterizing user's subjective experience for network services.
+- In terms of application scenarios, IE concentrates on the evaluation of network services equipped with interactive characteristics while traditional QoE is generally appropriate for regular audio/video services.
 
 IE is much more complex, fine-grained and multi-dimensional perception, which is produced through the interplay between multi-sensory data and diverse cognitive processes.
 
 ## Technical challenges
 
-+ Growing data volume
-+ Stricter delay constraint
-+ Increasing data dimension
+- Growing data volume
+- Stricter delay constraint
+- Increasing data dimension
 
 ## IFs on IE
 
@@ -59,32 +61,32 @@ IE is much more complex, fine-grained and multi-dimensional perception, which is
 
 Actually, when heterogeneous streams are delivered to the network, their transmission quality is dependent on the outside network conditions(e.g., delay, jitter, throughput, and so on), as well as the streaming strategy (e.g., encoding, transmission protocol, and so on) inside streams, which ultimately impact end users' IE. To this end, we can further subdivide this category into two classes including network QoS and stream-related IFs.
 
-+ QoS:
+- QoS:
 
-  + low latency
-  + high throughput
-  + high reliability
-  + temporal synchronization among heterogeneous streams
+  - low latency
+  - high throughput
+  - high reliability
+  - temporal synchronization among heterogeneous streams
 
-+ stream-related IFs
+- stream-related IFs
 
-  + the form of data compression strategy
-  + resource scheduling scheme
+  - the form of data compression strategy
+  - resource scheduling scheme
 
 ## User-aware IFs
 
 IE may be influenced by human users while human users can perceive IE, for which we can subdivide this category into three classes based on such correlations.
 
-  + User profile
-  + Physiological IFs
-  + Psychological IFs
+- User profile
+- Physiological IFs
+- Psychological IFs
 
 It is obvious that users with diverse user profiles have distinctive influences on IE.
 
 The psychology and physiology of users can highly reflect the IE for the application.
 
-+ For psychological IFs, they are able to directly demonstrate a user's positive or negative feedback for interactive network services. However, this can hardly be simply measured.
-+ For physiological IFs, some of them(e.g., heart rate, blood pressure) can be objectively measured by affordable medical sensors.
+- For psychological IFs, they are able to directly demonstrate a user's positive or negative feedback for interactive network services. However, this can hardly be simply measured.
+- For physiological IFs, some of them(e.g., heart rate, blood pressure) can be objectively measured by affordable medical sensors.
 
 ## Device-aware IFs
 
@@ -92,17 +94,17 @@ With regard to device-aware IFs, two broad classes can be gotten according to in
 
 IE management in the device level mainly lies in two aspects.
 
-+ The selection of terminal type(e.g., mobile phone, laptop, VR/AR glasses)
-+ The corresponding possession of hardware(e.g., CPU, GPU, battery).
+- The selection of terminal type(e.g., mobile phone, laptop, VR/AR glasses)
+- The corresponding possession of hardware(e.g., CPU, GPU, battery).
 
 ## Context-aware IFs
 
 Typically, IE for interactive network services is generated by interacting with the virtual environment. To this end, we can derive two primary classes.
 
-+ Virtual context: focuses on the specific virtual application scenario.
-+ Physical context: focuses on its surrounding physical environment.
+- Virtual context: focuses on the specific virtual application scenario.
+- Physical context: focuses on its surrounding physical environment.
 
-We can provide constructive suggestions for different contexts. For example, online virtual games are  appropriate to play outside for the broad horizon, but watching a 3D film is more proper inside the home.
+We can provide constructive suggestions for different contexts. For example, online virtual games are appropriate to play outside for the broad horizon, but watching a 3D film is more proper inside the home.
 
 We can suggest appropriate application types with different technical requirement to guarantee users' IE according to existing network resources and the surrounding environment.
 
@@ -134,9 +136,9 @@ We introduced statistical function-based approach to analyze the mathematical re
 
 Existing statistical function-based approaches for user experience evaluation are broadly divided into three categories:
 
-+ Exponential model
-+ Logarithmic model
-+ Linear regression model
+- Exponential model
+- Logarithmic model
+- Linear regression model
 
 Notably, in order to further improve evaluation performance for interactive network services via statistical function-based approaches, two fundamental and significant issues need to be concerned as follows:
 
@@ -158,13 +160,17 @@ Then we adopt subspace learning-based approaches to obtain an appropriate subspa
 Finally, based on the optimal and combined projection subspace, decision tree is deployed here to evaluation IE.
 
 The key point is find a general and robust evaluation approach:
+
 $$
 f: X \rarr Y
 $$
+
 Result is:
+
 $$
 Y = X^{\top} {\beta} + {\epsilon}
 $$
+
 ${\epsilon}$ is the noise, ${\beta}$ can be considered as influencing degree of various IFs to the IE.
 
 IE evaluation for multi-modal applications must satisfy more stringent delay requirements in the context of higher-dimensional data. So we apply the [LASSO estimation](https://www.doi.org/10.1080/10618600.1998.10474784), which is equipped with sparse solutions for the linear regression model, is incorporated to alleviate the issue of high-dimensional data for fast IE evaluation.
@@ -173,8 +179,8 @@ Dataset: [VisTouch](http://8.133.175.194/)
 
 Compare obejcts:
 
-+ Ridge regression
-+ Exponential model
+- Ridge regression
+- Exponential model
 
 Performance metric: MAE
 

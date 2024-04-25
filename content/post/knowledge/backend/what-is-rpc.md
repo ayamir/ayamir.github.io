@@ -7,6 +7,7 @@ keywords: ["backend", "rpc"]
 tags: ["backend"]
 categories: ["knowledge"]
 url: "posts/knowledge/backend/what-is-rpc"
+summary: "这篇博客讨论了 RPC 这一概念以及用法。"
 ---
 
 ## 是什么

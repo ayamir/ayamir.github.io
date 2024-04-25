@@ -4,7 +4,7 @@ date: 2022-02-27T10:39:45+08:00
 draft: false
 math: true
 keywords: ["ABR"]
-tags: ["ABR", "Survey"]
+tags: ["Immersive Video"]
 categories: ["paper"]
 url: "posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2"
 ---
@@ -14,6 +14,8 @@ url: "posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-m
 ## Client-based
 
 Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.
+
+<!--more-->
 
 ![image-20220227104659348](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220227104659348.png)
 

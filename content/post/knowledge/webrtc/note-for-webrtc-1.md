@@ -7,6 +7,7 @@ keywords: ["WebRTC"]
 tags: ["WebRTC"]
 categories: ["knowledge"]
 url: "posts/knowledge/webrtc/note-for-webrtc-1"
+summary: "这篇博客主要分析理解 WebRTC 中的关于视频自适应机制的相关设置。"
 ---
 
 # 概况

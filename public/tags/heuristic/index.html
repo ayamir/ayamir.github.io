@@ -143,7 +143,7 @@
                 </path>
               </svg>
               Posts
-              <span class="Counter">67</span>
+              <span class="Counter">65</span>
             </a>
           </nav>
           <div class="profile-color-modes js-promo-color-modes-banner-profile isInitialToggle">
@@ -430,7 +430,7 @@
         </path>
       </svg>
       Posts
-      <span class="Counter ">67</span>
+      <span class="Counter ">65</span>
     </a>
   </nav>
 </div>
@@ -472,20 +472,10 @@
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                论文概况 Link：Popularity-Aware 360-Degree Video Streaming
-Level：IEEE INFOCOM 2021
-Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization
-Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）
-而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。
-用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。
-Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。
-除了常规的分块之外， $M$ 个宏块也被建构出来。
-每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。
-整个推流过程可以看作是一系列连续的下载任务。
-客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。
-用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。
-QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$
-$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；
+                <h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://ieeexplore.ieee.org/abstract/document/9488856/">Popularity-Aware 360-Degree Video Streaming</a></p>
+<p>Level：IEEE INFOCOM 2021</p>
+<p>Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization</p>
               </div>
             </div>
 
@@ -531,17 +521,10 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
 
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686
-Level: SIGCOMM 18
-Keyword: UDP+FOV-aware+FEC
-工作范围 目标 在给定序列的帧中，为每个 tile设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。
-问题建模 输入 估计的丢包率$p$、发送速率$f$、有$n$个 tile 的$m$个帧($&lt;i, j&gt;$来表示第$i$个帧的第$j$个 tile
-第$&lt;i, j&gt;$个 tile 的大小$v_{i, j}$、第$&lt;i, j&gt;$个 tile 被看到的可能性$\gamma_{i, j}$、
-如果第$&lt;i, j&gt;$ 个 tile 没有被恢复的质量降低率、最大延迟$T$
-输出
-第$&lt;i, j&gt;$个 tile 的 FEC 冗余率$r_{i, j} = \frac{冗余包数量}{原始包数量}$
-最优化问题的形式化 $$ minimize\ \sum_{0&lt;i\le m}\sum_{0&lt;j\le n} \gamma_{i, j}d_{i, j}(p, r_{i, j}) $$
-$$ subject\ \ to\ \ \frac{1}{f}\sum_{0&lt;i\le m}\sum_{0&lt;j\le n}v_{i, j}(1+r_{i, j}) \le T $$
+                <h2 id="论文概况">论文概况</h2>
+<p>Link: <a href="https://dl.acm.org/doi/10.1145/3232565.3234686">https://dl.acm.org/doi/10.1145/3232565.3234686</a></p>
+<p>Level: SIGCOMM 18</p>
+<p>Keyword: UDP+FOV-aware+FEC</p>
               </div>
             </div>
 

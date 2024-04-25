@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for 360ProbDASH - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -22,21 +22,11 @@
 Level: ACM MM 17
 Keyword:
 Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation
-工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型&#43;预期质量的最大化
-针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）
-提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）
-形式化 QoE-driven 优化问题：
-在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）
-问题建模 形式化参数
-$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级
-$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）
-$\Phi(X)$指质量失真，$\Psi(X)$指质量变化
-目标
-找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) &#43; \eta \cdot \Psi(X) \ s." />
+" />
 <meta name="keywords"
   content='Trajectory-based predict, Probabilistic Model' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-360ProbDASH/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-360ProbDASH/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -46,21 +36,11 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
 Level: ACM MM 17
 Keyword:
 Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation
-工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型&#43;预期质量的最大化
-针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）
-提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）
-形式化 QoE-driven 优化问题：
-在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）
-问题建模 形式化参数
-$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级
-$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）
-$\Phi(X)$指质量失真，$\Psi(X)$指质量变化
-目标
-找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) &#43; \eta \cdot \Psi(X) \ s." />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -70,21 +50,11 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
 Level: ACM MM 17
 Keyword:
 Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation
-工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型&#43;预期质量的最大化
-针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）
-提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）
-形式化 QoE-driven 优化问题：
-在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）
-问题建模 形式化参数
-$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级
-$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）
-$\Phi(X)$指质量失真，$\Psi(X)$指质量变化
-目标
-找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) &#43; \eta \cdot \Psi(X) \ s." />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-360ProbDASH/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-360ProbDASH/" />
 <meta property="og:site_name" content="Note for 360ProbDASH" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -106,7 +76,7 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -128,7 +98,7 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -136,7 +106,7 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -162,7 +132,7 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -170,11 +140,11 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-360ProbDASH/">Note for 360ProbDASH</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-360ProbDASH/">Note for 360ProbDASH</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -184,9 +154,9 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:28:37 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:28:37 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -232,24 +202,6 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
                       Immersive Video
                     </a>
                     
-                    <a class="muted-link mr-3" href="/tags/trajectory-based-predict">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Trajectory-based predict
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/probabilistic-model">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Probabilistic Model
-                    </a>
-                    
                     
                   </div>
                 </div>
@@ -286,13 +238,13 @@ $\Phi(X)$指质量失真，$\Psi(X)$指质量变化
 </li>
 <li>
 <p>目标</p>
-<p>找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&lt;i, j&gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。
-$$
+<p>找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&lt;i, j&gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。</p>
+<p>$$
 \underset{X}{min}\ \Phi(X) + \eta \cdot \Psi(X) \
 s.t. \sum_{i=1}^{N}\sum_{j=1}^{M}x_{i, j}\cdot r_{i, j} \le R, \
 \sum_{j=1}^{M}x_{i, j} \le 1, x_{i, j} \in {0, 1}, \forall i.
-$$
-整个公式即为前所述的问题的形式化表达的公式化结果。</p>
+$$</p>
+<p>整个公式即为前所述的问题的形式化表达的公式化结果。</p>
 </li>
 <li>
 <p>模型细节</p>
@@ -300,23 +252,23 @@ $$
 <li>
 <p>$\Phi(X)$和$\Psi(X)$的计算=&gt;通过考虑球面到平面的映射</p>
 <p>通过计算球面上点的 Mean Squared Error 来得到 S-PSNR 进而评估质量：$d_{i, j}$来表示第${&lt;i, j&gt;}$个段的 MSE</p>
-<p><img src="https://s2.loli.net/2021/12/09/VkFKugqlcdRB4aG.png" alt="Spherical Mapping of Tiles">
-$$
+<p><img src="https://s2.loli.net/2021/12/09/VkFKugqlcdRB4aG.png" alt="Spherical Mapping of Tiles"></p>
+<p>$$
 \phi_i = \frac{\pi}{2} - h_i \cdot \frac{\pi}{H}, \Delta\phi = \Delta h \cdot \frac{\pi}{H}, \
 \theta_i = w_i \cdot \frac{2\pi}{W}, \ \Delta\theta = \Delta w \cdot \frac{2\pi}{W},
-$$
-$H$和$W$分别指按照 ERP 格式投影之后的视频高度和宽度</p>
-<p>第$i$个 tile 的空间面积用$s_i$表示：
-$$
+$$</p>
+<p>$H$和$W$分别指按照 ERP 格式投影之后的视频高度和宽度</p>
+<p>第$i$个 tile 的空间面积用$s_i$表示：</p>
+<p>$$
 s_i\ =\ \iint_{\Omega_i}Rd\phi Rcos\phi d\theta \
 =\Delta\theta R^2[sin(\phi_i + \Delta\phi) - sin\phi_i],
-$$
-$R$指球的半径（$R = W/2\pi$），所以整体的球面质量失真$D_{i, j}$可以计算出来：
-$$
+$$</p>
+<p>$R$指球的半径（$R = W/2\pi$），所以整体的球面质量失真$D_{i, j}$可以计算出来：</p>
+<p>$$
 D_{i, j} = d_{i, j} \cdot s_i,
-$$
-结合每个 tile 被看到的概率$p_i$可以得出$\Phi(X)$和$\Psi(X)$
-$$
+$$</p>
+<p>结合每个 tile 被看到的概率$p_i$可以得出$\Phi(X)$和$\Psi(X)$</p>
+<p>$$
 \Phi(X)=\frac{\sum_{i=1}^N\sum_{j=1}^MD_{i, j}\cdot x_{i,j}\cdot p_i}{\sum_{i=1}^N\sum_{j=1}^Mx_{i,j}\cdot s_i},\
 \Psi(X) = \frac{\sum_{i=1}^N\sum_{j=1}^Mx_{i, j}\cdot p_i \cdot\ (D_{i,j}-s_{i} \cdot \Phi(X))^2}{\sum_{i=1}^N\sum_{j=1}^Mx_{i,j}\cdot s_i}.
 $$</p>
@@ -326,8 +278,8 @@ $$</p>
 <ol>
 <li>
 <p>方向预测=&gt;<strong>线性回归模型</strong></p>
-<p>将用户的欧拉角看作是$yaw(\alpha)$，$pitch(\beta)$和$rool(\gamma)$，应用线性回归做预测
-$$
+<p>将用户的欧拉角看作是$yaw(\alpha)$，$pitch(\beta)$和$rool(\gamma)$，应用线性回归做预测</p>
+<p>$$
 \begin{cases}
 \hat{\alpha}(t_0 + \delta) = m_{\alpha}\delta+\alpha(t_0),\
 \hat{\beta}(t_0 + \delta) = m_{\beta}\delta+\beta(t_0),\
@@ -338,16 +290,16 @@ $$</p>
 <li>
 <p>预测错误的分布=&gt;<strong>高斯分布</strong>，根据公式均值和标准差都能从统计信息中计算出来</p>
 <p>收集 5 名志愿者的头部移动轨迹并投影到 3 个方向上绘制成图，实验结果为预测错误呈现高斯分布（样本数可能不够？）</p>
-<p><img src="https://s2.loli.net/2021/12/09/efSalq5TdYjK3NE.png" alt="Distribution of prediction error">
-$$
+<p><img src="https://s2.loli.net/2021/12/09/efSalq5TdYjK3NE.png" alt="Distribution of prediction error"></p>
+<p>$$
 \begin{cases}
 P_{yaw}(\alpha) = \frac{1}{\sigma_{\alpha}\sqrt{2\pi}}exp{-\frac{[\alpha-(\hat{\alpha}+\mu_{\alpha})]^2}{2\sigma_{\alpha}^2}},\
 P_{pitch}(\beta) = \frac{1}{\sigma_{\beta}\sqrt{2\pi}}exp{-\frac{[\beta-(\hat{\beta}+\mu_{\beta})]^2}{2\sigma_{\beta}^2}},\
 P_{roll}(\gamma) = \frac{1}{\sigma_{\gamma}\sqrt{2\pi}}exp{-\frac{[\gamma-(\hat{\gamma}+\mu_{\gamma})]^2}{2\sigma_{\gamma}^2}}.
 \end{cases}
-$$
-3 个方向各自<strong>独立</strong>，因此最终的预测错误$P_E(\alpha,\beta,\gamma)$可以表示为：
-$$
+$$</p>
+<p>3 个方向各自<strong>独立</strong>，因此最终的预测错误$P_E(\alpha,\beta,\gamma)$可以表示为：</p>
+<p>$$
 P_E(\alpha, \beta, \gamma) = P_{yaw}(\alpha)P_{pitch}(\beta)P_{roll}(\gamma).
 $$</p>
 </li>
@@ -355,18 +307,18 @@ $$</p>
 <p>球面上点被看到的可能性</p>
 <p>球面坐标为$(\phi, \theta)$点的可能性表示为$P_s(\phi, \theta)$</p>
 <p>因为一个点可能在多个不同的 viewport 里面，所以定义按照用户方向从点$(\phi, \theta)$出发能看到的点集$L(\phi, theta)$</p>
-<p>因此空间点$s$被看到的可能性可以表示为：
-$$
+<p>因此空间点$s$被看到的可能性可以表示为：</p>
+<p>$$
 P_s(\phi, \theta) = \frac{1}{|L(\phi, \theta)|}\sum_{(\alpha, \beta, \gamma) \in L(\phi, \theta)}P_E(\alpha, \beta, \gamma),
 $$</p>
 </li>
 <li>
 <p>球面上 tile 被看到的可能性</p>
-<p>tile 内各个点被看到的可能性的<strong>均值</strong>即为 tile 被看到的可能性（可否使用其他方式？）
-$$
+<p>tile 内各个点被看到的可能性的<strong>均值</strong>即为 tile 被看到的可能性（可否使用其他方式？）</p>
+<p>$$
 p_i = \frac{1}{|U_i|} \sum_{(\phi, \theta) \in U_i} P_s(\phi, \theta).
-$$
-$U_i$表示 tile 内的空间点集</p>
+$$</p>
+<p>$U_i$表示 tile 内的空间点集</p>
 </li>
 </ol>
 </li>
@@ -375,19 +327,19 @@ $U_i$表示 tile 内的空间点集</p>
 <p>因为长期的头部移动预测会产生较高的预测错误，所以不能采用大缓冲区（没有 cite 来证明这一点）</p>
 <p><img src="https://s2.loli.net/2021/12/09/vNEIlOfXgVMcAUD.png" alt="Dynamic of small playback buffer"></p>
 <p>将处于相同时刻的段集合成一个块存储在缓冲区中。</p>
-<p>在自适应的第 k 步，定义$d_k$作为此时的 buffer 占用情况（等到第 k 个块被下载完毕）
-$$
+<p>在自适应的第 k 步，定义$d_k$作为此时的 buffer 占用情况（等到第 k 个块被下载完毕）</p>
+<p>$$
 b_k = b_{k-1} - \frac{R_k \cdot T}{C_k} + T
-$$
-$C_k$表示平均带宽，$R_k$表示总计的码率</p>
+$$</p>
+<p>$C_k$表示平均带宽，$R_k$表示总计的码率</p>
 <p>为了避免重新缓冲设定目标 buffer 占用$B_{target}$，并使 buffer 占用保持在$B_{target}$（$b_k = B_{target}$）</p>
-<p>因此总计的码率需要满足：
-$$
+<p>因此总计的码率需要满足：</p>
+<p>$$
 R_k = \frac{C_k}{T} \cdot (b_{k-1} - B_{target} + T),
-$$
-这里的$C_k$表示可以从历史的段下载信息中估计出来的带宽</p>
-<p>设定$R$的下界$R_{min}$之后（没有说明为何需要设定下界），公式 12 可以修正为如下：
-$$
+$$</p>
+<p>这里的$C_k$表示可以从历史的段下载信息中估计出来的带宽</p>
+<p>设定$R$的下界$R_{min}$之后（没有说明为何需要设定下界），公式 12 可以修正为如下：</p>
+<p>$$
 R_k = max{\frac{C_k}{T} \cdot (b_{k-1} - B_{target} + T), R_{min}}.
 $$</p>
 </li>
@@ -425,12 +377,12 @@ $$</p>
 <p>额外的模块</p>
 <ul>
 <li>
-<p><code>QoE-driver Optimizer</code>
-$$
+<p><code>QoE-driver Optimizer</code></p>
+<p>$$
 Output = HTTP\ GET请求中的最优段
 $$</p>
 <p>$$
-Input = Output\ of\
+Input = Output\ of<br>
 \begin{cases}
 Target\ buffer\ based\ Rate\ Controller\
 Viewport\ Probabilistic\ Model\
@@ -439,8 +391,8 @@ QR\ Map
 $$</p>
 </li>
 <li>
-<p><code>Target-buffer-based Rate Controller</code>
-$$
+<p><code>Target-buffer-based Rate Controller</code></p>
+<p>$$
 Output = 总计的传输码率，按照公式13计算而来
 $$</p>
 <p>$$
@@ -448,12 +400,12 @@ Input = Output\ of\ {Bandwidth\ Estimation\ module
 $$</p>
 </li>
 <li>
-<p><code>Viewport Probabilistic Model</code>
-$$
+<p><code>Viewport Probabilistic Model</code></p>
+<p>$$
 Output = 每个tile被看到的可能性，按照公式10计算而来
 $$</p>
 <p>$$
-Input = Output\ of\
+Input = Output\ of<br>
 \begin{cases}
 Orientation\ Prediction\ module\
 SRD\ information
@@ -461,8 +413,8 @@ SRD\ information
 $$</p>
 </li>
 <li>
-<p><code>QR Map</code>QR=&gt;Quality-Rate
-$$
+<p><code>QR Map</code>QR=&gt;Quality-Rate</p>
+<p>$$
 Output = 所有段的QR映射
 $$</p>
 <p>$$
@@ -470,8 +422,8 @@ Input = MPD中的属性
 $$</p>
 </li>
 <li>
-<p><code>Bandwidth Estimation</code>（没有展开研究，因为不是关键？）
-$$
+<p><code>Bandwidth Estimation</code>（没有展开研究，因为不是关键？）</p>
+<p>$$
 Output = 前3秒带宽估计的平均值
 $$</p>
 <p>$$
@@ -480,8 +432,8 @@ $$</p>
 <p>可以通过<code>onProgess()</code>的回调函数<code>XMLHttpRequest API</code>获取</p>
 </li>
 <li>
-<p><code>Orientation Prediction</code>
-$$
+<p><code>Orientation Prediction</code></p>
+<p>$$
 Output = 用户方向信息的预测结果（yaw, pitch, roll）
 $$</p>
 <p>$$
@@ -577,8 +529,7 @@ $$</p>
 <li>Viewport 偏差：空白区域在 Viewport 中的比例</li>
 </ul>
 </li>
-</ul>
-</article>
+</ul></article>
               </div>
             </div>
           </div>
@@ -587,13 +538,13 @@ $$</p>
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -613,7 +564,7 @@ $$</p>
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -634,7 +585,7 @@ $$</p>
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

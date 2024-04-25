@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script type="application/javascript" src='http://localhost:1313/js/theme-mode.js'></script>
-    <link rel="stylesheet" href='http://localhost:1313/css/frameworks.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github.min.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/github-style.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/light.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/dark.css' />
-    <link rel="stylesheet" href='http://localhost:1313/css/syntax.css' />
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
     <title>Note for Popularity Aware 360-Degree Video Streaming - Ayamir&#39;s blog</title>
     
     <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
@@ -21,21 +21,11 @@
   content="论文概况 Link：Popularity-Aware 360-Degree Video Streaming
 Level：IEEE INFOCOM 2021
 Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization
-Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）
-而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。
-用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。
-Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。
-除了常规的分块之外， $M$ 个宏块也被建构出来。
-每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。
-整个推流过程可以看作是一系列连续的下载任务。
-客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。
-用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。
-QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$
-$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；" />
+" />
 <meta name="keywords"
   content='Macrotile, Popularity' />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="http://localhost:1313/posts/papers/note-for-popularity-aware-360-degree-video-streaming/" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/" />
 
 
 <meta name="twitter:card" content="summary" />
@@ -44,21 +34,11 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
   content="论文概况 Link：Popularity-Aware 360-Degree Video Streaming
 Level：IEEE INFOCOM 2021
 Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization
-Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）
-而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。
-用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。
-Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。
-除了常规的分块之外， $M$ 个宏块也被建构出来。
-每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。
-整个推流过程可以看作是一系列连续的下载任务。
-客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。
-用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。
-QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$
-$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；" />
-<meta name="twitter:site" content="http://localhost:1313/" />
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
 <meta name="twitter:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 
 
 <meta property="og:type" content="article" />
@@ -67,21 +47,11 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
   content="论文概况 Link：Popularity-Aware 360-Degree Video Streaming
 Level：IEEE INFOCOM 2021
 Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization
-Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）
-而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。
-用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。
-Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。
-除了常规的分块之外， $M$ 个宏块也被建构出来。
-每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。
-整个推流过程可以看作是一系列连续的下载任务。
-客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。
-用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。
-QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$
-$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；" />
-<meta property="og:url" content="http://localhost:1313/posts/papers/note-for-popularity-aware-360-degree-video-streaming/" />
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/" />
 <meta property="og:site_name" content="Note for Popularity Aware 360-Degree Video Streaming" />
 <meta property="og:image"
-  content="http://localhost:1313/">
+  content="https://ayamir.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 
@@ -103,7 +73,7 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
   <div style="position: relative">
   <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
     <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
-      <a class="Header-link" href="http://localhost:1313/">
+      <a class="Header-link" href="https://ayamir.github.io/">
         <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -125,7 +95,7 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
               <input type="text"
                 class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
                 name="q" value="" placeholder="Search" autocomplete="off">
-              <input type="hidden" name="q" value="site:http://localhost:1313/">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
             </label>
           </form>
         </div>
@@ -133,7 +103,7 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
     </div>
 
     <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
-      <a class="Header-link " href="http://localhost:1313/">
+      <a class="Header-link " href="https://ayamir.github.io/">
         <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
       </a>
     </div>
@@ -159,7 +129,7 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
           <div class="flex-auto min-width-0 width-fit mr-3">
             <div class="d-flex">
               <div class="d-none d-md-block">
-                <a class="avatar mr-2 flex-shrink-0" href="http://localhost:1313/">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
                   <img class=" avatar-user"
                     src="/images/avatar.png"
                     width="32" height="32"></a>
@@ -167,11 +137,11 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
               <div class="d-flex flex-column">
                 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
                   <span class="author">
-                    <a href="http://localhost:1313/"></a>
+                    <a href="https://ayamir.github.io/"></a>
                   </span>
                   <span class="path-divider">/</span>
                   <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
-                    <a href="http://localhost:1313/posts/papers/note-for-popularity-aware-360-degree-video-streaming/">Note for Popularity Aware 360-Degree Video Streaming</a>
+                    <a href="https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/">Note for Popularity Aware 360-Degree Video Streaming</a>
                   </strong>
                 </h1>
                 <div class="note m-0">
@@ -181,9 +151,9 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:30:31 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                    Thu, 25 Apr 2024 22:30:31 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -220,22 +190,13 @@ $V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v
                   <div class="file-actions flex-order-2 pt-0">
                     
                     
-                    <a class="muted-link mr-3" href="/tags/dynamic-tiling">
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
                         </path>
                       </svg>
-                      Dynamic tiling
-                    </a>
-                    
-                    <a class="muted-link mr-3" href="/tags/heuristic">
-                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                        <path fill-rule="evenodd"
-                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                        </path>
-                      </svg>
-                      Heuristic
+                      Immersive Video
                     </a>
                     
                     
@@ -268,18 +229,18 @@ $$</p>
 <p>$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；</p>
 <ul>
 <li>
-<p>平均质量：
-$$
+<p>平均质量：</p>
+<p>$$
 Q_0(V_k) = q(\overline{V_k})
-$$
-$\overline{V_k}$ 表示<code>FoV</code>内的平均视频质量； $q(\cdot)$ 表示视频质量和用户实际感知质量之间的映射函数；</p>
+$$</p>
+<p>$\overline{V_k}$ 表示<code>FoV</code>内的平均视频质量； $q(\cdot)$ 表示视频质量和用户实际感知质量之间的映射函数；</p>
 </li>
 <li>
-<p>质量变化：两个连续段之间的质量差异和<code>FoV</code>内不同空间位置 tile 的质量差异会导致用户不适。
-$$
+<p>质量变化：两个连续段之间的质量差异和<code>FoV</code>内不同空间位置 tile 的质量差异会导致用户不适。</p>
+<p>$$
 I_v(V_k) = |Q_0(V_k) - Q_0(V_{k-1})| + \widehat{V_k}
-$$
-$|Q_0(V_k) - Q_0(V_{k-1})|$ 表示连续段间的<code>FoV</code>内时间质量差异； $\widehat{V_k}$ 表示一个视频段的<code>FoV</code>内空间质量差异；</p>
+$$</p>
+<p>$|Q_0(V_k) - Q_0(V_{k-1})|$ 表示连续段间的<code>FoV</code>内时间质量差异； $\widehat{V_k}$ 表示一个视频段的<code>FoV</code>内空间质量差异；</p>
 </li>
 <li>
 <p>缓冲：
@@ -294,12 +255,12 @@ $S(V_k)$ 表示段数据量大小； $R$ 表示下载吞吐量； ${(x)}_+ = max
 <p>${\beta}^v_m = 1$ 表示下载编码的质量等级为 $v$ 的宏块，消耗的带宽为 $B^v_m$ ，反之 $ {\beta}^v_m = 0$ 表示不下载；</p>
 <p>${\beta}^v_c = 1$ 表示下载编码的质量等级为 $v$ 的常规块，消耗的带宽为 $B^v_c$，反之 ${\beta}^v_m = 0$ 表示不下载；</p>
 <p>客户端应该优先下载覆盖用户<code>FoV</code> 的宏块，如果没有这样的宏块则去下载对应的常规块的集合。</p>
-<p>优化目标：
-$$
+<p>优化目标：</p>
+<p>$$
 max\ Q(\lbrace v | {\forall}_{m, v} {\beta}^v_m = 1 \rbrace) + Q(\lbrace v | {\forall}_{c, v} {\beta}^v_c = 1 \rbrace)
-$$
-同时需要满足以下 3 个约束：
-$$
+$$</p>
+<p>同时需要满足以下 3 个约束：</p>
+<p>$$
 \sum^{M}_{m=1} \sum^{V}_{v=1} {\beta}^v_m + 1(\sum^{C}_{c=1} \sum^{V}_{v=1} {\beta}^v_c) = 1
 $$</p>
 <p>$$
@@ -320,12 +281,12 @@ $$</p>
 </ul>
 <p>最后的解取这两种方案能取得更大<code>QoE</code>的那种。</p>
 <p>如果<code>QoE</code>模型不考虑常规块之间的质量差异，则整体的<code>QoE</code>等价于下载的常规块的平均质量等级。</p>
-<p>确定常规块质量等级的问题则可以简化为：
-$$
+<p>确定常规块质量等级的问题则可以简化为：</p>
+<p>$$
 max\ \sum_{c \in C} \sum^{V}_{v=1} Q({\beta}^v_c v)
-$$
-需要满足以下 2 个约束：
-$$
+$$</p>
+<p>需要满足以下 2 个约束：</p>
+<p>$$
 \sum^{V}_{v=1} {\beta}^v_c = 1,\ for\ c \in C
 $$</p>
 <p>$$
@@ -375,11 +336,11 @@ $$</p>
 <p>宏块构造问题的形式化：</p>
 <p>为每个用户 $i$ 引入二元变量 ${\alpha}_i$ ，${\alpha}_i = 1$ 表示此用户的观看区域用于构建宏块，反之则没有；</p>
 <p>实际应用中即为：如果 ${\alpha}_i = 1$ ，则用户 $i$ 可以下载宏块；否则用户只能下载对应的常规块集合。</p>
-<p>问题的目标是：在下载宏块或相同质量等级的常规块集合时，最小化所有用户的总带宽使用量。
-$$
+<p>问题的目标是：在下载宏块或相同质量等级的常规块集合时，最小化所有用户的总带宽使用量。</p>
+<p>$$
 \underset{\lbrace {\alpha}_i \rbrace}{min}\ \sum^{N_j}_{i=1} {\alpha}_i B_m + (1-{\alpha}_i) B_c
-$$
-$N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用所有 ${\alpha}_i = 1$ 的用户观看区域构建宏块；</p>
+$$</p>
+<p>$N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用所有 ${\alpha}_i = 1$ 的用户观看区域构建宏块；</p>
 <p>尽管暴力枚举法可以完成最优求解，但是其时间复杂度为 $O(2^{N_j})$ ，为了减少实际建构宏块的时间，提出一种类似于<a href="https://en.wikipedia.org/wiki/Random_sample_consensus">随机采样一致性算法</a>的迭代算法，每次迭代中，所做工作如下：</p>
 <ol>
 <li>随机选取用户观察区域的子集。</li>
@@ -397,8 +358,7 @@ $N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用�
 <li>基于预测的观看区域，算法确定是否存在覆盖预测区域及其边缘区域的宏块，是则搜索并下载满足条件的最高质量的宏块；否则下载相应区域的常规块集。</li>
 </ul>
 <p><img src="https://s2.loli.net/2022/01/19/L8BvNj3l6hnEYWs.png" alt="image-20220119193439743"></p>
-<p>选择常规块集时首先为所有要选择的块确定满足贷款限制的最高质量等级，分配完之后如果还有剩余的带宽，算法会根据常规块与视野中心距离的远近程度提高一个质量等级，越近越优先提高。同时考虑到空间质量差异会降低<code>QoE</code>，所以提高质量的行为只有在超过半数的常规块满足条件时才会执行。</p>
-</article>
+<p>选择常规块集时首先为所有要选择的块确定满足贷款限制的最高质量等级，分配完之后如果还有剩余的带宽，算法会根据常规块与视野中心距离的远近程度提高一个质量等级，越近越优先提高。同时考虑到空间质量差异会降低<code>QoE</code>，所以提高质量的行为只有在超过半数的常规块满足条件时才会执行。</p></article>
               </div>
             </div>
           </div>
@@ -407,13 +367,13 @@ $N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用�
     </div>
   </main>
 </div>
-<script type="application/javascript" src='http://localhost:1313/js/toc.js'></script>
-<link rel="stylesheet" href='http://localhost:1313/css/toc.css' />
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
 
 
 <div id="gitalk-container" class="gitalk-container"></div>
-<link rel="stylesheet" href='http://localhost:1313/css/gitalk.css'>
-<script src='http://localhost:1313/js/gitalk.min.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
 <script>
   const gitalk = new Gitalk({
     clientID: '1ee3454a8f1f370a7934',
@@ -433,7 +393,7 @@ $N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用�
   <div class="footer container-xl width-full p-responsive">
   <div
     class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="http://localhost:1313/">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
       <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
         <path fill-rule="evenodd"
           d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
@@ -454,7 +414,7 @@ $N_j$ 表示在 $j^{th}$ 簇中的用户数量；解决问题之后，可以用�
 </div>
 </body>
 
-<script type="application/javascript" src="http://localhost:1313/js/github-style.js"></script>
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
 
 <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
   integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">

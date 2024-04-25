@@ -17,6 +17,8 @@ url: "posts/papers/note3"
 
 自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。
 
+<!--more-->
+
 ## 分类
 
 ### Viewport-Independent Streaming

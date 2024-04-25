@@ -1,12 +1,13 @@
 ---
-title: "VR 和 全景视频的区别总结"
+title: "VR 和全景视频的区别总结"
 date: 2022-01-17T17:02:51+08:00
 draft: false
 math: true
 keywords: ["VR", "Panoramic Video"]
-tags: ["VR", "Panoramic Video"]
+tags: ["Viewport predict"]
 categories: ["knowledge"]
 url: "posts/knowledge/360video/summary-for-vr-and-panoramic-video"
+summary: "这篇博客主要总结了 VR 和全景视频之间的区别。"
 ---
 
 VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。
