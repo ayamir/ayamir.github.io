@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebGL on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/webgl/</link>
+    <description>Recent content in WebGL on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/webgl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebGL 样例的解释</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+      <description>这篇博客主要学习总结了 WebGL 的一些使用样例。</description>
+    </item>
+    <item>
+      <title>WebGL 样例</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:31 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
+      <description>这篇博客主要学习总结了 WebGL 的一些使用样例。</description>
+    </item>
+    <item>
+      <title>WebGL 中的管线</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:22 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
+      <description>这篇博客主要学习总结了 WebGL 的管线相关的知识。</description>
+    </item>
+    <item>
+      <title>WebGL 基础知识</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:04 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
+      <description>这篇博客主要学习总结了 WebGL 的一些基础知识。</description>
+    </item>
+  </channel>
+</rss>

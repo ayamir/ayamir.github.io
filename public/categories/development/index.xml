@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Development on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/categories/development/</link>
+    <description>Recent content in Development on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebRTC任务队列学习笔记</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
+      <pubDate>Tue, 19 Mar 2024 19:32:57 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+      <description>这篇博客主要学习了 WebRTC 中的任务队列的实现方式和使用方式。</description>
+    </item>
+    <item>
+      <title>孤儿进程</title>
+      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+      <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。&#xA;但是结果是 Python 进程并没有变红，而是成为了 init 进程的子进程。&#xA;孤儿进程是怎么产生的 大二学 OS 学到父进程和子进程的概念的时候，还是只是以为父进程和子进程之间应该存在牢固的控制关系，父进程退出时子进程也应该默认退出。&#xA;但是 OS 的实际行为不是这样，子进程和父进程只是说明了二者之间存在谁创建谁的关系，并不存在牢固的控制关系（而是类似于现实中的父子关系）。&#xA;父进程结束时子进程并没有结束，子进程成为孤儿进程，会被 init 进程收养&#xA;父进程崩溃或异常终止&#xA;并发和竞争条件导致父子进程的结束顺序错误&#xA;如何避免孤儿进程的产生 其实就是需要在程序设计时，考虑到上述的这几种可能导致孤儿进程产生的原因，然后对异常情况进行注册和处理。对于开始时的这个引入问题而言，答案可以写成以下两个脚本：&#xA;#!/bin/bash # 定义一个函数来处理信号 cleanup() { echo &amp;#34;捕捉到终止信号，正在终止 Python 进程...&amp;#34; kill $PYTHON_PID exit } # 在接收到 SIGINT || SIGTERM || SIGKILL 时执行 cleanup 函数 trap &amp;#39;cleanup&amp;#39; SIGINT SIGTERM # 启动 Python 脚本并获取其进程 ID python example_python.py &amp;amp; PYTHON_PID=$!</description>
+    </item>
+    <item>
+      <title>Git 常用用法记录</title>
+      <link>https://ayamir.github.io/posts/development/git-usage/</link>
+      <pubDate>Tue, 23 Jan 2024 09:50:29 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+      <description>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。&#xA;clone 相关 克隆指定 branch ： git clone --branch &amp;lt;branch-name&amp;gt; &amp;lt;remote-repo-url&amp;gt;&#xA;递归克隆（包括 submodule ）：git clone --recursive&#xA;已经 clone 完的仓库：git submodule update --init --recursive&#xA;checkout 相关 切换分支：git checkout &amp;lt;branch-name&amp;gt; / git switch &amp;lt;branch-name&amp;gt;&#xA;新建分支：git checkout -b &amp;lt;branch-name&amp;gt; / git switch -c &amp;lt;branch-name&amp;gt;&#xA;切换到一个 tag ：git fetch --all --tags --prune -&amp;gt; git tag -&amp;gt; 使用 / 快速搜索 -&amp;gt; git checkout tags/&amp;lt;tag-name&amp;gt; -b &amp;lt;branch-name&amp;gt;&#xA;commit 相关 undo 本地改动（还未 commit）：git restore &amp;lt;file-path&amp;gt;</description>
+    </item>
+    <item>
+      <title>在Linux下如何搭建WebRTC的开发环境</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
+      <pubDate>Sun, 23 Apr 2023 21:28:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
+      <description>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。&#xA;准备工作 网络：可以科学上网的梯子 IDE：VSCode 或者 CLion 安装depot_tools Google 有自己的一套用于管理 Chromium 项目的工具，名叫depot_tools，其中有包括git在内的一系列工具和脚本。&#xA;# 创建google目录用于存储google相关的代码 mkdir ~/google cd ~/google # clone depot_tools git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 克隆完成之后需要将depot_tools的路径加到PATH中，Linux 上添加环境变量最简单的方式是修改~/.profile，这种方式与你的登录 shell 是什么没有关系，不管是fish还是bash还是zsh都会吃这种方式：&#xA;# ~/.profile export GOOGLE_BIN=$HOME/google/depot_tools export PATH=$GOOGLE_BIN:$PATH 但是这种方式需要你注销重新登录。&#xA;克隆代码 mkdir webrtc-checkout cd webrtc-checkout fetch --nohooks webrtc gclient sync 整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。&#xA;克隆期间可能会因为网络问题中断，重新执行gclient sync即可，直到所有的模块都克隆完毕。&#xA;按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。&#xA;cd src git checkout master git new-branch &amp;lt;branch-name&amp;gt; 编译 WebRTC 关于 WebRTC 的版本可以在Chromium Dash查到：</description>
+    </item>
+    <item>
+      <title>MLflow 的用法</title>
+      <link>https://ayamir.github.io/posts/development/note-for-mlflow/</link>
+      <pubDate>Mon, 07 Mar 2022 19:25:46 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/note-for-mlflow/</guid>
+      <description>Overview MLflow是一个用于管理机器学习全生命周期的框架。&#xA;其主要的作用是：&#xA;完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflow Tracking 以一种可复现重用的方式包装 ML 代码——MLflow Projects 简化模型部署的难度——MLflow Models 提供中心化的模型存储来管理全生命周期——MLflow Model Registry 现在主要用到的是第三个，所以先记录Models的用法&#xA;MLflow Models MLflow Models本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。&#xA;这种格式定义了一种惯例来让我们以不同的flavor保存模型进而可以被下游工具所理解。&#xA;存储格式 每个MLflow Model是一个包含任意文件的目录，根目录之下有一个MLmodel文件，用于定义多个flavor。&#xA;flavor是MLflow Model的关键概念，抽象上是部署工具可以用来理解模型的一种约定。&#xA;MLflow定义了其所有内置部署工具都支持的几种标准flavor，比如描述如何将模型作为Python函数运行的python_function flavor。&#xA;目录结构示例如下：&#xA;MLmode文件内容示例如下：&#xA;这个模型可以用于任何支持pytorch或python_function flavor的工具，例如可以使用如下的命令用python_function来 serve 一个有python_function flavor的模型：&#xA;mlflow models serve -m my_model Model Signature 模型的输入输出要么是column-based，要么是tensor-based。&#xA;column-based inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the MLflow data type. tensor-based inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the numpy data type.</description>
+    </item>
+    <item>
+      <title>使用 WebXR 完成基于分块的全景视频自适应码率播放器</title>
+      <link>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</link>
+      <pubDate>Fri, 25 Feb 2022 11:04:23 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</guid>
+      <description>最近几天一直在用WebXR的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。&#xA;首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用 WebXR 提供的 API）&#xA;分块播放 分块播放的本质是将一整块的全景视频从空间上划分成多个小块，各个小块在时间上与原视频的长度是相同的。&#xA;在实际播放的时候需要将各个小块按照原有的空间顺序排列好之后播放，为了避免各个分块播放进度不同的问题，播放时还需要经过统一的时间同步。&#xA;对应到 web 端的技术实现就是：&#xA;一个分块的视频&amp;lt;-&amp;gt;一个&amp;lt;video&amp;gt;h5 元素&amp;lt;-&amp;gt;一个&amp;lt;canvas&amp;gt;h5 元素&#xA;视频的播放过程就是各个分块对应的&amp;lt;canvas&amp;gt;元素不断重新渲染的过程&#xA;各个分块时间同步的实现需要一个基准视频进行对齐，大体上的原理如下：&#xA;let baseVideo = null; let videos = []; initBaseVideo(); initVideos(); for (video in videos) { video.currentTime = baseVideo.currentTime; } 自适应码率 自适应码率的方案使用dashjs库实现，即对每个分块&amp;lt;video&amp;gt;元素的播放都用dashjs的方案控制：&#xA;import { MediaPlayer } from &amp;#34;dashjs&amp;#34;; let videos = []; let dashs = []; let mpdUrls = []; initVideos(); initMpdUrls(); for (let i = 0; i &amp;lt; tileNum; i++) { let video = videos[i]; let dash = MediaPlayer().</description>
+    </item>
+    <item>
+      <title>在 Jupyter Notebook 中设置 Conda 环境</title>
+      <link>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</link>
+      <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</guid>
+      <description>远程启动jupyter notebool：&#xA;jupyter notebook --no-browser --ip=&amp;#34;&amp;lt;server-ip&amp;gt;&amp;#34; --port=&amp;#34;&amp;lt;server-port&amp;gt;&amp;#34; 激活预先配置好的conda环境，这里假设环境名为keras-tf-2.1.0：&#xA;conda activate keras-tf-2.1.0 安装ipykernel：&#xA;pip3 install ipykernel --user 为ipykernel安装环境：&#xA;python3 -m ipykernel install --user --name=keras-tf-2.1.0 打开notebook更改服务之后刷新即可：</description>
+    </item>
+    <item>
+      <title>部署 Immersive Video OMAF-Sample</title>
+      <link>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</link>
+      <pubDate>Sat, 09 Oct 2021 15:31:46 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</guid>
+      <description>原仓库地址：Immersive-Video-Sample&#xA;修改之后的仓库：Immersive-Video-Sample&#xA;Server 端搭建 修改 Dockerfile 手动设置 wget 和 git 的 http_proxy&#xA;旧 package 目录 not found，修改为新 package 目录&#xA;因为找不到 glog 库因此加入软链接操作&#xA;ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0 重新编译内核 运行脚本时显示 libnuma 错误因此推断与 numa 设置有关&#xA;执行numactl -H显示只有一个 node，报错输出显示需要至少两个 numa 节点&#xA;查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数&#xA;手动下载 Linux 内核源代码到/usr/src/目录 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz 解压 tar xpvf linux-5.11.1.tar.gz 复制现有内核配置 cd linux-5.11.1 &amp;amp;&amp;amp; cp -v /boot/config-$(uname -r) .config 安装必要的包 sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev 进入内核配置界面 sudo make menuconfig 按下/键分别查询CONFIG_NUMA和CONFIG_NUMA_EMU位置 手动勾选对应选项之后保存退出 重新编译并等待安装结束 sudo make -j $(nproc) &amp;amp;&amp;amp; sudo make modules_install &amp;amp;&amp;amp; sudo make install 修改grub启动参数加入 fake numa 配置 sudo vim /etc/default/grub 找到对应行并修改为</description>
+    </item>
+    <item>
+      <title>在 microsoft-edge-dev 上设置 Python selenium</title>
+      <link>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+      <pubDate>Fri, 26 Mar 2021 21:43:35 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+      <description>Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.&#xA;Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.&#xA;Extract it to you path like /usr/local/bin or $HOME/.local/bin.&#xA;Write Code Following is a example.&#xA;from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&amp;#34;/usr/bin/microsoft-edge-dev&amp;#34; options.set_capability(&amp;#34;platform&amp;#34;, &amp;#34;LINUX&amp;#34;) webdriver_path = r&amp;#34;/home/ayamir/.local/bin/msedgewebdriver&amp;#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&amp;#34;http://localhost:8000&amp;#34;) assert &amp;#34;Django&amp;#34; in browser.</description>
+    </item>
+  </channel>
+</rss>
