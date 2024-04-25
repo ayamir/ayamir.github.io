@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>同步、异步、阻塞、非阻塞 - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：
+同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。
+异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。
+阻塞就是在调用结果返回之前，当前线程会被挂起。
+非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。
+那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。
+同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。
+同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。
+以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：
+如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。
+不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。
+在这个例子中我们可以发现：
+如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。
+如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。
+如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。
+这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。
+从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。
+以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。
+为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 &#43; 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。
+阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。
+还是以上面的例子来说：
+阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），
+非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。
+对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）
+对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。
+如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：
+如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。" />
+<meta name="keywords"
+  content='同步, 异步, 阻塞, 非阻塞' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="同步、异步、阻塞、非阻塞 - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：
+同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。
+异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。
+阻塞就是在调用结果返回之前，当前线程会被挂起。
+非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。
+那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。
+同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。
+同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。
+以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：
+如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。
+不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。
+在这个例子中我们可以发现：
+如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。
+如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。
+如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。
+这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。
+从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。
+以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。
+为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 &#43; 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。
+阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。
+还是以上面的例子来说：
+阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），
+非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。
+对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）
+对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。
+如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：
+如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="同步、异步、阻塞、非阻塞 - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：
+同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。
+异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。
+阻塞就是在调用结果返回之前，当前线程会被挂起。
+非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。
+那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。
+同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。
+同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。
+以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：
+如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。
+不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。
+在这个例子中我们可以发现：
+如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。
+如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。
+如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。
+这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。
+从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。
+以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。
+为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 &#43; 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。
+阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。
+还是以上面的例子来说：
+阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），
+非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。
+对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）
+对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。
+如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：
+如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/" />
+<meta property="og:site_name" content="同步、异步、阻塞、非阻塞" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2024-04-13 23:39:22 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/">同步、异步、阻塞、非阻塞</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Sat, 13 Apr 2024 23:39:22 &#43;0800"
+                    class="no-wrap">
+                    Sat, 13 Apr 2024 23:39:22 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      2069 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/os">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      OS
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h2 id="概念">概念</h2>
+<p>同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：</p>
+<ul>
+<li>
+<p>同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。</p>
+</li>
+<li>
+<p>异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。</p>
+</li>
+<li>
+<p>阻塞就是在调用结果返回之前，当前线程会被挂起。</p>
+</li>
+<li>
+<p>非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。</p>
+</li>
+</ul>
+<p>那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。</p>
+<h2 id="同步和异步">同步和异步</h2>
+<p>同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。</p>
+<p>同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。</p>
+<p>以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：</p>
+<ul>
+<li>
+<p>如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。</p>
+</li>
+<li>
+<p>不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。</p>
+</li>
+</ul>
+<p>在这个例子中我们可以发现：</p>
+<ul>
+<li>
+<p>如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。</p>
+</li>
+<li>
+<p>如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。</p>
+</li>
+</ul>
+<p>如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。</p>
+<p>这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。</p>
+<p>从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。</p>
+<p>以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 <code>goimports</code> ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。</p>
+<p>为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 + 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。</p>
+<h2 id="阻塞和非阻塞">阻塞和非阻塞</h2>
+<p>阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。</p>
+<p>还是以上面的例子来说：</p>
+<ul>
+<li>
+<p>阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），</p>
+</li>
+<li>
+<p>非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。</p>
+</li>
+</ul>
+<p>对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 <code>fcntl</code> 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）</p>
+<p>对于 TCP 而言，其对应的发送和接收的 API 是 <code>send</code>/<code>recv</code>，而 <code>send</code>/<code>recv</code> 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。</p>
+<p>如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：</p>
+<ul>
+<li>
+<p>如果 socket 是阻塞模式，继续调用 <code>send</code> 会将程序阻塞在 <code>send</code> 处，不会执行之后的逻辑。</p>
+</li>
+<li>
+<p>如果 socket 是非阻塞模式，继续调用 <code>send</code> 会直接返回错误，然后执行之后的逻辑（通常使用非阻塞模式我们会获取 <code>send</code> 调用的返回值并在循环中判断）。</p>
+</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>其实总的来看，在实际的编码过程中我们没必要严格区分这两种概念，因为它们之间的区别并不是左与右，正与负这种关系。概念还是需要与实际的例子相结合才有相辅相成的意义。</p>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

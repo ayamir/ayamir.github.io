@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>Content Based VP for Live Streaming (1) - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。
+将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑：
+细节可以参见：note-for-content-motion-viewport-prediction.
+LiveDeep 受限于Motion识别算法，前面提出的LiveMotion只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。
+Method LiveDeep处理问题的场景为：
+视频内容在线生成； 没有历史用户数据； 预测需要满足实时性的要求； LiveDeep的设计原则：
+online：在线训练在线预测； lifelong：模型在整个视频播放会话中更新； real-time：预测带来的处理延迟不能影响推流延迟； CNN的设计：
+在推流会话的运行时收集并标注训练数据； 以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练； 子采样少部分的代表帧来运行 VP 以满足实时性的要求； Framework Setup 分包器将视频按照 DASH 标准将视频分段，每个段作为训练模型和预测的单元； 考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样； 将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ； 训练集来自于用户的实时反馈，根据实际FoV和预测FoV之间的差距来标注数据； 用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与CNN模块采样的帧同步； Details 在用于训练的图像还没有被标注之前并不能直接预测，所以 CNN 模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新 CNN 模型； LSTM 模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据； 对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧； 为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）； 取两个模块预测输出的共同的部分作为最终的预测结果； CNN Module 使用经典的 CNN：VGG 作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。
+推理和视口生成 直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的FoV。
+实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。
+所以不直接使用 CNN 网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。" />
+<meta name="keywords"
+  content='VP' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Content Based VP for Live Streaming (1) - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。
+将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑：
+细节可以参见：note-for-content-motion-viewport-prediction.
+LiveDeep 受限于Motion识别算法，前面提出的LiveMotion只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。
+Method LiveDeep处理问题的场景为：
+视频内容在线生成； 没有历史用户数据； 预测需要满足实时性的要求； LiveDeep的设计原则：
+online：在线训练在线预测； lifelong：模型在整个视频播放会话中更新； real-time：预测带来的处理延迟不能影响推流延迟； CNN的设计：
+在推流会话的运行时收集并标注训练数据； 以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练； 子采样少部分的代表帧来运行 VP 以满足实时性的要求； Framework Setup 分包器将视频按照 DASH 标准将视频分段，每个段作为训练模型和预测的单元； 考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样； 将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ； 训练集来自于用户的实时反馈，根据实际FoV和预测FoV之间的差距来标注数据； 用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与CNN模块采样的帧同步； Details 在用于训练的图像还没有被标注之前并不能直接预测，所以 CNN 模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新 CNN 模型； LSTM 模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据； 对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧； 为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）； 取两个模块预测输出的共同的部分作为最终的预测结果； CNN Module 使用经典的 CNN：VGG 作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。
+推理和视口生成 直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的FoV。
+实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。
+所以不直接使用 CNN 网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Content Based VP for Live Streaming (1) - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。
+将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑：
+细节可以参见：note-for-content-motion-viewport-prediction.
+LiveDeep 受限于Motion识别算法，前面提出的LiveMotion只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。
+Method LiveDeep处理问题的场景为：
+视频内容在线生成； 没有历史用户数据； 预测需要满足实时性的要求； LiveDeep的设计原则：
+online：在线训练在线预测； lifelong：模型在整个视频播放会话中更新； real-time：预测带来的处理延迟不能影响推流延迟； CNN的设计：
+在推流会话的运行时收集并标注训练数据； 以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练； 子采样少部分的代表帧来运行 VP 以满足实时性的要求； Framework Setup 分包器将视频按照 DASH 标准将视频分段，每个段作为训练模型和预测的单元； 考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样； 将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ； 训练集来自于用户的实时反馈，根据实际FoV和预测FoV之间的差距来标注数据； 用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与CNN模块采样的帧同步； Details 在用于训练的图像还没有被标注之前并不能直接预测，所以 CNN 模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新 CNN 模型； LSTM 模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据； 对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧； 为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）； 取两个模块预测输出的共同的部分作为最终的预测结果； CNN Module 使用经典的 CNN：VGG 作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。
+推理和视口生成 直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的FoV。
+实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。
+所以不直接使用 CNN 网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/" />
+<meta property="og:site_name" content="Content Based VP for Live Streaming (1)" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2022-01-22 18:03:09 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/">Content Based VP for Live Streaming (1)</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Sat, 22 Jan 2022 18:03:09 &#43;0800"
+                    class="no-wrap">
+                    Sat, 22 Jan 2022 18:03:09 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      1533 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/content-based-predict">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Content-based predict
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="livemotion">LiveMotion</h1>
+<h2 id="motivation">Motivation</h2>
+<p>基于视频中物体的运动模式来做对应的<code>FoV</code>预测。</p>
+<p>将用户的<code>FoV</code>轨迹与视频内容中运动物体的轨迹结合到一起考虑：</p>
+<p><img src="https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png" alt="image-20220126222335930"></p>
+<p>细节可以参见：<a href="https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/">note-for-content-motion-viewport-prediction</a>.</p>
+<h1 id="livedeep">LiveDeep</h1>
+<p>受限于<code>Motion</code>识别算法，前面提出的<code>LiveMotion</code>只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。</p>
+<h2 id="method">Method</h2>
+<p><code>LiveDeep</code>处理问题的场景为：</p>
+<ol>
+<li>视频内容在线生成；</li>
+<li>没有历史用户数据；</li>
+<li>预测需要满足实时性的要求；</li>
+</ol>
+<p><code>LiveDeep</code>的设计原则：</p>
+<ol>
+<li><em>online</em>：在线训练在线预测；</li>
+<li><em>lifelong</em>：模型在整个视频播放会话中更新；</li>
+<li><em>real-time</em>：预测带来的处理延迟不能影响推流延迟；</li>
+</ol>
+<p><code>CNN</code>的设计：</p>
+<ol>
+<li>在推流会话的运行时收集并标注训练数据；</li>
+<li>以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练；</li>
+<li>子采样少部分的代表帧来运行 VP 以满足实时性的要求；</li>
+</ol>
+<h2 id="framework">Framework</h2>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/imgimage-20220128232855576.png" alt="image-20220128232855576"></p>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>分包器将视频按照 DASH 标准将视频分段，每个段作为训练模型和预测的单元；</li>
+<li>考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样；</li>
+<li>将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ；</li>
+<li>训练集来自于用户的实时反馈，根据实际<code>FoV</code>和预测<code>FoV</code>之间的差距来标注数据；</li>
+<li>用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与<code>CNN</code>模块采样的帧同步；</li>
+</ol>
+<h3 id="details">Details</h3>
+<ol>
+<li>在用于训练的图像还没有被标注之前并不能直接预测，所以 CNN 模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新 CNN 模型；</li>
+<li>LSTM 模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据；</li>
+<li>对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧；</li>
+<li>为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）；</li>
+<li>取两个模块预测输出的共同的部分作为最终的预测结果；</li>
+</ol>
+<h2 id="cnn-module">CNN Module</h2>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220128233356721.png" alt="image-20220128233356721"></p>
+<p>使用经典的 CNN：VGG 作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。</p>
+<h3 id="推理和视口生成">推理和视口生成</h3>
+<p>直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的<code>FoV</code>。</p>
+<p>实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。</p>
+<p>所以不直接使用 CNN 网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。</p>
+<h3 id="训练过程">训练过程</h3>
+<p>在传统的监督训练中，训练时间取决于可接受的最低损失值和 epoch 的值。为了满足实时性，<code>LiveDeep</code>采用较高的最低损失值和较低的最大 epoch 值。</p>
+<ul>
+<li>
+<p><em><strong>High acceptable loss value</strong></em>：因为直接对从被分类为感兴趣的部分中去获取最终结果，所以通过实验证明，损失值应该要比常规的 CNN 更高：设定为 0.2。</p>
+</li>
+<li>
+<p><em><strong>The number of epochs</strong></em>：因为直播推流的特殊性，重复的训练并不能持续降低损失，所以采用较小的值：10。</p>
+</li>
+<li>
+<p><em><strong>The batch size</strong></em>：受限于训练的图像，将其设定为训练图像的个数即： $k \times x \times y$。</p>
+</li>
+<li>
+<p><em><strong>Dynamic learning rate</strong></em>：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129001002629.png" alt="image-20220129001002629"></p>
+</li>
+</ul>
+<h2 id="lstm-module">LSTM Module</h2>
+<p>单纯的<code>CNN</code>模型可能会导致对视频内容有强记忆性，而这会使模型在面对新视频内容时需要花较长的时间去接受用户偏好，即对于用户偏好的快速切换不能做出即时响应。而<code>LSTM</code>的模块用于弥补这一缺陷；</p>
+<p>采用与原始的<code>LSTM</code>模型相同的训练过程：先用收集的训练数据训练模型然后推断未来的数据。</p>
+<p>收集用户在过去的视频片段中的用户轨迹，包括从 $k$ 个子采样帧中的 $k$ 个采样点，因此作为训练数据，同时将每个采样点中每个帧的索引指定为时间戳。最终模型的输出是预测出的分块的索引。</p>
+<h2 id="混合模型">混合模型</h2>
+<p>将<code>CNN</code>模块得到的输出作为主要的结果，接着结合<code>LSTM</code>模块的输出结果作为最终的预测结果。</p>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

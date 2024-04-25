@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MPC on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/mpc/</link>
+    <description>Recent content in MPC on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/mpc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for MPC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <description>论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&#xA;Level：ACM SIGCOMM 15&#xA;Keywords：Model Predictive Control，ABR，DASH&#xA;Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。&#xA;文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。&#xA;背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化&#xA;将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；&#xA;每个片段以不同码率编码，$R$ 作为所有可用码率的集合；&#xA;播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；&#xA;对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：&#xA;$q(\cdot):R \rightarrow \R_+$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；</description>
+    </item>
+    <item>
+      <title>Note for TBRA</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
+      <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
+      <description>论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming&#xA;Level：ACM MM 21&#xA;Keywords：Adaptive tiling and bitrate，Mobile streaming&#xA;创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。&#xA;考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：&#xA;从上图可以看到：&#xA;如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。&#xA;创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。&#xA;论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。</description>
+    </item>
+  </channel>
+</rss>

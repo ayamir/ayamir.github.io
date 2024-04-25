@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RNN on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/rnn/</link>
+    <description>Recent content in RNN on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/rnn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for RnnQoE</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
+      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
+      <description>论文概况 Link：QoE-driven Mobile 360 Video Streaming: Predictive View Generation and Dynamic Tile Selection&#xA;Level：ICCC 2021&#xA;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&#xA;系统建模与形式化 视频划分 先将视频划分成片段：$\Iota = {1, 2, &amp;hellip;, I}$表示片段数为$I$的片段集合。&#xA;接着将片段在空间上均匀划分成$M \times N$个 tile，FOV 由被用户看到的 tile 所确定。&#xA;使用 ERP 投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\degree, 180\degree], \theta_i \in (-90\degree, 90\degree]$来表示用户在第$i$个片段中的视点坐标。&#xA;播放过程中记录用户头部运动的轨迹，积累的数据可以用于 FOV 预测。&#xA;跨用户之间的 FOV 轨迹可以用于提高预测精度。&#xA;QoE 模型 前提&#xA;视频编解码器预先确定，无法调整每个 tile 的码率。&#xA;实现&#xA;每个 tile 都以不同的码率编码成不同的版本。 每个 tile 都有两种分辨率的版本。 QoE 内容</description>
+    </item>
+  </channel>
+</rss>

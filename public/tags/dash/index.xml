@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DASH on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/dash/</link>
+    <description>Recent content in DASH on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/dash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for GPAC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-gpac/</link>
+      <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-gpac/</guid>
+      <description>Dash 客户端自适应逻辑 tile priority setup：根据定义的规则对 tile 进行优先级排名。 rate allocation：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。 rate adaption：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。 tile priority setup Dash 客户端加载带有 SRD 信息的 MPD 文件时，首先确定使用 SRD 描述的 tile 集合。&#xA;确定 tile 之间的编码依赖（尤其是使用 HEVC 编码的 tile 时）&#xA;为每个独立的 tile 向媒体渲染器请求一个视频对象，并向其通知 tile 的 SRD 信息。&#xA;渲染器根据需要的显示大小调整 SRD 信息之后，执行视频对象的最终布局。&#xA;一旦 tile 集合被确定，客户端向每个 tile 分配优先级。（每次码率自适应执行的时候都需要分配 tile 优先级）&#xA;Rate allocation 首先需要估计可用带宽（tile 场景和非 tile 场景的估计不同） 在一个视频段播放过程中，客户端需要去下载多个段（并行-HTTP/2） 带宽可以在下载单个段或多个段的平均指标中估计出来。 一旦带宽估计完成，码率分配将 tile 根据其优先级进行分类。 一开始所有的 tile 都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的 tile 的码率。 一旦每个 tile 的码率分配完成，将为目标带宽等于所选比特率的每个 tile 调用常规速率自适应算法 </description>
+    </item>
+    <item>
+      <title>Note for MPC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <description>论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&#xA;Level：ACM SIGCOMM 15&#xA;Keywords：Model Predictive Control，ABR，DASH&#xA;Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。&#xA;文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。&#xA;背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化&#xA;将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；&#xA;每个片段以不同码率编码，$R$ 作为所有可用码率的集合；&#xA;播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；&#xA;对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：&#xA;$q(\cdot):R \rightarrow \R_+$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；</description>
+    </item>
+  </channel>
+</rss>

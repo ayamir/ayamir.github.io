@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebGL on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/webgl/</link>
+    <description>Recent content in WebGL on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/webgl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebGL 样例的解释</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+      <description>Context Create an HTML5 canvas Get the canvas id Obtain WebGL Context The parameter WebGLContextAttributes is not mandatory.&#xA;Attributes Description Default value alpha true: provide an alpha buffer to the canvas; true depth true: drawing buffer contains a depth buffer of at least 16 bits; true stencil true: drawing buffer contains a stencil buffer of at least 8 bits; false antialias true: drawing buffer performs anti-aliasing true premultipliedAlpha true: drawing buffer contains colors with pre-multiplied alpha true preserveDrawingBuffer true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author false let canvas = document.</description>
+    </item>
+    <item>
+      <title>WebGL 样例</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:31 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
+      <description>Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.&#xA;JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0.</description>
+    </item>
+    <item>
+      <title>WebGL 中的管线</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:22 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
+      <description>Overview JavaScript JavaScript is used to write the control code of the program, which includes the following actions:&#xA;Initialization: initialize WebGL context. Arrays: create arrays to hold the data of the geometry. Buffer objects: create buffer objects by passing the arrays as parameters. Shaders: create, compile and link the shaders. Attributes: create attributes, enable them and associate them with buffer objects. Uniforms: associate the uniforms. Transformation matrix: create transformation matrix. Vertex Shader The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods drawElements() and drawArrays().</description>
+    </item>
+    <item>
+      <title>WebGL 基础知识</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:04 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
+      <description>Coordinate System There are x, y, z axes in WebGL, where the z axis signifies depth. The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1). Positive value meaning: z: near viewer. x: near right. y: near top.&#xA;Graphics System Vertices To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon. A vertex is a point which defines the conjunction of the edges of a 3D object.</description>
+    </item>
+  </channel>
+</rss>

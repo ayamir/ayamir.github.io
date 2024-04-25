@@ -1,4 +1,0 @@
-# Note for Crowdsourced Prediction
-
-
-

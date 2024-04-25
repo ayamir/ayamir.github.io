@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>QoE on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/qoe/</link>
+    <description>Recent content in QoE on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/qoe/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for DQB</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-dqb/</link>
+      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-dqb/</guid>
+      <description>整体概况 Link：Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level：IEEE TCSVT 2021&#xA;DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。&#xA;DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。 这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。&#xA;Model 的建立 执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。 结合剩下分块的感知质量可以完成单帧质量模型的建模。 最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。 主观实验的设定 获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在） 获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停） 获取整个视频的感知质量（没有引入 DQB，所有分块质量相同） 实验结果&#xA;帧质量感知模型 从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：&#xA;$$ d_n = Q_{H, n} - Q_{L, n} $$&#xA;$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。 这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。&#xA;为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：</description>
+    </item>
+  </channel>
+</rss>

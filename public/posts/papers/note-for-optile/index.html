@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>Note for OpTile - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
+Level：ACM MM 17
+Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
+背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
+当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
+编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
+对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
+目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
+ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
+<meta name="keywords"
+  content='Immersive Video' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-optile/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Note for OpTile - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
+Level：ACM MM 17
+Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
+背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
+当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
+编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
+对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
+目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
+ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Note for OpTile - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming
+Level：ACM MM 17
+Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size
+背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。
+当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。
+编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。
+对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。
+目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。
+ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-optile/" />
+<meta property="og:site_name" content="Note for OpTile" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2021-12-13 16:19:02 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note-for-optile/">Note for OpTile</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Mon, 13 Dec 2021 16:19:02 &#43;0800"
+                    class="no-wrap">
+                    Mon, 13 Dec 2021 16:19:02 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      4684 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    <a class="muted-link mr-3" href="/tags/content-based-division">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Content-based division
+                    </a>
+                    
+                    <a class="muted-link mr-3" href="/tags/dynamic-tiling">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Dynamic tiling
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3123266.3123339">OpTile: Toward Optimal Tiling in 360-degree Video Streaming</a></p>
+<p>Level：ACM MM 17</p>
+<p>Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size</p>
+<h2 id="背景知识">背景知识</h2>
+<h3 id="编码过程概述">编码过程概述</h3>
+<ol>
+<li>
+<p>对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。</p>
+<p>当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。</p>
+</li>
+<li>
+<p>编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。</p>
+</li>
+</ol>
+<h3 id="对编码过程的影响">对编码过程的影响</h3>
+<ol>
+<li>基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。</li>
+<li>不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。</li>
+</ol>
+<h3 id="投影过程">投影过程</h3>
+<p>因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。</p>
+<p>目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。</p>
+<h4 id="erp-投影">ERP 投影</h4>
+<p>基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。</p>
+<p>对于平面坐标为$(x, y)$的点，其球面坐标分别为：</p>
+<p>$$
+\theta = (\frac{x}{W} - 0.5) * 360
+$$</p>
+<p>$$
+\phi = (0.5 - \frac{y}{H}) * 180
+$$</p>
+<h4 id="cmp-投影">CMP 投影</h4>
+<p>将球面置于一个立方体中，光线从球心向外发射，并分别与球面和立方体相交于两点，这两点之间便建立了映射关系。</p>
+<p>之后将立方体 6 个平面拼接成矩形，就可以使用标准的视频编码方式进行压缩。</p>
+<p>关于投影方式还可以参考这里的讲解：<a href="https://zhuanlan.zhihu.com/p/106922217">谈谈全景视频投影方式</a></p>
+<h3 id="tile-方式的缺点">tile 方式的缺点</h3>
+<ul>
+<li>
+<p>降低编码效率</p>
+<p>tile 划分越细，编码越低效</p>
+</li>
+<li>
+<p>增加更大的整体存储需求</p>
+</li>
+<li>
+<p>可能要求更多的带宽</p>
+</li>
+</ul>
+<h2 id="optile-的设计">OpTile 的设计</h2>
+<p>直觉上需要增大一些 tile 的大小来使与这些 tile 相关联的片段能捕获高效编码所需的类似块。</p>
+<p>同时也需要 tile 来分割视频帧来减少传输过程中造成的带宽浪费。</p>
+<ul>
+<li>
+<p>为了明白哪些片段的空间部分可以被高效独立编码，需要关于 tile 的存储大小的不同维度的信息。</p>
+</li>
+<li>
+<p>为了找到切分视频的最好位置，需要在片段播放过程中用户 viewport 运动轨迹的偏好。</p>
+</li>
+</ul>
+<p>将编码效率和浪费数据的竞争考虑到同一个问题之中，这个问题关注的是<strong>一个片段中所有可能的视图的分布</strong>。</p>
+<p>片段的每个可能的视图可以被 tile 的不同组合所覆盖。</p>
+<p>目标是为一个片段选择一个 tile 覆盖层，以<strong>最小化固定时间段内视图分布的总传输带宽</strong>。</p>
+<ul>
+<li>目标分离的部分考虑整个固定时间段的表示（representation）的存储开销。</li>
+<li>目标的存储部分与下载的带宽部分相竞争。例如，如果一个不受欢迎的视频一年只观看一次，那么我们更喜欢一个紧凑的表示，我们可以期望向用户发送更多未观看的像素。</li>
+</ul>
+<h2 id="问题形式化">问题形式化</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">segment/片段</th>
+<th style="text-align:center">推流过程中可以被下载的连续播放的视频单元</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">basic sub-rectangle/基本子矩形</td>
+<td style="text-align:center">推流过程中可以被下载的片段中最小的空间划分块</td>
+</tr>
+<tr>
+<td style="text-align:center">solution sub-rectangle/解子矩形</td>
+<td style="text-align:center">片段中由若干基本子矩形组成的任何矩形部分</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$x$</th>
+<th style="text-align:center">用于表示子矩形在解中的存在的二元向量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$c^{(stor)}$</td>
+<td style="text-align:center">每个子矩形存储开销相关的向量</td>
+</tr>
+<tr>
+<td style="text-align:center">$c^{(view)}$</td>
+<td style="text-align:center">给定一个 segment 中用户 viewport 的分布，$c^{(view)}$指相关子矩形的预期下载字节</td>
+</tr>
+<tr>
+<td style="text-align:center">$\alpha$</td>
+<td style="text-align:center">分配到$c^{(view)}$的权重，以此来控制相对于传输一个片段的存储开销</td>
+</tr>
+</tbody>
+</table>
+<p>考虑将 1 个矩形片段划分成 4 个基本子矩形，其对应的坐标如下：</p>
+<p><img src="https://s2.loli.net/2021/12/14/friEWozgJFYZ1OP.png" alt="image-20211214151032048"></p>
+<p>4 个基本子矩形可以有 9 种分配方式，成为解子矩形，如下（因为需要保持对应的空间关系，所以只有 9 种）：</p>
+<p><img src="https://s2.loli.net/2021/12/14/Ja9cHE5ZyAVqCRM.png" alt="image-20211214151452315"></p>
+<ul>
+<li>
+<p>$x$的形式化</p>
+<p>可以用向量$x$来分别表示上图中子矩形在解中的存在：</p>
+<p>$$
+[1 \times 1\ at\ (0, 0),\ 1 \times 1\ at\ (0, 1),\ 1 \times 1\ at\ (1, 0),
+\
+1 \times 1\ at\ (1, 1),\ 1 \times 2\ at\ (0, 0),\ 1 \times 2\ at\ (1, 0),
+\
+2 \times 1\ at\ (0, 0),\ 2 \times 1\ at\ (0,1),\ 2 \times 2\ at\ (0,0).]
+$$</p>
+<p>（$x$中每个二元变量的的组成：$1 \times 1$表示子矩形的形状，$(0,0)$表示所处的位置）</p>
+<p>要使$x$有效，<strong>每个基本子矩形必须被$x$中编码的子矩形精确覆盖一次</strong>。例如：</p>
+<ul>
+<li>
+<p>$[0, 0, 0, 0, 1, 1, 0, 0, 0]$=&gt;有效（第 5 和第 6 次序的位置分别对应$e$和$f$子矩形，恰好覆盖了所有基本子矩形 1 次）</p>
+</li>
+<li>
+<p>$[0,0,0,1,1,0,0,0,0]$=&gt;无效（第 4 和第 5 次序的位置分别对应$d$和$e$子矩形，没有覆盖到$(1,0)$基本子矩形）</p>
+</li>
+<li>
+<p>$[0,0,0,1,1,1,0,0,0]$=&gt;无效（第 4、第 5 和第 6 次序的位置分别对应$d$、$e$和$f$子矩形，$(1,1)$基本子矩形被覆盖了两次）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>$c^{(stor)}$的形式化</p>
+<p>与每个$x$相对应的向量$c^{(stor)}$长度与$x$相等，其中每个元素是$x$中对应位置的子矩形的存储开销的估计值。</p>
+</li>
+<li>
+<p>$c^{(view)}$的形式化</p>
+<p>考虑分发子矩形的网络带宽开销时，需要考虑所有可能被分发的 360 度表面的视图。</p>
+<p>为了简化问题，将片段所有可能的视图离散化到一个大小为$V$的集合中。</p>
+<p>集合中每个元素表示一个<strong>事件</strong>，即向观看 360 度视频片段的用户显示基本子矩形的唯一子集。</p>
+<p>注意到片段中被看到的视频区域可以包含来自多个视角的区域。</p>
+<p>将之前离散化好的大小为$V$的集合中每个元素与可能性相关联：$[p_1, p_2, &hellip;, p_V]$。</p>
+<p>考虑为给定的解下载视图$V$的开销，作为需要为该视图下载的数据量：</p>
+<p>$$
+quantity = x^{\top}diag(d_v)c^{(stor)}
+$$</p>
+<p>$d_v$是一个二元向量，其内容是按照$x$所描述的表示方案，对所有覆盖视图的子矩形的选择。</p>
+<p>例如对于 ERP 投影中位置坐标为$yaw = 0, pitch = 90$即处于等矩形顶部的图像，对应的$d_{view-(0, 90)} = [1, 1, 0, 0, 1, 0, 1, 1, 1]$</p>
+<p>（即上面图中$a, b, e, g, h, i$位置的子矩形包含此视图所需的基本子矩形）。</p>
+<p>给出一个片段中的用户 viewport 分布，$c^{(view)}$的元素是相关联的子矩形预期的下载字节。</p>
+<p>$$
+c^{(view)} = \sum_v p_v diag(d_v) c^{(stor)}
+$$</p>
+<p>最后，将优化问题的基本子矩形覆盖约束编码为矩阵$A$。</p>
+<p>$A$是一个列中包含给定子矩形解所覆盖的基本子矩形信息的二元矩阵。</p>
+<p>对于$2 \times 2$的矩形片段，其$A$有 4 行 9 列，例子如下：</p>
+<p><img src="https://s2.loli.net/2021/12/14/iWaZCwBzG2EeHQr.png" alt="image-20211214204726707"></p>
+<p>因此最终的问题可以形式化为一个整数线性程序：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216212347330.png" alt="image-20211216212347330"></p>
+<ul>
+<li>
+<p>$c^{(stor)}$</p>
+<p>可以理解为存储一段$\Delta t$时间长的片段的子矩形的存储开销；</p>
+</li>
+<li>
+<p>$c^{(view)}$</p>
+<p>可以理解为传输一个视图所需要的所有的子矩形的传输开销。</p>
+</li>
+<li>
+<p>$\alpha$</p>
+<p>控制相比于传输一个片段的相对存储开销，同时应该考虑片段的流行度。</p>
+<p>即$\alpha$应该与所期望的片段在$\Delta t$的时间间隔内的下载次数成比例，$\alpha$应该可以通过经验测量以合理的精度进行估计。</p>
+<p>可以通过将$x$的二元离散限制放松到$0 \le x_i \le 1\ \forall i$构成一个线性程序，其解为整数。</p>
+<p>（对于有 33516 个变量的$x$，其解可以在单核 CPU 上用 7~10 秒求出）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="开销向量建构">开销向量建构</h2>
+<p>首先需要建构出存储开销向量$c^{(stor)}$，但是对于有$n$个基本子矩形的子矩形，其建构复杂度为$O(n^2)$。</p>
+<p>因此对每个子矩形进行编码来获得存储开销并不可行，所以利用视频压缩与运动估计之间的强相关性来预测$c^{(stor)}$的值。</p>
+<ol>
+<li>
+<p>给定一个视频，首先暂时将其分成长度为 1 秒的片段，每个片段被限定为只拥有 1 个 GOP，片段的大小表示为$S_{orig}$。</p>
+</li>
+<li>
+<p>接着抽取出每个片段中的动作序列用于之后的分析。</p>
+</li>
+<li>
+<p>将片段从空间上划分成基本子矩形，每个基本子矩形包含$4 \times 4 = 16$个宏块（例如：$64 \times 64$个像素点）。</p>
+</li>
+<li>
+<p>独立编码每个基本子矩形，其大小表示为$S_i$。</p>
+</li>
+<li>
+<p>通过分析动作向量信息，可以推断出如果对基本子矩形$i$进行独立编码，指向基本子矩形$i$的原始运动向量应该重新定位多少。</p>
+<p>将其表示为$r_i$。</p>
+</li>
+<li>
+<p>每个运动向量的存储开销可以计算为：</p>
+<p>$$
+o = \frac{\sum_i S_i - S_{orig}}{\sum_i r_i}
+$$</p>
+<p>即：存储开销的整体增长除以被基本子矩形边界所分割的运动向量数。</p>
+</li>
+<li>
+<p>如果基本子矩形被融合进更大的子矩形$t$，使用$m_t$来表示由于融合操作而无须再进行重定位的运动向量的数量：</p>
+<p>$$
+m_t = \sum_{i \in t} r_i - r_t
+$$</p>
+<p>$i \in t$表示基本子矩形位于子矩形$t$中。</p>
+</li>
+<li>
+<p>为了估计任意子矩形$t$的大小，使用下面 5 个参数：
+$$
+\sum_{i \in t} S_i,\ \sum_{i \in t} r_i,\ m_t,\ o,\ n
+$$
+$n$表示$t$中基本子矩形的数量。</p>
+</li>
+</ol>
+<p>实际操作：</p>
+<ol>
+<li>
+<p>创建了来自 4 个单视角 360 度视频的 6082 个 tile 数据集。4 个视频都以两种分辨率进行编码：$1920 \times 960$和$3980 \times 1920$。</p>
+</li>
+<li>
+<p>为了产生 tile，从视频中随机选取片段，随机选取 tile 的位置，宽度和高度。</p>
+<p>设置 tile 的 size 最大为$12 \times 12$个基本子矩形。</p>
+<p>对于每个选择的 tile，为其建构一个数据集元素：</p>
+<ol>
+<li>计算上面提到的 5 参数的特性向量。</li>
+<li>使用 FFmpeg 编码 tile 的视频段来得到存储该段需要的空间。</li>
+</ol>
+</li>
+<li>
+<p>使用多层感知机 MLP 来估计 tile 的大小。</p>
+<p>MLP 中包含 50 个节点的单隐层，激活函数为 ReLU 函数，300 次迭代的训练过程使用<a href="https://zhuanlan.zhihu.com/p/29672873">L-BFGS 算法</a>。</p>
+<p>为了评估 MLP 的预测效果，使用 4 折的交叉验证法。</p>
+<p>每次折叠时先从 3 个视频训练 MLP，接着使用训练好的模型去预测第 4 个视频的 tile 大小。</p>
+</li>
+</ol>
+<h2 id="实现">实现</h2>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216110120067.png" alt="img"></p>
+<p>将视频划分成 1 秒长的片段，之后为每个片段解决整数线性问题来确定最优的 tile 划分策略。</p>
+<ol>
+<li>使用 MLP 模型估计每个 tile 的存储开销。</li>
+<li>根据视图的集合$d$及其对应的可能性分布$p$，来估计视图的下载开销$c^{(view)}$。</li>
+<li>构造矩阵$A$时，限制最大的 tile 大小为$12 \times 12$的基本子矩形（如果设置每个基本子矩形包含$64 \times 64$的像素，tile 的最大尺寸即为$768 \times 768$的像素）。</li>
+<li>使用<a href="https://www.gnu.org/software/glpk/">GNU Linear Programming Kit</a>来解决问题。</li>
+<li>将所有可能的解子矩形编码进一个二元向量$x$中来表示解。</li>
+<li>GLPK 的解表明一个可能的解子矩形是否应该被放入解中。</li>
+<li>基于最终得到的解，划分片段并使用 ffmepg 以同样参数的 x264 格式进行编码。</li>
+</ol>
+<h2 id="评估">评估</h2>
+<ul>
+<li>
+<p>度量指标</p>
+<ol>
+<li>服务端存储需求。</li>
+<li>客户端需要下载的字节数。</li>
+</ol>
+</li>
+<li>
+<p>数据来源</p>
+<p>数据集：<a href="http://dash.ipv6.enstb.fr/headMovements/">dash.ipv6.enstb.fr</a></p>
+</li>
+<li>
+<p>评估准备</p>
+<p>下载 5 个使用 ERP 投影的视频，抽取出测试中用户看到的对应部分。</p>
+<p>每个视频都有$1920 \times 960$和$3840 \times 1920$的两种分辨率的版本。</p>
+<p>$1920 \times 960$视频的基本子矩形尺寸为$64 \times 64$的像素。</p>
+<p>$3840 \times 1920$视频的基本子矩形尺寸为$128 \times 128$的像素。</p>
+<p>将视频划分成 1 秒长的片段，对每个片段都产生出 MLP 所需的 5 元组特性。</p>
+<p>之后使用训练好的 MLP 模型来预测所有可能的 tile 的大小。</p>
+</li>
+<li>
+<p>数据选择</p>
+<ol>
+<li>
+<p>从数据集中随机选择出 40 个用户的集合。</p>
+</li>
+<li>
+<p>假设 100°的水平和垂直 FOV，并使用 40 个用户的头部方向来为每个片段产生$p_v$和$d_v$。</p>
+<p>即：分块的决策基于每个片段的内容特征信息与用户的经验视图模式。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>参数设定：$\alpha = 0,1,1000$.</p>
+</li>
+<li>
+<p>对比实验：</p>
+<p>一组使用由 ILP 得出的结构进行分块；</p>
+<p>另外一组：</p>
+<ul>
+<li>
+<p>$1920 \times 960$的视频片段分别使用$64 \times 64$，$128 \times 128$，$256 \times 256$，$512 \times 512$的方案固定大小分块。</p>
+</li>
+<li>
+<p>$3840 \times 1920$的视频片段分别使用$128 \times 128$，$256 \times 256$，$512 \times 512$，$1024 \times 1024$的方案固定大小分块。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>划分结果对比</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216152224127.png" alt="image-20211216152224127"></p>
+</li>
+</ul>
+<h3 id="服务端的存储大小">服务端的存储大小</h3>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216152649700.png" alt="image-20211216152649700"></p>
+<p>按照$\alpha = 0$方案分块之后的视频大小几乎与未分块之前的视频大小持平，有时甚至略微小于未分块前的视频大小。</p>
+<p>因为所有分块方案都使用相同的编码参数，所以重新编码带来的有损压缩并不会影响竞争的公平性。</p>
+<p>如果将$\alpha$的值调大，存储的大小会略微增大；固定分块大小的方案所得到的存储大小也会随 tile 变小而变大。</p>
+<h3 id="客户端的下载大小">客户端的下载大小</h3>
+<ul>
+<li>
+<p>预测完美的情况——下载的 tile 没有任何浪费</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216155616490.png" alt="image-20211216155616490"></p>
+<p>$\alpha= 1000$的情况下，OpTile 的表现总是最好的。</p>
+</li>
+<li>
+<p>正常预测的情况</p>
+<p>预测的方法：假设用户的头部方向不会改变，预测的位置即为按照当前方向几秒之后的位置。</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211216161737364.png" alt="image-20211216161737364"></p>
+<p>相比于完美假设的预测，所有分块方案的下载大小都增大了。</p>
+<p>$\alpha = 1000$的方案在两个视频的情况下都取得了最小的下载大小。在剩下的 3 个视频中，OpTile 方案的下载大小比起最优的固定分块大小方案不超过 25%。</p>
+<p>尽管固定分块大小的方案可能表现更好，但是这种表现随视频的改变而变化显著。</p>
+<p><strong>因为固定分块的方案没有考虑视频内容的特性与用户的观看行为。</strong></p>
+</li>
+</ul>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+
+
+
+</html>

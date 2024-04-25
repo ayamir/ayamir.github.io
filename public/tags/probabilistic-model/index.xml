@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Probabilistic Model on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/probabilistic-model/</link>
+    <description>Recent content in Probabilistic Model on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/probabilistic-model/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for 360ProbDASH</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
+      <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
+      <description>论文概况 Link: 360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming&#xA;Level: ACM MM 17&#xA;Keyword:&#xA;Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation&#xA;工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型+预期质量的最大化&#xA;针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）&#xA;提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）&#xA;形式化 QoE-driven 优化问题：&#xA;在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）&#xA;问题建模 形式化参数&#xA;$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级&#xA;$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）&#xA;$\Phi(X)$指质量失真，$\Psi(X)$指质量变化&#xA;目标&#xA;找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) + \eta \cdot \Psi(X) \ s.</description>
+    </item>
+  </channel>
+</rss>

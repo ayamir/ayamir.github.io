@@ -1,334 +1,45 @@
-baseURL = "https://ayamir.github.io/"
-languageCode = "zh-CN"
-defaultContentLanguage = "zh-cn"
-hasCJKLanguage = true
-title = "Ayamir's Blog"
-preserveTaxonomyNames = true
-enableRobotsTXT = true
-enableEmoji = true
-enableGitInfo = true
-theme = "FeelIt"
-defaultTheme = "auto"
-publishDir = "docs"
+baseURL = "https://ayamir.github.io"
+languageCode = "zh-cn"
+title = "Ayamir's blog"
+theme = "github-style"
+pygmentsCodeFences = true
+pygmentsUseClasses = true
 
 [params]
-version = "1.0.X"
-description = "Welcome to Ayamir's blog."
-keywords = [
-  "GNU/Linux",
-  "Algorithms",
-  "Programming Language",
-  "Immersive Video",
-]
-fingerprint = "sha256"
-dateFormat = "2006-01-02"
-SourceMap = true
+  description = "All is for liberty."
+  github = "ayamir"
+  email = "miracle_l@bupt.edu.cn"
+  url = "https://github.com/ayamir"
+  keywords = "blog, google analytics"
+  rss = true
+  lastmod = true
+  userStatusEmoji = "🎯"
+  favicon = "/images/favicon.png"
+  avatar = "/images/avatar.png"
+  headerIcon = "/images/GitHub-Mark-Light-32px.png"
+  location = "China"
+  enableGitalk = true
 
-[params.pwa]
-enable = true
-version = "0.0.1"
+  [params.gitalk]
+    clientID = "1ee3454a8f1f370a7934"
+    clientSecret = "737cbeaf81ce60b50fafd2b0d6c7ebfa42826555"
+    repo = "repo"
+    owner = "ayamir"
+    admin = "ayamir"
+    id = "location.pathname"
+    labels = "gitalk"
+    perPage = 15
+    pagerDirection = "last"
+    createIssueManually = true
+    distractionFreeMode = false
 
-[params.app]
-title = "Ayamir's blog"
-noFavicon = false
-themeColor = "#ffffff"
-iconColor = "#5bbad5"
-tileColor = "#da532c"
+  [[params.links]]
+    title = "Zhihu"
+    href = "https://www.zhihu.com/people/MiraculousMoon"
 
-[params.search]
-enable = true
-type = "algolia"
-contentLength = 4000
-placeholder = ""
-maxResultLength = 10
-snippetLength = 50
-highlightTag = "em"
-absoluteURL = false
-[params.search.algolia]
-index = "ayamir_io"
-appId = "ZO1JYZIF7J"
-searchKey = "2d94be64af0985c7d1980d1ed75ee698"
+[frontmatter]
+  lastmod = ["lastmod", ":fileModTime", ":default"]
 
-[params.header]
-desktopMode = "auto"
-mobileMode = "auto"
-
-[params.footer]
-enable = true
-custom = ''
-hugo = true
-copyright = true
-author = true
-since = 2021
-license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
-
-[params.list]
-paginate = 25
-dateFormat = "01-02"
-rss = 20
-
-[params.page]
-hiddenFromHomePage = false
-hiddenFromSearch = false
-twemoji = false
-lightgallery = false
-ruby = true
-fraction = true
-fontawesome = true
-linkToMarkdown = true
-rssFullText = true
-
-[params.page.math]
-enable = true
-copyTex = true
-mhchem = true
-
-[params.page.toc]
-enable = true
-auto = true
-
-[params.page.code]
-copy = true
-maxShownLines = 300
-
-[params.page.share]
-enable = true
-Twitter = true
-Facebook = true
-Linkedin = false
-Whatsapp = true
-Pinterest = false
-Tumblr = false
-HackerNews = false
-Reddit = false
-VK = false
-Buffer = false
-Xing = false
-Line = true
-Instapaper = false
-Pocket = false
-Digg = false
-Stumbleupon = false
-Flipboard = false
-Weibo = true
-Renren = false
-Myspace = true
-Blogger = true
-Baidu = false
-Odnoklassniki = false
-Evernote = true
-Skype = false
-Trello = false
-Mix = false
-[params.page.comment]
-enable = true
-[params.page.comment.utterances]
-enable = true
-# owner/repo
-repo = "ayamir/ayamir.github.io"
-issueTerm = "pathname"
-label = ""
-lightTheme = "github-light"
-darkTheme = "github-dark"
-
-[params.section]
-paginate = 20
-rss = 10
-
-[params.home]
-rss = 10
-[params.home.profile]
-enable = true
-avatarURL = "https://avatars.githubusercontent.com/u/61657399?s=400&u=7a71222b05d3e29bae8c36647b078d8aad923bfe&v=4"
-social = true
-typeit = true
-subtitle = "Until to the End of Interest..."
-disclaimer = "Hardwork always pays off, whatever you do."
-[params.home.posts]
-enable = true
-paginate = 10
-defaultHiddenFromHomePage = false
-
-[params.social]
-GitHub = "ayamir"
-Zhihu = "MiraculousMoon"
-Email = "miracle_l@bupt.edu.cn"
-RSS = true
-
-[params.typeit]
-speed = 100
-cursorSpeed = 1000
-cursorChar = "|"
-duration = -1
-
-# 网站验证代码，用于 Google/Bing/Yandex/Pinterest/Baidu
-[params.verification]
-google = ""
-bing = ""
-yandex = ""
-pinterest = ""
-baidu = ""
-
-[params.seo]
-image = ""
-thumbnailUrl = ""
-
-[params.analytics]
-enable = true
-[params.analytics.google]
-id = ""
-anonymizeIP = true
-[params.analytics.fathom]
-id = ""
-server = ""
-
-[params.cookieconsent]
-enable = false
-[params.cookieconsent.content]
-message = ""
-dismiss = ""
-link = ""
-
-[params.compatibility]
-polyfill = true
-objectFit = false
-
-# 作者配置
-[author]
-name = "Ayamir"
-email = "miracle_l@bupt.edu.cn"
-link = "https://github.com/ayamir"
-
-[menu]
-[[menu.main]]
-identifier = "posts"
-# 你可以在名称 (允许 HTML 格式) 之前添加其他信息, 例如图标
-pre = ""
-# 你可以在名称 (允许 HTML 格式) 之后添加其他信息, 例如图标
-post = ""
-name = "文章"
-url = "/posts/"
-# 当你将鼠标悬停在此菜单链接上时, 将显示的标题
-title = ""
-weight = 1
-[[menu.main]]
-identifier = "tags"
-pre = ""
-post = ""
-name = "标签"
-url = "/tags/"
-title = ""
-weight = 2
-[[menu.main]]
-identifier = "categories"
-pre = ""
-post = ""
-name = "分类"
-url = "/categories/"
-title = ""
-weight = 3
-[[menu.main]]
-identifier = "about"
-pre = ""
-post = ""
-name = "关于"
-url = "/about/"
-title = ""
-weight = 4
-
-[params.about]
-enable = true
-param = true
-paramTitle = "个人信息"
-description = "Blog mainly about MM, Coding Tech and GNU/Linux."
-[[params.about.status]]
-faIcon = "fas fa-building"
-title = "School"
-desc = "BUPT"
-[[params.about.status]]
-faIcon = "fas fa-briefcase fa-fw"
-title = "Career"
-desc = "Postgraduate"
-[[params.about.status]]
-title = "Place"
-faIcon = "fas fa-map-marker-alt"
-desc = "Beijing"
-[[params.about.parameter]]
-language = "C++"
-level = "60"
-[[params.about.parameter]]
-language = "Go"
-level = "50"
-[[params.about.parameter]]
-language = "Python"
-level = "40"
-[[params.about.parameter]]
-language = "Java"
-level = "30"
-[[params.about.parameter]]
-language = "Rust"
-level = "30"
-[[params.about.parameter]]
-language = "Javascript"
-level = "30"
-
-
-# Hugo 解析文档的配置
-[markup]
-[markup.highlight]
-codeFences = true
-guessSyntax = true
-lineNos = true
-lineNumbersInTable = true
-noClasses = false
-[markup.goldmark]
-[markup.goldmark.extensions]
-definitionList = true
-footnote = true
-linkify = true
-strikethrough = true
-table = true
-taskList = true
-typographer = true
-[markup.goldmark.renderer]
-# 是否在文档中直接使用 HTML 标签
-unsafe = true
-[markup.tableOfContents]
-ordered = false
-startLevel = 1
-endLevel = 6
-
-[sitemap]
-changefreq = "weekly"
-filename = "sitemap.xml"
-priority = 0.5
-
-[Permalinks]
-posts = "posts/:filename"
-
-[privacy]
-[privacy.googleAnalytics]
-anonymizeIP = true
-disable = false
-respectDoNotTrack = false
-useSessionStorage = false
-[privacy.instagram]
-[privacy.twitter]
-enableDNT = true
-[privacy.youtube]
-privacyEnhanced = true
-
-[mediaTypes]
-[mediaTypes."text/plain"]
-suffixes = ["md"]
-
-[outputFormats.MarkDown]
-mediaType = "text/plain"
-isPlainText = true
-isHTML = false
-
-[outputs]
-home = ["HTML", "RSS", "JSON"]
-page = ["HTML", "MarkDown"]
-section = ["HTML", "RSS"]
-taxonomy = ["HTML", "RSS"]
+[services]
+  [services.googleAnalytics]
+    ID = "UA-123456-789"

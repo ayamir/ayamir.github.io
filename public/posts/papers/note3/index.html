@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>自适应360度视频推流方案 - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="概述 360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。
+相比于常规视频，360 度视频被编码成全向的场景。
+自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。
+分类 Viewport-Independent Streaming 服务端的任务 使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。 客户端的任务 投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。 客户端需要支持对应的投影格式。 客户端像处理传统视频一样完成比特率自适应。 基于网络特征向将要到来的 segment 请求相同投影格式的表示 DASH 插件需要支持相同质量视频的推流。
+应用 视角独立型推流主要用于体育、教育和旅游视频内容。
+优点 简单 缺点 相比于视角依赖型方案视频编码效率低了 30%。 为不可见的区域要求大量带宽和解码资源。 Viewport-Dependent Streaming 终端设备的任务 只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。 监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。 为服务端准备和用户方向相关的几个自适应集。 客户端的任务 根据网络情况和估计的视角位置决定获取哪个自适应集。 难点 可视区域的确定 与用户头部移动的同步 质量调整 提供平滑的播放体验 现有的工作 各种投影方式在实际推流中表现如何？ 相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。 偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。 提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。 相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。 如何在网络资源受限的情况下提供高质量的推流？ 为视角依赖型推流产生不同质量的 segment。 当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。 在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。 这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。 为立体视频的背景和前景视图采用不对称质量。 可以分别为背景块和前景块分别节省 15%和 41%的比特率。 DASH 需要做什么？ manifest 中需要包含视角位置信息和投影元数据。 优化获取 random access point 的周期来优化视角分辨率自适应体验。 考虑低延迟和活跃的视角切换。 Tile-based Streaming 传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。" />
+<meta name="keywords"
+  content='Immersive Video' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note3/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="自适应360度视频推流方案 - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="概述 360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。
+相比于常规视频，360 度视频被编码成全向的场景。
+自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。
+分类 Viewport-Independent Streaming 服务端的任务 使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。 客户端的任务 投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。 客户端需要支持对应的投影格式。 客户端像处理传统视频一样完成比特率自适应。 基于网络特征向将要到来的 segment 请求相同投影格式的表示 DASH 插件需要支持相同质量视频的推流。
+应用 视角独立型推流主要用于体育、教育和旅游视频内容。
+优点 简单 缺点 相比于视角依赖型方案视频编码效率低了 30%。 为不可见的区域要求大量带宽和解码资源。 Viewport-Dependent Streaming 终端设备的任务 只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。 监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。 为服务端准备和用户方向相关的几个自适应集。 客户端的任务 根据网络情况和估计的视角位置决定获取哪个自适应集。 难点 可视区域的确定 与用户头部移动的同步 质量调整 提供平滑的播放体验 现有的工作 各种投影方式在实际推流中表现如何？ 相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。 偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。 提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。 相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。 如何在网络资源受限的情况下提供高质量的推流？ 为视角依赖型推流产生不同质量的 segment。 当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。 在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。 这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。 为立体视频的背景和前景视图采用不对称质量。 可以分别为背景块和前景块分别节省 15%和 41%的比特率。 DASH 需要做什么？ manifest 中需要包含视角位置信息和投影元数据。 优化获取 random access point 的周期来优化视角分辨率自适应体验。 考虑低延迟和活跃的视角切换。 Tile-based Streaming 传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="自适应360度视频推流方案 - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="概述 360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。
+相比于常规视频，360 度视频被编码成全向的场景。
+自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。
+分类 Viewport-Independent Streaming 服务端的任务 使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。 客户端的任务 投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。 客户端需要支持对应的投影格式。 客户端像处理传统视频一样完成比特率自适应。 基于网络特征向将要到来的 segment 请求相同投影格式的表示 DASH 插件需要支持相同质量视频的推流。
+应用 视角独立型推流主要用于体育、教育和旅游视频内容。
+优点 简单 缺点 相比于视角依赖型方案视频编码效率低了 30%。 为不可见的区域要求大量带宽和解码资源。 Viewport-Dependent Streaming 终端设备的任务 只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。 监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。 为服务端准备和用户方向相关的几个自适应集。 客户端的任务 根据网络情况和估计的视角位置决定获取哪个自适应集。 难点 可视区域的确定 与用户头部移动的同步 质量调整 提供平滑的播放体验 现有的工作 各种投影方式在实际推流中表现如何？ 相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。 偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。 提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。 相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。 如何在网络资源受限的情况下提供高质量的推流？ 为视角依赖型推流产生不同质量的 segment。 当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。 在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。 这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。 为立体视频的背景和前景视图采用不对称质量。 可以分别为背景块和前景块分别节省 15%和 41%的比特率。 DASH 需要做什么？ manifest 中需要包含视角位置信息和投影元数据。 优化获取 random access point 的周期来优化视角分辨率自适应体验。 考虑低延迟和活跃的视角切换。 Tile-based Streaming 传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note3/" />
+<meta property="og:site_name" content="自适应360度视频推流方案" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2021-10-25 09:34:10 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note3/">自适应360度视频推流方案</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Mon, 25 Oct 2021 09:34:10 &#43;0800"
+                    class="no-wrap">
+                    Mon, 25 Oct 2021 09:34:10 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      4162 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h2 id="概述">概述</h2>
+<p>360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。</p>
+<p>相比于常规视频，360 度视频被编码成全向的场景。</p>
+<p>自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。</p>
+<h2 id="分类">分类</h2>
+<h3 id="viewport-independent-streaming">Viewport-Independent Streaming</h3>
+<h4 id="服务端的任务">服务端的任务</h4>
+<ul>
+<li>使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。</li>
+</ul>
+<h4 id="客户端的任务">客户端的任务</h4>
+<ul>
+<li>投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。</li>
+<li>客户端需要支持对应的投影格式。</li>
+<li>客户端像处理传统视频一样完成比特率自适应。
+<ul>
+<li>基于网络特征向将要到来的 segment 请求相同投影格式的表示</li>
+</ul>
+</li>
+</ul>
+<p>DASH 插件需要支持相同质量视频的推流。</p>
+<h4 id="应用">应用</h4>
+<p>视角独立型推流主要用于体育、教育和旅游视频内容。</p>
+<h4 id="优点">优点</h4>
+<ul>
+<li>简单</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li>相比于视角依赖型方案视频编码效率低了 30%。</li>
+<li>为不可见的区域要求大量带宽和解码资源。</li>
+</ul>
+<h3 id="viewport-dependent-streaming">Viewport-Dependent Streaming</h3>
+<h4 id="终端设备的任务">终端设备的任务</h4>
+<ul>
+<li>只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。</li>
+<li>监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。</li>
+<li>为服务端准备和用户方向相关的几个自适应集。</li>
+</ul>
+<h4 id="客户端的任务-1">客户端的任务</h4>
+<ul>
+<li>根据网络情况和估计的视角位置决定获取哪个自适应集。</li>
+</ul>
+<h4 id="难点">难点</h4>
+<ul>
+<li>可视区域的确定</li>
+<li>与用户头部移动的同步</li>
+<li>质量调整</li>
+<li>提供平滑的播放体验</li>
+</ul>
+<h4 id="现有的工作">现有的工作</h4>
+<h5 id="各种投影方式在实际推流中表现如何">各种投影方式在实际推流中表现如何？</h5>
+<ul>
+<li>相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。</li>
+<li>偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。
+<ul>
+<li>提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。</li>
+<li>相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。</li>
+</ul>
+</li>
+</ul>
+<h5 id="如何在网络资源受限的情况下提供高质量的推流">如何在网络资源受限的情况下提供高质量的推流？</h5>
+<ul>
+<li>为视角依赖型推流产生不同质量的 segment。
+<ul>
+<li>当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。</li>
+<li>在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。</li>
+<li>这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。</li>
+</ul>
+</li>
+<li>为立体视频的背景和前景视图采用不对称质量。
+<ul>
+<li>可以分别为背景块和前景块分别节省 15%和 41%的比特率。</li>
+</ul>
+</li>
+</ul>
+<h5 id="dash-需要做什么">DASH 需要做什么？</h5>
+<ul>
+<li>manifest 中需要包含视角位置信息和投影元数据。</li>
+<li>优化获取 random access point 的周期来优化视角分辨率自适应体验。</li>
+<li>考虑低延迟和活跃的视角切换。</li>
+</ul>
+<h3 id="tile-based-streaming">Tile-based Streaming</h3>
+<p>传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。</p>
+<h4 id="分块策略">分块策略</h4>
+<ul>
+<li>
+<p>基本完全交付</p>
+</li>
+<li>
+<p>高级完全交付</p>
+</li>
+<li>
+<p>部分交付</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/25/oi8ZDSzyFj6dtXC.png" alt="三种策略在不同视域的两个连续segment上的表现形式"></p>
+<h4 id="分块模式">分块模式</h4>
+<p>1x1，3x2，5x3，6x4，8x5</p>
+<p>其中 6x4 的模式实现了较好的带宽消耗和编码效率的折中。</p>
+<p>在不同的带宽条件下，基本完全交付策略获得了大约 65%的带宽节约。</p>
+<h4 id="具体方案">具体方案</h4>
+<h5 id="clustile">ClusTile</h5>
+<p>基于分簇的方式，推送满足最小带宽需求的 tile 来克服编码效率和计算开销。</p>
+<ul>
+<li>相比于传统和高级的基于 tile 的推流方案，分别实现了 72%和 52%的带宽节约。</li>
+<li>当实际看到的和下载的 tile 有差异时，基于分簇的 tile 选取可能会导致选择不当。</li>
+</ul>
+<h5 id="ghoshs-work">Ghosh&rsquo;s work</h5>
+<p>提议以最低可获得的质量下载周围和远处的 tile。</p>
+<ul>
+<li>相比于其他算法，视角及其周边区域的可变质量提高了 20%的 QoE 水平。</li>
+</ul>
+<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
+<p>介绍了一种自适应 360° 视频流框架。</p>
+<ul>
+<li>
+<p>利用视觉注意力度量来计算每个帧的最佳平铺模式。</p>
+</li>
+<li>
+<p>使用选中的模式，为不同区域的 tile 分配非统一的比特率。</p>
+</li>
+<li>
+<p>比特率的选取取决于估计的视角和网络状况。</p>
+</li>
+<li>
+<p>因为很大部分的带宽被用于传输非视角内的 tile，框架难以优化视角内的质量。</p>
+</li>
+</ul>
+<h5 id="xies-work">Xie&rsquo;s work</h5>
+<p>提出了一套优化框架，以此来最小化预取 tile 的错误，改善与不同比特率相关联的 tile 边界的平滑程度。</p>
+<ul>
+<li>
+<p>定义了两个 QoE 函数，目标是最小化：</p>
+<p>预期质量失真$\Phi(X)$</p>
+<p>当考虑 tile 看到概率时视角的空间质量方差$\Psi(X)$：</p>
+<p>$$
+\Phi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}D_{i,j} * x_{i,j} * p_{i,j}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j} * s_{i}}
+$$</p>
+<p>$$
+\Psi(X) = \frac{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*p_i * (D_{i,j} - s_i * \Phi(X))^{2}}{\sum_{i=1}^{N}\sum_{j=1}^{M}x_{i,j}*s_i}
+$$</p>
+</li>
+<li>
+<p>基于目标缓冲区的自适应方法用于在需要短期视口预测的小缓冲区下进行平滑播放</p>
+<p>在自适应的第 k 步，当第 k 个 segment 集合下载完成时，缓冲区占用率$b_k$由下面的式子给出：</p>
+<p>$$
+b_k = b_{k-1} - \frac{R_k*T}{C_k} + T
+$$</p>
+<p>为了避免用尽所有块，缓冲区的占用率被通过设定一个目标缓冲区水平$B_{target}$所控制，即$b_k = B_{target}$。</p>
+</li>
+<li>
+<p>平均空间质量方差是 0.97，比其他基于 tile 的策略小。</p>
+</li>
+<li>
+<p>所提出的概率自适应框架在感知质量上实现了约 39% 的增益，平均降低了 46% 的空间质量方差。</p>
+</li>
+</ul>
+<h5 id="vander-hoofts-work">Vander Hooft&rsquo;s work</h5>
+<p>将 360 度帧划分成视角内区域和视角外区域。</p>
+<ul>
+<li>首先为所有区域都选择最低质量，然后提高视角内 tile 的质量。</li>
+<li>如果带宽依然可用，接着提高剩下的 tile 的质量。</li>
+<li>启发式的方式在带宽可用的基础上积极提高视角内 tile 的质量。</li>
+<li>没有考虑视角比特率调整时视角预测的错误。</li>
+</ul>
+<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
+<p>提出了一种新的自适应机制，它在每个 segment 中同时考虑头部移动和视角的预测错误，动态地决定视角内的比特率。</p>
+<ul>
+<li>联合适应扩展块的覆盖范围和比特率。</li>
+<li>在不同记录的用户头部运动下的实验评估表明，在不获取非视角内区域过多带宽利用率的情况下，视角内容质量有所提高。</li>
+</ul>
+<h4 id="dash-srd-扩展">DASH SRD 扩展</h4>
+<p>DASH 的 SRD 扩展提供了多种版本的 tile 的关联来节省更多的比特率。</p>
+<h5 id="le-feuvre-and-concolatos-work">Le Feuvre and Concolato&rsquo;s work</h5>
+<p>他们应用了这个 SRD 特性，引入了同时为独立的和运动受限的 HEVC tile 的不同优先级设定，以此来高效地实现基于 tile 的方案。</p>
+<ul>
+<li>使用开源的 GPAC 多媒体框架开发了一个 DASH 客户端，以此来执行带有可配置参数的基于 tile 的推流。</li>
+</ul>
+<h5 id="dacuntos-work">D&rsquo;Acunto&rsquo;s work</h5>
+<p>提出了一种 <a href="https://github.com/tnomedialab/dash-srd.js">MPEG-DASH SRD 方法</a>来促进可缩放和可平移视频的平滑推流。</p>
+<ul>
+<li>总是下载低分辨率的 tile 来避免用户移动视角时的重新缓冲。</li>
+<li>当前视野区域被上采样并展示给用户，以此来支持高质量的缩放功能。</li>
+<li>用<code>JavaScript</code>实现了 SRD 视频播放器。</li>
+</ul>
+<h5 id="hosseinis-work">Hosseini&rsquo;s work</h5>
+<p>基于 SRD 实现了视角内容、相邻 tile 和剩余 tile 的优先级推流。</p>
+<ul>
+<li>用 6 个 3D 网格构建了一套 3D 座标系来在 3D 空间中平滑地表示 tile。</li>
+<li>相比于基础的方式，这种区分质量的推流方案节省了 72%的带宽。</li>
+</ul>
+<h5 id="kim-and-yangs-work">Kim and Yang&rsquo;s work</h5>
+<p>使用改进的 MPEG-DASH SRD 来在质量可变的 tile 层中作选择。</p>
+<ul>
+<li>基于他们之前的工作设计并实现了一个支持多层渲染的 360° VR 播放器，以支持高度不可预测的头部运动数据的高分辨率和低延迟流。</li>
+</ul>
+<h4 id="motion-constrained-tileset">Motion-Constrained TileSet</h4>
+<p>在 HEVC 中，运动约束贴图集(MCTS)是将整个帧表示为子视频的相邻分割，并为自由选择的贴图集提供解码支持。</p>
+<h5 id="zares-work">Zare&rsquo;s work</h5>
+<p>将 MCTS 的概念应用到了全景视频推流中。</p>
+<ul>
+<li>将两个质量版本的视频分割成 tile，以原始的分辨率推流视角内的 tile，以低分辨率推流剩余的 tile。</li>
+<li>它已经表明，选定图块的可变比特率会降低 30% 到 40% 的比特率。</li>
+</ul>
+<h5 id="skupins-work">Skupin&rsquo;s work</h5>
+<p>陈述了一种使用 HEVC 编码器的基于 tile 的可变分辨率的推流系统。</p>
+<ul>
+<li>使用立方贴图投影的 360 度视频被分割成 24 个网格，每个代表了一个独立的比特流。</li>
+<li>两种不同质量的版本被推流到客户端，例如 8 个 tile 以高质量推送，16 个 tile 以低质量推送。</li>
+</ul>
+<h5 id="sons-work">Son&rsquo;s work</h5>
+<p>在基于视角的移动 VR 推流中，为独立的 tile 提取和传输实现了基于 MCTS 的 HEVC 和可缩放的 HEVC 编解码器。</p>
+<ul>
+<li>节省了超过 47%的带宽。</li>
+<li>相比于原始的 HM 和 SHM 编码器表现不佳，因为 MCTS 限制了时间运动信息。</li>
+</ul>
+<h5 id="lees-work">Lee&rsquo;s work</h5>
+<p>用 MCTS 编码 360 度视频 tile，并使用显著性检测网络将混合质量的视频 tile 推流给终端用户。</p>
+<ul>
+<li>通过显著性模型改进 MCTS 的使用，可以在不增加任何复杂性的情况下灵活地对感兴趣的 tile 区域进行解码支持。</li>
+</ul>
+<h4 id="scalable-video-code">Scalable Video Code</h4>
+<p>可伸缩视频编码 SVC 是实现 viewport 自适应的一种替代策略。</p>
+<p>基础层总被需要并且能从客户端预取来避免重新缓冲事件。</p>
+<p>提高层改善 viewport 质量并且可以在带宽充足的时候被请求。</p>
+<p>SVC 促进了一种高效的网络内缓存支持来减少多个客户端请求相同内容时的分发开销。</p>
+<h5 id="nasrabadis-work">Nasrabadi&rsquo;s work</h5>
+<p>使用了一种可伸缩编码方案来解决 360 度视频推流的重新缓冲的问题。</p>
+<ul>
+<li>存在质量波动的问题，因为没有使用任何机制来处理 viewport 的预测错误。</li>
+</ul>
+<h5 id="nguyens-work-1">Nguyen&rsquo;s work</h5>
+<p>建议使用 SVC 协同 viewport 预测来克服网络信道和头部运动的随机性。</p>
+<ul>
+<li>实验表明，所提出的平铺层更新和后期平铺终止特征可使 viewport 质量提高 17%。</li>
+</ul>
+<h4 id="ai-方法的应用">AI 方法的应用</h4>
+<p>背景：传统视频推流中使用强化学习来高效调整视频比特率和实现长期的 QoE 回报。</p>
+<p>和传统视频内容不同，360 度视频包含几个新的方面比如 tile 大小、viewport 预测等。</p>
+<p>直接将现有的强化学习自适应策略应用到 360 度视频上可能会降低推流性能。</p>
+<h5 id="fus-work">Fu&rsquo;s work</h5>
+<p>为 360 度视频提出了称为<em>360SRL</em>的一种序列化强化学习方法，它基于之前决策的 QoE 回报而非估计的带宽状况做出自适应决策。</p>
+<ul>
+<li>360SRL 使用基于 tile 的推流模拟器来增强训练阶段。</li>
+<li>跟踪驱动的评估表明，360SRL 比基线适应方法取得了 12%的 QoE 改善。</li>
+</ul>
+<h5 id="jiangs-work">Jiang&rsquo;s work</h5>
+<p>基于历史带宽、缓冲区空间、tile 大小和 viewport 预测错误等，利用强化学习来做 viewport 和非 viewport 内 tile 的比特率选择。</p>
+<ul>
+<li>所提出系统的架构由状态缓冲区、视口预测 (VPP) 和 tile 比特率选择 (TBS) 代理组成。</li>
+<li>状态缓冲区向 VPP 和 TBS 代理提供用户查看模式和网络状态。</li>
+<li>VPP 代理然后使用 LSTM 模型估计下一个 viewport 位置。</li>
+<li>TBS 代理由 Asynchronous Advantage Actor-Critic (A3C)算法训练以执行合适的比特率决策。</li>
+</ul>
+<h5 id="quans-work">Quan&rsquo;s work</h5>
+<p>通过卷积神经网络(CNN)提取像素运动来分析用户 QoE，并使用它对 tile 动态分组，从而在视频质量和编码效率之间提供重要的平衡。</p>
+<ul>
+<li>使用了基于强化学习的自适应代理，它可以智能地使每个图块的质量适应动态环境。</li>
+<li>使用真实 LTE 带宽跟踪验证该方案，在感知质量方面表现出了卓越的性能，同时也节省了带宽资源。</li>
+</ul>
+<p>背景：深度学习使强化学习能够使用多方面的状态和动作空间进一步优化聚合回报。</p>
+<h5 id="kan-and-xiaos-work">Kan and Xiao&rsquo;s work</h5>
+<p>设计了一套深度强化学习的框架，基于对环境因素的探索和开发，自适应地调整推流策略。</p>
+<ul>
+<li>这两种方案都采用 DRL 的 A3C 算法来进行比特率决策，因为 A3C 算法能使代理变得越来越智能化。</li>
+<li>性能评估表明，所提出的系统平衡了各种 QoE 指标，包括平均视觉质量、平均质量波动和重新缓冲事件等。</li>
+</ul>
+<h5 id="zhangs-work">Zhang&rsquo;s work</h5>
+<p>提出了一个深度强化学习模型，它考虑 viewport 预测准确度和网络状况，使用基于 LSTM 的 ACTOR-CRITIC(AC)网络动态地学习适应比特率分配。</p>
+<ul>
+<li>方案能够很好地适应广泛的动态特性，并且与传统方法相比，提供了 20%到 30%的改进 QoE 回报。</li>
+</ul>
+<h4 id="总结">总结</h4>
+<p>基于 tile 的推流只需要少量的服务端内容版本。</p>
+<p>与依赖视图的推流相比，它包含更低的存储和处理开销。</p>
+<p>提出的大多数方案为 viewport 及其临近的 tile 使用不同的分辨率，这会为高效推流减少带宽开销。</p>
+<p>但是这种区分分辨率的 tile 为了防止 viewport 预测错误会显著地降低能察觉到的视频质量。</p>
+<p>一个 50 个用户的主观实验表明，当混合 1920x1080 和 960x540 分辨率的块时，绝大多数用户能观察到明显的质量降低。</p>
+<p>但是当混合 1920x1080 和 1600x900 分辨率的块时，用户只会注意到微小的差别。</p>
+<p>对于高运动内容，这种混合效应甚至会导致严重的质量下降。</p>
+<p>因此为了动态执行 tile 的选择和基于 DRL 的比特率适应，需要有一个推流分辨率的恰当选择，进而在流质量、空间质量方差、视口预测误差和带宽效率之间获得完美的平衡。</p>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Survey on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/survey/</link>
+    <description>Recent content in Survey on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/survey/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+      <description>Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.&#xA;Purposes:&#xA;Minimal rebuffering events when the playback buffer depletes. Minimal startup delay especially in case of live video streaming. A high overall playback bitrate level with respect to network resources. Minimal video quality oscillations, which occur due to frequent switching. Available bandwidth-based The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+      <pubDate>Sat, 26 Feb 2022 11:26:06 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+      <description>Paper Overview Link: https://ieeexplore.ieee.org/document/8424813&#xA;Level: IEEE Communications Surveys &amp;amp; Tutorials 2019&#xA;Background Traditional non-HAS IP-based streaming The client receives media that is typically pushed by a media server using connection-oriented protocol such as Real-time Messaging Protocol(RTMP/TCP) or connectionless protocol such as Real-time Transport Protocol(RTP/UDP).&#xA;Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</description>
+    </item>
+  </channel>
+</rss>

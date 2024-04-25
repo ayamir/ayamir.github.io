@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/</link>
+    <description>Recent content on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:56:07 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jitter Buffer学习理解（上）</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</link>
+      <pubDate>Thu, 18 Apr 2024 17:33:24 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</guid>
+      <description>Jitter Buffer 是什么 在了解 Jitter Buffer 之前，我们应该先来看一下整个 webrtc 会话中数据传输的完整流程。&#xA;与传输相关的部分主要出现在 pacer 和 Jitter Buffer 这两个部分，从图中可以清晰的看到这两者处于编解码和网络传输之间，考虑到编解码可能会引入突变的帧大小（比如 I 帧），而在网络传输的过程又受到网络传输速率和排队延迟的影响，所以它们的作用其实就比较显而易见了。Pacer 在发送端负责平滑编码后的码流打包成 rtp 包之后，发送到网络上的速率；Jitter Buffer 在接收端负责平滑接收到的 rtp 包到组成解码所需的码流的过程。&#xA;当然，这个传输的过程中离开不了拥塞控制算法如 gcc 和各种抗丢包的技术如 nack，fec 等来保障实时通信质量。在这里我们主要关注传输的流程，相关算法和机制之后再研究。&#xA;Jitter Buffer 可以理解为有两部分的功能，一部分是 Buffer 的功能，也就是作为 rtp 包的缓冲区，并且将 rtp 包恢复成表示可解码帧的码流；另一部分是 Jitter 的功能，也就是通过引入延迟来平滑因帧大小和网络状况而造成的接收帧不均匀的情况。&#xA;buffer 的工作流程 正如前面所说，网络传输的是 rtp 包，而解码器的输入是可以解码的码流，所以需要一个将 rtp 包转换成可以解码的帧的过程。因为一个帧由多个 rtp 包组成，所以肯定需要缓冲区来存放前面收到但是还不足以组成一个帧的 rtp 包，这个缓冲区在 webrtc 中其实就是PacketBuffer。此外，考虑到编解码原理，接收到的 P 帧还需要等它所依赖的 I 帧/P 帧被解码，它才能被解码，所以在PacketBuffer之外还需要一个FrameBuffer来缓存可以解码的一个 GOP 中的各个帧。而负责寻找当前帧所依赖帧的是RtpFrameReferenceFinder，因为这个寻找依赖帧的过程实际上是递归依赖的，直到找到一个 GOP 的 IDR 帧才算结束，这样就能得到按照解码依赖顺序排列的一个 GOP。而最后，因为不同 GOP 的解码是独立的，所以 GOP 之间实际上就直接按照时间顺序排列就完成了 GOP 的排序。</description>
+    </item>
+    <item>
+      <title>同步、异步、阻塞、非阻塞</title>
+      <link>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</link>
+      <pubDate>Sat, 13 Apr 2024 23:39:22 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</guid>
+      <description>概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：&#xA;同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。&#xA;异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。&#xA;阻塞就是在调用结果返回之前，当前线程会被挂起。&#xA;非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。&#xA;那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。&#xA;同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。&#xA;同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。&#xA;以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：&#xA;如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。&#xA;不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。&#xA;在这个例子中我们可以发现：&#xA;如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。&#xA;如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。&#xA;如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。&#xA;这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。&#xA;从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。&#xA;以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。&#xA;为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 + 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。&#xA;阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。&#xA;还是以上面的例子来说：&#xA;阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），&#xA;非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。&#xA;对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）&#xA;对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。&#xA;如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：&#xA;如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。</description>
+    </item>
+    <item>
+      <title>进程、线程和协程</title>
+      <link>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</link>
+      <pubDate>Sat, 06 Apr 2024 19:23:04 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</guid>
+      <description>进程 是什么 学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：&#xA;进程标识符 PID 进程状态：就绪、运行、阻塞 内存资源： 代码段、数据段、堆和栈 文件描述符 fd ： stdin、stdout、stderr、以及进程打开的文件描述符列表比如本地文件以及网络连接等的 fd 寄存器： PC、SP、还有其他的通用寄存器 进程控制信息： 父进程 ID ，子进程 ID ，以及信号处理器这些 有什么用 在拿进程和程序做对比的时候我们知道，进程就是运行着的程序（这里的运行指的是程序被加载到内存空间中然后开始按照程序指令执行，而不是指进程状态中的运行状态），受 OS 的调度，可以说我们写程序的目的就是要让 CPU 可以按照磁盘上的代码指令来执行操作，进程就是实现这一目的的过程。&#xA;因为 OS 使用了虚拟内存这一概念，使得每个进程都认为自己是独占 OS 的，所以一个进程是不知道其他进程的存在的。因而如果面对需要多个进程协作完成一项任务的时候（其实这种情况的描述从逻辑上应该是自上到下的，先有的是一项任务，我们通过分析发现这两个任务需要写多个程序来完成），就会不可避免地引入进程间通信 IPC 。&#xA;常用的进程间通信手段大概有 6 种：消息队列、共享内存、匿名管道、命名管道、信号量、Socket，这几种方式根据需求的不同都有自己的用武之地，不过我个人最习惯用的还是 Socket ，因为它具有最优的可扩展性（跨主机、跨语言），可记录性（可以使用 tcpdump/wireshark 抓包），也完美符合我对于通信这一名词想象（明确的通信双方、全双工的信道）。&#xA;从我的实际项目经历中来看，我的 Unity 客户端实例需要把游戏运行过程中产生的 2D 轨迹数据输入给 Python 端的 AI 模型，并获取模型输出。对于这一场景，我的首选就是 Socket 通信，首先是因为 Socket 具备全双工的特性可以满足需求，其次是使用 Socket 可以在 AI 模型部署到其他主机上的时候也能正常运行。&#xA;线程 是什么 上面说到进程是 OS 资源分配的最小单位，这句话的下半句是：线程是操作系统调度的最小单位，这句话其实暗示了，线程和进程的概念对于单线程的进程而言是相同的。&#xA;OS 在调度 CPU 的时候是以线程为单位的，也就说明线程其实也是一种 OS 级别的概念。对于 Linux 而言，线程和进程使用的是相同的数据结构 task_struct 来表示的，不过进程的创建使用的是 fork() 这一系统调用，而线程的创建用的是 clone() 这一系统调用。</description>
+    </item>
+    <item>
+      <title>什么是 RPC ？</title>
+      <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+      <pubDate>Fri, 29 Mar 2024 23:55:25 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
+      <description>是什么 RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。&#xA;为什么 RPC 的出现主要是为了满足现实世界中多机集群的业务分离， Client 端的业务和 Server 端的业务相互分离，目的是更强的性能、可扩展性和可维护性。&#xA;RPC 在我看来就是传统的前后端 http RESTful 框架的更加 general 的版本，两者在思想上是一致的，只不过 RESTful 框架是把现实业务中的 前端的显示 和 后端的数据处理 进行分离，而 RPC 则是更为通用的一种考虑，只要项目的设计者认为某个功能使用 RPC 进行分离会带来如性能、可靠性、可维护性等非功能特性上的收益，那其实就可以引入 RPC 。RPC 能完成的功能性需求不使用 RPC 一般来说也能实现，RPC 的收益主要体现在非功能性需求上。&#xA;怎么做 RPC 的核心是面向接口编程的思想，Server 端和 Client 端可以通过定义好语言无关的接口（函数签名），双方的过程调用就可以像调用同一文件中的不同函数一样进行。&#xA;既然涉及到了不同主机，那么不可避免地会引入网络通信，而网络通信的本质其实就是需要规定好：消息如何编解码（或者说如何序列化和反序列化）、消息如何通过网络传输。&#xA;因而 RPC 在实现上主要需要考虑两部分，第一个部分是通信协议，第二部分是编码协议，&#xA;通信协议：HTTP/TCP/UDP 编码协议：xml/json/protobuf 目前主流的 RPC 框架在编码协议上基本上都使用 protobuf ，因为 protobuf 作为一种二进制数据可以带来比 xml/json 这种文本数据更高的压缩效率（当然，更加重要的前提条件是 RPC 传输的消息其实不太需要跟人打交道，也就无需可读性）。&#xA;对于通信协议，不同的 RPC 框架可能根据自己的用途有着不同的选择，比如 gRPC 使用的是 HTTP/2，而 tRPC 则根据不同的传输形式（unary和stream）设计了不同的自定义的协议格式。</description>
+    </item>
+    <item>
+      <title>WebRTC任务队列学习笔记</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
+      <pubDate>Tue, 19 Mar 2024 19:32:57 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+      <description>TaskQueue TaskQueue也即任务队列，不过这个类本身并没有与队列相关的任何代码，所以它是用来干什么的呢？&#xA;我们直接来读代码（为了方便，我这里直接把方法的实现代码贴了出来）：&#xA;class RTC_LOCKABLE RTC_EXPORT TaskQueue { public: // TaskQueue priority levels. On some platforms these will map to thread // priorities, on others such as Mac and iOS, GCD queue priorities. using Priority = ::webrtc::TaskQueueFactory::Priority; explicit TaskQueue(std::unique_ptr&amp;lt;webrtc::TaskQueueBase, webrtc::TaskQueueDeleter&amp;gt; task_queue) : impl_(task_queue.release()) {} ~TaskQueue() { impl_-&amp;gt;Delete(); } // Used for DCHECKing the current queue. bool IsCurrent() const { impl_-&amp;gt;IsCurrent(); } // Returns non-owning pointer to the task queue implementation. webrtc::TaskQueueBase* Get() { return impl_; } // TODO(tommi): For better debuggability, implement RTC_FROM_HERE.</description>
+    </item>
+    <item>
+      <title>虚拟地址空间</title>
+      <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+      <pubDate>Wed, 07 Feb 2024 15:56:52 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
+      <description>什么是虚拟地址空间？ 虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。&#xA;虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：&#xA;对于 32 位系统，进程的虚拟地址空间大小为：&#xA;$$ 2^{32} bit = 4^{30} Byte = 4 GiB $$&#xA;对于 64 位系统，进程的虚拟地址空间大小为： $$ 2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB $$&#xA;不过理论是理论，实际是实际。&#xA;对于 32 位的linux系统而言，操作系统占用了空间中上面的 1GiB（从0xC0000000到0xFFFFFFFF），程序可以使用的虚拟空间原则上只有 3GiB（从0x00000000到0xBFFFFFFF），对于 64 位的 OS 跟进程各自占用 128T 的空间，分别在最高处和最低处。 对于 32 位的windows系统而言，操作系统 2GiB，程序 2GiB（不过windows系统可以设置启动参数来将 OS 占用的虚拟地址空间大小缩小到 1GiB）. 进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：&#xA;代码段(.text)：程序代码段 数据段(.data)：已初始化的静态常量、全局变量 BSS 段(.bss)：未初始化的静态变量、全局变量 堆：动态分配的内存，从低地址开始向上增长； 文件映射段：动态库、共享内存等，从高地址开始向下增长； 栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 8 MB，从高地址开始向下增长。 为什么需要虚拟地址空间？ 虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。&#xA;32 位的机器，程序使用的空间大小能超过 4GiB 吗？ 如果指的是虚拟地址空间，那么答案是“否”。因为 32 位的 CPU 只能使用 32 位的指针，最大的寻址范围就到 4GiB。</description>
+    </item>
+    <item>
+      <title>ABI是什么？</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+      <pubDate>Wed, 07 Feb 2024 12:51:01 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
+      <description>ABI 是什么？ ABI: Application Binary Interface（应用二进制接口）。&#xA;其实就是针对 编译器 和 链接器 的二进制级别的一些规范和约束，主要规范的内容有：&#xA;规定函数的调用顺序，也称为“调用约定”，规定了如何将“函数”转换成汇编代码。 规定库函数如何表示，主要对链接过程有指导作用。 规定可以使用什么类型的数据，这些数据如何对齐以及其他低级细节。 ABI 还涉及到 OS 的内容，包括可执行文件的格式、虚拟地址空间布局等细节。 为什么会有 ABI ？ 原因其实很简单，硬件架构、OS、编译工具链以及编程语言的发展和逐层抽象让大部分程序员可以不太在意底层程序的执行过程，而只需要负责编写表明业务逻辑的源代码。大部分程序员不需要在意并不意味着这部分不存在，实际上，这部分内容是通向二进制文件执行的必经之路。&#xA;通过上面的分析可以知道， ABI 这个概念基本上是由(硬件架构, OS, 编译工具链, 编程语言)这个四元组决定的。&#xA;架构兼容性：amd64架构和arm64架构对应的指令集不同，因而一个可执行文件要想在这两个架构上成功运行，就需要编译这两个架构的二进制文件（也就是交叉编译）。 OS 兼容性：windows(PE-COFF), linux(ELF)和macos(MACH-O)上规定的程序二进制文件格式不同，因而也需要为不同的 OS 编译不同的二进制文件。 编译工具链兼容性：这个我们平时遇到的比较多，常见原因是不同的编译器或不同的编译器版本的名字修饰规则不同，导致链接器在链接时找不到对应名字的库函数。 编程语言兼容性：C 语言中的一些基本内容如不同类型数据在内存中存放的形式，寄存器的使用形式等，以及 C++的众多特性：虚函数如何调用、虚表的内容和分布形式、template 如何实例化等等，都是 ABI 所需要规定的内容。 ABI-Compatible ? ABI-compatible 允许编译好的目标代码可以无需修改或重新编译链接就能直接运行，而从上面举的例子就可以发现，ABI 兼容是一件很难做到的事情，光是架构和 OS 的不同就需要不同的目标文件了。&#xA;而编译工具链的兼容性容易做到吗？其实也不容易。目前主流的 C++编译工具链有gcc, llvm(clang)和msvc，这三者之间对于名字修饰的规定都不同，因而一个用clang编译的库函数是无法被一个用msvc编译的main文件调用的。当然，这里指的是默认进行名字修饰的情况，如果使用extern &amp;quot;C&amp;quot;对函数进行修饰，从而要求编译器使用 C 语言的编译和链接规范进行处理就可以解决这个问题。&#xA;C++一直被诟病的原因之一就是二进制兼容性不好，对于小型项目而言使用同一种编译器进行编译可能可行，但是对于大型项目而言不太现实，库代码的提供者通常只是提供编译链接好的库，并不提供源代码，所以要想做到对于所有的编译器（的所有版本）都进行支持是一件困难且不太现实的事情。</description>
+    </item>
+    <item>
+      <title>孤儿进程</title>
+      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+      <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。&#xA;但是结果是 Python 进程并没有变红，而是成为了 init 进程的子进程。&#xA;孤儿进程是怎么产生的 大二学 OS 学到父进程和子进程的概念的时候，还是只是以为父进程和子进程之间应该存在牢固的控制关系，父进程退出时子进程也应该默认退出。&#xA;但是 OS 的实际行为不是这样，子进程和父进程只是说明了二者之间存在谁创建谁的关系，并不存在牢固的控制关系（而是类似于现实中的父子关系）。&#xA;父进程结束时子进程并没有结束，子进程成为孤儿进程，会被 init 进程收养&#xA;父进程崩溃或异常终止&#xA;并发和竞争条件导致父子进程的结束顺序错误&#xA;如何避免孤儿进程的产生 其实就是需要在程序设计时，考虑到上述的这几种可能导致孤儿进程产生的原因，然后对异常情况进行注册和处理。对于开始时的这个引入问题而言，答案可以写成以下两个脚本：&#xA;#!/bin/bash # 定义一个函数来处理信号 cleanup() { echo &amp;#34;捕捉到终止信号，正在终止 Python 进程...&amp;#34; kill $PYTHON_PID exit } # 在接收到 SIGINT || SIGTERM || SIGKILL 时执行 cleanup 函数 trap &amp;#39;cleanup&amp;#39; SIGINT SIGTERM # 启动 Python 脚本并获取其进程 ID python example_python.py &amp;amp; PYTHON_PID=$!</description>
+    </item>
+    <item>
+      <title>Git 常用用法记录</title>
+      <link>https://ayamir.github.io/posts/development/git-usage/</link>
+      <pubDate>Tue, 23 Jan 2024 09:50:29 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/git-usage/</guid>
+      <description>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。&#xA;clone 相关 克隆指定 branch ： git clone --branch &amp;lt;branch-name&amp;gt; &amp;lt;remote-repo-url&amp;gt;&#xA;递归克隆（包括 submodule ）：git clone --recursive&#xA;已经 clone 完的仓库：git submodule update --init --recursive&#xA;checkout 相关 切换分支：git checkout &amp;lt;branch-name&amp;gt; / git switch &amp;lt;branch-name&amp;gt;&#xA;新建分支：git checkout -b &amp;lt;branch-name&amp;gt; / git switch -c &amp;lt;branch-name&amp;gt;&#xA;切换到一个 tag ：git fetch --all --tags --prune -&amp;gt; git tag -&amp;gt; 使用 / 快速搜索 -&amp;gt; git checkout tags/&amp;lt;tag-name&amp;gt; -b &amp;lt;branch-name&amp;gt;&#xA;commit 相关 undo 本地改动（还未 commit）：git restore &amp;lt;file-path&amp;gt;</description>
+    </item>
+    <item>
+      <title>H264 Encode</title>
+      <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+      <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
+      <description>编码框架 编码器包含两个方向的码流分支：&#xA;从左到右的前向码流分支为编码过程；&#xA;从右到左的反向码流分支为重建过程。&#xA;前向编码分支 以 16x16 像素的 MB 为单位进行处理，首先从当前输入的视频图像(Frame or Field)中取一个待编码宏块$F_n$，该宏块以帧内或者帧间的模式进行编码，生成一个预测宏块$P$。&#xA;如果是帧内编码，$P$由当前 Slice 里面已经编码、解码、重构并且还没进行去块滤波的宏块 $μF_n&amp;rsquo;$ 使用帧内预测得到。当前宏块 $μF_n&amp;rsquo;$ 减去预测宏块 $P$，得到残差块$D_n$，对残差块 $D_n$ 进行整数变换（一般是 4x4，或者 8x8）、量化后得到一组系数 $X$ ，再对 $X$ 进行重排序和熵编码，就完成了一个宏块的编码过程。对于 P 帧和 B 帧，如果 ME 时候找不到最佳匹配块那也会使用帧内预测编码。&#xA;经过熵编码的码流加上宏块解码所需的一些信息，如预测模式、量化步长、描述宏块运动预测补偿的运动矢量信息等，就组成了该宏块压缩后的码流，Slice 中所有 MB 的码流加上 Slice 头信息就组成了 Slice 的编码码流，再通过 NAL 层进行传输或存储。图像参数集 PPS 和序列参数集 SPS 则由 NAL 单独进行传输。&#xA;后向重建分支 在后向重建分支中，对量化后的宏块系数 $X$ 进行解码从而得到重建宏块，后续宏块进行编码需要从已重建的宏块中寻找参考块。宏块重建过程如下： 宏块系数 $X$ 经过反量化和反变换之后，得到残差宏块 $D_n$ 的近似值 $D_n&amp;rsquo;$ ，预测块 $P$ 加上 $D_n&amp;rsquo;$ 得到未滤波的重构宏块 $μF_n&amp;rsquo;$ ，再做环路滤波来减少块效应，即得到了最终的重构宏块 $F_n&amp;rsquo;$ ，当图像中所有宏块都重建完成后，就形成了重建图像。&#xA;后向重建分支其实就是包含在编码中的完整解码流程，与真正解码器的唯一区别是： 其预测块 P 直接从前向编码分支中得到，而真正的解码器需要利用码流中解出的预测块信息获得预测块 P。当前图像的已重建宏块会被用做帧内预测的参考，而完整的重建图像会被加入参考帧列表，作为未来编码图像帧预测的参考图像。</description>
+    </item>
+    <item>
+      <title>远程桌面与WebRTC</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+      <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+      <description>关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。&#xA;远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：&#xA;音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：&#xA;基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。&#xA;基于其技术原理，VNC 有以下优点：&#xA;跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：&#xA;因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。&#xA;相比于 VNC，RDP 的实现原理还是比较复杂的：&#xA;首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。&#xA;TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T.</description>
+    </item>
+    <item>
+      <title>在Linux下如何搭建WebRTC的开发环境</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
+      <pubDate>Sun, 23 Apr 2023 21:28:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
+      <description>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。&#xA;准备工作 网络：可以科学上网的梯子 IDE：VSCode 或者 CLion 安装depot_tools Google 有自己的一套用于管理 Chromium 项目的工具，名叫depot_tools，其中有包括git在内的一系列工具和脚本。&#xA;# 创建google目录用于存储google相关的代码 mkdir ~/google cd ~/google # clone depot_tools git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 克隆完成之后需要将depot_tools的路径加到PATH中，Linux 上添加环境变量最简单的方式是修改~/.profile，这种方式与你的登录 shell 是什么没有关系，不管是fish还是bash还是zsh都会吃这种方式：&#xA;# ~/.profile export GOOGLE_BIN=$HOME/google/depot_tools export PATH=$GOOGLE_BIN:$PATH 但是这种方式需要你注销重新登录。&#xA;克隆代码 mkdir webrtc-checkout cd webrtc-checkout fetch --nohooks webrtc gclient sync 整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。&#xA;克隆期间可能会因为网络问题中断，重新执行gclient sync即可，直到所有的模块都克隆完毕。&#xA;按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。&#xA;cd src git checkout master git new-branch &amp;lt;branch-name&amp;gt; 编译 WebRTC 关于 WebRTC 的版本可以在Chromium Dash查到：</description>
+    </item>
+    <item>
+      <title>WebRTC 中关于视频自适应的相关设置</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+      <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+      <description>概况 WebRTC提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。&#xA;视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。&#xA;视频自适应调整的对象：帧率与分辨率。&#xA;资源 Resources监测指标来自于系统或视频流。例如，一个资源可以监测系统温度或者视频流的带宽使用率。&#xA;资源实现了Resource接口：&#xA;当资源检测到被过度使用则调用SetUsageState(kOveruse)； 当资源不再被过度使用则调用SetUsageState(kUnderuse)。 对所有的视频而言，默认有两种类型的资源：&#xA;质量标量资源 编码过度使用资源 QP 标量资源 质量标量资源监测发送视频流中编码之后的帧的量化参数（QP），确保视频流的对于当前的分辨率而言可以接受。&#xA;每一帧被编码之后，QualityScaler就能获得相应的 QP。&#xA;过度使用或者未被充分使用的信号在平均 QP 脱离 QP 阈值之后发出。&#xA;QP 阈值在EncoderInfo中的scaling_settings属性中设置。&#xA;需要注意的是 QP 标量只在降级偏好设置为MAINTAIN_FRAMERATE或BALANCED时启用。&#xA;编码使用资源 编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是 CPU 使用率的代理度量指标。&#xA;当平均编码使用超过了设定的阈值，就会触发过度使用的信号。&#xA;插入其他资源 自定义的资源可以通过Call::AddAdaptationResource方法插入。&#xA;自适应 资源发出过度使用或未充分使用的信号之后，会发送给ResourceAdaptationProcessor，其从VideoStreamAdapter中请求Adaptation提案。这个提案基于视频的降级偏好设置。&#xA;ResourceAdaptationProcessor基于获得的提案来确定是否需要执行当前的Adaptation。&#xA;降级偏好设置 有 3 种设置，在RtpParameters的头文件中定义：&#xA;MAINTAIN_FRAMERATE: 自适应分辨率 MAINTAIN_RESOLUTION: 自适应帧率 BALANCED: 自适应帧率或分辨率 降级偏好设置在RtpParameters中的degradation_perference属性中设置。&#xA;VideoSinkWants和视频流自适应 自适应完成之后就会通知视频流，视频流就会转换自适应为VideoSinkWants。&#xA;这些接收器需求向视频流表明：在其被送去编码之前需要施加一些限制。&#xA;对于自适应而言需要被设置的属性为：&#xA;target_pixel_count: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等， max_pixel_count: 每个视频帧中像素点的最大数量，不能被超过。 max_framerate_fps: 视频的最大帧率，超过这个阈值的帧将会被丢弃。 VideoSinkWants可以被任何视频源应用，或者根据需要可以直接使用其基类AdaptationVideoTraceSource来执行自适应。</description>
+    </item>
+    <item>
+      <title>Note for DQB</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-dqb/</link>
+      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-dqb/</guid>
+      <description>整体概况 Link：Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level：IEEE TCSVT 2021&#xA;DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。&#xA;DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。 这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。&#xA;Model 的建立 执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。 结合剩下分块的感知质量可以完成单帧质量模型的建模。 最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。 主观实验的设定 获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在） 获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停） 获取整个视频的感知质量（没有引入 DQB，所有分块质量相同） 实验结果&#xA;帧质量感知模型 从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：&#xA;$$ d_n = Q_{H, n} - Q_{L, n} $$&#xA;$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。 这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。&#xA;为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：</description>
+    </item>
+    <item>
+      <title>Note for Toward Immersive Experience</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</link>
+      <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</guid>
+      <description>Overview Link: Toward Immersive Experience: Evaluation for Interactive Network Services&#xA;Level: IEEE Network 2022&#xA;Keywords: QoE Metrics&#xA;Background Compared with traditional QoE for regular video/audio services, the existing work on IE is still in its infancy. This work aims at providing systematic and comprehensive research on IE for interactive network services, mainly studying the following three fundamental and challenging issues.&#xA;What is the essential difference between IE and traditional QoE? Which categories of factors mainly influence IE?</description>
+    </item>
+    <item>
+      <title>MLflow 的用法</title>
+      <link>https://ayamir.github.io/posts/development/note-for-mlflow/</link>
+      <pubDate>Mon, 07 Mar 2022 19:25:46 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/note-for-mlflow/</guid>
+      <description>Overview MLflow是一个用于管理机器学习全生命周期的框架。&#xA;其主要的作用是：&#xA;完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflow Tracking 以一种可复现重用的方式包装 ML 代码——MLflow Projects 简化模型部署的难度——MLflow Models 提供中心化的模型存储来管理全生命周期——MLflow Model Registry 现在主要用到的是第三个，所以先记录Models的用法&#xA;MLflow Models MLflow Models本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。&#xA;这种格式定义了一种惯例来让我们以不同的flavor保存模型进而可以被下游工具所理解。&#xA;存储格式 每个MLflow Model是一个包含任意文件的目录，根目录之下有一个MLmodel文件，用于定义多个flavor。&#xA;flavor是MLflow Model的关键概念，抽象上是部署工具可以用来理解模型的一种约定。&#xA;MLflow定义了其所有内置部署工具都支持的几种标准flavor，比如描述如何将模型作为Python函数运行的python_function flavor。&#xA;目录结构示例如下：&#xA;MLmode文件内容示例如下：&#xA;这个模型可以用于任何支持pytorch或python_function flavor的工具，例如可以使用如下的命令用python_function来 serve 一个有python_function flavor的模型：&#xA;mlflow models serve -m my_model Model Signature 模型的输入输出要么是column-based，要么是tensor-based。&#xA;column-based inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the MLflow data type. tensor-based inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the numpy data type.</description>
+    </item>
+    <item>
+      <title>WebGL 样例的解释</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+      <description>Context Create an HTML5 canvas Get the canvas id Obtain WebGL Context The parameter WebGLContextAttributes is not mandatory.&#xA;Attributes Description Default value alpha true: provide an alpha buffer to the canvas; true depth true: drawing buffer contains a depth buffer of at least 16 bits; true stencil true: drawing buffer contains a stencil buffer of at least 8 bits; false antialias true: drawing buffer performs anti-aliasing true premultipliedAlpha true: drawing buffer contains colors with pre-multiplied alpha true preserveDrawingBuffer true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author false let canvas = document.</description>
+    </item>
+    <item>
+      <title>WebGL 样例</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:31 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
+      <description>Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.&#xA;JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0.</description>
+    </item>
+    <item>
+      <title>WebGL 中的管线</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:22 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
+      <description>Overview JavaScript JavaScript is used to write the control code of the program, which includes the following actions:&#xA;Initialization: initialize WebGL context. Arrays: create arrays to hold the data of the geometry. Buffer objects: create buffer objects by passing the arrays as parameters. Shaders: create, compile and link the shaders. Attributes: create attributes, enable them and associate them with buffer objects. Uniforms: associate the uniforms. Transformation matrix: create transformation matrix. Vertex Shader The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods drawElements() and drawArrays().</description>
+    </item>
+    <item>
+      <title>WebGL 基础知识</title>
+      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+      <pubDate>Thu, 03 Mar 2022 10:31:04 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
+      <description>Coordinate System There are x, y, z axes in WebGL, where the z axis signifies depth. The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1). Positive value meaning: z: near viewer. x: near right. y: near top.&#xA;Graphics System Vertices To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon. A vertex is a point which defines the conjunction of the edges of a 3D object.</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+      <description>Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.&#xA;Purposes:&#xA;Minimal rebuffering events when the playback buffer depletes. Minimal startup delay especially in case of live video streaming. A high overall playback bitrate level with respect to network resources. Minimal video quality oscillations, which occur due to frequent switching. Available bandwidth-based The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+      <pubDate>Sat, 26 Feb 2022 11:26:06 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+      <description>Paper Overview Link: https://ieeexplore.ieee.org/document/8424813&#xA;Level: IEEE Communications Surveys &amp;amp; Tutorials 2019&#xA;Background Traditional non-HAS IP-based streaming The client receives media that is typically pushed by a media server using connection-oriented protocol such as Real-time Messaging Protocol(RTMP/TCP) or connectionless protocol such as Real-time Transport Protocol(RTP/UDP).&#xA;Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</description>
+    </item>
+    <item>
+      <title>使用 WebXR 完成基于分块的全景视频自适应码率播放器</title>
+      <link>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</link>
+      <pubDate>Fri, 25 Feb 2022 11:04:23 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webxr-for-panoramic-video/</guid>
+      <description>最近几天一直在用WebXR的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。&#xA;首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用 WebXR 提供的 API）&#xA;分块播放 分块播放的本质是将一整块的全景视频从空间上划分成多个小块，各个小块在时间上与原视频的长度是相同的。&#xA;在实际播放的时候需要将各个小块按照原有的空间顺序排列好之后播放，为了避免各个分块播放进度不同的问题，播放时还需要经过统一的时间同步。&#xA;对应到 web 端的技术实现就是：&#xA;一个分块的视频&amp;lt;-&amp;gt;一个&amp;lt;video&amp;gt;h5 元素&amp;lt;-&amp;gt;一个&amp;lt;canvas&amp;gt;h5 元素&#xA;视频的播放过程就是各个分块对应的&amp;lt;canvas&amp;gt;元素不断重新渲染的过程&#xA;各个分块时间同步的实现需要一个基准视频进行对齐，大体上的原理如下：&#xA;let baseVideo = null; let videos = []; initBaseVideo(); initVideos(); for (video in videos) { video.currentTime = baseVideo.currentTime; } 自适应码率 自适应码率的方案使用dashjs库实现，即对每个分块&amp;lt;video&amp;gt;元素的播放都用dashjs的方案控制：&#xA;import { MediaPlayer } from &amp;#34;dashjs&amp;#34;; let videos = []; let dashs = []; let mpdUrls = []; initVideos(); initMpdUrls(); for (let i = 0; i &amp;lt; tileNum; i++) { let video = videos[i]; let dash = MediaPlayer().</description>
+    </item>
+    <item>
+      <title>在 Jupyter Notebook 中设置 Conda 环境</title>
+      <link>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</link>
+      <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</guid>
+      <description>远程启动jupyter notebool：&#xA;jupyter notebook --no-browser --ip=&amp;#34;&amp;lt;server-ip&amp;gt;&amp;#34; --port=&amp;#34;&amp;lt;server-port&amp;gt;&amp;#34; 激活预先配置好的conda环境，这里假设环境名为keras-tf-2.1.0：&#xA;conda activate keras-tf-2.1.0 安装ipykernel：&#xA;pip3 install ipykernel --user 为ipykernel安装环境：&#xA;python3 -m ipykernel install --user --name=keras-tf-2.1.0 打开notebook更改服务之后刷新即可：</description>
+    </item>
+    <item>
+      <title>Note for Content Based Vp for Live Streaming (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
+      <pubDate>Tue, 25 Jan 2022 11:59:24 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
+      <description>LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：&#xA;模型需要花很长时间从一次预测错误中恢复； 在初始化的阶段预测率成功率很低； 为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。&#xA;基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。&#xA;用户观看行为分析 在直播推流中，不能通过分析其他用户的行为模式来得到特定用户的ROI，因此只能直接从视频内容本身入手。&#xA;通过对视频内容从空间和时间两个维度的分析得出结论：用户的ROI与物体的大小无关，而是很大程度上依赖于物体在视频中的语义，即用户倾向于观看有意义的事物。&#xA;这一结论可以给出推断FoV的直觉：基于检测视频中有意义的物体。&#xA;Methods 首先提出两种直观的通过分析视频内容的视点预测方法，进一步总结这些方法的局限性，并逐步切换到对LiveObj的讨论。&#xA;Basic method Basic方法检测视频中所有的对象并使用其中心作为预测的中心。&#xA;给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, &amp;hellip;, o_k]$ ，其中每个 $o_i(i = 1, &amp;hellip;, k)$ 表示物体的中心坐标： $o_i = &amp;lt;o^{(x)}_i, o^{(y)}_i&amp;gt;$ 。&#xA;最终的预测中心点坐标可以计算出来： $$ C_x = \frac{1}{k} \sum^{k}_{i=1} o^{(x)}_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i $$&#xA;Over-Cover method 受LiveMotion方法的启发，其创建了不规则的预测FoV来覆盖更多的潜在的区域，Over-Cover的方式预测的FoV会覆盖所有包含物体的区域。&#xA;采用YOLOv3来处理帧并检测物体，接着每个检测到的对象生成与该对象共享相同中心的预测子视图，所有子视图的聚合形成最终的预测视口。&#xA;Summary for intuitive methods Basic方式可能会在多个物体的场景中无法正确选择目标；&#xA;Over-Cover方式覆盖所有可能的目标来满足较高的精度，但会导致更高的带宽使用量；&#xA;Velocity方式能很快的适应用户偏好的变化，但是预测精度在长期预测的情况下会显著下降；&#xA;LiveObj Method Over-Cover方法将所有检测到的目标合并到预测的FoV中而导致冗余问题，而用户一次只能观看其中的几个。&#xA;为了解决这个问题，提出基于用户的反馈选择最吸引人的目标，例如用户当前的FoV来形成预测的FoV。&#xA;基于这种想法而提出LiveObj，一种基于轨迹的 VP 方式，通过从Over-Cover方法的结果中过滤掉用户更小可能性看到的目标来缩小最终的FoV。&#xA;Object Detection：处理视频帧并检测目标； User View Estimation：分析用户反馈并用Velocity的方式估计FoV； Object tracking：追踪用户观看的目标； RL-based modeling：接受估计出的FoV和被追踪的目标，最终更新每个分块的状态（选中或未选中） Object Detection and Tracking Detection：YOLOv3；</description>
+    </item>
+    <item>
+      <title>Content Based VP for Live Streaming (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
+      <pubDate>Sat, 22 Jan 2022 18:03:09 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
+      <description>LiveMotion Motivation 基于视频中物体的运动模式来做对应的FoV预测。&#xA;将用户的FoV轨迹与视频内容中运动物体的轨迹结合到一起考虑：&#xA;细节可以参见：note-for-content-motion-viewport-prediction.&#xA;LiveDeep 受限于Motion识别算法，前面提出的LiveMotion只能作用于有清晰并且容易分别的前景背景边界的视频，其健壮性并不能满足全景直播推流的场景。&#xA;Method LiveDeep处理问题的场景为：&#xA;视频内容在线生成； 没有历史用户数据； 预测需要满足实时性的要求； LiveDeep的设计原则：&#xA;online：在线训练在线预测； lifelong：模型在整个视频播放会话中更新； real-time：预测带来的处理延迟不能影响推流延迟； CNN的设计：&#xA;在推流会话的运行时收集并标注训练数据； 以交替迭代的方式进行基于当前视频片段的推理和基于之前视频片段的训练； 子采样少部分的代表帧来运行 VP 以满足实时性的要求； Framework Setup 分包器将视频按照 DASH 标准将视频分段，每个段作为训练模型和预测的单元； 考虑到不同的视频可能具有不同的帧速率，在每个单元中统一采样 $k$ 帧而非以固定的采样率采样； 将每帧图像划分成 $x \times y$ 个分块，最终每个单元中要处理的分块数为 $k \times x \times y$ ； 训练集来自于用户的实时反馈，根据实际FoV和预测FoV之间的差距来标注数据； 用户的轨迹数据来自于用户的实时头部轨迹，采样的帧与CNN模块采样的帧同步； Details 在用于训练的图像还没有被标注之前并不能直接预测，所以 CNN 模块只能以随机的权重给出预测结果。用预测结果与实际结果计算出损失值之后以此来更新 CNN 模型； LSTM 模型只能以用户观看到视频之后的实际轨迹作为训练的输入输入数据； 对下一个片段而言，首先使用两个模块独立做出预测。每个模块的预测都基于子采样之后的 $k$ 个帧； 为了产生对整个片段的预测结果，假设相邻的帧之间共享相同的视野中心（时空局部性）； 取两个模块预测输出的共同的部分作为最终的预测结果； CNN Module 使用经典的 CNN：VGG 作为骨干网络，修改最后一层，只输出两类：感兴趣的和不感兴趣的。&#xA;推理和视口生成 直观上的想法是选择被分类为感兴趣的部分，并且这些所选部分在原始帧中的位置将指示其他帧中可能感兴趣的FoV。&#xA;实际上存在的问题是：几乎所有的部分都被分类为感兴趣的一类，最终结果是整个帧被选择作为预测的结果。&#xA;所以不直接使用 CNN 网络的输出，而是在被分类为感兴趣的部分中进一步细分。通过对输出的分数排序并选择前 $M$ 份比例的输出作为最终的结果，这样通过控制 $M$ 的大小可以调整精度和消耗的带宽。</description>
+    </item>
+    <item>
+      <title>Note for Popularity Aware 360-Degree Video Streaming</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</link>
+      <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</guid>
+      <description>论文概况 Link：Popularity-Aware 360-Degree Video Streaming&#xA;Level：IEEE INFOCOM 2021&#xA;Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization&#xA;Motivation 将视频划分成分块进行编码之后，会降低编码效率，并增大服务端的存储压力。（细节可以参见Optile）&#xA;而分块时根据用户的 ROI 来确定不同的大小，并在客户端预取，这可以节省带宽。&#xA;用户的 ROI 推断利用跨用户的偏好来确定，即所谓的Popularity-Aware。&#xA;Model and Formulation Video Model 视频从时间上被分成固定长度的片段，接着每个片段被从空间上划分成 $C$ 个分块。&#xA;除了常规的分块之外， $M$ 个宏块也被建构出来。&#xA;每个常规分块和宏块都被编码成 $V$ 个不同的码率质量等级并存储在服务端。&#xA;整个推流过程可以看作是一系列连续的下载任务。&#xA;客户端在每次下载任务中的目标是：选择恰当分块（宏块或者常规分块的集合）的恰当质量。&#xA;用 $L$ 表示客户端请求分块时，缓冲区中已经下载但还没有查看的视频的视频长度，为了避免缓冲事件，分块需要在缓冲区被清空即 $L = 0$ 之前被下载完毕。&#xA;QoE Model $$ Q(V_k) = Q_{0}(V_k) - {\omega}_v I_v (V_k) - {\omega}_r I_r (V_k) $$&#xA;$V_k$ 表示下载的第 $k$ 段视频质量； $Q_0$ 表示平均质量； $I_v$ 表示由质量变化导致的质量损害； $I_r$ 表示由缓冲事件导致的质量损害； ${\omega}_v$ 和 ${\omega}_r$ 分别表示质量变化和缓冲的加权因子；</description>
+    </item>
+    <item>
+      <title>VR 和 全景视频的区别总结</title>
+      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+      <description>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。&#xA;全景视频 全景视频实际上事先通过特殊的全景摄像机录制好视频，之后可以在HMD中观看。虽然看到的图像相对于用户当前环境而言是虚拟的，但是终归是从实际环境中录制而来的，本质上更贴近普通视频的全景推广。 在全景视频的观看过程中，用户只有 3DoF 的自由度，即只能完成头部的 3 个角度的运动，同时手柄实际上并不能和视频中的内容进行交互。 全景视频的主要应用在于实景导览，通过事先由拍摄者带着全景录像设备行走拍摄，用户观看时实际是将自己带入到全景设备的位置上，同时移动头部来观察不同角度的视频。 VR VR 主要做的工作是创造出一个完全虚拟的环境，用户戴上HMD之后可以通过其看到虚拟环境中的事物，同时也可以使用HMD配套的手柄等设备进行操作，完成与虚拟环境之间的交互； VR 支持的是 6DoF 的自由度，即除了头部的运动之外也支持身体的前后、左右、上下的移动，手柄； VR 的主要应用在于游戏，比如广受好评的Beat Saber（又称节奏光剑），用户根据音乐节奏通过挥动手柄（在虚拟环境中被建模成光剑）来准确地按照提示的方向去砍击方块； AR 和 MR AR 主要做的工作是将虚拟世界中的事物投影到现实世界中，主体是现实世界，虚拟事物用于增强现实世界。&#xA;MR 主要做的工作是将现实世界中的事物虚拟化进入虚拟世界中，主体是虚拟世界，现实事物混合进虚拟世界中。&#xA;AR 实现起来比较简单，只需要将计算机产生的图像投影显示在现实中即可，目前的应用比如游戏Pokémon GO里面的AR-mode，启用之后游戏中遇到的Pokémon就可以投影在现实中。&#xA;MR 实现起来比较复杂，首先需要用摄像头扫描物体，得到的 2D 图像再交给计算机采用算法进行 3D 重建，最后将虚拟化建模好的物体展示到虚拟世界中，目前的应用比如Meta推出的Workrooms，线上的远距离视频会议在虚拟世界中可以变成虚拟人物之间面对面的交流。&#xA;总结 全景视频侧重于对虚拟环境的观察，而 VR 侧重于对虚拟环境的交互。&#xA;全景视频实际上是将用户带入到全景摄像机的位置上，让用户产生自己身临拍摄的环境中的感觉，本质上是对传统视频的推广；&#xA;VR 实际上是将用户完全带入到虚拟的环境中，用户可以和虚拟环境中的事物进行交互，而虚拟环境中发生的一切都和现实无关，本质上是对传统游戏的推广；&#xA;全景视频实际上和 VR、AR、MR 这种概念距离比较远，实际上只是因为全景摄像机相较于普通摄像机的 360 度视角的特殊性，这能让用户产生沉浸感。&#xA;VR 相比于 AR、MR 而言，是纯粹的虚拟环境，并不涉及到现实事物（除了HMD配套的手柄等设备），而纯粹的虚拟环境将人带入到了一个完全不同的世界，也是 VR 沉浸式体验的来源。&#xA;AR 和 MR 是虚拟和现实交融的技术，前者主体是现实，后者主体是虚拟环境。</description>
+    </item>
+    <item>
+      <title>Note for srlABR Cross User</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+      <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+      <description>论文概况 Link：Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network&#xA;Level：IEEE Transactions on Broadcasting 2021&#xA;Keywords：Cross-user vp, Sequetial RL ABR&#xA;主要工作 使用跨用户注意力网络CUAN来做 VP； 使用360SRL来做 ABR 将上面两者集成到了推流框架中； VP Motivation 形式化 VP 问题如下：&#xA;给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &amp;hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；&#xA;同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；&#xA;目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &amp;hellip;, t+T$ ；</description>
+    </item>
+    <item>
+      <title>Note for 360SRL</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
+      <pubDate>Thu, 13 Jan 2022 12:08:36 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+      <description>论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming&#xA;Level：ICME 2019&#xA;Keywords：ABR、RL、Sequential decision&#xA;创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，&#xA;每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，&#xA;因此对每个片段，有 $N \times M$ 种可选的编码块。&#xA;为了保证播放时的流畅性，需要确定最优的预取集合：&#xA;${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $&#xA;分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</description>
+    </item>
+    <item>
+      <title>全景视频中视口预测相关方法总结</title>
+      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+      <pubDate>Fri, 07 Jan 2022 23:08:36 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
+      <description>视口预测是什么？ 视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。&#xA;相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。&#xA;因为用户在观看全景视频时会在 3DoF 的自由度下转动头部去观看全景视频在空间上的不同部分，所以视口预测做的事情就是在用户的观看过程中预测相较于预测执行时刻的下一时刻的视口位置。&#xA;VP 在传输中所处的作用 基于 tile 的全景视频传输方式之所以热门，就是因其可以通过只传输用户 FoV 内的分块而大幅减少观看过程中消耗的带宽。&#xA;所以对用户 FoV 的预测是首先要处理的因素，如果 VP 精度很高，那么所有的带宽都可以用很高的码率去传输 FoV 内的分块。&#xA;两种方式的基本假设 基于轨迹的方法的基本假设&#xA;相对于当前时刻，前 $hw$ (history window)内用户的 FoV 位置对未来可预测的 $pw$ (predict window)内用户的 FoV 位置有影响，比如用户只有很小可能性会在很短的一段单位时间内做 180 度的转弯，而更小角度的调整则更可能发生。&#xA;基于内容的方法的基本假设&#xA;用户的 FoV 变化是因为对视频内容感兴趣，即 ROI 与 FoV 之间有相关关系，比如在观看篮球比赛这样的全景视频时，用户的 FoV 更可能专注于篮球。&#xA;按照提取 ROI 的来源不同可以分为两种类型：&#xA;从视频内容本身出发，使用 CV 方法去猜测 ROI； 从用户观看视频的热图出发，相当于得到了经过统计之后的平均 FoV 分布，以此推测其他用户的 ROI； 基于轨迹的方式是要在最表层的历史和预测的轨迹之间学习，即假设两者之间只有时空关系。&#xA;跨用户的方式则假设由用户群体所得出的热图可以用来预测单个用户的 FoV，即利用共性来推断个性。&#xA;基于内容的方式直接提取视频显著图来推断 FoV，即进一步假设共性与视频内容本身有关系。&#xA;跨用户预测的概念 基本假设</description>
+    </item>
+    <item>
+      <title>Note for Content Assisted Prediction</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</link>
+      <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</guid>
+      <description>论文概况 Link：Content Assisted Viewport Prediction for Panoramic Video Streaming&#xA;Level：IEEE CVPR 2019 CV4ARVR&#xA;Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion&#xA;主要工作 基于轨迹预测 输入：历史窗口轨迹&#xA;模型：64 个神经元的单层 LSTM，在输入层后面加上一个额外的减法层进行点归一化，以及一个加法层来恢复输出之前的值；用 ADAM 进行优化，MAE 作为损失函数。&#xA;跨用户热图 除了观看者自己的历史 FOV 轨迹之外，其他观看者对同一视频帧的观看方向也有启发性。&#xA;对视频的每一帧，首先收集用户的观看方向（坐标使用原始的来自三个方向的欧拉角表示，而非经纬度）。&#xA;接着将坐标投影到用经纬度表示的 180x360 像素的平面图上，对于图中的每个像素点，可以数出其被看到的次数；并对周围像素应用二维高斯光滑。&#xA;上面的过程可以为视频生成热图：&#xA;视频帧的显著图 鉴于观看相同的全景视频时跨用户行为的共性，进一步假设是内容促使多个观众观看公共区域，因此提取出每个帧的显著图可能会表明用户的 RoI。&#xA;对特定的视频帧，应用经典的特征密集型方法——Ittykoch，它首先根据强度、边缘、颜色和方向将图像分解为多个特征通道，然后将它们组合成识别显著区域。&#xA;除了在静态视频帧上检测显著性之外，进一步进行背景减法来减少不太可能感兴趣的区域：应用基于高斯混合的背景/前景分割算法，高级思想是在连续帧之间临时过滤变化的像素点。&#xA;结合上面这两个过程可以为视频帧提取时间显著图。&#xA;多模态融合 使用包含 3 个 LSTM 分支的深度学习模型来融合上述的几种预测方式的结果。&#xA;基于轨迹的 LSTM（图中绿色分支）从历史窗口 $hw$ 中接受 $n$ 个坐标的输入，接着预测未来窗口 $pw$ 中的 $m$ 个坐标，用 $trj_y_{i}$ 表示；&#xA;基于热图的 LSTM（图中蓝色分支）将每个预测步骤对应的视频帧的热图作为输入，并在 $pw$ 中输出第 2 组 $m$ 个坐标的预测，用 $ht_y_{i}$ 表示：&#xA;对于每个热图，让其通过 3 个卷积层，每个卷积层后面都有一个最大池化层。然后，在此图像特征提取之后，应用展平步骤和 1 个密集层来回归坐标（经纬度表示）。</description>
+    </item>
+    <item>
+      <title>Note for GPAC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-gpac/</link>
+      <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-gpac/</guid>
+      <description>Dash 客户端自适应逻辑 tile priority setup：根据定义的规则对 tile 进行优先级排名。 rate allocation：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。 rate adaption：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。 tile priority setup Dash 客户端加载带有 SRD 信息的 MPD 文件时，首先确定使用 SRD 描述的 tile 集合。&#xA;确定 tile 之间的编码依赖（尤其是使用 HEVC 编码的 tile 时）&#xA;为每个独立的 tile 向媒体渲染器请求一个视频对象，并向其通知 tile 的 SRD 信息。&#xA;渲染器根据需要的显示大小调整 SRD 信息之后，执行视频对象的最终布局。&#xA;一旦 tile 集合被确定，客户端向每个 tile 分配优先级。（每次码率自适应执行的时候都需要分配 tile 优先级）&#xA;Rate allocation 首先需要估计可用带宽（tile 场景和非 tile 场景的估计不同） 在一个视频段播放过程中，客户端需要去下载多个段（并行-HTTP/2） 带宽可以在下载单个段或多个段的平均指标中估计出来。 一旦带宽估计完成，码率分配将 tile 根据其优先级进行分类。 一开始所有的 tile 都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的 tile 的码率。 一旦每个 tile 的码率分配完成，将为目标带宽等于所选比特率的每个 tile 调用常规速率自适应算法 </description>
+    </item>
+    <item>
+      <title>Note for MPC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <description>论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&#xA;Level：ACM SIGCOMM 15&#xA;Keywords：Model Predictive Control，ABR，DASH&#xA;Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。&#xA;文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。&#xA;背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化&#xA;将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；&#xA;每个片段以不同码率编码，$R$ 作为所有可用码率的集合；&#xA;播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；&#xA;对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：&#xA;$q(\cdot):R \rightarrow \R_+$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；</description>
+    </item>
+    <item>
+      <title>Note for TBRA</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
+      <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
+      <description>论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming&#xA;Level：ACM MM 21&#xA;Keywords：Adaptive tiling and bitrate，Mobile streaming&#xA;创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。&#xA;考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：&#xA;从上图可以看到：&#xA;如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。&#xA;创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。&#xA;论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。</description>
+    </item>
+    <item>
+      <title>Note for Content Motion Viewport Prediction</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+      <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+      <description>论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking&#xA;Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019&#xA;Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model&#xA;Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：&#xA;VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；&#xA;其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。&#xA;$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。</description>
+    </item>
+    <item>
+      <title>Note for RnnQoE</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
+      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
+      <description>论文概况 Link：QoE-driven Mobile 360 Video Streaming: Predictive View Generation and Dynamic Tile Selection&#xA;Level：ICCC 2021&#xA;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&#xA;系统建模与形式化 视频划分 先将视频划分成片段：$\Iota = {1, 2, &amp;hellip;, I}$表示片段数为$I$的片段集合。&#xA;接着将片段在空间上均匀划分成$M \times N$个 tile，FOV 由被用户看到的 tile 所确定。&#xA;使用 ERP 投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\degree, 180\degree], \theta_i \in (-90\degree, 90\degree]$来表示用户在第$i$个片段中的视点坐标。&#xA;播放过程中记录用户头部运动的轨迹，积累的数据可以用于 FOV 预测。&#xA;跨用户之间的 FOV 轨迹可以用于提高预测精度。&#xA;QoE 模型 前提&#xA;视频编解码器预先确定，无法调整每个 tile 的码率。&#xA;实现&#xA;每个 tile 都以不同的码率编码成不同的版本。 每个 tile 都有两种分辨率的版本。 QoE 内容</description>
+    </item>
+    <item>
+      <title>Note for OpTile</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-optile/</link>
+      <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-optile/</guid>
+      <description>论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming&#xA;Level：ACM MM 17&#xA;Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size&#xA;背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。&#xA;当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。&#xA;编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。&#xA;对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。&#xA;目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。&#xA;ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。</description>
+    </item>
+    <item>
+      <title>多媒体基础知识</title>
+      <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+      <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
+      <description>媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。&#xA;音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DASH、HLS 将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。&#xA;同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）&#xA;解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如 MP4，FLV 等。&#xA;封装格式 封装格式如 AVI、MPEG、Real Video 将音频和视频组合打包成一个完整的文件.&#xA;封装格式不会影响视频的画质，影响画质的是视频的编码格式。&#xA;解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。&#xA;比如 FLV 或 TS 格式数据，解封装之后得到 H.264-AVC 编码的视频码流和 AAC 编码的音频码流。&#xA;编码 视频的本质是一帧又一帧的图片。&#xA;所以对于一部每秒 30 帧，90 分钟，分辨率为 1920x1080，24 位的真彩色的视频，在压缩之前的大小$S$满足：&#xA;$$ 一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte) \ 总帧数n = 90 * 60 * 30 = 162000 \ 总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB) $$</description>
+    </item>
+    <item>
+      <title>Note for RainbowDQN and Multitype Tiles</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
+      <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
+      <description>论文概况 Level：IEEE Transaction on multimedia 21&#xA;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&#xA;问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。&#xA;基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。&#xA;用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。&#xA;根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。&#xA;FOV 中的 tile 被分配更高的码率；&#xA;OOS 按照与$V$的距离逐步降低质量等级$q_i$；&#xA;Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。&#xA;传输的 tile 在同步完成之后交给渲染器渲染。&#xA;播放器根据各项指标计算可以评估播放性能：&#xA;$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。&#xA;传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。&#xA;传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$&#xA;带宽评估 收集每个 tile 的下载日志来评估带宽。&#xA;使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。&#xA;第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} + (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。</description>
+    </item>
+    <item>
+      <title>Note for 360ProbDASH</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
+      <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
+      <description>论文概况 Link: 360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming&#xA;Level: ACM MM 17&#xA;Keyword:&#xA;Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation&#xA;工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型+预期质量的最大化&#xA;针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）&#xA;提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）&#xA;形式化 QoE-driven 优化问题：&#xA;在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）&#xA;问题建模 形式化参数&#xA;$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级&#xA;$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）&#xA;$\Phi(X)$指质量失真，$\Psi(X)$指质量变化&#xA;目标&#xA;找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) + \eta \cdot \Psi(X) \ s.</description>
+    </item>
+    <item>
+      <title>Note for Dante</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-dante/</link>
+      <pubDate>Wed, 08 Dec 2021 22:14:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-dante/</guid>
+      <description>论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686&#xA;Level: SIGCOMM 18&#xA;Keyword: UDP+FOV-aware+FEC&#xA;工作范围 目标 在给定序列的帧中，为每个 tile设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。&#xA;问题建模 输入 估计的丢包率$p$、发送速率$f$、有$n$个 tile 的$m$个帧($&amp;lt;i, j&amp;gt;$来表示第$i$个帧的第$j$个 tile&#xA;第$&amp;lt;i, j&amp;gt;$个 tile 的大小$v_{i, j}$、第$&amp;lt;i, j&amp;gt;$个 tile 被看到的可能性$\gamma_{i, j}$、&#xA;如果第$&amp;lt;i, j&amp;gt;$ 个 tile 没有被恢复的质量降低率、最大延迟$T$&#xA;输出&#xA;第$&amp;lt;i, j&amp;gt;$个 tile 的 FEC 冗余率$r_{i, j} = \frac{冗余包数量}{原始包数量}$&#xA;最优化问题的形式化 $$ minimize\ \sum_{0&amp;lt;i\le m}\sum_{0&amp;lt;j\le n} \gamma_{i, j}d_{i, j}(p, r_{i, j}) $$&#xA;$$ subject\ \ to\ \ \frac{1}{f}\sum_{0&amp;lt;i\le m}\sum_{0&amp;lt;j\le n}v_{i, j}(1+r_{i, j}) \le T $$</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体传输的实际度量</title>
+      <link>https://ayamir.github.io/posts/papers/note11/</link>
+      <pubDate>Mon, 22 Nov 2021 15:21:59 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note11/</guid>
+      <description>度量指标 viewport 预测精度。 使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。 视频质量。 viewport 内部的 tile 质量（1～5）。 tile 在最高质量层之上花费的时间。 根据用户视线的分布而提出的加权质量度量。 度量参数 分块策略 带宽 延迟 viewport 预测 HTTP 版本 持久化的连接数量 </description>
+    </item>
+    <item>
+      <title>沉浸式推流中应用层的优化</title>
+      <link>https://ayamir.github.io/posts/papers/note10/</link>
+      <pubDate>Mon, 15 Nov 2021 10:13:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note10/</guid>
+      <description>背景 大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。&#xA;在基于 VR 的 HAS 方案中，播放 1 条视频片段就需要取得多种资源：1 次 GET 请求需要同时请求基础的 tile 层和每个空间视频 tile。使用 4x4 的 tile 方案时，客户端需要发起不少于 17 次 GET 请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。&#xA;解决方案 使用多条持久的 TCP 连接 大多数的现代浏览器都支持同时建立并维持多达 6 条 TCP 连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。&#xA;类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的 tile。&#xA;使用 HTTP/2 协议的服务端 push 特性 HTTP/2 协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。&#xA;服务端直接 push 短视频片段可以减少视频的启动时间和端到端延迟。&#xA;并且，服务端 push 特性可以应用在基于 tile 的 VR 视频推流中，客户端可以向服务器同时请求一条视频片段的所有 tile。</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体面临的挑战和启示</title>
+      <link>https://ayamir.github.io/posts/papers/note9/</link>
+      <pubDate>Sun, 14 Nov 2021 19:06:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note9/</guid>
+      <description>最终的目标 主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。&#xA;具体的任务 从 360 度视频的采集到显示的过程中，引入了好几种失真。&#xA;应该重点增加新的拼接、投影和分包方式以减少噪音。&#xA;除了捕获和使用 360 度视频来表示真实世界和实际交互内容之外，环境中还包括 3D 对象。&#xA;3D 对象的合并对于真实的视图而言是一个挑战。&#xA;因为在推流会话中，用户的头部移动高度可变，所以固定的 tiling 方案可能会导致非最优的 viewport 质量。&#xA;推流框架中的 tile 数量应该被动态选择，进而提高推流质量。&#xA;自适应的机制应该足够智能来根据环境因素精确地做出适应。&#xA;应该制定基于深度强化学习的策略，来给 360 度视频帧中不同区域的 tile 分配合适的比特率。&#xA;用户在 360 度视频中的自由导航很容易让其感觉忧虑自己错过了什么重要的东西。&#xA;在 360 度视频中导航的时候，需要支持自然的可见角度方向。&#xA;丰富的环境应配备新颖的定向机制，以支持 360 度视频，同时降低认知负荷，以克服此问题。&#xA;真实的导航依赖 viewport 预测机制。&#xA;现代的预测方式应该使用时空图像特性以及用户的位置信息，采用合适的编解码器卷积 LSTM 结构来减少长期预测误差。&#xA;沉浸式的场景随着用户的交互应该发生变化。&#xA;由于用户与场景的交互而产生的新挑战是通过编码和传输透视图创建的。&#xA;因此预测用户的行为来实现对交互内容的高效编码和推流非常关键。&#xA;对 360 度视频的质量获取方法和度量手段需要进一步研究。&#xA;360 度视频中特殊的音效需要引起注意。</description>
+    </item>
+    <item>
+      <title>360度视频的音频处理</title>
+      <link>https://ayamir.github.io/posts/papers/note8/</link>
+      <pubDate>Sun, 14 Nov 2021 16:52:20 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note8/</guid>
+      <description>背景 空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。&#xA;360 度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。&#xA;360 度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过&#xA;空间音频的再现技术 物理重建 物理重建技术用于合成尽可能接近所需信号的整个声场。&#xA;立体声配置在最流行的声音再现方法中使用两个扬声器，以促进更多的空间信息（包括距离、方向感、环境和舞台合奏）。而多信道再现方法在声学环境中使用，并在消费类设备中流行。&#xA;多信道再现技术 同样的声压场也通过其他物理重建技术产生，如环境中存在的环境声学和波场合成（WFS）。&#xA;需要麦克风阵列来捕获更多的空间声场。&#xA;因为不能直接用于声场特性分析，麦克风记录的内容需要后期处理。&#xA;麦克风阵列用于语音增强、声源分离、回声消除和声音再现。&#xA;感知重建 心理声学技术用于感知重建，以产生对空间声音特征的感知。&#xA;感知重建技术复制空间音频的自然听觉感受来表示物理音频。&#xA;双耳录制技术 双耳录制技术是立体声录制的一种扩展形式，提供 3D 的听觉体验。&#xA;双耳录制技术通过使用两个 360 度麦克风尽可能的复制人耳，这与使用定向麦克风捕捉声音的常规立体声录音相同。&#xA;假人头部的 360 度麦克风用作人耳的代理，因为它提供了耳朵的精确几何坐标。&#xA;假人头部还产生与人头轮廓相互作用的声波。借助 360 度麦克风，与任何其他记录方法相比，空间立体图像的捕获更精确。&#xA;头部相关传递函数（HRTF） 用于双耳音频的实时技术中，以再现复杂的线索，帮助我们通过过滤音频信号来定位声音。&#xA;多个因素（如耳朵、头部和听力环境）会影响线索，因为在现实中，我们会重新定位自己以定位声音。&#xA;选择合适的录音/重放技术对于使听到的声音与真实场景中的体验相同至关重要。&#xA;环境声学 概述 环境声学也被称为 3D 音频，被用于记录、混成和播放一个中心点周围的 360 度音频。&#xA;区别 环境音频和传统的环绕声技术不同。&#xA;双声道和传统环绕声技术背后的原理是相同的，都是通过将声音信号送到特定的扬声器来创建音频。&#xA;环境音频不受任何特定扬声器的预先限制，因为它在即使音域旋转的情况下，也能创造出平滑的音频。&#xA;传统环绕声的格式只有在声音场景保持静态的情况下才能提供出色的成像效果。&#xA;环境音频提供一个完整的球体，将声音均匀地传播到整个球体。&#xA;格式 环境音频有 6 种格式，分别为：A、B、C、D、E、G。&#xA;用途 一阶环境音频的用途 第一阶的环境音频或 B 格式的环境音频，其麦克风用于使用四面体阵列表示线性 VR。&#xA;此外，这些在四个通道中进行处理，例如提供非定向压力水平的“W”。同时，“X、Y 和 Z”分别促进了从前到后、从侧到侧以及从上到下的方向信息。&#xA;一阶环境音频仅适用于相对较小的场景，因为其有限的空间保真度会影响声音定位。&#xA;高阶环境音频的用途 高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。&#xA;总结 </description>
+    </item>
+    <item>
+      <title>自适应策略之viewport依赖型</title>
+      <link>https://ayamir.github.io/posts/papers/note7/</link>
+      <pubDate>Sun, 14 Nov 2021 13:24:59 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note7/</guid>
+      <description>概述 在 360 度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。&#xA;通常的实现方式 在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证 viewport 的平滑转换。&#xA;提出 QER(Quality-focused Regios)的概念使 viewport 内部的视频分辨率高于 viewport 之外的视频分辨率。&#xA;非对称的方式以不同的空间分辨率推流来节省带宽。&#xA;在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。 优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在 viewport 中生成。 缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。 自适应推流参数 可用带宽和网络吞吐量 Viewport 预测的位置 客户端播放器的可用缓冲 参数计算公式 第 n 个估计的 Viewport：$V^e(n)$&#xA;$V^e(n) = V_{fb}$&#xA;$V_{fb}$是最新报告的 viewport 位置&#xA;第 n 个估计的吞吐量：$T^e(n)$&#xA;$T^e(n) = T_{fb}$&#xA;$T_{fb}$是最新报告的吞吐量&#xA;比特率：$R_{bits}$&#xA;$R_{bits} = (1-\beta)T^e(n)$&#xA;$\beta$是安全边缘&#xA;第 n 个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$&#xA;$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$&#xA;$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$&#xA;$w_k = \frac{A(t,k)}{A_{vp}}$&#xA;$L=总帧数$&#xA;$w_k$表示在第 k 个帧中与 viewport 所重叠的 tile 程度</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体现有标准</title>
+      <link>https://ayamir.github.io/posts/papers/note6/</link>
+      <pubDate>Thu, 11 Nov 2021 20:08:03 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note6/</guid>
+      <description>OMAF(Omnidirectional Media Format) OMAF是第 1 个国际化的沉浸式媒体格式，描述了对 360 度视频进行编码、演示、消费的方法。&#xA;OMAF与与现有格式兼容，包括编码（例如HEVC），文件格式（例如ISOBMFF），交付信号（例如DASH，MMT）。&#xA;OMAF中还包括编码、投影、分包和 viewport 方向的元数据。&#xA;OMAF+DASH-&amp;gt;MPD OMAF 与 DASH 相结合，再加上一些额外的描述构成了 MPD 文件格式，用于向客户端通知 360 度媒体的属性。&#xA;OMAF 规定了 9 中媒体配置文件，包括 3 种视频配置文件：基于 HEVC 的 viewport 独立型、基于 HEVC 的 viewport 依赖型、基于 AVC 的 viewport 依赖型。&#xA;OMAF 为视角独立型的推流提供了无视 viewport 位置的连续的视频帧质量。&#xA;常规的 HEVC 编码方式和 DASH 推流格式可以用于 viewport 独立型的推流工作。&#xA;但是使用 HEVC/AVC 编码方式的基于 viewport 的自适应操作是 OMAF 的一项技术开发，允许无限制地使用矩形 RWP 来增强 viewport 区域的质量。&#xA;CMAF(Common Media Application Format) 致力于提供跨多个应用和设备之间的统一的编码格式和媒体配置文件。&#xA;CMAF 使请求低延迟的 segment 成为可能。</description>
+    </item>
+    <item>
+      <title>自适应360度视频推流挑战</title>
+      <link>https://ayamir.github.io/posts/papers/note5/</link>
+      <pubDate>Thu, 04 Nov 2021 11:01:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note5/</guid>
+      <description>背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。&#xA;沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。&#xA;目前主要面临的挑战有以下 4 个：&#xA;Viewport 预测 背景 HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。&#xA;分类 内容不可知的方式基于历史信息对 viewport 进行预测。 内容感知的方式需要视频内容信息来预测未来的 viewport。 内容不可知方式 分类 平均线性回归 LR 航位推算 DR 聚类 机器学习 ML 编解码器体系结构 现有成果 Qian&amp;rsquo;s work——LR 使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。&#xA;当预测后 0.5s、1s、2s 加权线性回归表现更好 Petrangeli&amp;rsquo;s work——LR 将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。&#xA;结合观察者头部的移动，将可变比特率分配给可见和不可见区域。&#xA;作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。&#xA;Mavlankar and Girod&amp;rsquo;s work——运动向量 使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。&#xA;La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体网络问题的相关解决方案</title>
+      <link>https://ayamir.github.io/posts/papers/note4/</link>
+      <pubDate>Sat, 30 Oct 2021 19:20:00 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note4/</guid>
+      <description>概况 现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。&#xA;传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。&#xA;边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。&#xA;解决方案 360 度视频的边缘协助推流 背景 主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。&#xA;在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。&#xA;Hou&amp;rsquo;s work 提出边缘/云服务器渲染可以使计算更加轻便，可以让无线 VR/AR 体验可行并且便携。&#xA;Zhang&amp;rsquo;s work 为 VR 多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。&#xA;进一步陈述了一种服务器选择算法，它基于 QoS 和玩家移动的影响确保所有 VR 玩家之间的公平性。&#xA;Lo&amp;rsquo;s work 考虑了为 360 度视频渲染提供边缘协助的设备的异质性。&#xA;边缘服务器将 HEVC tile 流转码为 viewport 视频流并传输到多个客户端。 最优化算法根据视频质量、HMD 类型和带宽动态决定边缘节点服务哪个客户端。 边缘缓存策略 背景 传统视频的缓冲方案并不能直接应用到 360 度视频上。&#xA;为了在启用边缘缓存的网络中促进 360 度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。&#xA;边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。&#xA;Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流行内容提出了一种缓存策略。&#xA;与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。 Papaioannou&amp;rsquo;s work 提出了基于 tile 分辨率和需求统计信息的缓存策略，用最少的错误，提高要求 tile 的和缓存 tile 这两种版本的 viewport 覆盖率。</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：容器和迭代器</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+      <pubDate>Thu, 28 Oct 2021 17:09:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
+      <description>常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。&#xA;string虽然不是容器，但是支持很多容器的操作。&#xA;容器不为空时：begin()返回的是容器中第一个元素的位置；end()返回的是容器中最后一个元素的后一个位置。&#xA;容器为空时：begin()和end()返回的都是最后一个元素的后一个位置。&#xA;任何可能改变容器大小的操作都会使容器的迭代器失效。&#xA;必须要理解的点 和指针类似的是，迭代器支持对对象的间接访问。&#xA;和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如begin(), end()。&#xA;所有迭代器都支持的运算：&#xA;运算符 例子 含义 * *iter 返回迭代器iter指向元素的引用 -&amp;gt; iter-&amp;gt;mem 解引用iter并获取该元素名为mem的成员，即(*iter).mem ++ ++iter 令iter指向当前元素的后一个元素 &amp;ndash; --iter 令iter指向当前元素的前一个元素 == iter1 == iter2 如果两个迭代器指向相同的元素返回true，否则返回false != iter1 != iter2 上面例子的反面 迭代器的类型有两种：iterator和const_iterator。&#xA;vector&amp;lt;int&amp;gt;::iterator itv; // 可用于读写vector&amp;lt;int&amp;gt;中的元素 string::iterator its; // 可用于读写string对象中的元素 vector&amp;lt;int&amp;gt;::const_iterator citv; // 只能读取元素 string::const_iterator cits; // 只能读取元素 begin()和end()返回哪一种取决于对象本身是否被const修饰。&#xA;C++11 中引入了cbegin()和cend()来专门返回const_iterator。&#xA;认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。&#xA;vector和string的迭代器支持的额外的运算：&#xA;运算 含义 iter + n 运算得到一个新迭代器，指向当前元素的后 n 个元素的位置 iter - n 运算得到一个新迭代器，指向当前元素的前 n 个元素的位置 iter += n 运算得到的新迭代器赋值给iter iter -= n 同上 iter1 - iter2 两个迭代器之间的距离，可正可负 &amp;gt;, &amp;lt;, &amp;lt;=, &amp;gt;= 同两类型的下标运算符中的数字的关系，位置靠前的较小 建议 一般不在意迭代器的类型，因此使用auto来标注。 循环结束的判断条件习惯使用迭代器和!</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：标准库类模板Vector</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+      <pubDate>Thu, 28 Oct 2021 15:35:17 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
+      <description>常见的坑与用法 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。&#xA;使用()和{}对vector执行初始化含义不同。&#xA;using std::vector; vector&amp;lt;int&amp;gt; v1{10}; // 存储1个int对象，值为10 vector&amp;lt;int&amp;gt; v2(10); // 存储10个int对象，值为0 vector&amp;lt;int&amp;gt; v3(10, 1); // 存储10个int对象，值都是1 vector&amp;lt;int&amp;gt; v4{10, 1}; // 存储2个int对象，值分别是10和1 使用{}执行列表初始化时按照顺序遵守 2 个守则：&#xA;如果{}内容可以用于初始化，则采用{}默认的初始化含义。&#xA;如果{}中的内容无法用{}默认的初始化含义做出解释，则会按照()的初始化含义去解释{}。&#xA;using std::vector; using std::string; vector&amp;lt;string&amp;gt; v1{&amp;#34;hi&amp;#34;}; // 存储1个值为hi的string对象 vector&amp;lt;string&amp;gt; v2{10}; // 存储10个值为空的string对象 vector&amp;lt;string&amp;gt; v3{10, &amp;#34;hi&amp;#34;}; // 存储10个值为hi的string对象 与string相同，vector也有size_type作为其size()的返回值类型。&#xA;但是使用时必须首先指定vector由哪个类型定义。&#xA;std::vector&amp;lt;int&amp;gt;::size_type a; // 正确 std::vector::size_type a; // 错误 只有vector内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。&#xA;增加vector中的元素只能使用push_back() or emplace_back()，而不能使用对下标赋值的方式。&#xA;push_back() 和 emplace_back() 的区别来自于两者的函数签名不同：&#xA;emplace_back() 支持通过传入参数在 vector 内部原地构造对象，因而只会调用构造函数 1 次； push_back() 不支持，所以至少会调用 2 次构造函数和 1 次析构函数（临时对象的构造函数和析构函数、vector 内对象的拷贝或移动构造函数）； 两者都支持传入右值引用作为参数，因而可以使用 push_back(std::move(obj)) or emplace_back(std::move(obj)) 来避免对象拷贝操作，从而改善性能。 可以使用 vector 来模拟 stack 的行为：</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：标准库类型string</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+      <pubDate>Thu, 28 Oct 2021 10:31:33 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
+      <description>常见的坑 string.size()和string.length()等价。&#xA;string.size()和其他STL容器的命名风格相一致（如vector, map）。&#xA;string.length()出现主要是因为这样的命名符合人的直觉，有更好的可读性。&#xA;string::size_type是无符号类型，和int不同，能存放下任何string对象的大小。&#xA;+两边至少有一端需要是string对象，不允许两个字符串字面量单独相加。&#xA;using std::string; string a = &amp;#34;a&amp;#34;; string b = a + &amp;#34;b&amp;#34; + &amp;#34;c&amp;#34;; // 正确，从左到右运算时能保证至少一段是string对象 string c = &amp;#34;b&amp;#34; + &amp;#34;c&amp;#34; + a; // 错误，从左到右运算时第一个+左右都是字符串字面量 必须要理解的点 string的初始化方式有两种，一种是默认初始化，另一种是拷贝初始化。&#xA;string.size()返回值类型为string::size_type，出现这种类型是为了体现标准库类型和机器无关的特性。&#xA;string对象的比较运算完全实现了运算符重载（==, !=, &amp;lt;,&amp;lt;=, &amp;gt;, &amp;gt;=）。&#xA;==表明两个对象的内容和长度完全一致，反之任一不同则!=。&#xA;不等关系运算符比较的法则：&#xA;如果两个对象长度不同，但是从前到后内容一致，则长度较短的对象较小。 如果两个对象从前到后有对应位置的字符不同，则这个位置的两个字符的大小关系就是两个对象的大小关系。 string对象赋值操作就是内容的替换。&#xA;string对象相加操作就是内容的拼接，+=操作同理。&#xA;string对象可以与字符串字面量相加。&#xA;形如cname的C++头文件兼容形如ctype.h的C头文件，C++头文件中定义的名字可以在std中找到。&#xA;建议 表达式中出现string.size()函数时就不应该使用int类型，这样可以避免int和unsigned混用的问题。&#xA;C++和C兼容的头文件作选择时，选择C++的头文件。&#xA;处理string对象中每一个字符时，使用foreach语句。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;cctype&amp;gt; using std::string; string str{&amp;#34;Some String&amp;#34;}; for (auto c : str) { std::cout &amp;lt;&amp;lt; c &amp;lt;&amp;lt; std::endl; } // 使用引用来改变原字符串内容 for (auto &amp;amp;c : str) { c = std::toupper(c); } std::cout &amp;lt;&amp;lt; str &amp;lt;&amp;lt; std::endl; 处理string对象中特定字符时使用[]（下标运算符）或者迭代器。</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：类型推导</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+      <pubDate>Tue, 26 Oct 2021 21:14:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
+      <description>常见的坑 auto可以在一条语句中声明多个变量，但是所有变量的类型必须一致。&#xA;decltype在分析表达式类型时并不执行表达式。&#xA;decltype处理解引用操作之后返回的是引用类型，而引用类型的变量必须初始化。&#xA;decltype((variable))的结果永远是引用。&#xA;decltype(variable)的结果只有当variable是引用时才是引用。&#xA;必须要理解的点 auto用于变量初始化时的类型推导，decltype用于分析表达式的类型。 auto对引用类型推导时实际上用的是引用对象的值。 auto与const：详见重学 C++：Const 二三事。 decltype与const：详见重学 C++：Const 二三事。 建议 auto尽量只在类型较长但比较清晰时使用。 decltype尽量不要使用。 </description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：Const二三事</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+      <pubDate>Tue, 26 Oct 2021 15:53:11 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
+      <description>常见的坑 仅用const修饰的对象只在单个文件中有效，如果想在多个文件之间共享const对象，必须在对象定义的前面加extern。&#xA;允许为一个常量引用绑定非常量的对象、字面量和表达式。&#xA;int i = 42; const int &amp;amp;r1 = i; // 正确 const int &amp;amp;r2 = 42; // 正确 const int &amp;amp;r3 = r1 * 2; // 正确 int &amp;amp;r4 = r1 * 2; // 错误 int &amp;amp;r5 = i; r5 = 0; // 正确 r1 = 42; // 错误 指向常量的指针和常量指针：&#xA;int err_numb = 0; const double pi = 3.1415; int *const cur_err = &amp;amp;err_numb; const double *mut_pi_pointer = &amp;amp;pi; const double *const pi_pointer = &amp;amp;pi; 从声明语句的变量符号开始，自右向左看：</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：引用和指针</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+      <pubDate>Tue, 26 Oct 2021 15:49:49 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
+      <description>常见的坑 &amp;amp;和*在不同的上下文里面其含义并不相同，因此完全可以当成不同的符号看待。&#xA;int i = 42; int &amp;amp;r = i; // &amp;amp;在类型名后出现，是声明的一部分，表明r是一个引用 int *p; // *在类型名后出现，是声明的一部分，表明p是一个指针 p = &amp;amp;i; // &amp;amp;在表达式中出现，是取地址符 *p = 43; // *在表达式中出现，是解引用符 int &amp;amp;r2 = *p; // &amp;amp;是声明的一部分，*是解引用符 指针可以用0进行初始化成空指针，但是不可以用0赋值。&#xA;指针之间使用==来比较时，如果结果是true，对应多种情况：&#xA;都是空指针 都是同一个地址 都指向同一个对象 一个指针指向某一个对象，另一个指针指向另一对象的下一地址 必须要理解的点 引用和指针——都可以用于间接访问对象&#xA;引用 指针 复合类型 ✅ ✅ 表示符号 &amp;amp; * 含义 变量的别名 变量在内存中的地址 初始化和赋值时是否需要类型匹配 必须匹配（除常量引用） 必须匹配（除 void*和指向常量的指针） 是否需要初始化 必须初始化 无需初始化 可否重新绑定其他变量 不可以 可以 可否嵌套定义 不可以 可以 引用：&#xA;引用只能绑定在对象上，不能绑定在字面量或者表达式上。 引用只是原有对象的别名，并非对象，因此不可以定义引用的引用。 定义引用时并不开辟新的内存空间，因此不可以定义引用的指针。 指针：&#xA;指针本身就是一个对象，能执行的操作自由度远超过引用。</description>
+    </item>
+    <item>
+      <title>自适应360度视频推流方案</title>
+      <link>https://ayamir.github.io/posts/papers/note3/</link>
+      <pubDate>Mon, 25 Oct 2021 09:34:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note3/</guid>
+      <description>概述 360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。&#xA;相比于常规视频，360 度视频被编码成全向的场景。&#xA;自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。&#xA;分类 Viewport-Independent Streaming 服务端的任务 使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。 客户端的任务 投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。 客户端需要支持对应的投影格式。 客户端像处理传统视频一样完成比特率自适应。 基于网络特征向将要到来的 segment 请求相同投影格式的表示 DASH 插件需要支持相同质量视频的推流。&#xA;应用 视角独立型推流主要用于体育、教育和旅游视频内容。&#xA;优点 简单 缺点 相比于视角依赖型方案视频编码效率低了 30%。 为不可见的区域要求大量带宽和解码资源。 Viewport-Dependent Streaming 终端设备的任务 只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。 监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。 为服务端准备和用户方向相关的几个自适应集。 客户端的任务 根据网络情况和估计的视角位置决定获取哪个自适应集。 难点 可视区域的确定 与用户头部移动的同步 质量调整 提供平滑的播放体验 现有的工作 各种投影方式在实际推流中表现如何？ 相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。 偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。 提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。 相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。 如何在网络资源受限的情况下提供高质量的推流？ 为视角依赖型推流产生不同质量的 segment。 当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。 在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。 这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。 为立体视频的背景和前景视图采用不对称质量。 可以分别为背景块和前景块分别节省 15%和 41%的比特率。 DASH 需要做什么？ manifest 中需要包含视角位置信息和投影元数据。 优化获取 random access point 的周期来优化视角分辨率自适应体验。 考虑低延迟和活跃的视角切换。 Tile-based Streaming 传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。</description>
+    </item>
+    <item>
+      <title>自适应视频推流方案</title>
+      <link>https://ayamir.github.io/posts/papers/note2/</link>
+      <pubDate>Thu, 21 Oct 2021 10:50:54 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note2/</guid>
+      <description>概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。&#xA;目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。&#xA;适应性的视频比特率需要同时匹配网络条件和质量目标的需求。&#xA;分类 服务端适应 大多数服务端适应的方案要求客户端发送系统或网络相关信息。&#xA;质量导向的适应方案（Quality-Oriented Adaptive Scheme/QOAS） 向终端用户提供了高知觉质量的媒体内容。&#xA;QOAS 是 C-S 架构，决策在服务器端产生。&#xA;QOAS 基于客户知觉质量的反馈，提供对推流质量等级的调整。&#xA;智能优先级适应方案（intelligent Prioritized Adaptive Scheme/iPAS） 专用于 802.11 网络。&#xA;iPAS 服务器上的基于固有印象的带宽分配模块被用于组合 QoS 相关的参数和视频内容特征来进行内容的优先级分类和带宽份额分配。&#xA;通过区分多媒体流，iPAS 提供可用无线信道的优先级分配。&#xA;设备导向的适应方案（Device-Oriented Adaptive multimedia Scheme/DOAS） 专用于 LTE 网络，建立在 LTE 下行链路调度机制之上。&#xA;DOAS 专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的 QoE。 客户端适应 基于吞吐量的自适应方案 这类方案基于估计的网络吞吐量从服务端选择视频的比特率。&#xA;HTTP 客户端通过之前的观察记录来估计网络的吞吐量。 通过测量端获取时间（segment fetch time/SFT）来代表发起和收到回复的瞬时 HTTP GET 请求之间的时间段，以此来确定一个推流会话中吞吐量的变化，进而独立地做出适应决策。 在分布式网络中，同时考虑并发和顺序的 SFT。通过比较实际的和理想的 SFT 来选择未来的 segment 的质量等级。 FESTIVE 算法 适用于多个 HAS 客户端共享一个常见的拥塞带宽链路的情形。&#xA;以效率、稳定性、公平性为度量因素的适应性算法。&#xA;探索了一种为分段调度、吞吐量估计和比特率选择而生的健壮的机制。&#xA;包含一个随机调度器来调度下一个视频块的下载。&#xA;多个客户端共享容量为$W$的满带宽链路，每个客户端$x$在$t$时刻播放的视频比特率为$b_x,_t$ ，需要避免以下 3 种问题：</description>
+    </item>
+    <item>
+      <title>360度流媒体面临的挑战、机遇和解决方案</title>
+      <link>https://ayamir.github.io/posts/papers/note1/</link>
+      <pubDate>Wed, 20 Oct 2021 20:08:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note1/</guid>
+      <description>360 度流媒体视频框架 视频采集和拼接 使用不同的 360 度视频采集相机可以将视频内容存储为 3D 的球形内容&#xA;使用不同的投影策略实现降维 策略主要分为 2 种：视角独立型和视角依赖型&#xA;视角独立型 整个 3D 的视频内容被按照统一的质量投影到 2D 平面上&#xA;主要包括等距长方形投影和立方贴图投影&#xA;等距长方形投影(ERP) 使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上&#xA;视角范围：左 180 度～右 180 度、上 90 度～下 90 度&#xA;缺点：&#xA;极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽 由于图像失真导致压缩效率不足 立方贴图投影(CMP) 六面立方体组合用于将球体的像素映射到立方体上的相关像素&#xA;在游戏中被广泛应用&#xA;优点：&#xA;节省空间，相比于等距长方形投影视频体积能减少 25% 缺点：&#xA;只能渲染有限的用户视野 视角依赖型 视角内的内容比之外的内容有更高保真度的表示&#xA;主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影&#xA;金字塔投影 球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向&#xA;优点：&#xA;节省空间，降低 80%的视频体积 缺点：&#xA;用户以 120 度旋转视角时，视频的质量会像旋转 180 度一样急速下降 截断方形金字塔投影 大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔&#xA;优点：&#xA;减少了边缘数据，提高了高码率视频的推流性能 缺点：&#xA;使边缘更加锐利 偏移立方贴图投影 与原始的立方贴图投影类似，球体的像素点被投影到立方体的 6 个面上&#xA;优点：&#xA;视角方向的内容会有更高的质量，提供平滑的视频质量变化 缺点：&#xA;存储开销很大 编码视频内容 目前主要的编码方式有 AVC/H.</description>
+    </item>
+    <item>
+      <title>重学C&#43;&#43;：类型系统基础</title>
+      <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
+      <pubDate>Mon, 18 Oct 2021 19:32:22 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
+      <description>常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。&#xA;字符型被分为 3 种：char, signed char, unsigned char，前两种并不等价。 虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。&#xA;有符号类型在与无符号类型运算时会隐式转换为无符号类型。&#xA;虽然变量初始化时候使用了=号，但是初始化和变量赋值并不相同。&#xA;变量默认初始化：&#xA;变量类型 位置在函数内部 位置在函数外部 内置类型 undefined 0 自定义类型 由类决定 由类决定 #include &amp;lt;iostream&amp;gt; int default_initialize(int a) { // 输出必定是0 std::cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; int b; return b; } int main() { int a; // 输出是随机值 std::cout &amp;lt;&amp;lt; default_initialize(a) &amp;lt;&amp;lt; std::endl; } 如果在函数体内部试图初始化一个extern标记的变量会引发错误。&#xA;在嵌套作用域中，内层作用域中的定义可以覆盖外层作用域中声明的变量。&#xA;可以显式使用域操作符::来指明使用哪层的变量。&#xA;必须要理解的点 字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。&#xA;变量的组成部分：类型和值。说白了就是一个定性一个定量。&#xA;类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。&#xA;值在实际代码运行过程中则被各种函数使用参与运算。&#xA;变量声明和定义：&#xA;声明的意思就是：我要用这个变量。&#xA;定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。&#xA;声明 定义 规定变量的类型和名字 ✅ ✅ 申请空间 ✅ 初始化 ✅ 执行多次 ✅ 用extern标记未初始化的变量来表明只对变量作声明：</description>
+    </item>
+    <item>
+      <title>部署 Immersive Video OMAF-Sample</title>
+      <link>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</link>
+      <pubDate>Sat, 09 Oct 2021 15:31:46 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</guid>
+      <description>原仓库地址：Immersive-Video-Sample&#xA;修改之后的仓库：Immersive-Video-Sample&#xA;Server 端搭建 修改 Dockerfile 手动设置 wget 和 git 的 http_proxy&#xA;旧 package 目录 not found，修改为新 package 目录&#xA;因为找不到 glog 库因此加入软链接操作&#xA;ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0 重新编译内核 运行脚本时显示 libnuma 错误因此推断与 numa 设置有关&#xA;执行numactl -H显示只有一个 node，报错输出显示需要至少两个 numa 节点&#xA;查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数&#xA;手动下载 Linux 内核源代码到/usr/src/目录 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz 解压 tar xpvf linux-5.11.1.tar.gz 复制现有内核配置 cd linux-5.11.1 &amp;amp;&amp;amp; cp -v /boot/config-$(uname -r) .config 安装必要的包 sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev 进入内核配置界面 sudo make menuconfig 按下/键分别查询CONFIG_NUMA和CONFIG_NUMA_EMU位置 手动勾选对应选项之后保存退出 重新编译并等待安装结束 sudo make -j $(nproc) &amp;amp;&amp;amp; sudo make modules_install &amp;amp;&amp;amp; sudo make install 修改grub启动参数加入 fake numa 配置 sudo vim /etc/default/grub 找到对应行并修改为</description>
+    </item>
+    <item>
+      <title>修复 Archlinux 上出现的 GPGME Error</title>
+      <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+      <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
+      <description>Delete old sync files sudo rm /var/lib/pacman/sync/* Re init pacman-key sudo pacman-key --init Populate key sudo pacman-key --populate Re sync sudo pacman -Syyy Now you can update successfully!</description>
+    </item>
+    <item>
+      <title>在 microsoft-edge-dev 上设置 Python selenium</title>
+      <link>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</link>
+      <pubDate>Fri, 26 Mar 2021 21:43:35 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</guid>
+      <description>Get Correct Version microsoft-edge-dev --version The output is Microsoft Edge 91.0.831.1 dev in my case.&#xA;Get Corresponding WebDriver Find the corresponding version at msedgewebdriverstorage and download the zip.&#xA;Extract it to you path like /usr/local/bin or $HOME/.local/bin.&#xA;Write Code Following is a example.&#xA;from msedge.selenium_tools import EdgeOptions, Edge options = EdgeOptions() options.use_chromium = True options.binary_location = r&amp;#34;/usr/bin/microsoft-edge-dev&amp;#34; options.set_capability(&amp;#34;platform&amp;#34;, &amp;#34;LINUX&amp;#34;) webdriver_path = r&amp;#34;/home/ayamir/.local/bin/msedgewebdriver&amp;#34; browser = Edge(options=options, executable_path=webdriver_path) browser.get(&amp;#34;http://localhost:8000&amp;#34;) assert &amp;#34;Django&amp;#34; in browser.</description>
+    </item>
+    <item>
+      <title>Linux 权限相关命令解读</title>
+      <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
+      <pubDate>Mon, 15 Mar 2021 21:43:35 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
+      <description>文件和目录的权限 下图为使用exa命令的部分截图&#xA;上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ：&#xA;剩下的 9 个位置上的字符称为 文件模式 ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限&#xA;id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多个用户组成 文件和目录的访问权限由其所有者授予群组或者用户&#xA;下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果&#xA;uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称&#xA;许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users 现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组&#xA;chmod：更改文件模式 chmod 支持两种标识方法&#xA;八进制表示法&#xA;常用的模式有 7,6,5,4,0&#xA;符号表示法&#xA;如果没有指定字符默认使用all + 表示添加一种权限 - 表示删除一种权限 例如：&#xA;-R 表示递归设置&#xA;umask：设置文件默认权限 使用八进制表示法表示从文件模式属性中删除一个位掩码 掩码的意思：用掩码来取消不同的文件模式&#xA;plain umask&#xA;可以看到输出为：&#xA;plain 0022&#xA;不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</description>
+    </item>
+    <item>
+      <title>在 Linux 上手动设置 DNS</title>
+      <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+      <pubDate>Tue, 26 Jan 2021 21:43:35 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
+      <description>Arch Linux DNS 设置 安装dnsmasq sudo pacman -S dnsmasq 配置/etc/resolv.conf中的域名代理服务器 # Tencent nameserver 119.29.29.29 nameserver 182.254.118.118 # Ali nameserver 223.5.5.5 nameserver 223.6.6.6 # OpenDNS IPv4 nameservers nameserver 208.67.222.222 nameserver 208.67.220.220 # OpenDNS IPv6 nameservers nameserver 2620:0:ccc::2 nameserver 2620:0:ccd::2 # Google IPv4 nameservers nameserver 8.8.8.8 nameserver 8.8.4.4 # Google IPv6 nameservers nameserver 2001:4860:4860::8888 nameserver 2001:4860:4860::8844 # Comodo nameservers nameserver 8.26.56.26 nameserver 8.20.247.20 # Generated by NetworkManager nameserver 192.168.1.1 防止/etc/resolv.conf被修改 sudo chattr +i /etc/resolv.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://ayamir.github.io/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://ayamir.github.io/readme/</guid>
+      <description>个人概况 23 岁，北京邮电大学 2022 级计算机科学与技术专业研究生，2018 级软件工程工学学士。&#xA;本科期间做的的项目：&#xA;一个结合了 B 站和知乎部分功能的的前后端未分离的网站（php/css/html/js/mysql）&#xA;一个实现了拼单、拼车、群聊等功能的 Android App （java）&#xA;一套 Neovim 的配置方案，与其他小伙伴维护至今已获得 2.5K+ star 和 400+ fork （lua）&#xA;研究生期间的项目：&#xA;全景视频的分块传输和 Web 端播放系统（基于 Dash、WebXR、WebGL）&#xA;结合游戏引擎的物体级 ROI 编码增强（基于 Unity、WebRTC、OpenH264）&#xA;基于 Unity 的 VR 开发，以及结合 VR 的 HCI 研究。&#xA;喜欢 coding ，有代码审美，喜欢折腾并且经验丰富，愿意花时间在提高效率上。&#xA;目前的感兴趣方向是音视频、 WebRTC 与云游戏，希望能找到与之相关的工作。&#xA;友链 cl 的博客：https://clslaid.icu/ 黄鸡的博客：https://blog.hyiker.com/ Maxlinn 的博客：https://www.maxlinn.site/ z217 的博客：https://z217blog.cn/ Tackoil 的博客：https://tackoil.github.io/ Leeshy 的博客: https://leeshy-tech.github.io/ </description>
+    </item>
+  </channel>
+</rss>

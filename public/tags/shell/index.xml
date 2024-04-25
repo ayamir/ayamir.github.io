@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/shell/</link>
+    <description>Recent content in Shell on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>孤儿进程</title>
+      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+      <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+      <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。&#xA;但是结果是 Python 进程并没有变红，而是成为了 init 进程的子进程。&#xA;孤儿进程是怎么产生的 大二学 OS 学到父进程和子进程的概念的时候，还是只是以为父进程和子进程之间应该存在牢固的控制关系，父进程退出时子进程也应该默认退出。&#xA;但是 OS 的实际行为不是这样，子进程和父进程只是说明了二者之间存在谁创建谁的关系，并不存在牢固的控制关系（而是类似于现实中的父子关系）。&#xA;父进程结束时子进程并没有结束，子进程成为孤儿进程，会被 init 进程收养&#xA;父进程崩溃或异常终止&#xA;并发和竞争条件导致父子进程的结束顺序错误&#xA;如何避免孤儿进程的产生 其实就是需要在程序设计时，考虑到上述的这几种可能导致孤儿进程产生的原因，然后对异常情况进行注册和处理。对于开始时的这个引入问题而言，答案可以写成以下两个脚本：&#xA;#!/bin/bash # 定义一个函数来处理信号 cleanup() { echo &amp;#34;捕捉到终止信号，正在终止 Python 进程...&amp;#34; kill $PYTHON_PID exit } # 在接收到 SIGINT || SIGTERM || SIGKILL 时执行 cleanup 函数 trap &amp;#39;cleanup&amp;#39; SIGINT SIGTERM # 启动 Python 脚本并获取其进程 ID python example_python.py &amp;amp; PYTHON_PID=$!</description>
+    </item>
+  </channel>
+</rss>

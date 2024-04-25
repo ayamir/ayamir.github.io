@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Backend on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/backend/</link>
+    <description>Recent content in Backend on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/backend/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>什么是 RPC ？</title>
+      <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+      <pubDate>Fri, 29 Mar 2024 23:55:25 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
+      <description>是什么 RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。&#xA;为什么 RPC 的出现主要是为了满足现实世界中多机集群的业务分离， Client 端的业务和 Server 端的业务相互分离，目的是更强的性能、可扩展性和可维护性。&#xA;RPC 在我看来就是传统的前后端 http RESTful 框架的更加 general 的版本，两者在思想上是一致的，只不过 RESTful 框架是把现实业务中的 前端的显示 和 后端的数据处理 进行分离，而 RPC 则是更为通用的一种考虑，只要项目的设计者认为某个功能使用 RPC 进行分离会带来如性能、可靠性、可维护性等非功能特性上的收益，那其实就可以引入 RPC 。RPC 能完成的功能性需求不使用 RPC 一般来说也能实现，RPC 的收益主要体现在非功能性需求上。&#xA;怎么做 RPC 的核心是面向接口编程的思想，Server 端和 Client 端可以通过定义好语言无关的接口（函数签名），双方的过程调用就可以像调用同一文件中的不同函数一样进行。&#xA;既然涉及到了不同主机，那么不可避免地会引入网络通信，而网络通信的本质其实就是需要规定好：消息如何编解码（或者说如何序列化和反序列化）、消息如何通过网络传输。&#xA;因而 RPC 在实现上主要需要考虑两部分，第一个部分是通信协议，第二部分是编码协议，&#xA;通信协议：HTTP/TCP/UDP 编码协议：xml/json/protobuf 目前主流的 RPC 框架在编码协议上基本上都使用 protobuf ，因为 protobuf 作为一种二进制数据可以带来比 xml/json 这种文本数据更高的压缩效率（当然，更加重要的前提条件是 RPC 传输的消息其实不太需要跟人打交道，也就无需可读性）。&#xA;对于通信协议，不同的 RPC 框架可能根据自己的用途有着不同的选择，比如 gRPC 使用的是 HTTP/2，而 tRPC 则根据不同的传输形式（unary和stream）设计了不同的自定义的协议格式。</description>
+    </item>
+  </channel>
+</rss>

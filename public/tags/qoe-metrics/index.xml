@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>QoE Metrics on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/qoe-metrics/</link>
+    <description>Recent content in QoE Metrics on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/qoe-metrics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for Toward Immersive Experience</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</link>
+      <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</guid>
+      <description>Overview Link: Toward Immersive Experience: Evaluation for Interactive Network Services&#xA;Level: IEEE Network 2022&#xA;Keywords: QoE Metrics&#xA;Background Compared with traditional QoE for regular video/audio services, the existing work on IE is still in its infancy. This work aims at providing systematic and comprehensive research on IE for interactive network services, mainly studying the following three fundamental and challenging issues.&#xA;What is the essential difference between IE and traditional QoE? Which categories of factors mainly influence IE?</description>
+    </item>
+  </channel>
+</rss>

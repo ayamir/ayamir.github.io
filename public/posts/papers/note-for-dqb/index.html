@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>Note for DQB - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="整体概况 Link：Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level：IEEE TCSVT 2021
+DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。
+DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。 这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。
+Model 的建立 执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。 结合剩下分块的感知质量可以完成单帧质量模型的建模。 最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。 主观实验的设定 获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在） 获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停） 获取整个视频的感知质量（没有引入 DQB，所有分块质量相同） 实验结果
+帧质量感知模型 从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：
+$$ d_n = Q_{H, n} - Q_{L, n} $$
+$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。 这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。
+为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：" />
+<meta name="keywords"
+  content='QoE' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-dqb/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Note for DQB - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="整体概况 Link：Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level：IEEE TCSVT 2021
+DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。
+DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。 这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。
+Model 的建立 执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。 结合剩下分块的感知质量可以完成单帧质量模型的建模。 最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。 主观实验的设定 获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在） 获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停） 获取整个视频的感知质量（没有引入 DQB，所有分块质量相同） 实验结果
+帧质量感知模型 从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：
+$$ d_n = Q_{H, n} - Q_{L, n} $$
+$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。 这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。
+为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Note for DQB - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="整体概况 Link：Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact Level：IEEE TCSVT 2021
+DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。
+DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。 这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。
+Model 的建立 执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。 结合剩下分块的感知质量可以完成单帧质量模型的建模。 最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。 主观实验的设定 获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在） 获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停） 获取整个视频的感知质量（没有引入 DQB，所有分块质量相同） 实验结果
+帧质量感知模型 从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：
+$$ d_n = Q_{H, n} - Q_{L, n} $$
+$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。 这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。
+为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-dqb/" />
+<meta property="og:site_name" content="Note for DQB" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2022-03-20 22:09:11 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note-for-dqb/">Note for DQB</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Sun, 20 Mar 2022 22:09:11 &#43;0800"
+                    class="no-wrap">
+                    Sun, 20 Mar 2022 22:09:11 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 19:02:12 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 19:02:12 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      1594 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/qoe">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      QoE
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="整体概况">整体概况</h1>
+<p>Link：<a href="https://ieeexplore.ieee.org/document/9317771">Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact</a>
+Level：IEEE TCSVT 2021</p>
+<p>DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。</p>
+<p>DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。
+这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。</p>
+<h1 id="model-的建立">Model 的建立</h1>
+<ol>
+<li>执行一系列主观评估，由低质量分块的比例和质量导致的感知质量的降低可以基于主观实验结果完成建模。</li>
+<li>结合剩下分块的感知质量可以完成单帧质量模型的建模。</li>
+<li>最后将一段时间内的所有帧的感知质量池化，就完成了整个的模型。</li>
+</ol>
+<h2 id="主观实验的设定">主观实验的设定</h2>
+<ol>
+<li>获得 FoV 内帧的感知质量（低质量分块和高质量分块同时存在）</li>
+<li>获取整个视频的感知质量（与上面的实验过程相近，只是过程中没有暂停）</li>
+<li>获取整个视频的感知质量（没有引入 DQB，所有分块质量相同）</li>
+</ol>
+<p>实验结果</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/quality-with-different-proportion-low-quality.png" alt="quality-with-different-proportion-low-quality"></p>
+<h2 id="帧质量感知模型">帧质量感知模型</h2>
+<p>从上面的实验结果可以看出来高质量区域与低质量区域的质量差距 $d_n$ 越大，DQB 效应越显著（符合直觉）。将这部分影响因素看作是感知质量的主要影响因素：</p>
+<p>$$
+d_n = Q_{H, n} - Q_{L, n}
+$$</p>
+<p>$Q_{H, n}$ 和 $Q_{L, n}$ 分别表示第 $n$个 帧高质量分块和低质量分块的感知质量。
+这两个质量从主观实验 3 的主观质量获得，在之后的训练过程中可以被客观质量评估的结果所替换。</p>
+<p>为了调查质量差异 $d_n$ 和感知质量降低 $D_n$ 之间的关系，通过使用实验 1 的帧质量分数计算得出第$n$个帧的感知质量降低：</p>
+<p>$$
+D_n = Q_{H, n} - Q_{HL, n}
+$$</p>
+<p>$Q_{HL, n}$是实验 1 中评分得到的第$n$个帧的 FoV 内感知质量。</p>
+<p>在 6 个视频上的实验结果如下图：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/relationship-with-Dn-and-dn.png" alt="relationship-with-Dn-and-dn"></p>
+<p>可以看到二者的关系可以近似为线性相关，即：</p>
+<p>$$
+D_n = k_1 d_n
+$$</p>
+<p>$k_1$ 作为线性回归的参数，可以计算出来。</p>
+<p>但是对于不同取值的 $p_n$ ， $k_1$ 的取值也相当不同，两者之间的关系可以见下图：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/relationship-with-pn-and-k1.png" alt="relationship-with-pn-and-k1"></p>
+<p>数学表示可以建模为：</p>
+<p>$$
+k_1 = a_1 \cdot ln(a_2 \cdot p_n + a_3) \cdot sgn(p_n - P)
+$$</p>
+<p>$sgn$ 是符号函数，$a_1, a_2, a_3$ 可以从回归中计算出来， $P$ 表示低质量分块的比例。按照图中的回归结果，$P = 0.118$ 时，用户几乎没办法注意到低质量区域的存在。</p>
+<p>最终，由低质量区域暴露引起的感知质量降低 $D_n$ 可以计算为：</p>
+<p>$$
+D_n = a_1 \cdot ln(a_2 \cdot p_n + a_3) \cdot (Q_{H, n} - Q_{L, n}) \cdot sgn(p_n - P)
+$$</p>
+<p>那么实际的感知质量 $Q_n$ 可以计算为：</p>
+<p>$$
+Q_n = Q_{H, n} - D_n
+$$</p>
+<h2 id="时间池化">时间池化</h2>
+<p>可以采用下面两种方式之一完成</p>
+<h3 id="exp-minkowski-basedhttpsieeexploreieeeorgdocument6603210"><a href="https://ieeexplore.ieee.org/document/6603210"><code>Exp Minkowski-Based</code></a></h3>
+<p>单个帧的感知质量由衰减指数加权，衰减指数表示在主观评估中观察到的<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/3299/1/Viewer-response-to-time-varying-video-quality/10.1117/12.320109.short?SSO=1">近因效应</a>。</p>
+<p>最终整个视频的感知质量 $PQ$ 可以计算为：</p>
+<p>$$
+PQ = \Big[\frac{1}{N} \sum_{n=1}^{N} exp\big( \frac{n-N}{\delta} \big) \cdot {Q_n}^p \Big]^{1/p}
+$$</p>
+<p>$N$ 是整个视频的帧数。</p>
+<p>$p$ 是 <code>Minkowski</code>指数，高 $p$ 值强调了最高质量帧的影响。</p>
+<p>$\delta$ 是控制近因效应强度的指数时间常数，以帧的数量的形式给出，高 $\delta$ 值对应较弱的近因效应。</p>
+<p>$p$ 和 $\delta$ 的值可以通过对主观帧质量和视频序列的整体质量进行回归得到。</p>
+<h3 id="quality-contribution-basedhttpsieeexploreieeeorgdocument6235989"><a href="https://ieeexplore.ieee.org/document/6235989"><code>Quality Contribution-Based</code></a></h3>
+<p>之前的研究表明，传统视频在时间维度上的感知质量降低主要与每帧的显示时长相关。</p>
+<p>FoV 自适应的全景视频也与之类似，感知质量与降低质量帧和高质量帧的持续时间相关。因此采用<code>Quality Contribution</code>的概念来描述每帧对视频感知质量的影响（考虑每帧的空间感知质量和显示时长）。</p>
+<p>时间池化是由相应的显示时长加权的每帧的质量贡献的函数，特别的，质量贡献是从 MOS 和显示持续时间之间初步找到的对数关系所导出的：</p>
+<p>$$
+C_n = Q_n \cdot (p_1 + p_2 \cdot log(T))
+$$</p>
+<p>$C_n$ 是第 $n$ 帧的贡献， $T$ 是每帧的显示时长， $T = Max(T, 33.3ms)$，即当帧率不低于 30fps 时，时间不连续性可以忽略。</p>
+<p>接着，二级时间池化法用于池化单帧的分布。这种方法将 FoV 内的帧以注视水平划分为短时帧组(GoFs)，并以 GoF 的质量作为长期时间池化的基本单位来评估感知质量。</p>
+<p>给出每帧的质量贡献之后，每个 GoF 的质量可以计算为</p>
+<p>$$
+Q_{GoF} = \frac{\sum_{n \in N} \big( C(n) \cdot T(n) \big)}{\sum_{n \in N} T(n)}
+$$</p>
+<p>接下来组合 GoF 的质量得到长期时间池化，即可以获得感知质量。</p>
+<p>质量严重受损的帧会影响相邻帧的感知质量，视频中质量最差的部分主要决定整个视频的感知质量。因此提出选择计算出的质量低于平均值 75%的 GoF，以此计算平均质量并作为整个视频的感知质量。</p>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>
