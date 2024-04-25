@@ -2,283 +2,290 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 20:01:42 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WebRTC</title>
-      <link>https://ayamir.github.io/tags/webrtc/</link>
+      <link>http://localhost:1313/tags/webrtc/</link>
       <pubDate>Thu, 18 Apr 2024 17:33:24 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/webrtc/</guid>
+      <guid>http://localhost:1313/tags/webrtc/</guid>
       <description></description>
     </item>
     <item>
       <title>OS</title>
-      <link>https://ayamir.github.io/tags/os/</link>
+      <link>http://localhost:1313/tags/os/</link>
       <pubDate>Sat, 13 Apr 2024 23:39:22 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/os/</guid>
+      <guid>http://localhost:1313/tags/os/</guid>
       <description></description>
     </item>
     <item>
       <title>Backend</title>
-      <link>https://ayamir.github.io/tags/backend/</link>
+      <link>http://localhost:1313/tags/backend/</link>
       <pubDate>Fri, 29 Mar 2024 23:55:25 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/backend/</guid>
+      <guid>http://localhost:1313/tags/backend/</guid>
       <description></description>
     </item>
     <item>
       <title>ABI</title>
-      <link>https://ayamir.github.io/tags/abi/</link>
+      <link>http://localhost:1313/tags/abi/</link>
       <pubDate>Wed, 07 Feb 2024 12:51:01 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/abi/</guid>
+      <guid>http://localhost:1313/tags/abi/</guid>
       <description></description>
     </item>
     <item>
       <title>C&#43;&#43;</title>
-      <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
+      <link>http://localhost:1313/tags/c&#43;&#43;/</link>
       <pubDate>Wed, 07 Feb 2024 12:51:01 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
+      <guid>http://localhost:1313/tags/c&#43;&#43;/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>https://ayamir.github.io/tags/python/</link>
+      <link>http://localhost:1313/tags/python/</link>
       <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/python/</guid>
+      <guid>http://localhost:1313/tags/python/</guid>
       <description></description>
     </item>
     <item>
       <title>Shell</title>
-      <link>https://ayamir.github.io/tags/shell/</link>
+      <link>http://localhost:1313/tags/shell/</link>
       <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/shell/</guid>
+      <guid>http://localhost:1313/tags/shell/</guid>
       <description></description>
     </item>
     <item>
       <title>Git</title>
-      <link>https://ayamir.github.io/tags/git/</link>
+      <link>http://localhost:1313/tags/git/</link>
       <pubDate>Tue, 23 Jan 2024 09:50:29 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/git/</guid>
+      <guid>http://localhost:1313/tags/git/</guid>
       <description></description>
     </item>
     <item>
       <title>Multimedia</title>
-      <link>https://ayamir.github.io/tags/multimedia/</link>
+      <link>http://localhost:1313/tags/multimedia/</link>
       <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/multimedia/</guid>
+      <guid>http://localhost:1313/tags/multimedia/</guid>
       <description></description>
     </item>
     <item>
       <title>QoE</title>
-      <link>https://ayamir.github.io/tags/qoe/</link>
+      <link>http://localhost:1313/tags/qoe/</link>
       <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/qoe/</guid>
+      <guid>http://localhost:1313/tags/qoe/</guid>
       <description></description>
     </item>
     <item>
       <title>QoE Metrics</title>
-      <link>https://ayamir.github.io/tags/qoe-metrics/</link>
+      <link>http://localhost:1313/tags/qoe-metrics/</link>
       <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/qoe-metrics/</guid>
+      <guid>http://localhost:1313/tags/qoe-metrics/</guid>
       <description></description>
     </item>
     <item>
       <title>ML</title>
-      <link>https://ayamir.github.io/tags/ml/</link>
+      <link>http://localhost:1313/tags/ml/</link>
       <pubDate>Mon, 07 Mar 2022 19:25:46 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/ml/</guid>
+      <guid>http://localhost:1313/tags/ml/</guid>
       <description></description>
     </item>
     <item>
       <title>WebGL</title>
-      <link>https://ayamir.github.io/tags/webgl/</link>
+      <link>http://localhost:1313/tags/webgl/</link>
       <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/webgl/</guid>
+      <guid>http://localhost:1313/tags/webgl/</guid>
       <description></description>
     </item>
     <item>
       <title>ABR</title>
-      <link>https://ayamir.github.io/tags/abr/</link>
+      <link>http://localhost:1313/tags/abr/</link>
       <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/abr/</guid>
+      <guid>http://localhost:1313/tags/abr/</guid>
       <description></description>
     </item>
     <item>
       <title>Survey</title>
-      <link>https://ayamir.github.io/tags/survey/</link>
+      <link>http://localhost:1313/tags/survey/</link>
       <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/survey/</guid>
+      <guid>http://localhost:1313/tags/survey/</guid>
       <description></description>
     </item>
     <item>
       <title>WebXR</title>
-      <link>https://ayamir.github.io/tags/webxr/</link>
+      <link>http://localhost:1313/tags/webxr/</link>
       <pubDate>Fri, 25 Feb 2022 11:04:23 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/webxr/</guid>
+      <guid>http://localhost:1313/tags/webxr/</guid>
       <description></description>
     </item>
     <item>
       <title>Conda</title>
-      <link>https://ayamir.github.io/tags/conda/</link>
+      <link>http://localhost:1313/tags/conda/</link>
       <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/conda/</guid>
+      <guid>http://localhost:1313/tags/conda/</guid>
       <description></description>
     </item>
     <item>
       <title>Jupyter</title>
-      <link>https://ayamir.github.io/tags/jupyter/</link>
+      <link>http://localhost:1313/tags/jupyter/</link>
       <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/jupyter/</guid>
+      <guid>http://localhost:1313/tags/jupyter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nginx</title>
+      <link>http://localhost:1313/tags/nginx/</link>
+      <pubDate>Fri, 11 Feb 2022 20:43:46 +0800</pubDate>
+      <guid>http://localhost:1313/tags/nginx/</guid>
       <description></description>
     </item>
     <item>
       <title>Content-Based Predict</title>
-      <link>https://ayamir.github.io/tags/content-based-predict/</link>
+      <link>http://localhost:1313/tags/content-based-predict/</link>
       <pubDate>Tue, 25 Jan 2022 11:59:24 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/content-based-predict/</guid>
+      <guid>http://localhost:1313/tags/content-based-predict/</guid>
       <description></description>
     </item>
     <item>
       <title>Dynamic Tiling</title>
-      <link>https://ayamir.github.io/tags/dynamic-tiling/</link>
+      <link>http://localhost:1313/tags/dynamic-tiling/</link>
       <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/dynamic-tiling/</guid>
+      <guid>http://localhost:1313/tags/dynamic-tiling/</guid>
       <description></description>
     </item>
     <item>
       <title>Heuristic</title>
-      <link>https://ayamir.github.io/tags/heuristic/</link>
+      <link>http://localhost:1313/tags/heuristic/</link>
       <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/heuristic/</guid>
+      <guid>http://localhost:1313/tags/heuristic/</guid>
       <description></description>
     </item>
     <item>
       <title>Panoramic Video</title>
-      <link>https://ayamir.github.io/tags/panoramic-video/</link>
+      <link>http://localhost:1313/tags/panoramic-video/</link>
       <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/panoramic-video/</guid>
+      <guid>http://localhost:1313/tags/panoramic-video/</guid>
       <description></description>
     </item>
     <item>
       <title>VR</title>
-      <link>https://ayamir.github.io/tags/vr/</link>
+      <link>http://localhost:1313/tags/vr/</link>
       <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/vr/</guid>
+      <guid>http://localhost:1313/tags/vr/</guid>
       <description></description>
     </item>
     <item>
       <title>Cross-User Vp</title>
-      <link>https://ayamir.github.io/tags/cross-user-vp/</link>
+      <link>http://localhost:1313/tags/cross-user-vp/</link>
       <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/cross-user-vp/</guid>
+      <guid>http://localhost:1313/tags/cross-user-vp/</guid>
       <description></description>
     </item>
     <item>
       <title>Immersive Video</title>
-      <link>https://ayamir.github.io/tags/immersive-video/</link>
+      <link>http://localhost:1313/tags/immersive-video/</link>
       <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/immersive-video/</guid>
+      <guid>http://localhost:1313/tags/immersive-video/</guid>
       <description></description>
     </item>
     <item>
       <title>Viewport Predict</title>
-      <link>https://ayamir.github.io/tags/viewport-predict/</link>
+      <link>http://localhost:1313/tags/viewport-predict/</link>
       <pubDate>Fri, 07 Jan 2022 23:08:36 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/viewport-predict/</guid>
+      <guid>http://localhost:1313/tags/viewport-predict/</guid>
       <description></description>
     </item>
     <item>
       <title>Trajectory-Based Predict</title>
-      <link>https://ayamir.github.io/tags/trajectory-based-predict/</link>
+      <link>http://localhost:1313/tags/trajectory-based-predict/</link>
       <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/trajectory-based-predict/</guid>
+      <guid>http://localhost:1313/tags/trajectory-based-predict/</guid>
       <description></description>
     </item>
     <item>
       <title>DASH</title>
-      <link>https://ayamir.github.io/tags/dash/</link>
+      <link>http://localhost:1313/tags/dash/</link>
       <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/dash/</guid>
+      <guid>http://localhost:1313/tags/dash/</guid>
       <description></description>
     </item>
     <item>
       <title>MPC</title>
-      <link>https://ayamir.github.io/tags/mpc/</link>
+      <link>http://localhost:1313/tags/mpc/</link>
       <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/mpc/</guid>
+      <guid>http://localhost:1313/tags/mpc/</guid>
       <description></description>
     </item>
     <item>
       <title>Mobile Device</title>
-      <link>https://ayamir.github.io/tags/mobile-device/</link>
+      <link>http://localhost:1313/tags/mobile-device/</link>
       <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/mobile-device/</guid>
+      <guid>http://localhost:1313/tags/mobile-device/</guid>
       <description></description>
     </item>
     <item>
       <title>Live Video</title>
-      <link>https://ayamir.github.io/tags/live-video/</link>
+      <link>http://localhost:1313/tags/live-video/</link>
       <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/live-video/</guid>
+      <guid>http://localhost:1313/tags/live-video/</guid>
       <description></description>
     </item>
     <item>
       <title>Dynamic Tile Selection</title>
-      <link>https://ayamir.github.io/tags/dynamic-tile-selection/</link>
+      <link>http://localhost:1313/tags/dynamic-tile-selection/</link>
       <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/dynamic-tile-selection/</guid>
+      <guid>http://localhost:1313/tags/dynamic-tile-selection/</guid>
       <description></description>
     </item>
     <item>
       <title>RNN</title>
-      <link>https://ayamir.github.io/tags/rnn/</link>
+      <link>http://localhost:1313/tags/rnn/</link>
       <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/rnn/</guid>
+      <guid>http://localhost:1313/tags/rnn/</guid>
       <description></description>
     </item>
     <item>
       <title>Content-Based Division</title>
-      <link>https://ayamir.github.io/tags/content-based-division/</link>
+      <link>http://localhost:1313/tags/content-based-division/</link>
       <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/content-based-division/</guid>
+      <guid>http://localhost:1313/tags/content-based-division/</guid>
       <description></description>
     </item>
     <item>
       <title>DRL</title>
-      <link>https://ayamir.github.io/tags/drl/</link>
+      <link>http://localhost:1313/tags/drl/</link>
       <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/drl/</guid>
+      <guid>http://localhost:1313/tags/drl/</guid>
       <description></description>
     </item>
     <item>
       <title>Rainbow-DQN</title>
-      <link>https://ayamir.github.io/tags/rainbow-dqn/</link>
+      <link>http://localhost:1313/tags/rainbow-dqn/</link>
       <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/rainbow-dqn/</guid>
+      <guid>http://localhost:1313/tags/rainbow-dqn/</guid>
       <description></description>
     </item>
     <item>
       <title>Probabilistic Model</title>
-      <link>https://ayamir.github.io/tags/probabilistic-model/</link>
+      <link>http://localhost:1313/tags/probabilistic-model/</link>
       <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/probabilistic-model/</guid>
+      <guid>http://localhost:1313/tags/probabilistic-model/</guid>
       <description></description>
     </item>
     <item>
       <title>UDP</title>
-      <link>https://ayamir.github.io/tags/udp/</link>
+      <link>http://localhost:1313/tags/udp/</link>
       <pubDate>Wed, 08 Dec 2021 22:14:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/udp/</guid>
+      <guid>http://localhost:1313/tags/udp/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>https://ayamir.github.io/tags/linux/</link>
+      <link>http://localhost:1313/tags/linux/</link>
       <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate>
-      <guid>https://ayamir.github.io/tags/linux/</guid>
+      <guid>http://localhost:1313/tags/linux/</guid>
       <description></description>
     </item>
   </channel>

@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>OS on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/os/</link>
+    <link>http://localhost:1313/tags/os/</link>
     <description>Recent content in OS on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/os/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>同步、异步、阻塞、非阻塞</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</link>
+      <link>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</link>
       <pubDate>Sat, 13 Apr 2024 23:39:22 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</guid>
       <description>概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：&#xA;同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。&#xA;异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。&#xA;阻塞就是在调用结果返回之前，当前线程会被挂起。&#xA;非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。&#xA;那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。&#xA;同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。&#xA;同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。&#xA;以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：&#xA;如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。&#xA;不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。&#xA;在这个例子中我们可以发现：&#xA;如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。&#xA;如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。&#xA;如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。&#xA;这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。&#xA;从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。&#xA;以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。&#xA;为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 + 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。&#xA;阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。&#xA;还是以上面的例子来说：&#xA;阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），&#xA;非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。&#xA;对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）&#xA;对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。&#xA;如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：&#xA;如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。</description>
     </item>
     <item>
       <title>进程、线程和协程</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</link>
+      <link>http://localhost:1313/posts/knowledge/os/process-thread-coroutine/</link>
       <pubDate>Sat, 06 Apr 2024 19:23:04 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/process-thread-coroutine/</guid>
       <description>进程 是什么 学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：&#xA;进程标识符 PID 进程状态：就绪、运行、阻塞 内存资源： 代码段、数据段、堆和栈 文件描述符 fd ： stdin、stdout、stderr、以及进程打开的文件描述符列表比如本地文件以及网络连接等的 fd 寄存器： PC、SP、还有其他的通用寄存器 进程控制信息： 父进程 ID ，子进程 ID ，以及信号处理器这些 有什么用 在拿进程和程序做对比的时候我们知道，进程就是运行着的程序（这里的运行指的是程序被加载到内存空间中然后开始按照程序指令执行，而不是指进程状态中的运行状态），受 OS 的调度，可以说我们写程序的目的就是要让 CPU 可以按照磁盘上的代码指令来执行操作，进程就是实现这一目的的过程。&#xA;因为 OS 使用了虚拟内存这一概念，使得每个进程都认为自己是独占 OS 的，所以一个进程是不知道其他进程的存在的。因而如果面对需要多个进程协作完成一项任务的时候（其实这种情况的描述从逻辑上应该是自上到下的，先有的是一项任务，我们通过分析发现这两个任务需要写多个程序来完成），就会不可避免地引入进程间通信 IPC 。&#xA;常用的进程间通信手段大概有 6 种：消息队列、共享内存、匿名管道、命名管道、信号量、Socket，这几种方式根据需求的不同都有自己的用武之地，不过我个人最习惯用的还是 Socket ，因为它具有最优的可扩展性（跨主机、跨语言），可记录性（可以使用 tcpdump/wireshark 抓包），也完美符合我对于通信这一名词想象（明确的通信双方、全双工的信道）。&#xA;从我的实际项目经历中来看，我的 Unity 客户端实例需要把游戏运行过程中产生的 2D 轨迹数据输入给 Python 端的 AI 模型，并获取模型输出。对于这一场景，我的首选就是 Socket 通信，首先是因为 Socket 具备全双工的特性可以满足需求，其次是使用 Socket 可以在 AI 模型部署到其他主机上的时候也能正常运行。&#xA;线程 是什么 上面说到进程是 OS 资源分配的最小单位，这句话的下半句是：线程是操作系统调度的最小单位，这句话其实暗示了，线程和进程的概念对于单线程的进程而言是相同的。&#xA;OS 在调度 CPU 的时候是以线程为单位的，也就说明线程其实也是一种 OS 级别的概念。对于 Linux 而言，线程和进程使用的是相同的数据结构 task_struct 来表示的，不过进程的创建使用的是 fork() 这一系统调用，而线程的创建用的是 clone() 这一系统调用。</description>
     </item>
     <item>
       <title>虚拟地址空间</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+      <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
       <pubDate>Wed, 07 Feb 2024 15:56:52 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
       <description>什么是虚拟地址空间？ 虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。&#xA;虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：&#xA;对于 32 位系统，进程的虚拟地址空间大小为：&#xA;$$ 2^{32} bit = 4^{30} Byte = 4 GiB $$&#xA;对于 64 位系统，进程的虚拟地址空间大小为： $$ 2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB $$&#xA;不过理论是理论，实际是实际。&#xA;对于 32 位的linux系统而言，操作系统占用了空间中上面的 1GiB（从0xC0000000到0xFFFFFFFF），程序可以使用的虚拟空间原则上只有 3GiB（从0x00000000到0xBFFFFFFF），对于 64 位的 OS 跟进程各自占用 128T 的空间，分别在最高处和最低处。 对于 32 位的windows系统而言，操作系统 2GiB，程序 2GiB（不过windows系统可以设置启动参数来将 OS 占用的虚拟地址空间大小缩小到 1GiB）. 进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：&#xA;代码段(.text)：程序代码段 数据段(.data)：已初始化的静态常量、全局变量 BSS 段(.bss)：未初始化的静态变量、全局变量 堆：动态分配的内存，从低地址开始向上增长； 文件映射段：动态库、共享内存等，从高地址开始向下增长； 栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 8 MB，从高地址开始向下增长。 为什么需要虚拟地址空间？ 虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。&#xA;32 位的机器，程序使用的空间大小能超过 4GiB 吗？ 如果指的是虚拟地址空间，那么答案是“否”。因为 32 位的 CPU 只能使用 32 位的指针，最大的寻址范围就到 4GiB。</description>
     </item>
     <item>
       <title>孤儿进程</title>
-      <link>https://ayamir.github.io/posts/development/orphan-process/</link>
+      <link>http://localhost:1313/posts/development/orphan-process/</link>
       <pubDate>Mon, 29 Jan 2024 10:31:56 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/development/orphan-process/</guid>
+      <guid>http://localhost:1313/posts/development/orphan-process/</guid>
       <description>问题背景 前两天室友问我，怎么 kill 掉在 Shell 脚本中调用的 Python 进程，我第一时间想到的是：打开 htop，把它调整成树形布局，然后搜索 Shell 脚本，选中之后把它 kill 掉，Python 进程应该也会被 kill 掉。&#xA;但是结果是 Python 进程并没有变红，而是成为了 init 进程的子进程。&#xA;孤儿进程是怎么产生的 大二学 OS 学到父进程和子进程的概念的时候，还是只是以为父进程和子进程之间应该存在牢固的控制关系，父进程退出时子进程也应该默认退出。&#xA;但是 OS 的实际行为不是这样，子进程和父进程只是说明了二者之间存在谁创建谁的关系，并不存在牢固的控制关系（而是类似于现实中的父子关系）。&#xA;父进程结束时子进程并没有结束，子进程成为孤儿进程，会被 init 进程收养&#xA;父进程崩溃或异常终止&#xA;并发和竞争条件导致父子进程的结束顺序错误&#xA;如何避免孤儿进程的产生 其实就是需要在程序设计时，考虑到上述的这几种可能导致孤儿进程产生的原因，然后对异常情况进行注册和处理。对于开始时的这个引入问题而言，答案可以写成以下两个脚本：&#xA;#!/bin/bash # 定义一个函数来处理信号 cleanup() { echo &amp;#34;捕捉到终止信号，正在终止 Python 进程...&amp;#34; kill $PYTHON_PID exit } # 在接收到 SIGINT || SIGTERM || SIGKILL 时执行 cleanup 函数 trap &amp;#39;cleanup&amp;#39; SIGINT SIGTERM # 启动 Python 脚本并获取其进程 ID python example_python.py &amp;amp; PYTHON_PID=$!</description>
     </item>
   </channel>

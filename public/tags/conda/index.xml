@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Conda on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/conda/</link>
+    <link>http://localhost:1313/tags/conda/</link>
     <description>Recent content in Conda on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/conda/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/conda/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在 Jupyter Notebook 中设置 Conda 环境</title>
-      <link>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</link>
+      <link>http://localhost:1313/posts/development/use-jupyter-notebook-in-conda-env/</link>
       <pubDate>Tue, 15 Feb 2022 17:19:26 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/development/use-jupyter-notebook-in-conda-env/</guid>
+      <guid>http://localhost:1313/posts/development/use-jupyter-notebook-in-conda-env/</guid>
       <description>远程启动jupyter notebool：&#xA;jupyter notebook --no-browser --ip=&amp;#34;&amp;lt;server-ip&amp;gt;&amp;#34; --port=&amp;#34;&amp;lt;server-port&amp;gt;&amp;#34; 激活预先配置好的conda环境，这里假设环境名为keras-tf-2.1.0：&#xA;conda activate keras-tf-2.1.0 安装ipykernel：&#xA;pip3 install ipykernel --user 为ipykernel安装环境：&#xA;python3 -m ipykernel install --user --name=keras-tf-2.1.0 打开notebook更改服务之后刷新即可：</description>
     </item>
   </channel>

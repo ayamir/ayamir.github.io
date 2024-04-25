@@ -7,6 +7,7 @@ keywords: ["webrtc"]
 tags: ["WebRTC"]
 categories: ["knowledge"]
 url: "posts/knowledge/webrtc/jitter-buffer"
+summary: "这篇博客主要分析理解 WebRTC 中的 Jitter Buffer 的工作职责以及 Buffer 相关的代码实现。"
 ---
 
 ## Jitter Buffer 是什么

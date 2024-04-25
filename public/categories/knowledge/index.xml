@@ -2,192 +2,199 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Knowledge on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/categories/knowledge/</link>
+    <link>http://localhost:1313/categories/knowledge/</link>
     <description>Recent content in Knowledge on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/categories/knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 20:01:42 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/knowledge/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jitter Buffer学习理解（上）</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/jitter-buffer/</link>
       <pubDate>Thu, 18 Apr 2024 17:33:24 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</guid>
-      <description>Jitter Buffer 是什么 在了解 Jitter Buffer 之前，我们应该先来看一下整个 webrtc 会话中数据传输的完整流程。&#xA;与传输相关的部分主要出现在 pacer 和 Jitter Buffer 这两个部分，从图中可以清晰的看到这两者处于编解码和网络传输之间，考虑到编解码可能会引入突变的帧大小（比如 I 帧），而在网络传输的过程又受到网络传输速率和排队延迟的影响，所以它们的作用其实就比较显而易见了。Pacer 在发送端负责平滑编码后的码流打包成 rtp 包之后，发送到网络上的速率；Jitter Buffer 在接收端负责平滑接收到的 rtp 包到组成解码所需的码流的过程。&#xA;当然，这个传输的过程中离开不了拥塞控制算法如 gcc 和各种抗丢包的技术如 nack，fec 等来保障实时通信质量。在这里我们主要关注传输的流程，相关算法和机制之后再研究。&#xA;Jitter Buffer 可以理解为有两部分的功能，一部分是 Buffer 的功能，也就是作为 rtp 包的缓冲区，并且将 rtp 包恢复成表示可解码帧的码流；另一部分是 Jitter 的功能，也就是通过引入延迟来平滑因帧大小和网络状况而造成的接收帧不均匀的情况。&#xA;buffer 的工作流程 正如前面所说，网络传输的是 rtp 包，而解码器的输入是可以解码的码流，所以需要一个将 rtp 包转换成可以解码的帧的过程。因为一个帧由多个 rtp 包组成，所以肯定需要缓冲区来存放前面收到但是还不足以组成一个帧的 rtp 包，这个缓冲区在 webrtc 中其实就是PacketBuffer。此外，考虑到编解码原理，接收到的 P 帧还需要等它所依赖的 I 帧/P 帧被解码，它才能被解码，所以在PacketBuffer之外还需要一个FrameBuffer来缓存可以解码的一个 GOP 中的各个帧。而负责寻找当前帧所依赖帧的是RtpFrameReferenceFinder，因为这个寻找依赖帧的过程实际上是递归依赖的，直到找到一个 GOP 的 IDR 帧才算结束，这样就能得到按照解码依赖顺序排列的一个 GOP。而最后，因为不同 GOP 的解码是独立的，所以 GOP 之间实际上就直接按照时间顺序排列就完成了 GOP 的排序。</description>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/jitter-buffer/</guid>
+      <description>这篇博客主要分析理解 WebRTC 中的 Jitter Buffer 的工作职责以及 Buffer 相关的代码实现。</description>
     </item>
     <item>
       <title>同步、异步、阻塞、非阻塞</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</link>
+      <link>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</link>
       <pubDate>Sat, 13 Apr 2024 23:39:22 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/sync-async-block-nonblock/</guid>
       <description>概念 同步和异步、阻塞和非阻塞这两组概念经常出现，并且人们往往会有如下认知：&#xA;同步就是程序发出同步调用之后就需要等待调用返回一个结果，然后才能继续指令的执行流。&#xA;异步就是程序发出异步调用之后能直接得到返回，程序可以继续执行，至于调用发起者想要得到的结果会在未来的某个时刻获取。&#xA;阻塞就是在调用结果返回之前，当前线程会被挂起。&#xA;非阻塞就是再不能立刻得到结果之前，当前线程并不会被挂起。&#xA;那么这样来看的话，同步调用就是阻塞调用，异步调用就是非阻塞调用，这个认知是有些狭隘的。&#xA;同步和异步 同步和异步主要 focus 的是调用者和被调用者双方消息通信的机制。&#xA;同步是调用者等待被调用者返回结果，异步则是调用被直接返回，调用者不会等待被调用者。&#xA;以例子来说明的话就是：假如你打开了崩铁想玩，但是却发现需要下载更新客户端：&#xA;如果采用同步的方式就是你一直等着下载安装完成，期间什么都不做。&#xA;不过我相信正常人都不会在这个过程中干等着什么都不做，而是会在点击下载按钮之后玩会儿手机或者干点别的事，这就是异步的方式。&#xA;在这个例子中我们可以发现：&#xA;如果采用同步的方式，我们一定能在更新完成之后的第一时间立刻玩到游戏，但是在苦苦等待的过程中我们的时间被浪费掉了。&#xA;如果采用异步的方式，我们在等游戏更新完成的过程中做了其他事情，时间没有被浪费掉，但是我们需要一种机制来知道什么时候游戏就更新好了。假如在下载过程中我们去做了别的事情，那么就可能不会第一时间知道它什么时候更新完成。&#xA;如果把我们自己比作 CPU 的话，并且假设目前 OS 上面只有这一个任务，同步的方式会浪费 CPU 时间，而采用异步的方式可以让我们多做一些别的事情，不过异步需要一些消息通知的方式来告诉我们等待的任务什么时候会有结果。假如崩铁下载器在下载完成之后没法通知我们，那么我们可能需要隔一段时间检查一下有没有更新完成。&#xA;这么看来，其实同步就是 OS/函数调用 默认支持的通信方式（无非就是等呗），而异步虽然可以解决同步会浪费时间的问题，但是需要引入 消息通知（下载器窗口变成启动游戏的窗口，并且置于最前）/注册回调函数（假如可以派个人替我玩的话）/轮询（隔几分钟看看有没有更新完）这些机制才能保证完成任务。&#xA;从线程/协程的角度来看同步和异步的话，其实同步就是完完全全的单线程模式，而异步可以利用协程的特性在单线程中完成异步任务，从而避免大量使用回调函数带来的“回调地狱”。&#xA;以实际的例子来说明，在使用 neovim 写代码的时候会使用代码格式化的功能，默认的代码格式化的同步完成的，也就是说我们需要等格式化完成才能执行别的任务（从阻塞的角度看就是，neovim 被格式化的过程阻塞了，这种方式就是同步且阻塞的方式）。在文件很小的时候，因为格式化很快所以以同步的方式进行格式化并不会有太多的影响。但是如果需要进行大文件的格式化，同步的方式会阻塞很久，严重影响体验。从更高的角度来看，格式化器影响的主要是代码的位置（可能也会影响代码的内容例如 goimports ），那么理论上我们不进行与代码内容和代码位置相关的写入操作就不会造成写冲突。但是这种同步的方式就是一种一刀切，使我们只能等格式化完成，这其实不太合理。&#xA;为什么说这个例子可以用协程的方式实现异步呢？其实原理就是局部性 + 协程特性。因为我们在写代码的时候通常只是会编辑一处的内容，如果我们下达了对整个大文件的格式化操作，那么理论上是可以按照不同的小部分（比如一个函数）来完成格式化过程的，而在完成格式化一个函数的过程中，CPU 的执行权可以交给格式化器，而在用户需要进行一些别的操作的时候，格式化协程可以挂起(yield)并将 CPU 让给用户操作的协程，而当用户的操作完成之后，格式化协程可以恢复(resume)并获取 CPU 继续执行。这样来看，通过对任务的分割和对协程的交替切换，就实现了异步的机制。&#xA;阻塞和非阻塞 阻塞和非阻塞主要 focus 的是调用者在等待调用结果时候的状态。&#xA;还是以上面的例子来说：&#xA;阻塞描述的是我们在等待游戏更新完毕的过程中，处于什么都干不了的状态（我只想玩崩铁，我啥都不想干！），&#xA;非阻塞描述的是在游戏更新的时候，我们可以干点别的，比如看一集《葬送的芙莉莲》（这个时间正好能多看一集番，美滋滋~）。&#xA;对于实际的编程场景而言，阻塞和非阻塞这组概念常常在 Socket 编程中出现，我们可以利用 fcntl 把 socket 置为阻塞或者非阻塞的状态（默认是非阻塞）&#xA;对于 TCP 而言，其对应的发送和接收的 API 是 send/recv，而 send/recv 其实并不是真的直接向网络上发数据/直接从网络上接收数据，而是将数据写入到内核发送缓冲区/从内核接收缓冲区读取数据。&#xA;如果发送端一直往发送缓冲区写数据而接收端不读数据的话（其实就是流量的滑动窗口不滑动了），当缓冲区满了之后：&#xA;如果 socket 是阻塞模式，继续调用 send 会将程序阻塞在 send 处，不会执行之后的逻辑。</description>
     </item>
     <item>
       <title>进程、线程和协程</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</link>
+      <link>http://localhost:1313/posts/knowledge/os/process-thread-coroutine/</link>
       <pubDate>Sat, 06 Apr 2024 19:23:04 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/process-thread-coroutine/</guid>
       <description>进程 是什么 学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：&#xA;进程标识符 PID 进程状态：就绪、运行、阻塞 内存资源： 代码段、数据段、堆和栈 文件描述符 fd ： stdin、stdout、stderr、以及进程打开的文件描述符列表比如本地文件以及网络连接等的 fd 寄存器： PC、SP、还有其他的通用寄存器 进程控制信息： 父进程 ID ，子进程 ID ，以及信号处理器这些 有什么用 在拿进程和程序做对比的时候我们知道，进程就是运行着的程序（这里的运行指的是程序被加载到内存空间中然后开始按照程序指令执行，而不是指进程状态中的运行状态），受 OS 的调度，可以说我们写程序的目的就是要让 CPU 可以按照磁盘上的代码指令来执行操作，进程就是实现这一目的的过程。&#xA;因为 OS 使用了虚拟内存这一概念，使得每个进程都认为自己是独占 OS 的，所以一个进程是不知道其他进程的存在的。因而如果面对需要多个进程协作完成一项任务的时候（其实这种情况的描述从逻辑上应该是自上到下的，先有的是一项任务，我们通过分析发现这两个任务需要写多个程序来完成），就会不可避免地引入进程间通信 IPC 。&#xA;常用的进程间通信手段大概有 6 种：消息队列、共享内存、匿名管道、命名管道、信号量、Socket，这几种方式根据需求的不同都有自己的用武之地，不过我个人最习惯用的还是 Socket ，因为它具有最优的可扩展性（跨主机、跨语言），可记录性（可以使用 tcpdump/wireshark 抓包），也完美符合我对于通信这一名词想象（明确的通信双方、全双工的信道）。&#xA;从我的实际项目经历中来看，我的 Unity 客户端实例需要把游戏运行过程中产生的 2D 轨迹数据输入给 Python 端的 AI 模型，并获取模型输出。对于这一场景，我的首选就是 Socket 通信，首先是因为 Socket 具备全双工的特性可以满足需求，其次是使用 Socket 可以在 AI 模型部署到其他主机上的时候也能正常运行。&#xA;线程 是什么 上面说到进程是 OS 资源分配的最小单位，这句话的下半句是：线程是操作系统调度的最小单位，这句话其实暗示了，线程和进程的概念对于单线程的进程而言是相同的。&#xA;OS 在调度 CPU 的时候是以线程为单位的，也就说明线程其实也是一种 OS 级别的概念。对于 Linux 而言，线程和进程使用的是相同的数据结构 task_struct 来表示的，不过进程的创建使用的是 fork() 这一系统调用，而线程的创建用的是 clone() 这一系统调用。</description>
     </item>
     <item>
       <title>什么是 RPC ？</title>
-      <link>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</link>
+      <link>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</link>
       <pubDate>Fri, 29 Mar 2024 23:55:25 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</guid>
+      <guid>http://localhost:1313/posts/knowledge/backend/what-is-rpc/</guid>
       <description>是什么 RPC 全名即 Remote Procedure Call：远程过程调用，本质上是一种设计/概念，它允许在一台机器上的 Client 调用运行在另一台机器上的 Server 上的程序接口。&#xA;为什么 RPC 的出现主要是为了满足现实世界中多机集群的业务分离， Client 端的业务和 Server 端的业务相互分离，目的是更强的性能、可扩展性和可维护性。&#xA;RPC 在我看来就是传统的前后端 http RESTful 框架的更加 general 的版本，两者在思想上是一致的，只不过 RESTful 框架是把现实业务中的 前端的显示 和 后端的数据处理 进行分离，而 RPC 则是更为通用的一种考虑，只要项目的设计者认为某个功能使用 RPC 进行分离会带来如性能、可靠性、可维护性等非功能特性上的收益，那其实就可以引入 RPC 。RPC 能完成的功能性需求不使用 RPC 一般来说也能实现，RPC 的收益主要体现在非功能性需求上。&#xA;怎么做 RPC 的核心是面向接口编程的思想，Server 端和 Client 端可以通过定义好语言无关的接口（函数签名），双方的过程调用就可以像调用同一文件中的不同函数一样进行。&#xA;既然涉及到了不同主机，那么不可避免地会引入网络通信，而网络通信的本质其实就是需要规定好：消息如何编解码（或者说如何序列化和反序列化）、消息如何通过网络传输。&#xA;因而 RPC 在实现上主要需要考虑两部分，第一个部分是通信协议，第二部分是编码协议，&#xA;通信协议：HTTP/TCP/UDP 编码协议：xml/json/protobuf 目前主流的 RPC 框架在编码协议上基本上都使用 protobuf ，因为 protobuf 作为一种二进制数据可以带来比 xml/json 这种文本数据更高的压缩效率（当然，更加重要的前提条件是 RPC 传输的消息其实不太需要跟人打交道，也就无需可读性）。&#xA;对于通信协议，不同的 RPC 框架可能根据自己的用途有着不同的选择，比如 gRPC 使用的是 HTTP/2，而 tRPC 则根据不同的传输形式（unary和stream）设计了不同的自定义的协议格式。</description>
     </item>
     <item>
       <title>虚拟地址空间</title>
-      <link>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</link>
+      <link>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</link>
       <pubDate>Wed, 07 Feb 2024 15:56:52 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</guid>
+      <guid>http://localhost:1313/posts/knowledge/os/virtual-memory-space/</guid>
       <description>什么是虚拟地址空间？ 虚拟地址空间就是每个程序在运行起来之后所独占的内存空间，也就是进程自己的地址空间。&#xA;虚拟地址空间的大小由地址总线的宽度也就是计算机的字长决定：&#xA;对于 32 位系统，进程的虚拟地址空间大小为：&#xA;$$ 2^{32} bit = 4^{30} Byte = 4 GiB $$&#xA;对于 64 位系统，进程的虚拟地址空间大小为： $$ 2^{64}bit = 16^{30} GiB = 16 ^{20} TiB = 16^{10} PiB= 16 EiB $$&#xA;不过理论是理论，实际是实际。&#xA;对于 32 位的linux系统而言，操作系统占用了空间中上面的 1GiB（从0xC0000000到0xFFFFFFFF），程序可以使用的虚拟空间原则上只有 3GiB（从0x00000000到0xBFFFFFFF），对于 64 位的 OS 跟进程各自占用 128T 的空间，分别在最高处和最低处。 对于 32 位的windows系统而言，操作系统 2GiB，程序 2GiB（不过windows系统可以设置启动参数来将 OS 占用的虚拟地址空间大小缩小到 1GiB）. 进程的虚拟地址空间用于存放进程运行所必不可少的数据，内存地址从低到高生长，各个区域分别为：&#xA;代码段(.text)：程序代码段 数据段(.data)：已初始化的静态常量、全局变量 BSS 段(.bss)：未初始化的静态变量、全局变量 堆：动态分配的内存，从低地址开始向上增长； 文件映射段：动态库、共享内存等，从高地址开始向下增长； 栈：局部变量和函数调用的上下文等。栈的大小是固定的，一般是 8 MB，从高地址开始向下增长。 为什么需要虚拟地址空间？ 虚拟地址空间其实是一种应对多进程环境下的策略，这种对程序员透明的抽象方式可以使每个进程都无法感知到其他进程的存在，让各个进程之间的内存空间相互隔离，程序员也无需关心进程运行的物理地址的事情，极大地降低了程序员的心智负担。&#xA;32 位的机器，程序使用的空间大小能超过 4GiB 吗？ 如果指的是虚拟地址空间，那么答案是“否”。因为 32 位的 CPU 只能使用 32 位的指针，最大的寻址范围就到 4GiB。</description>
     </item>
     <item>
       <title>ABI是什么？</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/abi/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/abi/</link>
       <pubDate>Wed, 07 Feb 2024 12:51:01 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/abi/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/abi/</guid>
       <description>ABI 是什么？ ABI: Application Binary Interface（应用二进制接口）。&#xA;其实就是针对 编译器 和 链接器 的二进制级别的一些规范和约束，主要规范的内容有：&#xA;规定函数的调用顺序，也称为“调用约定”，规定了如何将“函数”转换成汇编代码。 规定库函数如何表示，主要对链接过程有指导作用。 规定可以使用什么类型的数据，这些数据如何对齐以及其他低级细节。 ABI 还涉及到 OS 的内容，包括可执行文件的格式、虚拟地址空间布局等细节。 为什么会有 ABI ？ 原因其实很简单，硬件架构、OS、编译工具链以及编程语言的发展和逐层抽象让大部分程序员可以不太在意底层程序的执行过程，而只需要负责编写表明业务逻辑的源代码。大部分程序员不需要在意并不意味着这部分不存在，实际上，这部分内容是通向二进制文件执行的必经之路。&#xA;通过上面的分析可以知道， ABI 这个概念基本上是由(硬件架构, OS, 编译工具链, 编程语言)这个四元组决定的。&#xA;架构兼容性：amd64架构和arm64架构对应的指令集不同，因而一个可执行文件要想在这两个架构上成功运行，就需要编译这两个架构的二进制文件（也就是交叉编译）。 OS 兼容性：windows(PE-COFF), linux(ELF)和macos(MACH-O)上规定的程序二进制文件格式不同，因而也需要为不同的 OS 编译不同的二进制文件。 编译工具链兼容性：这个我们平时遇到的比较多，常见原因是不同的编译器或不同的编译器版本的名字修饰规则不同，导致链接器在链接时找不到对应名字的库函数。 编程语言兼容性：C 语言中的一些基本内容如不同类型数据在内存中存放的形式，寄存器的使用形式等，以及 C++的众多特性：虚函数如何调用、虚表的内容和分布形式、template 如何实例化等等，都是 ABI 所需要规定的内容。 ABI-Compatible ? ABI-compatible 允许编译好的目标代码可以无需修改或重新编译链接就能直接运行，而从上面举的例子就可以发现，ABI 兼容是一件很难做到的事情，光是架构和 OS 的不同就需要不同的目标文件了。&#xA;而编译工具链的兼容性容易做到吗？其实也不容易。目前主流的 C++编译工具链有gcc, llvm(clang)和msvc，这三者之间对于名字修饰的规定都不同，因而一个用clang编译的库函数是无法被一个用msvc编译的main文件调用的。当然，这里指的是默认进行名字修饰的情况，如果使用extern &amp;quot;C&amp;quot;对函数进行修饰，从而要求编译器使用 C 语言的编译和链接规范进行处理就可以解决这个问题。&#xA;C++一直被诟病的原因之一就是二进制兼容性不好，对于小型项目而言使用同一种编译器进行编译可能可行，但是对于大型项目而言不太现实，库代码的提供者通常只是提供编译链接好的库，并不提供源代码，所以要想做到对于所有的编译器（的所有版本）都进行支持是一件困难且不太现实的事情。</description>
     </item>
     <item>
       <title>H264 Encode</title>
-      <link>https://ayamir.github.io/posts/knowledge/h264-encode/</link>
+      <link>http://localhost:1313/posts/knowledge/h264-encode/</link>
       <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
+      <guid>http://localhost:1313/posts/knowledge/h264-encode/</guid>
       <description>编码框架 编码器包含两个方向的码流分支：&#xA;从左到右的前向码流分支为编码过程；&#xA;从右到左的反向码流分支为重建过程。&#xA;前向编码分支 以 16x16 像素的 MB 为单位进行处理，首先从当前输入的视频图像(Frame or Field)中取一个待编码宏块$F_n$，该宏块以帧内或者帧间的模式进行编码，生成一个预测宏块$P$。&#xA;如果是帧内编码，$P$由当前 Slice 里面已经编码、解码、重构并且还没进行去块滤波的宏块 $μF_n&amp;rsquo;$ 使用帧内预测得到。当前宏块 $μF_n&amp;rsquo;$ 减去预测宏块 $P$，得到残差块$D_n$，对残差块 $D_n$ 进行整数变换（一般是 4x4，或者 8x8）、量化后得到一组系数 $X$ ，再对 $X$ 进行重排序和熵编码，就完成了一个宏块的编码过程。对于 P 帧和 B 帧，如果 ME 时候找不到最佳匹配块那也会使用帧内预测编码。&#xA;经过熵编码的码流加上宏块解码所需的一些信息，如预测模式、量化步长、描述宏块运动预测补偿的运动矢量信息等，就组成了该宏块压缩后的码流，Slice 中所有 MB 的码流加上 Slice 头信息就组成了 Slice 的编码码流，再通过 NAL 层进行传输或存储。图像参数集 PPS 和序列参数集 SPS 则由 NAL 单独进行传输。&#xA;后向重建分支 在后向重建分支中，对量化后的宏块系数 $X$ 进行解码从而得到重建宏块，后续宏块进行编码需要从已重建的宏块中寻找参考块。宏块重建过程如下： 宏块系数 $X$ 经过反量化和反变换之后，得到残差宏块 $D_n$ 的近似值 $D_n&amp;rsquo;$ ，预测块 $P$ 加上 $D_n&amp;rsquo;$ 得到未滤波的重构宏块 $μF_n&amp;rsquo;$ ，再做环路滤波来减少块效应，即得到了最终的重构宏块 $F_n&amp;rsquo;$ ，当图像中所有宏块都重建完成后，就形成了重建图像。&#xA;后向重建分支其实就是包含在编码中的完整解码流程，与真正解码器的唯一区别是： 其预测块 P 直接从前向编码分支中得到，而真正的解码器需要利用码流中解出的预测块信息获得预测块 P。当前图像的已重建宏块会被用做帧内预测的参考，而完整的重建图像会被加入参考帧列表，作为未来编码图像帧预测的参考图像。</description>
     </item>
     <item>
       <title>远程桌面与WebRTC</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
       <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
       <description>关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。&#xA;远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：&#xA;音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：&#xA;基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。&#xA;基于其技术原理，VNC 有以下优点：&#xA;跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：&#xA;因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。&#xA;相比于 VNC，RDP 的实现原理还是比较复杂的：&#xA;首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。&#xA;TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T.</description>
     </item>
     <item>
       <title>WebRTC 中关于视频自适应的相关设置</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</link>
       <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
       <description>概况 WebRTC提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。&#xA;视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。&#xA;视频自适应调整的对象：帧率与分辨率。&#xA;资源 Resources监测指标来自于系统或视频流。例如，一个资源可以监测系统温度或者视频流的带宽使用率。&#xA;资源实现了Resource接口：&#xA;当资源检测到被过度使用则调用SetUsageState(kOveruse)； 当资源不再被过度使用则调用SetUsageState(kUnderuse)。 对所有的视频而言，默认有两种类型的资源：&#xA;质量标量资源 编码过度使用资源 QP 标量资源 质量标量资源监测发送视频流中编码之后的帧的量化参数（QP），确保视频流的对于当前的分辨率而言可以接受。&#xA;每一帧被编码之后，QualityScaler就能获得相应的 QP。&#xA;过度使用或者未被充分使用的信号在平均 QP 脱离 QP 阈值之后发出。&#xA;QP 阈值在EncoderInfo中的scaling_settings属性中设置。&#xA;需要注意的是 QP 标量只在降级偏好设置为MAINTAIN_FRAMERATE或BALANCED时启用。&#xA;编码使用资源 编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是 CPU 使用率的代理度量指标。&#xA;当平均编码使用超过了设定的阈值，就会触发过度使用的信号。&#xA;插入其他资源 自定义的资源可以通过Call::AddAdaptationResource方法插入。&#xA;自适应 资源发出过度使用或未充分使用的信号之后，会发送给ResourceAdaptationProcessor，其从VideoStreamAdapter中请求Adaptation提案。这个提案基于视频的降级偏好设置。&#xA;ResourceAdaptationProcessor基于获得的提案来确定是否需要执行当前的Adaptation。&#xA;降级偏好设置 有 3 种设置，在RtpParameters的头文件中定义：&#xA;MAINTAIN_FRAMERATE: 自适应分辨率 MAINTAIN_RESOLUTION: 自适应帧率 BALANCED: 自适应帧率或分辨率 降级偏好设置在RtpParameters中的degradation_perference属性中设置。&#xA;VideoSinkWants和视频流自适应 自适应完成之后就会通知视频流，视频流就会转换自适应为VideoSinkWants。&#xA;这些接收器需求向视频流表明：在其被送去编码之前需要施加一些限制。&#xA;对于自适应而言需要被设置的属性为：&#xA;target_pixel_count: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等， max_pixel_count: 每个视频帧中像素点的最大数量，不能被超过。 max_framerate_fps: 视频的最大帧率，超过这个阈值的帧将会被丢弃。 VideoSinkWants可以被任何视频源应用，或者根据需要可以直接使用其基类AdaptationVideoTraceSource来执行自适应。</description>
     </item>
     <item>
       <title>WebGL 样例的解释</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</link>
+      <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</link>
       <pubDate>Thu, 03 Mar 2022 10:31:38 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples-explanation/</guid>
       <description>Context Create an HTML5 canvas Get the canvas id Obtain WebGL Context The parameter WebGLContextAttributes is not mandatory.&#xA;Attributes Description Default value alpha true: provide an alpha buffer to the canvas; true depth true: drawing buffer contains a depth buffer of at least 16 bits; true stencil true: drawing buffer contains a stencil buffer of at least 8 bits; false antialias true: drawing buffer performs anti-aliasing true premultipliedAlpha true: drawing buffer contains colors with pre-multiplied alpha true preserveDrawingBuffer true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author false let canvas = document.</description>
     </item>
     <item>
       <title>WebGL 样例</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</link>
+      <link>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</link>
       <pubDate>Thu, 03 Mar 2022 10:31:31 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webgl/webgl-samples/</guid>
       <description>Structure of WebGL Application WebGL application code is a combination of JavaScript and OpenGL Shader Language.&#xA;JavaScript is required to communicate with the CPU. OpenGL Shader Language is required to communicate with the GPU. Samples 2D coordinates &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;body&amp;gt; &amp;lt;canvas width=&amp;#34;300&amp;#34; height=&amp;#34;300&amp;#34; id=&amp;#34;my_canvas&amp;#34;&amp;gt;&amp;lt;/canvas&amp;gt; &amp;lt;script&amp;gt; // 1. Prepare the canvas and get context let canvas = document.getElementById(&amp;#34;my_canvas&amp;#34;); let gl = canvas.getContext(&amp;#34;experimental-webgl&amp;#34;); // 2. Define the geometry and store it in buffer objects let vertices = [ -0.</description>
     </item>
     <item>
       <title>WebGL 中的管线</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</link>
+      <link>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</link>
       <pubDate>Thu, 03 Mar 2022 10:31:22 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webgl/webgl-pipeline/</guid>
       <description>Overview JavaScript JavaScript is used to write the control code of the program, which includes the following actions:&#xA;Initialization: initialize WebGL context. Arrays: create arrays to hold the data of the geometry. Buffer objects: create buffer objects by passing the arrays as parameters. Shaders: create, compile and link the shaders. Attributes: create attributes, enable them and associate them with buffer objects. Uniforms: associate the uniforms. Transformation matrix: create transformation matrix. Vertex Shader The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods drawElements() and drawArrays().</description>
     </item>
     <item>
       <title>WebGL 基础知识</title>
-      <link>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</link>
+      <link>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</link>
       <pubDate>Thu, 03 Mar 2022 10:31:04 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webgl/webgl-basics/</guid>
       <description>Coordinate System There are x, y, z axes in WebGL, where the z axis signifies depth. The coordinates in WebGL are restricted to (1, 1, 1) and (-1, -1, -1). Positive value meaning: z: near viewer. x: near right. y: near top.&#xA;Graphics System Vertices To draw a polygon, we need to mark the points on the plane and join them to form a desired polygon. A vertex is a point which defines the conjunction of the edges of a 3D object.</description>
     </item>
     <item>
+      <title>为 Nginx 启用 HTTPS</title>
+      <link>http://localhost:1313/posts/knowledge/linux/enable-https-for-nginx/</link>
+      <pubDate>Fri, 11 Feb 2022 20:43:46 +0800</pubDate>
+      <guid>http://localhost:1313/posts/knowledge/linux/enable-https-for-nginx/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>VR 和 全景视频的区别总结</title>
-      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+      <link>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
       <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+      <guid>http://localhost:1313/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
       <description>VR 和 360 度全景视频都是获得沉浸式体验的重要途径，除此之外，AR（Argmented Reality）和 MR（Mixed Reality）也是比较火的概念，可以用来对比学习。&#xA;全景视频 全景视频实际上事先通过特殊的全景摄像机录制好视频，之后可以在HMD中观看。虽然看到的图像相对于用户当前环境而言是虚拟的，但是终归是从实际环境中录制而来的，本质上更贴近普通视频的全景推广。 在全景视频的观看过程中，用户只有 3DoF 的自由度，即只能完成头部的 3 个角度的运动，同时手柄实际上并不能和视频中的内容进行交互。 全景视频的主要应用在于实景导览，通过事先由拍摄者带着全景录像设备行走拍摄，用户观看时实际是将自己带入到全景设备的位置上，同时移动头部来观察不同角度的视频。 VR VR 主要做的工作是创造出一个完全虚拟的环境，用户戴上HMD之后可以通过其看到虚拟环境中的事物，同时也可以使用HMD配套的手柄等设备进行操作，完成与虚拟环境之间的交互； VR 支持的是 6DoF 的自由度，即除了头部的运动之外也支持身体的前后、左右、上下的移动，手柄； VR 的主要应用在于游戏，比如广受好评的Beat Saber（又称节奏光剑），用户根据音乐节奏通过挥动手柄（在虚拟环境中被建模成光剑）来准确地按照提示的方向去砍击方块； AR 和 MR AR 主要做的工作是将虚拟世界中的事物投影到现实世界中，主体是现实世界，虚拟事物用于增强现实世界。&#xA;MR 主要做的工作是将现实世界中的事物虚拟化进入虚拟世界中，主体是虚拟世界，现实事物混合进虚拟世界中。&#xA;AR 实现起来比较简单，只需要将计算机产生的图像投影显示在现实中即可，目前的应用比如游戏Pokémon GO里面的AR-mode，启用之后游戏中遇到的Pokémon就可以投影在现实中。&#xA;MR 实现起来比较复杂，首先需要用摄像头扫描物体，得到的 2D 图像再交给计算机采用算法进行 3D 重建，最后将虚拟化建模好的物体展示到虚拟世界中，目前的应用比如Meta推出的Workrooms，线上的远距离视频会议在虚拟世界中可以变成虚拟人物之间面对面的交流。&#xA;总结 全景视频侧重于对虚拟环境的观察，而 VR 侧重于对虚拟环境的交互。&#xA;全景视频实际上是将用户带入到全景摄像机的位置上，让用户产生自己身临拍摄的环境中的感觉，本质上是对传统视频的推广；&#xA;VR 实际上是将用户完全带入到虚拟的环境中，用户可以和虚拟环境中的事物进行交互，而虚拟环境中发生的一切都和现实无关，本质上是对传统游戏的推广；&#xA;全景视频实际上和 VR、AR、MR 这种概念距离比较远，实际上只是因为全景摄像机相较于普通摄像机的 360 度视角的特殊性，这能让用户产生沉浸感。&#xA;VR 相比于 AR、MR 而言，是纯粹的虚拟环境，并不涉及到现实事物（除了HMD配套的手柄等设备），而纯粹的虚拟环境将人带入到了一个完全不同的世界，也是 VR 沉浸式体验的来源。&#xA;AR 和 MR 是虚拟和现实交融的技术，前者主体是现实，后者主体是虚拟环境。</description>
     </item>
     <item>
       <title>全景视频中视口预测相关方法总结</title>
-      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</link>
+      <link>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</link>
       <pubDate>Fri, 07 Jan 2022 23:08:36 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</guid>
+      <guid>http://localhost:1313/posts/knowledge/360video/summary-for-vp/</guid>
       <description>视口预测是什么？ 视口预测 (Viewport Predict) 是全景视频中特有的一种用于进一步优化码率自适应的方式。&#xA;相较于全景视频 360 度无死角的特性，用户实际上能看到的内容其实只是全景视频中的一个小窗口，这个小窗口就是视口 (Viewport) 。&#xA;因为用户在观看全景视频时会在 3DoF 的自由度下转动头部去观看全景视频在空间上的不同部分，所以视口预测做的事情就是在用户的观看过程中预测相较于预测执行时刻的下一时刻的视口位置。&#xA;VP 在传输中所处的作用 基于 tile 的全景视频传输方式之所以热门，就是因其可以通过只传输用户 FoV 内的分块而大幅减少观看过程中消耗的带宽。&#xA;所以对用户 FoV 的预测是首先要处理的因素，如果 VP 精度很高，那么所有的带宽都可以用很高的码率去传输 FoV 内的分块。&#xA;两种方式的基本假设 基于轨迹的方法的基本假设&#xA;相对于当前时刻，前 $hw$ (history window)内用户的 FoV 位置对未来可预测的 $pw$ (predict window)内用户的 FoV 位置有影响，比如用户只有很小可能性会在很短的一段单位时间内做 180 度的转弯，而更小角度的调整则更可能发生。&#xA;基于内容的方法的基本假设&#xA;用户的 FoV 变化是因为对视频内容感兴趣，即 ROI 与 FoV 之间有相关关系，比如在观看篮球比赛这样的全景视频时，用户的 FoV 更可能专注于篮球。&#xA;按照提取 ROI 的来源不同可以分为两种类型：&#xA;从视频内容本身出发，使用 CV 方法去猜测 ROI； 从用户观看视频的热图出发，相当于得到了经过统计之后的平均 FoV 分布，以此推测其他用户的 ROI； 基于轨迹的方式是要在最表层的历史和预测的轨迹之间学习，即假设两者之间只有时空关系。&#xA;跨用户的方式则假设由用户群体所得出的热图可以用来预测单个用户的 FoV，即利用共性来推断个性。&#xA;基于内容的方式直接提取视频显著图来推断 FoV，即进一步假设共性与视频内容本身有关系。&#xA;跨用户预测的概念 基本假设</description>
     </item>
     <item>
       <title>多媒体基础知识</title>
-      <link>https://ayamir.github.io/posts/knowledge/mm-base/</link>
+      <link>http://localhost:1313/posts/knowledge/mm-base/</link>
       <pubDate>Mon, 13 Dec 2021 10:03:17 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/mm-base/</guid>
+      <guid>http://localhost:1313/posts/knowledge/mm-base/</guid>
       <description>媒体处理过程 解协议 将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。&#xA;音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DASH、HLS 将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。&#xA;同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）&#xA;解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如 MP4，FLV 等。&#xA;封装格式 封装格式如 AVI、MPEG、Real Video 将音频和视频组合打包成一个完整的文件.&#xA;封装格式不会影响视频的画质，影响画质的是视频的编码格式。&#xA;解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。&#xA;比如 FLV 或 TS 格式数据，解封装之后得到 H.264-AVC 编码的视频码流和 AAC 编码的音频码流。&#xA;编码 视频的本质是一帧又一帧的图片。&#xA;所以对于一部每秒 30 帧，90 分钟，分辨率为 1920x1080，24 位的真彩色的视频，在压缩之前的大小$S$满足：&#xA;$$ 一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte) \ 总帧数n = 90 * 60 * 30 = 162000 \ 总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB) $$</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：容器和迭代器</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/iterator/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/iterator/</link>
       <pubDate>Thu, 28 Oct 2021 17:09:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/iterator/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/iterator/</guid>
       <description>常见的坑 所有标准库容器都支持迭代器，而只有少数几种支持下标运算符。&#xA;string虽然不是容器，但是支持很多容器的操作。&#xA;容器不为空时：begin()返回的是容器中第一个元素的位置；end()返回的是容器中最后一个元素的后一个位置。&#xA;容器为空时：begin()和end()返回的都是最后一个元素的后一个位置。&#xA;任何可能改变容器大小的操作都会使容器的迭代器失效。&#xA;必须要理解的点 和指针类似的是，迭代器支持对对象的间接访问。&#xA;和指针不同的是，获取迭代器不使用取地址符，有迭代器的类型都拥有返回迭代器的成员函数，如begin(), end()。&#xA;所有迭代器都支持的运算：&#xA;运算符 例子 含义 * *iter 返回迭代器iter指向元素的引用 -&amp;gt; iter-&amp;gt;mem 解引用iter并获取该元素名为mem的成员，即(*iter).mem ++ ++iter 令iter指向当前元素的后一个元素 &amp;ndash; --iter 令iter指向当前元素的前一个元素 == iter1 == iter2 如果两个迭代器指向相同的元素返回true，否则返回false != iter1 != iter2 上面例子的反面 迭代器的类型有两种：iterator和const_iterator。&#xA;vector&amp;lt;int&amp;gt;::iterator itv; // 可用于读写vector&amp;lt;int&amp;gt;中的元素 string::iterator its; // 可用于读写string对象中的元素 vector&amp;lt;int&amp;gt;::const_iterator citv; // 只能读取元素 string::const_iterator cits; // 只能读取元素 begin()和end()返回哪一种取决于对象本身是否被const修饰。&#xA;C++11 中引入了cbegin()和cend()来专门返回const_iterator。&#xA;认定一种类型是迭代器当且仅当它支持一套操作，这套操作能使我们访问容器内的元素或从某一个元素移动到另一个元素。&#xA;vector和string的迭代器支持的额外的运算：&#xA;运算 含义 iter + n 运算得到一个新迭代器，指向当前元素的后 n 个元素的位置 iter - n 运算得到一个新迭代器，指向当前元素的前 n 个元素的位置 iter += n 运算得到的新迭代器赋值给iter iter -= n 同上 iter1 - iter2 两个迭代器之间的距离，可正可负 &amp;gt;, &amp;lt;, &amp;lt;=, &amp;gt;= 同两类型的下标运算符中的数字的关系，位置靠前的较小 建议 一般不在意迭代器的类型，因此使用auto来标注。 循环结束的判断条件习惯使用迭代器和!</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：标准库类模板Vector</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/vector/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/vector/</link>
       <pubDate>Thu, 28 Oct 2021 15:35:17 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/vector/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/vector/</guid>
       <description>常见的坑与用法 vector的默认初始化是否合法取决于vector内对象所属的类是否要求显式初始化。&#xA;使用()和{}对vector执行初始化含义不同。&#xA;using std::vector; vector&amp;lt;int&amp;gt; v1{10}; // 存储1个int对象，值为10 vector&amp;lt;int&amp;gt; v2(10); // 存储10个int对象，值为0 vector&amp;lt;int&amp;gt; v3(10, 1); // 存储10个int对象，值都是1 vector&amp;lt;int&amp;gt; v4{10, 1}; // 存储2个int对象，值分别是10和1 使用{}执行列表初始化时按照顺序遵守 2 个守则：&#xA;如果{}内容可以用于初始化，则采用{}默认的初始化含义。&#xA;如果{}中的内容无法用{}默认的初始化含义做出解释，则会按照()的初始化含义去解释{}。&#xA;using std::vector; using std::string; vector&amp;lt;string&amp;gt; v1{&amp;#34;hi&amp;#34;}; // 存储1个值为hi的string对象 vector&amp;lt;string&amp;gt; v2{10}; // 存储10个值为空的string对象 vector&amp;lt;string&amp;gt; v3{10, &amp;#34;hi&amp;#34;}; // 存储10个值为hi的string对象 与string相同，vector也有size_type作为其size()的返回值类型。&#xA;但是使用时必须首先指定vector由哪个类型定义。&#xA;std::vector&amp;lt;int&amp;gt;::size_type a; // 正确 std::vector::size_type a; // 错误 只有vector内元素的类型可以被比较时才能做比较运算，对于自定义类型需要手动定义运算符重载。&#xA;增加vector中的元素只能使用push_back() or emplace_back()，而不能使用对下标赋值的方式。&#xA;push_back() 和 emplace_back() 的区别来自于两者的函数签名不同：&#xA;emplace_back() 支持通过传入参数在 vector 内部原地构造对象，因而只会调用构造函数 1 次； push_back() 不支持，所以至少会调用 2 次构造函数和 1 次析构函数（临时对象的构造函数和析构函数、vector 内对象的拷贝或移动构造函数）； 两者都支持传入右值引用作为参数，因而可以使用 push_back(std::move(obj)) or emplace_back(std::move(obj)) 来避免对象拷贝操作，从而改善性能。 可以使用 vector 来模拟 stack 的行为：</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：标准库类型string</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/string/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/string/</link>
       <pubDate>Thu, 28 Oct 2021 10:31:33 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/string/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/string/</guid>
       <description>常见的坑 string.size()和string.length()等价。&#xA;string.size()和其他STL容器的命名风格相一致（如vector, map）。&#xA;string.length()出现主要是因为这样的命名符合人的直觉，有更好的可读性。&#xA;string::size_type是无符号类型，和int不同，能存放下任何string对象的大小。&#xA;+两边至少有一端需要是string对象，不允许两个字符串字面量单独相加。&#xA;using std::string; string a = &amp;#34;a&amp;#34;; string b = a + &amp;#34;b&amp;#34; + &amp;#34;c&amp;#34;; // 正确，从左到右运算时能保证至少一段是string对象 string c = &amp;#34;b&amp;#34; + &amp;#34;c&amp;#34; + a; // 错误，从左到右运算时第一个+左右都是字符串字面量 必须要理解的点 string的初始化方式有两种，一种是默认初始化，另一种是拷贝初始化。&#xA;string.size()返回值类型为string::size_type，出现这种类型是为了体现标准库类型和机器无关的特性。&#xA;string对象的比较运算完全实现了运算符重载（==, !=, &amp;lt;,&amp;lt;=, &amp;gt;, &amp;gt;=）。&#xA;==表明两个对象的内容和长度完全一致，反之任一不同则!=。&#xA;不等关系运算符比较的法则：&#xA;如果两个对象长度不同，但是从前到后内容一致，则长度较短的对象较小。 如果两个对象从前到后有对应位置的字符不同，则这个位置的两个字符的大小关系就是两个对象的大小关系。 string对象赋值操作就是内容的替换。&#xA;string对象相加操作就是内容的拼接，+=操作同理。&#xA;string对象可以与字符串字面量相加。&#xA;形如cname的C++头文件兼容形如ctype.h的C头文件，C++头文件中定义的名字可以在std中找到。&#xA;建议 表达式中出现string.size()函数时就不应该使用int类型，这样可以避免int和unsigned混用的问题。&#xA;C++和C兼容的头文件作选择时，选择C++的头文件。&#xA;处理string对象中每一个字符时，使用foreach语句。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;cctype&amp;gt; using std::string; string str{&amp;#34;Some String&amp;#34;}; for (auto c : str) { std::cout &amp;lt;&amp;lt; c &amp;lt;&amp;lt; std::endl; } // 使用引用来改变原字符串内容 for (auto &amp;amp;c : str) { c = std::toupper(c); } std::cout &amp;lt;&amp;lt; str &amp;lt;&amp;lt; std::endl; 处理string对象中特定字符时使用[]（下标运算符）或者迭代器。</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：类型推导</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/auto/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/auto/</link>
       <pubDate>Tue, 26 Oct 2021 21:14:32 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/auto/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/auto/</guid>
       <description>常见的坑 auto可以在一条语句中声明多个变量，但是所有变量的类型必须一致。&#xA;decltype在分析表达式类型时并不执行表达式。&#xA;decltype处理解引用操作之后返回的是引用类型，而引用类型的变量必须初始化。&#xA;decltype((variable))的结果永远是引用。&#xA;decltype(variable)的结果只有当variable是引用时才是引用。&#xA;必须要理解的点 auto用于变量初始化时的类型推导，decltype用于分析表达式的类型。 auto对引用类型推导时实际上用的是引用对象的值。 auto与const：详见重学 C++：Const 二三事。 decltype与const：详见重学 C++：Const 二三事。 建议 auto尽量只在类型较长但比较清晰时使用。 decltype尽量不要使用。 </description>
     </item>
     <item>
       <title>重学C&#43;&#43;：Const二三事</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/const/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/const/</link>
       <pubDate>Tue, 26 Oct 2021 15:53:11 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/const/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/const/</guid>
       <description>常见的坑 仅用const修饰的对象只在单个文件中有效，如果想在多个文件之间共享const对象，必须在对象定义的前面加extern。&#xA;允许为一个常量引用绑定非常量的对象、字面量和表达式。&#xA;int i = 42; const int &amp;amp;r1 = i; // 正确 const int &amp;amp;r2 = 42; // 正确 const int &amp;amp;r3 = r1 * 2; // 正确 int &amp;amp;r4 = r1 * 2; // 错误 int &amp;amp;r5 = i; r5 = 0; // 正确 r1 = 42; // 错误 指向常量的指针和常量指针：&#xA;int err_numb = 0; const double pi = 3.1415; int *const cur_err = &amp;amp;err_numb; const double *mut_pi_pointer = &amp;amp;pi; const double *const pi_pointer = &amp;amp;pi; 从声明语句的变量符号开始，自右向左看：</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：引用和指针</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</link>
       <pubDate>Tue, 26 Oct 2021 15:49:49 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/reference-and-pointer/</guid>
       <description>常见的坑 &amp;amp;和*在不同的上下文里面其含义并不相同，因此完全可以当成不同的符号看待。&#xA;int i = 42; int &amp;amp;r = i; // &amp;amp;在类型名后出现，是声明的一部分，表明r是一个引用 int *p; // *在类型名后出现，是声明的一部分，表明p是一个指针 p = &amp;amp;i; // &amp;amp;在表达式中出现，是取地址符 *p = 43; // *在表达式中出现，是解引用符 int &amp;amp;r2 = *p; // &amp;amp;是声明的一部分，*是解引用符 指针可以用0进行初始化成空指针，但是不可以用0赋值。&#xA;指针之间使用==来比较时，如果结果是true，对应多种情况：&#xA;都是空指针 都是同一个地址 都指向同一个对象 一个指针指向某一个对象，另一个指针指向另一对象的下一地址 必须要理解的点 引用和指针——都可以用于间接访问对象&#xA;引用 指针 复合类型 ✅ ✅ 表示符号 &amp;amp; * 含义 变量的别名 变量在内存中的地址 初始化和赋值时是否需要类型匹配 必须匹配（除常量引用） 必须匹配（除 void*和指向常量的指针） 是否需要初始化 必须初始化 无需初始化 可否重新绑定其他变量 不可以 可以 可否嵌套定义 不可以 可以 引用：&#xA;引用只能绑定在对象上，不能绑定在字面量或者表达式上。 引用只是原有对象的别名，并非对象，因此不可以定义引用的引用。 定义引用时并不开辟新的内存空间，因此不可以定义引用的指针。 指针：&#xA;指针本身就是一个对象，能执行的操作自由度远超过引用。</description>
     </item>
     <item>
       <title>重学C&#43;&#43;：类型系统基础</title>
-      <link>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</link>
+      <link>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</link>
       <pubDate>Mon, 18 Oct 2021 19:32:22 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</guid>
+      <guid>http://localhost:1313/posts/knowledge/cpp/Cpp-Types/</guid>
       <description>常见的坑 int, short, long, long long都是带符号的，在前面添加unsigned就能得到无符号类型。&#xA;字符型被分为 3 种：char, signed char, unsigned char，前两种并不等价。 虽然有三种类型，但是实际上只有两种表现形式：有符号的和无符号的。&#xA;有符号类型在与无符号类型运算时会隐式转换为无符号类型。&#xA;虽然变量初始化时候使用了=号，但是初始化和变量赋值并不相同。&#xA;变量默认初始化：&#xA;变量类型 位置在函数内部 位置在函数外部 内置类型 undefined 0 自定义类型 由类决定 由类决定 #include &amp;lt;iostream&amp;gt; int default_initialize(int a) { // 输出必定是0 std::cout &amp;lt;&amp;lt; a &amp;lt;&amp;lt; std::endl; int b; return b; } int main() { int a; // 输出是随机值 std::cout &amp;lt;&amp;lt; default_initialize(a) &amp;lt;&amp;lt; std::endl; } 如果在函数体内部试图初始化一个extern标记的变量会引发错误。&#xA;在嵌套作用域中，内层作用域中的定义可以覆盖外层作用域中声明的变量。&#xA;可以显式使用域操作符::来指明使用哪层的变量。&#xA;必须要理解的点 字面量的意思就是从这个表示形式就能推断其对应类型的量，不同表示形式的字面量和不同类型是多对一的关系。&#xA;变量的组成部分：类型和值。说白了就是一个定性一个定量。&#xA;类型决定变量在内存里面的存储方式，包括大小和布局方式，以及能参与的运算。&#xA;值在实际代码运行过程中则被各种函数使用参与运算。&#xA;变量声明和定义：&#xA;声明的意思就是：我要用这个变量。&#xA;定义的意思就是：我要对这个操作的变量做出定义，规定其具体的细节。&#xA;声明 定义 规定变量的类型和名字 ✅ ✅ 申请空间 ✅ 初始化 ✅ 执行多次 ✅ 用extern标记未初始化的变量来表明只对变量作声明：</description>
     </item>
     <item>
       <title>修复 Archlinux 上出现的 GPGME Error</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
+      <link>http://localhost:1313/posts/knowledge/linux/how-to-fix-GPGME-error/</link>
       <pubDate>Fri, 11 Jun 2021 08:50:43 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
+      <guid>http://localhost:1313/posts/knowledge/linux/how-to-fix-GPGME-error/</guid>
       <description>Delete old sync files sudo rm /var/lib/pacman/sync/* Re init pacman-key sudo pacman-key --init Populate key sudo pacman-key --populate Re sync sudo pacman -Syyy Now you can update successfully!</description>
     </item>
     <item>
       <title>Linux 权限相关命令解读</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</link>
+      <link>http://localhost:1313/posts/knowledge/linux/linux-authority/</link>
       <pubDate>Mon, 15 Mar 2021 21:43:35 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</guid>
+      <guid>http://localhost:1313/posts/knowledge/linux/linux-authority/</guid>
       <description>文件和目录的权限 下图为使用exa命令的部分截图&#xA;上图中的 Permission 字段下面的字母表示权限 第一个字母表示 文件类型 ：&#xA;剩下的 9 个位置上的字符称为 文件模式 ，每 3 个为一组，分别表示文件所有者、文件所属群组以及其他所有用户对该文件的读取、写入和执行权限&#xA;id：显示用户身份标识 一个用户可以拥有文件和目录，同时对其拥有的文件和目录有控制权 用户之上是群组，一个群组可以由多个用户组成 文件和目录的访问权限由其所有者授予群组或者用户&#xA;下图为 Gentoo Linux 下以普通用户身份执行 id 命令的结果&#xA;uid 和 gid 分别说明了当前用户的用户编号与用户名、所属用户组的编号与组名 groups 后的内容说明了用户还属于哪些组，说明了其对应的编号和名称&#xA;许多类 UNIX 系统会将普通用户分配到一个公共的群组中如：users 现代 Linux 操作是创建一个独一无二的只有一个用户的同名群组&#xA;chmod：更改文件模式 chmod 支持两种标识方法&#xA;八进制表示法&#xA;常用的模式有 7,6,5,4,0&#xA;符号表示法&#xA;如果没有指定字符默认使用all + 表示添加一种权限 - 表示删除一种权限 例如：&#xA;-R 表示递归设置&#xA;umask：设置文件默认权限 使用八进制表示法表示从文件模式属性中删除一个位掩码 掩码的意思：用掩码来取消不同的文件模式&#xA;plain umask&#xA;可以看到输出为：&#xA;plain 0022&#xA;不同 linux 发行版默认的文件权限不同，这里的输出是 Gentoo Linux 上普通用户对应的的输出 0022：先不看第一个 0,后面的 0|2|2 用二进制展开结果是：000|010|010</description>
     </item>
     <item>
       <title>在 Linux 上手动设置 DNS</title>
-      <link>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</link>
+      <link>http://localhost:1313/posts/knowledge/linux/dns-settings-on-archlinux/</link>
       <pubDate>Tue, 26 Jan 2021 21:43:35 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
+      <guid>http://localhost:1313/posts/knowledge/linux/dns-settings-on-archlinux/</guid>
       <description>Arch Linux DNS 设置 安装dnsmasq sudo pacman -S dnsmasq 配置/etc/resolv.conf中的域名代理服务器 # Tencent nameserver 119.29.29.29 nameserver 182.254.118.118 # Ali nameserver 223.5.5.5 nameserver 223.6.6.6 # OpenDNS IPv4 nameservers nameserver 208.67.222.222 nameserver 208.67.220.220 # OpenDNS IPv6 nameservers nameserver 2620:0:ccc::2 nameserver 2620:0:ccd::2 # Google IPv4 nameservers nameserver 8.8.8.8 nameserver 8.8.4.4 # Google IPv6 nameservers nameserver 2001:4860:4860::8888 nameserver 2001:4860:4860::8844 # Comodo nameservers nameserver 8.26.56.26 nameserver 8.20.247.20 # Generated by NetworkManager nameserver 192.168.1.1 防止/etc/resolv.conf被修改 sudo chattr +i /etc/resolv.</description>
     </item>
   </channel>

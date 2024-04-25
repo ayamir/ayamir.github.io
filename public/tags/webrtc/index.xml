@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>WebRTC on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/webrtc/</link>
+    <link>http://localhost:1313/tags/webrtc/</link>
     <description>Recent content in WebRTC on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/webrtc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 20:01:42 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/webrtc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jitter Buffer学习理解（上）</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/jitter-buffer/</link>
       <pubDate>Thu, 18 Apr 2024 17:33:24 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</guid>
-      <description>Jitter Buffer 是什么 在了解 Jitter Buffer 之前，我们应该先来看一下整个 webrtc 会话中数据传输的完整流程。&#xA;与传输相关的部分主要出现在 pacer 和 Jitter Buffer 这两个部分，从图中可以清晰的看到这两者处于编解码和网络传输之间，考虑到编解码可能会引入突变的帧大小（比如 I 帧），而在网络传输的过程又受到网络传输速率和排队延迟的影响，所以它们的作用其实就比较显而易见了。Pacer 在发送端负责平滑编码后的码流打包成 rtp 包之后，发送到网络上的速率；Jitter Buffer 在接收端负责平滑接收到的 rtp 包到组成解码所需的码流的过程。&#xA;当然，这个传输的过程中离开不了拥塞控制算法如 gcc 和各种抗丢包的技术如 nack，fec 等来保障实时通信质量。在这里我们主要关注传输的流程，相关算法和机制之后再研究。&#xA;Jitter Buffer 可以理解为有两部分的功能，一部分是 Buffer 的功能，也就是作为 rtp 包的缓冲区，并且将 rtp 包恢复成表示可解码帧的码流；另一部分是 Jitter 的功能，也就是通过引入延迟来平滑因帧大小和网络状况而造成的接收帧不均匀的情况。&#xA;buffer 的工作流程 正如前面所说，网络传输的是 rtp 包，而解码器的输入是可以解码的码流，所以需要一个将 rtp 包转换成可以解码的帧的过程。因为一个帧由多个 rtp 包组成，所以肯定需要缓冲区来存放前面收到但是还不足以组成一个帧的 rtp 包，这个缓冲区在 webrtc 中其实就是PacketBuffer。此外，考虑到编解码原理，接收到的 P 帧还需要等它所依赖的 I 帧/P 帧被解码，它才能被解码，所以在PacketBuffer之外还需要一个FrameBuffer来缓存可以解码的一个 GOP 中的各个帧。而负责寻找当前帧所依赖帧的是RtpFrameReferenceFinder，因为这个寻找依赖帧的过程实际上是递归依赖的，直到找到一个 GOP 的 IDR 帧才算结束，这样就能得到按照解码依赖顺序排列的一个 GOP。而最后，因为不同 GOP 的解码是独立的，所以 GOP 之间实际上就直接按照时间顺序排列就完成了 GOP 的排序。</description>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/jitter-buffer/</guid>
+      <description>这篇博客主要分析理解 WebRTC 中的 Jitter Buffer 的工作职责以及 Buffer 相关的代码实现。</description>
     </item>
     <item>
       <title>WebRTC任务队列学习笔记</title>
-      <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
+      <link>http://localhost:1313/posts/development/webrtc-task-queue/</link>
       <pubDate>Tue, 19 Mar 2024 19:32:57 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+      <guid>http://localhost:1313/posts/development/webrtc-task-queue/</guid>
       <description>TaskQueue TaskQueue也即任务队列，不过这个类本身并没有与队列相关的任何代码，所以它是用来干什么的呢？&#xA;我们直接来读代码（为了方便，我这里直接把方法的实现代码贴了出来）：&#xA;class RTC_LOCKABLE RTC_EXPORT TaskQueue { public: // TaskQueue priority levels. On some platforms these will map to thread // priorities, on others such as Mac and iOS, GCD queue priorities. using Priority = ::webrtc::TaskQueueFactory::Priority; explicit TaskQueue(std::unique_ptr&amp;lt;webrtc::TaskQueueBase, webrtc::TaskQueueDeleter&amp;gt; task_queue) : impl_(task_queue.release()) {} ~TaskQueue() { impl_-&amp;gt;Delete(); } // Used for DCHECKing the current queue. bool IsCurrent() const { impl_-&amp;gt;IsCurrent(); } // Returns non-owning pointer to the task queue implementation. webrtc::TaskQueueBase* Get() { return impl_; } // TODO(tommi): For better debuggability, implement RTC_FROM_HERE.</description>
     </item>
     <item>
       <title>远程桌面与WebRTC</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
       <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
       <description>关于远程桌面 远程桌面是一种将一台计算机的桌面控制权限交给网络上另一台计算机的技术，两台计算机之间建立连接之后，可以进行音视频以及控制信令的相互传输，从而实现远程控制的功能。&#xA;远程桌面技术的实现 基于远程桌面要完成的任务目标，其需要实现以下两个核心功能：&#xA;音视频的传输，即需要让控制机收到受控机的音频跟视频。 控制信令的传输，即鼠标键盘的控制信号等 目前主流的远程桌面技术主要有 2 种：&#xA;基于VNC(Virtual Network Computing)的远程桌面技术 基于RDP(Remote Desktop Protocol)的远程桌面技术 VNC VNC 使用远程帧缓冲协议即(RFB, Remote FrameBuffer)来远程控制另一台计算机，将控制机的键盘和鼠标事件传输到被控制机，同时将被控制机的屏幕图像传输到控制机。&#xA;基于其技术原理，VNC 有以下优点：&#xA;跨平台，可以在不同的操作系统上运行，VNC 技术本身也有多个客户端和服务端的实现版本，如 RealVNC、TightVNC、UltraVNC 等 开源，VNC 的源代码及其很多现代衍生品都是在 GNU 许可证之下发布的 轻量级，VNC 的客户端和服务端都是非常轻量级的程序，可以在低配置的计算机上运行 但因为 VNC 本身的设计时间很早，因此在 2023 年的今天暴露出了很多的时代局限性：&#xA;因为其基于像素方块的传输原理，就算是采用部分更新传输的方式，在大量像素变化的情况下会消耗大量的带宽。特别是对于现在的高分屏，其传输的数据量会更大。 VNC 在设计之初被用于局域网内使用，因此没有考虑太多的安全性，虽然密码并不以明文发送，但是如果从网络中嗅探出加密密钥和编码之后的密码，也可能成功破解出密码。 RDP RDP 是微软提出的一种专有协议，扩展了 T-120 系列协议标准，最早专用于 Windows 系统的终端和服务器之间的远程桌面连接，之后微软也实现了RDP 的 MacOS 客户端，现在也有很多第三方的实现版本实现了其功能的子集，为 GNU/Linux 做了适配如xrdp。因此，可以说 RDP 也一定程度上具有跨平台的性质。&#xA;相比于 VNC，RDP 的实现原理还是比较复杂的：&#xA;首先，RDP 的最底层是 TCP，TCP 之上是各层的协议和服务。&#xA;TPKT：是 TCP 之上的 ISO 传输服务，允许两个组交换 TPDU（传输协议数据单元）或 PDU（协议数据单元）的信息单元。 X.224：连接传输协议，主要用于 RDP 初始连接请求和响应。 T.</description>
     </item>
     <item>
       <title>在Linux下如何搭建WebRTC的开发环境</title>
-      <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
+      <link>http://localhost:1313/posts/development/webrtc-development-prepare/</link>
       <pubDate>Sun, 23 Apr 2023 21:28:38 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
+      <guid>http://localhost:1313/posts/development/webrtc-development-prepare/</guid>
       <description>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。&#xA;准备工作 网络：可以科学上网的梯子 IDE：VSCode 或者 CLion 安装depot_tools Google 有自己的一套用于管理 Chromium 项目的工具，名叫depot_tools，其中有包括git在内的一系列工具和脚本。&#xA;# 创建google目录用于存储google相关的代码 mkdir ~/google cd ~/google # clone depot_tools git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 克隆完成之后需要将depot_tools的路径加到PATH中，Linux 上添加环境变量最简单的方式是修改~/.profile，这种方式与你的登录 shell 是什么没有关系，不管是fish还是bash还是zsh都会吃这种方式：&#xA;# ~/.profile export GOOGLE_BIN=$HOME/google/depot_tools export PATH=$GOOGLE_BIN:$PATH 但是这种方式需要你注销重新登录。&#xA;克隆代码 mkdir webrtc-checkout cd webrtc-checkout fetch --nohooks webrtc gclient sync 整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。&#xA;克隆期间可能会因为网络问题中断，重新执行gclient sync即可，直到所有的模块都克隆完毕。&#xA;按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。&#xA;cd src git checkout master git new-branch &amp;lt;branch-name&amp;gt; 编译 WebRTC 关于 WebRTC 的版本可以在Chromium Dash查到：</description>
     </item>
     <item>
       <title>WebRTC 中关于视频自适应的相关设置</title>
-      <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+      <link>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</link>
       <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+      <guid>http://localhost:1313/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
       <description>概况 WebRTC提供了视频自适应机制，其目的主要是通过降低编码的视频的质量来减少带宽和 CPU 消耗。&#xA;视频自适应发生的情形：带宽或 CPU 资源发出信号表明自己未被充分使用或被过度使用时，进行视频自适应。过度使用则降低质量，否则提高质量。&#xA;视频自适应调整的对象：帧率与分辨率。&#xA;资源 Resources监测指标来自于系统或视频流。例如，一个资源可以监测系统温度或者视频流的带宽使用率。&#xA;资源实现了Resource接口：&#xA;当资源检测到被过度使用则调用SetUsageState(kOveruse)； 当资源不再被过度使用则调用SetUsageState(kUnderuse)。 对所有的视频而言，默认有两种类型的资源：&#xA;质量标量资源 编码过度使用资源 QP 标量资源 质量标量资源监测发送视频流中编码之后的帧的量化参数（QP），确保视频流的对于当前的分辨率而言可以接受。&#xA;每一帧被编码之后，QualityScaler就能获得相应的 QP。&#xA;过度使用或者未被充分使用的信号在平均 QP 脱离 QP 阈值之后发出。&#xA;QP 阈值在EncoderInfo中的scaling_settings属性中设置。&#xA;需要注意的是 QP 标量只在降级偏好设置为MAINTAIN_FRAMERATE或BALANCED时启用。&#xA;编码使用资源 编码使用资源监测编码器需要花多长时间来编码一个视频帧，实际上这是 CPU 使用率的代理度量指标。&#xA;当平均编码使用超过了设定的阈值，就会触发过度使用的信号。&#xA;插入其他资源 自定义的资源可以通过Call::AddAdaptationResource方法插入。&#xA;自适应 资源发出过度使用或未充分使用的信号之后，会发送给ResourceAdaptationProcessor，其从VideoStreamAdapter中请求Adaptation提案。这个提案基于视频的降级偏好设置。&#xA;ResourceAdaptationProcessor基于获得的提案来确定是否需要执行当前的Adaptation。&#xA;降级偏好设置 有 3 种设置，在RtpParameters的头文件中定义：&#xA;MAINTAIN_FRAMERATE: 自适应分辨率 MAINTAIN_RESOLUTION: 自适应帧率 BALANCED: 自适应帧率或分辨率 降级偏好设置在RtpParameters中的degradation_perference属性中设置。&#xA;VideoSinkWants和视频流自适应 自适应完成之后就会通知视频流，视频流就会转换自适应为VideoSinkWants。&#xA;这些接收器需求向视频流表明：在其被送去编码之前需要施加一些限制。&#xA;对于自适应而言需要被设置的属性为：&#xA;target_pixel_count: 对于每个视频帧要求的像素点总数，为了保持原始的长宽比，实际的像素数应该接近这个值，而不一定要精确相等， max_pixel_count: 每个视频帧中像素点的最大数量，不能被超过。 max_framerate_fps: 视频的最大帧率，超过这个阈值的帧将会被丢弃。 VideoSinkWants可以被任何视频源应用，或者根据需要可以直接使用其基类AdaptationVideoTraceSource来执行自适应。</description>
     </item>
   </channel>

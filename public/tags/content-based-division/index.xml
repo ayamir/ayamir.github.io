@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Content-Based Division on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/content-based-division/</link>
+    <link>http://localhost:1313/tags/content-based-division/</link>
     <description>Recent content in Content-Based Division on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/content-based-division/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/content-based-division/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for OpTile</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-optile/</link>
+      <link>http://localhost:1313/posts/papers/note-for-optile/</link>
       <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-optile/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-optile/</guid>
       <description>论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming&#xA;Level：ACM MM 17&#xA;Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size&#xA;背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。&#xA;当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。&#xA;编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。&#xA;对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。&#xA;目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。&#xA;ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。</description>
     </item>
   </channel>

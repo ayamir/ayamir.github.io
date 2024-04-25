@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cross-User Vp on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/cross-user-vp/</link>
+    <link>http://localhost:1313/tags/cross-user-vp/</link>
     <description>Recent content in Cross-User Vp on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/cross-user-vp/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cross-user-vp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for srlABR Cross User</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+      <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
       <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
       <description>论文概况 Link：Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network&#xA;Level：IEEE Transactions on Broadcasting 2021&#xA;Keywords：Cross-user vp, Sequetial RL ABR&#xA;主要工作 使用跨用户注意力网络CUAN来做 VP； 使用360SRL来做 ABR 将上面两者集成到了推流框架中； VP Motivation 形式化 VP 问题如下：&#xA;给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &amp;hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；&#xA;同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；&#xA;目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &amp;hellip;, t+T$ ；</description>
     </item>
   </channel>

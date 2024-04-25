@@ -2,164 +2,164 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Immersive Video on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/immersive-video/</link>
+    <link>http://localhost:1313/tags/immersive-video/</link>
     <description>Recent content in Immersive Video on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/immersive-video/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/immersive-video/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for srlABR Cross User</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+      <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
       <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
       <description>论文概况 Link：Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network&#xA;Level：IEEE Transactions on Broadcasting 2021&#xA;Keywords：Cross-user vp, Sequetial RL ABR&#xA;主要工作 使用跨用户注意力网络CUAN来做 VP； 使用360SRL来做 ABR 将上面两者集成到了推流框架中； VP Motivation 形式化 VP 问题如下：&#xA;给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &amp;hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；&#xA;同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；&#xA;目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &amp;hellip;, t+T$ ；</description>
     </item>
     <item>
       <title>Note for 360SRL</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
+      <link>http://localhost:1313/posts/papers/note-for-360srl/</link>
       <pubDate>Thu, 13 Jan 2022 12:08:36 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-360srl/</guid>
       <description>论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming&#xA;Level：ICME 2019&#xA;Keywords：ABR、RL、Sequential decision&#xA;创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，&#xA;每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，&#xA;因此对每个片段，有 $N \times M$ 种可选的编码块。&#xA;为了保证播放时的流畅性，需要确定最优的预取集合：&#xA;${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $&#xA;分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</description>
     </item>
     <item>
       <title>Note for GPAC</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-gpac/</link>
+      <link>http://localhost:1313/posts/papers/note-for-gpac/</link>
       <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-gpac/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-gpac/</guid>
       <description>Dash 客户端自适应逻辑 tile priority setup：根据定义的规则对 tile 进行优先级排名。 rate allocation：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。 rate adaption：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。 tile priority setup Dash 客户端加载带有 SRD 信息的 MPD 文件时，首先确定使用 SRD 描述的 tile 集合。&#xA;确定 tile 之间的编码依赖（尤其是使用 HEVC 编码的 tile 时）&#xA;为每个独立的 tile 向媒体渲染器请求一个视频对象，并向其通知 tile 的 SRD 信息。&#xA;渲染器根据需要的显示大小调整 SRD 信息之后，执行视频对象的最终布局。&#xA;一旦 tile 集合被确定，客户端向每个 tile 分配优先级。（每次码率自适应执行的时候都需要分配 tile 优先级）&#xA;Rate allocation 首先需要估计可用带宽（tile 场景和非 tile 场景的估计不同） 在一个视频段播放过程中，客户端需要去下载多个段（并行-HTTP/2） 带宽可以在下载单个段或多个段的平均指标中估计出来。 一旦带宽估计完成，码率分配将 tile 根据其优先级进行分类。 一开始所有的 tile 都分配成最低的优先级对应的码率，然后从高到低依次增长优先级高的 tile 的码率。 一旦每个 tile 的码率分配完成，将为目标带宽等于所选比特率的每个 tile 调用常规速率自适应算法 </description>
     </item>
     <item>
       <title>Note for TBRA</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
+      <link>http://localhost:1313/posts/papers/note-for-tbra/</link>
       <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-tbra/</guid>
       <description>论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming&#xA;Level：ACM MM 21&#xA;Keywords：Adaptive tiling and bitrate，Mobile streaming&#xA;创新点 背景 现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。&#xA;考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：&#xA;从上图可以看到：&#xA;如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。 如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。 另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：note-for-optile），而这样的性能需求对于移动设备而言是不可忽略的。&#xA;创新 除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。&#xA;论文组织 首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。 接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。 自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。 为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。 形式化了优化模型，讨论了自适应算法的细节。 评估证明了方案的优越性。 Motivation 分块策略对 tile 选择的影响 实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。</description>
     </item>
     <item>
       <title>Note for Content Motion Viewport Prediction</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+      <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
       <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
       <description>论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking&#xA;Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019&#xA;Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model&#xA;Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：&#xA;VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；&#xA;其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。&#xA;$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。</description>
     </item>
     <item>
       <title>Note for RnnQoE</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
+      <link>http://localhost:1313/posts/papers/note-for-rnnQoE/</link>
       <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-rnnQoE/</guid>
       <description>论文概况 Link：QoE-driven Mobile 360 Video Streaming: Predictive View Generation and Dynamic Tile Selection&#xA;Level：ICCC 2021&#xA;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&#xA;系统建模与形式化 视频划分 先将视频划分成片段：$\Iota = {1, 2, &amp;hellip;, I}$表示片段数为$I$的片段集合。&#xA;接着将片段在空间上均匀划分成$M \times N$个 tile，FOV 由被用户看到的 tile 所确定。&#xA;使用 ERP 投影，$(\phi_i, \theta_i),\ \phi_i \in (-180\degree, 180\degree], \theta_i \in (-90\degree, 90\degree]$来表示用户在第$i$个片段中的视点坐标。&#xA;播放过程中记录用户头部运动的轨迹，积累的数据可以用于 FOV 预测。&#xA;跨用户之间的 FOV 轨迹可以用于提高预测精度。&#xA;QoE 模型 前提&#xA;视频编解码器预先确定，无法调整每个 tile 的码率。&#xA;实现&#xA;每个 tile 都以不同的码率编码成不同的版本。 每个 tile 都有两种分辨率的版本。 QoE 内容</description>
     </item>
     <item>
       <title>Note for OpTile</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-optile/</link>
+      <link>http://localhost:1313/posts/papers/note-for-optile/</link>
       <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-optile/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-optile/</guid>
       <description>论文概况 Link：OpTile: Toward Optimal Tiling in 360-degree Video Streaming&#xA;Level：ACM MM 17&#xA;Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size&#xA;背景知识 编码过程概述 对一帧图像中的每一个 block，编码算法在当前帧的已解码部分或由解码器缓冲的临近的帧中搜索类似的 block。&#xA;当编码器在邻近的帧中找到一个 block 与当前 block 紧密匹配时，它会将这个类似的 block 编码进一个动作向量中。&#xA;编码器计算当前 block 和引用 block 之间像素点的差异，通过应用变换（如离散余弦变换），量化变换系数以及对剩余稀疏矩阵系数集应用无损熵编码（如 Huffman 编码）对计算出的差异进行编码。&#xA;对编码过程的影响 基于 tile 的方式会减少可用于拷贝的 block 数量，增大了可供匹配的 tile 之间的距离。 不同的投影方式会影响编码变换输出的系数稀疏性，而这会降低视频编码效率。 投影过程 因为直接对 360 度图像和视频的编码技术还没有成熟，所以 360 度推流系统目前还需要先将 3D 球面投影到 2D 平面上。&#xA;目前应用最广的投影技术主要是 ERP 和 CMP，分别被 YouTube 和 Meta 采用。&#xA;ERP 投影 基于球面上点的左右偏航角$\theta$与上下俯仰角$\phi$将其映射到宽高分别为$W$和$H$的矩形上。</description>
     </item>
     <item>
       <title>Note for RainbowDQN and Multitype Tiles</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
+      <link>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
       <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
       <description>论文概况 Level：IEEE Transaction on multimedia 21&#xA;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&#xA;问题形式化 模型 原始视频用网格划分成$N$块 tile，每个 tile 都被转码成$M$个不同的质量等级$q_i$。&#xA;基于传输控制模块得出的结果，播放器请求$t_i$个 tile 的$q_i$质量的版本并将其存储在缓冲区中，对应的缓冲区大小为$l_i$。&#xA;用户 Viewport 的信息用$V$表示，可以确定 FOV 的中心。&#xA;根据$V$可以将 tile 划分成 3 种类型：FOV、OOS、Base。&#xA;FOV 中的 tile 被分配更高的码率；&#xA;OOS 按照与$V$的距离逐步降低质量等级$q_i$；&#xA;Base 总是使用低质量等级$q_{Base}$但使用完整的分辨率。&#xA;传输的 tile 在同步完成之后交给渲染器渲染。&#xA;播放器根据各项指标计算可以评估播放性能：&#xA;$&amp;lt;V, B, Q, F, E&amp;gt;$：viewport 信息$V$，网络带宽$B$，FOV 质量$Q$，重缓冲频率$F$，传输效率$E$。&#xA;传输控制模块用于确定每个 tile 的质量等级$q_i$和缓冲区大小$l_i$。&#xA;传输控制模块优化的最终目标是获取最大的性能： $$ performance = E_{max},\ QoE \in accept\ range $$&#xA;带宽评估 收集每个 tile 的下载日志来评估带宽。&#xA;使用指数加权移动平均算法 EWMA使评估结果光滑，来应对网络波动。&#xA;第$t$次评估结果使用$B_t$表示，用下式计算： $$ B_t = \beta B_{t-1} + (1-\beta)b_t $$ $b_t$是 B 的第$t$次测量值；$\beta$是 EWMA 的加权系数。</description>
     </item>
     <item>
       <title>Note for 360ProbDASH</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
+      <link>http://localhost:1313/posts/papers/note-for-360ProbDASH/</link>
       <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-360ProbDASH/</guid>
       <description>论文概况 Link: 360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming&#xA;Level: ACM MM 17&#xA;Keyword:&#xA;Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation&#xA;工作范围与目标 应用层-&amp;gt;基于 tile-&amp;gt;viewport 预测的可能性模型+预期质量的最大化&#xA;针对小 buffer 提出了target-buffer-based rate control算法来避免重缓冲事件（避免卡顿）&#xA;提出 viewport 预测的可能性模型计算 tile 被看到的可能性（避免边缘效应）&#xA;形式化 QoE-driven 优化问题：&#xA;在传输率受限的情况下最小化 viewport 内的质量失真和空间质量变化（获取受限状态下最好的视频质量）&#xA;问题建模 形式化参数&#xA;$M*N$个 tile，M 指 tile 序列的序号，N 指不同的码率等级&#xA;$r_{i, j}$指比特率，$d_{i, j}$指失真，$p_{i}$指被看到的可能性（$\sum_{i=1}^{N}p_{i} = 1$）&#xA;$\Phi(X)$指质量失真，$\Psi(X)$指质量变化&#xA;目标&#xA;找到推流段的集合：$X = {x_{i, j}}$，其中${x_{i, j}} = 1$指被第$&amp;lt;i, j&amp;gt;$个 tile 被选中；$x_{i, j} = 0$则是未选中。 $$ \underset{X}{min}\ \Phi(X) + \eta \cdot \Psi(X) \ s.</description>
     </item>
     <item>
       <title>Note for Dante</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-dante/</link>
+      <link>http://localhost:1313/posts/papers/note-for-dante/</link>
       <pubDate>Wed, 08 Dec 2021 22:14:15 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-dante/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-dante/</guid>
       <description>论文概况 Link: https://dl.acm.org/doi/10.1145/3232565.3234686&#xA;Level: SIGCOMM 18&#xA;Keyword: UDP+FOV-aware+FEC&#xA;工作范围 目标 在给定序列的帧中，为每个 tile设定 FEC 冗余，根据其被看到的可能性的加权最小化平均质量降低。&#xA;问题建模 输入 估计的丢包率$p$、发送速率$f$、有$n$个 tile 的$m$个帧($&amp;lt;i, j&amp;gt;$来表示第$i$个帧的第$j$个 tile&#xA;第$&amp;lt;i, j&amp;gt;$个 tile 的大小$v_{i, j}$、第$&amp;lt;i, j&amp;gt;$个 tile 被看到的可能性$\gamma_{i, j}$、&#xA;如果第$&amp;lt;i, j&amp;gt;$ 个 tile 没有被恢复的质量降低率、最大延迟$T$&#xA;输出&#xA;第$&amp;lt;i, j&amp;gt;$个 tile 的 FEC 冗余率$r_{i, j} = \frac{冗余包数量}{原始包数量}$&#xA;最优化问题的形式化 $$ minimize\ \sum_{0&amp;lt;i\le m}\sum_{0&amp;lt;j\le n} \gamma_{i, j}d_{i, j}(p, r_{i, j}) $$&#xA;$$ subject\ \ to\ \ \frac{1}{f}\sum_{0&amp;lt;i\le m}\sum_{0&amp;lt;j\le n}v_{i, j}(1+r_{i, j}) \le T $$</description>
     </item>
     <item>
       <title>沉浸式流媒体传输的实际度量</title>
-      <link>https://ayamir.github.io/posts/papers/note11/</link>
+      <link>http://localhost:1313/posts/papers/note11/</link>
       <pubDate>Mon, 22 Nov 2021 15:21:59 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note11/</guid>
+      <guid>http://localhost:1313/posts/papers/note11/</guid>
       <description>度量指标 viewport 预测精度。 使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。 视频质量。 viewport 内部的 tile 质量（1～5）。 tile 在最高质量层之上花费的时间。 根据用户视线的分布而提出的加权质量度量。 度量参数 分块策略 带宽 延迟 viewport 预测 HTTP 版本 持久化的连接数量 </description>
     </item>
     <item>
       <title>沉浸式推流中应用层的优化</title>
-      <link>https://ayamir.github.io/posts/papers/note10/</link>
+      <link>http://localhost:1313/posts/papers/note10/</link>
       <pubDate>Mon, 15 Nov 2021 10:13:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note10/</guid>
+      <guid>http://localhost:1313/posts/papers/note10/</guid>
       <description>背景 大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。&#xA;在基于 VR 的 HAS 方案中，播放 1 条视频片段就需要取得多种资源：1 次 GET 请求需要同时请求基础的 tile 层和每个空间视频 tile。使用 4x4 的 tile 方案时，客户端需要发起不少于 17 次 GET 请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。&#xA;解决方案 使用多条持久的 TCP 连接 大多数的现代浏览器都支持同时建立并维持多达 6 条 TCP 连接来减少页面加载时间，并行地获取请求的资源。这允许增加整体吞吐量，并部分消除网络延迟引入的空闲 RTT 周期。&#xA;类似地，基于 VR 的 HAS 客户端可以使用多个 TCP 连接并行下载不同的 tile。&#xA;使用 HTTP/2 协议的服务端 push 特性 HTTP/2 协议引入了请求和相应的多路复用、头部压缩和请求优先级的特性，这可以减少页面加载时间。&#xA;服务端直接 push 短视频片段可以减少视频的启动时间和端到端延迟。&#xA;并且，服务端 push 特性可以应用在基于 tile 的 VR 视频推流中，客户端可以向服务器同时请求一条视频片段的所有 tile。</description>
     </item>
     <item>
       <title>沉浸式流媒体面临的挑战和启示</title>
-      <link>https://ayamir.github.io/posts/papers/note9/</link>
+      <link>http://localhost:1313/posts/papers/note9/</link>
       <pubDate>Sun, 14 Nov 2021 19:06:10 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note9/</guid>
+      <guid>http://localhost:1313/posts/papers/note9/</guid>
       <description>最终的目标 主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。&#xA;具体的任务 从 360 度视频的采集到显示的过程中，引入了好几种失真。&#xA;应该重点增加新的拼接、投影和分包方式以减少噪音。&#xA;除了捕获和使用 360 度视频来表示真实世界和实际交互内容之外，环境中还包括 3D 对象。&#xA;3D 对象的合并对于真实的视图而言是一个挑战。&#xA;因为在推流会话中，用户的头部移动高度可变，所以固定的 tiling 方案可能会导致非最优的 viewport 质量。&#xA;推流框架中的 tile 数量应该被动态选择，进而提高推流质量。&#xA;自适应的机制应该足够智能来根据环境因素精确地做出适应。&#xA;应该制定基于深度强化学习的策略，来给 360 度视频帧中不同区域的 tile 分配合适的比特率。&#xA;用户在 360 度视频中的自由导航很容易让其感觉忧虑自己错过了什么重要的东西。&#xA;在 360 度视频中导航的时候，需要支持自然的可见角度方向。&#xA;丰富的环境应配备新颖的定向机制，以支持 360 度视频，同时降低认知负荷，以克服此问题。&#xA;真实的导航依赖 viewport 预测机制。&#xA;现代的预测方式应该使用时空图像特性以及用户的位置信息，采用合适的编解码器卷积 LSTM 结构来减少长期预测误差。&#xA;沉浸式的场景随着用户的交互应该发生变化。&#xA;由于用户与场景的交互而产生的新挑战是通过编码和传输透视图创建的。&#xA;因此预测用户的行为来实现对交互内容的高效编码和推流非常关键。&#xA;对 360 度视频的质量获取方法和度量手段需要进一步研究。&#xA;360 度视频中特殊的音效需要引起注意。</description>
     </item>
     <item>
       <title>360度视频的音频处理</title>
-      <link>https://ayamir.github.io/posts/papers/note8/</link>
+      <link>http://localhost:1313/posts/papers/note8/</link>
       <pubDate>Sun, 14 Nov 2021 16:52:20 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note8/</guid>
+      <guid>http://localhost:1313/posts/papers/note8/</guid>
       <description>背景 空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。&#xA;360 度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。&#xA;360 度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过&#xA;空间音频的再现技术 物理重建 物理重建技术用于合成尽可能接近所需信号的整个声场。&#xA;立体声配置在最流行的声音再现方法中使用两个扬声器，以促进更多的空间信息（包括距离、方向感、环境和舞台合奏）。而多信道再现方法在声学环境中使用，并在消费类设备中流行。&#xA;多信道再现技术 同样的声压场也通过其他物理重建技术产生，如环境中存在的环境声学和波场合成（WFS）。&#xA;需要麦克风阵列来捕获更多的空间声场。&#xA;因为不能直接用于声场特性分析，麦克风记录的内容需要后期处理。&#xA;麦克风阵列用于语音增强、声源分离、回声消除和声音再现。&#xA;感知重建 心理声学技术用于感知重建，以产生对空间声音特征的感知。&#xA;感知重建技术复制空间音频的自然听觉感受来表示物理音频。&#xA;双耳录制技术 双耳录制技术是立体声录制的一种扩展形式，提供 3D 的听觉体验。&#xA;双耳录制技术通过使用两个 360 度麦克风尽可能的复制人耳，这与使用定向麦克风捕捉声音的常规立体声录音相同。&#xA;假人头部的 360 度麦克风用作人耳的代理，因为它提供了耳朵的精确几何坐标。&#xA;假人头部还产生与人头轮廓相互作用的声波。借助 360 度麦克风，与任何其他记录方法相比，空间立体图像的捕获更精确。&#xA;头部相关传递函数（HRTF） 用于双耳音频的实时技术中，以再现复杂的线索，帮助我们通过过滤音频信号来定位声音。&#xA;多个因素（如耳朵、头部和听力环境）会影响线索，因为在现实中，我们会重新定位自己以定位声音。&#xA;选择合适的录音/重放技术对于使听到的声音与真实场景中的体验相同至关重要。&#xA;环境声学 概述 环境声学也被称为 3D 音频，被用于记录、混成和播放一个中心点周围的 360 度音频。&#xA;区别 环境音频和传统的环绕声技术不同。&#xA;双声道和传统环绕声技术背后的原理是相同的，都是通过将声音信号送到特定的扬声器来创建音频。&#xA;环境音频不受任何特定扬声器的预先限制，因为它在即使音域旋转的情况下，也能创造出平滑的音频。&#xA;传统环绕声的格式只有在声音场景保持静态的情况下才能提供出色的成像效果。&#xA;环境音频提供一个完整的球体，将声音均匀地传播到整个球体。&#xA;格式 环境音频有 6 种格式，分别为：A、B、C、D、E、G。&#xA;用途 一阶环境音频的用途 第一阶的环境音频或 B 格式的环境音频，其麦克风用于使用四面体阵列表示线性 VR。&#xA;此外，这些在四个通道中进行处理，例如提供非定向压力水平的“W”。同时，“X、Y 和 Z”分别促进了从前到后、从侧到侧以及从上到下的方向信息。&#xA;一阶环境音频仅适用于相对较小的场景，因为其有限的空间保真度会影响声音定位。&#xA;高阶环境音频的用途 高阶环境音频通过增加更多的麦克风来增强一阶环境音频的性能效率。&#xA;总结 </description>
     </item>
     <item>
       <title>自适应策略之viewport依赖型</title>
-      <link>https://ayamir.github.io/posts/papers/note7/</link>
+      <link>http://localhost:1313/posts/papers/note7/</link>
       <pubDate>Sun, 14 Nov 2021 13:24:59 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note7/</guid>
+      <guid>http://localhost:1313/posts/papers/note7/</guid>
       <description>概述 在 360 度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。&#xA;通常的实现方式 在服务端提供几个自适应集，来在遇到用户头部的突然运动的情况时，能保证 viewport 的平滑转换。&#xA;提出 QER(Quality-focused Regios)的概念使 viewport 内部的视频分辨率高于 viewport 之外的视频分辨率。&#xA;非对称的方式以不同的空间分辨率推流来节省带宽。&#xA;在播放过程中，客户端根据用户的方向来请求不同分辨率版本的视频。 优点是即使客户端对用户的方面做了错误预测，低质量的内容仍然可以在 viewport 中生成。 缺点是在大多数场景下，这种方案需要巨大的存储开销和处理负载。 自适应推流参数 可用带宽和网络吞吐量 Viewport 预测的位置 客户端播放器的可用缓冲 参数计算公式 第 n 个估计的 Viewport：$V^e(n)$&#xA;$V^e(n) = V_{fb}$&#xA;$V_{fb}$是最新报告的 viewport 位置&#xA;第 n 个估计的吞吐量：$T^e(n)$&#xA;$T^e(n) = T_{fb}$&#xA;$T_{fb}$是最新报告的吞吐量&#xA;比特率：$R_{bits}$&#xA;$R_{bits} = (1-\beta)T^e(n)$&#xA;$\beta$是安全边缘&#xA;第 n 个帧的客观度量质量：$VQ(k)$和最终客观度量质量$VQ$&#xA;$VQ=\frac{1}{L}\sum^L_{k=1}VQ(k)$&#xA;$VQ(k) = \sum_{t=1}^{T^n}w_k(k) * D^n_t(V_t, k)$&#xA;$w_k = \frac{A(t,k)}{A_{vp}}$&#xA;$L=总帧数$&#xA;$w_k$表示在第 k 个帧中与 viewport 所重叠的 tile 程度</description>
     </item>
     <item>
       <title>沉浸式流媒体现有标准</title>
-      <link>https://ayamir.github.io/posts/papers/note6/</link>
+      <link>http://localhost:1313/posts/papers/note6/</link>
       <pubDate>Thu, 11 Nov 2021 20:08:03 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note6/</guid>
+      <guid>http://localhost:1313/posts/papers/note6/</guid>
       <description>OMAF(Omnidirectional Media Format) OMAF是第 1 个国际化的沉浸式媒体格式，描述了对 360 度视频进行编码、演示、消费的方法。&#xA;OMAF与与现有格式兼容，包括编码（例如HEVC），文件格式（例如ISOBMFF），交付信号（例如DASH，MMT）。&#xA;OMAF中还包括编码、投影、分包和 viewport 方向的元数据。&#xA;OMAF+DASH-&amp;gt;MPD OMAF 与 DASH 相结合，再加上一些额外的描述构成了 MPD 文件格式，用于向客户端通知 360 度媒体的属性。&#xA;OMAF 规定了 9 中媒体配置文件，包括 3 种视频配置文件：基于 HEVC 的 viewport 独立型、基于 HEVC 的 viewport 依赖型、基于 AVC 的 viewport 依赖型。&#xA;OMAF 为视角独立型的推流提供了无视 viewport 位置的连续的视频帧质量。&#xA;常规的 HEVC 编码方式和 DASH 推流格式可以用于 viewport 独立型的推流工作。&#xA;但是使用 HEVC/AVC 编码方式的基于 viewport 的自适应操作是 OMAF 的一项技术开发，允许无限制地使用矩形 RWP 来增强 viewport 区域的质量。&#xA;CMAF(Common Media Application Format) 致力于提供跨多个应用和设备之间的统一的编码格式和媒体配置文件。&#xA;CMAF 使请求低延迟的 segment 成为可能。</description>
     </item>
     <item>
       <title>自适应360度视频推流挑战</title>
-      <link>https://ayamir.github.io/posts/papers/note5/</link>
+      <link>http://localhost:1313/posts/papers/note5/</link>
       <pubDate>Thu, 04 Nov 2021 11:01:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note5/</guid>
+      <guid>http://localhost:1313/posts/papers/note5/</guid>
       <description>背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。&#xA;沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。&#xA;目前主要面临的挑战有以下 4 个：&#xA;Viewport 预测 背景 HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。&#xA;分类 内容不可知的方式基于历史信息对 viewport 进行预测。 内容感知的方式需要视频内容信息来预测未来的 viewport。 内容不可知方式 分类 平均线性回归 LR 航位推算 DR 聚类 机器学习 ML 编解码器体系结构 现有成果 Qian&amp;rsquo;s work——LR 使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。&#xA;当预测后 0.5s、1s、2s 加权线性回归表现更好 Petrangeli&amp;rsquo;s work——LR 将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。&#xA;结合观察者头部的移动，将可变比特率分配给可见和不可见区域。&#xA;作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。&#xA;Mavlankar and Girod&amp;rsquo;s work——运动向量 使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。&#xA;La Fuente&amp;rsquo;s work——运动向量 考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。</description>
     </item>
     <item>
       <title>沉浸式流媒体网络问题的相关解决方案</title>
-      <link>https://ayamir.github.io/posts/papers/note4/</link>
+      <link>http://localhost:1313/posts/papers/note4/</link>
       <pubDate>Sat, 30 Oct 2021 19:20:00 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note4/</guid>
+      <guid>http://localhost:1313/posts/papers/note4/</guid>
       <description>概况 现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。&#xA;传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。&#xA;边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。&#xA;解决方案 360 度视频的边缘协助推流 背景 主要的视频内容可以被传送到边缘节点乃至下游客户端来满足高分辨率等级和严格的低延迟要求。&#xA;在边缘计算中，处理和存储的任务被从核心网转移到边缘节点例如基站、微型数据中心和机顶盒等。&#xA;Hou&amp;rsquo;s work 提出边缘/云服务器渲染可以使计算更加轻便，可以让无线 VR/AR 体验可行并且便携。&#xA;Zhang&amp;rsquo;s work 为 VR 多人游戏提出了一种混合边缘云基础架构，中心云负责更新全局游戏事件，边缘云负责管理视图更新和大规模的帧渲染任务，以此来支持大量的在线联机人数的低延迟游戏。&#xA;进一步陈述了一种服务器选择算法，它基于 QoS 和玩家移动的影响确保所有 VR 玩家之间的公平性。&#xA;Lo&amp;rsquo;s work 考虑了为 360 度视频渲染提供边缘协助的设备的异质性。&#xA;边缘服务器将 HEVC tile 流转码为 viewport 视频流并传输到多个客户端。 最优化算法根据视频质量、HMD 类型和带宽动态决定边缘节点服务哪个客户端。 边缘缓存策略 背景 传统视频的缓冲方案并不能直接应用到 360 度视频上。&#xA;为了在启用边缘缓存的网络中促进 360 度视频的传输，两个传输节点之间的代理缓存被部署来使用户侧的内容可用。&#xA;边缘缓存能从实质上减少重复的传输并且可以使内容服务器更加可扩展。&#xA;Mahzai&amp;rsquo;s work 基于其他用户的观看行为为 360 度视频的流行内容提出了一种缓存策略。&#xA;与最不常用 (LFU) 和最近最少使用 (LRU) 缓存策略相比，在缓存使用方面的性能分别提高了至少 40% 和 17%。 Papaioannou&amp;rsquo;s work 提出了基于 tile 分辨率和需求统计信息的缓存策略，用最少的错误，提高要求 tile 的和缓存 tile 这两种版本的 viewport 覆盖率。</description>
     </item>
     <item>
       <title>自适应360度视频推流方案</title>
-      <link>https://ayamir.github.io/posts/papers/note3/</link>
+      <link>http://localhost:1313/posts/papers/note3/</link>
       <pubDate>Mon, 25 Oct 2021 09:34:10 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note3/</guid>
+      <guid>http://localhost:1313/posts/papers/note3/</guid>
       <description>概述 360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。&#xA;相比于常规视频，360 度视频被编码成全向的场景。&#xA;自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。&#xA;分类 Viewport-Independent Streaming 服务端的任务 使用如 ERP、CMP 等视角独立型的投影方式，360 度视频被投影到一个球体上。 客户端的任务 投影之后的视频直接被传送到客户端，并不需要来自传感器的方向信息。 客户端需要支持对应的投影格式。 客户端像处理传统视频一样完成比特率自适应。 基于网络特征向将要到来的 segment 请求相同投影格式的表示 DASH 插件需要支持相同质量视频的推流。&#xA;应用 视角独立型推流主要用于体育、教育和旅游视频内容。&#xA;优点 简单 缺点 相比于视角依赖型方案视频编码效率低了 30%。 为不可见的区域要求大量带宽和解码资源。 Viewport-Dependent Streaming 终端设备的任务 只接受特定的视频帧内容，包括等于或大于视角角度的可见信息。 监测相关的视角作为用户头部移动的回应，并且向服务端发送信号来精确播放器信息。 为服务端准备和用户方向相关的几个自适应集。 客户端的任务 根据网络情况和估计的视角位置决定获取哪个自适应集。 难点 可视区域的确定 与用户头部移动的同步 质量调整 提供平滑的播放体验 现有的工作 各种投影方式在实际推流中表现如何？ 相比于金字塔格式，为视角依赖型投影方案提出的多分辨率变体有最好的研究和开发(RD)性能。 偏移 CMP 获得了 5.6%到 16.4%的平均可见质量。 提出的框架可以基于已知的网络资源和未来的视角位置适应视角的尺寸和质量。 相比于理想的下载过程，这种二维自适应策略可以花费 20%的额外网络带宽下载超过 57%的额外视频块。 如何在网络资源受限的情况下提供高质量的推流？ 为视角依赖型推流产生不同质量的 segment。 当流中只有有限的 representation 时，利用 Quality Emphasized Regions 策略来缩放特定区域的分辨率。 在拥塞网络条件下，执行了基于网络回应的视角大小和比特率的联合适应，结果显示，相比于传送全部的 360 度场景，动态的视角覆盖率提供了更好的画面质量。 这种基于网络回应的自适应也确保基于整体拥塞变化做调整时能改善视频质量。 为立体视频的背景和前景视图采用不对称质量。 可以分别为背景块和前景块分别节省 15%和 41%的比特率。 DASH 需要做什么？ manifest 中需要包含视角位置信息和投影元数据。 优化获取 random access point 的周期来优化视角分辨率自适应体验。 考虑低延迟和活跃的视角切换。 Tile-based Streaming 传统视频被分成多个块，360 度视频在块的基础上还被分成多个大小相等或者不等的 tile，以此更加精确地调整画面的细节质量。</description>
     </item>
     <item>
       <title>自适应视频推流方案</title>
-      <link>https://ayamir.github.io/posts/papers/note2/</link>
+      <link>http://localhost:1313/posts/papers/note2/</link>
       <pubDate>Thu, 21 Oct 2021 10:50:54 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note2/</guid>
+      <guid>http://localhost:1313/posts/papers/note2/</guid>
       <description>概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。&#xA;目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。&#xA;适应性的视频比特率需要同时匹配网络条件和质量目标的需求。&#xA;分类 服务端适应 大多数服务端适应的方案要求客户端发送系统或网络相关信息。&#xA;质量导向的适应方案（Quality-Oriented Adaptive Scheme/QOAS） 向终端用户提供了高知觉质量的媒体内容。&#xA;QOAS 是 C-S 架构，决策在服务器端产生。&#xA;QOAS 基于客户知觉质量的反馈，提供对推流质量等级的调整。&#xA;智能优先级适应方案（intelligent Prioritized Adaptive Scheme/iPAS） 专用于 802.11 网络。&#xA;iPAS 服务器上的基于固有印象的带宽分配模块被用于组合 QoS 相关的参数和视频内容特征来进行内容的优先级分类和带宽份额分配。&#xA;通过区分多媒体流，iPAS 提供可用无线信道的优先级分配。&#xA;设备导向的适应方案（Device-Oriented Adaptive multimedia Scheme/DOAS） 专用于 LTE 网络，建立在 LTE 下行链路调度机制之上。&#xA;DOAS 专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的 QoE。 客户端适应 基于吞吐量的自适应方案 这类方案基于估计的网络吞吐量从服务端选择视频的比特率。&#xA;HTTP 客户端通过之前的观察记录来估计网络的吞吐量。 通过测量端获取时间（segment fetch time/SFT）来代表发起和收到回复的瞬时 HTTP GET 请求之间的时间段，以此来确定一个推流会话中吞吐量的变化，进而独立地做出适应决策。 在分布式网络中，同时考虑并发和顺序的 SFT。通过比较实际的和理想的 SFT 来选择未来的 segment 的质量等级。 FESTIVE 算法 适用于多个 HAS 客户端共享一个常见的拥塞带宽链路的情形。&#xA;以效率、稳定性、公平性为度量因素的适应性算法。&#xA;探索了一种为分段调度、吞吐量估计和比特率选择而生的健壮的机制。&#xA;包含一个随机调度器来调度下一个视频块的下载。&#xA;多个客户端共享容量为$W$的满带宽链路，每个客户端$x$在$t$时刻播放的视频比特率为$b_x,_t$ ，需要避免以下 3 种问题：</description>
     </item>
     <item>
       <title>360度流媒体面临的挑战、机遇和解决方案</title>
-      <link>https://ayamir.github.io/posts/papers/note1/</link>
+      <link>http://localhost:1313/posts/papers/note1/</link>
       <pubDate>Wed, 20 Oct 2021 20:08:38 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note1/</guid>
+      <guid>http://localhost:1313/posts/papers/note1/</guid>
       <description>360 度流媒体视频框架 视频采集和拼接 使用不同的 360 度视频采集相机可以将视频内容存储为 3D 的球形内容&#xA;使用不同的投影策略实现降维 策略主要分为 2 种：视角独立型和视角依赖型&#xA;视角独立型 整个 3D 的视频内容被按照统一的质量投影到 2D 平面上&#xA;主要包括等距长方形投影和立方贴图投影&#xA;等距长方形投影(ERP) 使用左右偏向和俯仰值将观察者周围的球体展平到二维表面上&#xA;视角范围：左 180 度～右 180 度、上 90 度～下 90 度&#xA;缺点：&#xA;极点处会使用比赤道处更多的像素进行表示，会消耗有限的带宽 由于图像失真导致压缩效率不足 立方贴图投影(CMP) 六面立方体组合用于将球体的像素映射到立方体上的相关像素&#xA;在游戏中被广泛应用&#xA;优点：&#xA;节省空间，相比于等距长方形投影视频体积能减少 25% 缺点：&#xA;只能渲染有限的用户视野 视角依赖型 视角内的内容比之外的内容有更高保真度的表示&#xA;主要包括金字塔投影、截断方形金字塔投影(TSP)和偏移立方贴图投影&#xA;金字塔投影 球体被投影到一个金字塔上，基础部分有最高的质量，大多数的投影区域属于用户的视角方向&#xA;优点：&#xA;节省空间，降低 80%的视频体积 缺点：&#xA;用户以 120 度旋转视角时，视频的质量会像旋转 180 度一样急速下降 截断方形金字塔投影 大体情况和金字塔投影相同，区别在与使用了被截断的方形金字塔&#xA;优点：&#xA;减少了边缘数据，提高了高码率视频的推流性能 缺点：&#xA;使边缘更加锐利 偏移立方贴图投影 与原始的立方贴图投影类似，球体的像素点被投影到立方体的 6 个面上&#xA;优点：&#xA;视角方向的内容会有更高的质量，提供平滑的视频质量变化 缺点：&#xA;存储开销很大 编码视频内容 目前主要的编码方式有 AVC/H.</description>
     </item>
     <item>
       <title>部署 Immersive Video OMAF-Sample</title>
-      <link>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</link>
+      <link>http://localhost:1313/posts/development/Immersive-Video-Deploy/</link>
       <pubDate>Sat, 09 Oct 2021 15:31:46 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</guid>
+      <guid>http://localhost:1313/posts/development/Immersive-Video-Deploy/</guid>
       <description>原仓库地址：Immersive-Video-Sample&#xA;修改之后的仓库：Immersive-Video-Sample&#xA;Server 端搭建 修改 Dockerfile 手动设置 wget 和 git 的 http_proxy&#xA;旧 package 目录 not found，修改为新 package 目录&#xA;因为找不到 glog 库因此加入软链接操作&#xA;ln -s /usr/local/lib64/libglog.so.0.6.0 /usr/local/lib64/libglog.so.0 重新编译内核 运行脚本时显示 libnuma 错误因此推断与 numa 设置有关&#xA;执行numactl -H显示只有一个 node，报错输出显示需要至少两个 numa 节点&#xA;查询资料之后获知可以使用 fakenuma 技术创造新节点，但是 Ubuntu 默认的内核没有开启对应的内核参数&#xA;手动下载 Linux 内核源代码到/usr/src/目录 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.11.1.tar.gz 解压 tar xpvf linux-5.11.1.tar.gz 复制现有内核配置 cd linux-5.11.1 &amp;amp;&amp;amp; cp -v /boot/config-$(uname -r) .config 安装必要的包 sudo apt install build-essential libncurses-dev bison flex libssl-dev libelf-dev 进入内核配置界面 sudo make menuconfig 按下/键分别查询CONFIG_NUMA和CONFIG_NUMA_EMU位置 手动勾选对应选项之后保存退出 重新编译并等待安装结束 sudo make -j $(nproc) &amp;amp;&amp;amp; sudo make modules_install &amp;amp;&amp;amp; sudo make install 修改grub启动参数加入 fake numa 配置 sudo vim /etc/default/grub 找到对应行并修改为</description>
     </item>
   </channel>

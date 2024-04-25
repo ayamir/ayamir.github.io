@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ABR on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/abr/</link>
+    <link>http://localhost:1313/tags/abr/</link>
     <description>Recent content in ABR on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/abr/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/abr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+      <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
       <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
       <description>Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.&#xA;Purposes:&#xA;Minimal rebuffering events when the playback buffer depletes. Minimal startup delay especially in case of live video streaming. A high overall playback bitrate level with respect to network resources. Minimal video quality oscillations, which occur due to frequent switching. Available bandwidth-based The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</description>
     </item>
     <item>
       <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+      <link>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
       <pubDate>Sat, 26 Feb 2022 11:26:06 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
       <description>Paper Overview Link: https://ieeexplore.ieee.org/document/8424813&#xA;Level: IEEE Communications Surveys &amp;amp; Tutorials 2019&#xA;Background Traditional non-HAS IP-based streaming The client receives media that is typically pushed by a media server using connection-oriented protocol such as Real-time Messaging Protocol(RTMP/TCP) or connectionless protocol such as Real-time Transport Protocol(RTP/UDP).&#xA;Real-time Streaming Protocol(RTSP) is a common protocol to control the media servers, which is responsible for setting up a streaming session and keeping the state information during this session, but is not responsible for actual media delivery(task for protocol like RTP).</description>
     </item>
     <item>
       <title>Note for srlABR Cross User</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+      <link>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</link>
       <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-srlABR-cross-user/</guid>
       <description>论文概况 Link：Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network&#xA;Level：IEEE Transactions on Broadcasting 2021&#xA;Keywords：Cross-user vp, Sequetial RL ABR&#xA;主要工作 使用跨用户注意力网络CUAN来做 VP； 使用360SRL来做 ABR 将上面两者集成到了推流框架中； VP Motivation 形式化 VP 问题如下：&#xA;给出 $p^{th}$ 用户的 $1-t$ 时间内的历史视点坐标 $L^{p}_{1:t} = \lbrace l^p_1, l^p_2, &amp;hellip;, l^p_t \rbrace$ ，其中 $l^p_t = (x_t, y_t), x_t \in [-180, 180]; y_t \in [-90, 90]$ ；&#xA;同一视频的不同用户视点表示为 $L^{1:M}_{1:t+T}$ ， $M$ 表示其他用户的数量；&#xA;目标是预测未来的 $T$ 个时刻的视点位置 $L^p_i, i = t+1, &amp;hellip;, t+T$ ；</description>
     </item>
     <item>
       <title>Note for 360SRL</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
+      <link>http://localhost:1313/posts/papers/note-for-360srl/</link>
       <pubDate>Thu, 13 Jan 2022 12:08:36 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-360srl/</guid>
       <description>论文概况 Link：360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming&#xA;Level：ICME 2019&#xA;Keywords：ABR、RL、Sequential decision&#xA;创新点 在 MDP 中，将 N 维决策空间内的一次决策转换为 1 维空间内的 N 次级联顺序决策处理来降低复杂度。 问题定义 原始的全景视频被划分成每段固定长度为 $T$ 的片段，&#xA;每个片段包含 $N$ 个分块，并以 $M$ 的码率等级独立编码，&#xA;因此对每个片段，有 $N \times M$ 种可选的编码块。&#xA;为了保证播放时的流畅性，需要确定最优的预取集合：&#xA;${a_0, &amp;hellip;, a_i, &amp;hellip;, a_{N-1}}, i \in \lbrace 0, &amp;hellip;, N-1 \rbrace, a_i \in \lbrace 0, &amp;hellip;, M-1 \rbrace $&#xA;分别用 $q_{i, a_i}$ 和 $w_{i, a_i}$ 表示码率选择为 $a^{th}_i$ 的 $i^{th}$ 分块的质量和相应的分块片段大小。</description>
     </item>
     <item>
       <title>Note for MPC</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <link>http://localhost:1313/posts/papers/note-for-mpc/</link>
       <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-mpc/</guid>
       <description>论文概况 Link：A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&#xA;Level：ACM SIGCOMM 15&#xA;Keywords：Model Predictive Control，ABR，DASH&#xA;Motivation 关于码率自适应的逻辑，现有的解决方案还没有形成清晰的、一致的意见。不同类型的方案之间优化的出发点并不相同，比如基于速率和基于缓冲区，而且没有广泛考虑各方面的因素并形成折中。&#xA;文章引入了控制论中的方法，将各方面的影响因素形式化为随机优化控制问题，利用模型预测控制 MPC将两种不同出发点的解决方案结合到一起，进而解决其最优化的问题。而仿真结果也证明，如果能运行一个最优化的 MPC 算法，并且预测误差很低，那么 MPC 方案可以优于传统的基于速率和基于缓冲区的策略。&#xA;背景 播放器端为 QoE 需要考虑的问题： 最小化冲缓冲事件发生的次数； 在吞吐量限制下尽可能传输码率较高的视频； 最小化播放器开始播放花费的时间（启动时间）； 保持播放过程平滑，尽可能避免大幅度的码率变化； 这些目标相互冲突的原因： 最小化重缓冲次数和启动时间会导致只选择最低码率的视频； 尽可能选择高码率的视频会导致很多的重缓冲事件； 保持播放过程平滑可能会与最小的重缓冲次数与最大化的平均码率相冲突； 控制论模型 视频推流模型 参数形式化&#xA;将视频建模成连续片段的集合，即：$V = \lbrace 1, 2, &amp;hellip;, K \rbrace$，每个片段长为$L$秒；&#xA;每个片段以不同码率编码，$R$ 作为所有可用码率的集合；&#xA;播放器可以选择以码率$R_k \in R$ 下载第$k$块片段，$d_k(R_k)$ 表示以码率$R_k$编码的视频大小；&#xA;对于恒定码率 CBR 的情况，$d_k(R_k) = L \times R_k$； 对于变化码率 VBR 的情况，$d_k \sim R_k$； 选择的码率越高，用户感知到的质量越高：&#xA;$q(\cdot):R \rightarrow \R_+$ 是一个不减函数，是选择的码率 $R_k$ 到用户感知到的视频质量 $q(R_k)$ 的映射；</description>
     </item>
   </channel>

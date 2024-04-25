@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Live Video on Ayamir&#39;s blog</title>
-    <link>https://ayamir.github.io/tags/live-video/</link>
+    <link>http://localhost:1313/tags/live-video/</link>
     <description>Recent content in Live Video on Ayamir&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Apr 2024 19:02:12 +0800</lastBuildDate>
-    <atom:link href="https://ayamir.github.io/tags/live-video/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/live-video/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Note for Content Motion Viewport Prediction</title>
-      <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+      <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
       <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
-      <guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+      <guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
       <description>论文概况 Link：Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking&#xA;Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019&#xA;Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model&#xA;Workflow Tracking：VR motion 追踪算法：应用了高斯混合模型来检测物体的运动。 Recovery：基于反馈的错误恢复算法：在运行时考虑实际的用户 viewport 来自动更正潜在的预测错误。 Update：viewport 动态更新算法：动态调整预测的 viewport 大小去覆盖感兴趣的潜在 viewport，同时尽可能保证最低的带宽消耗。 Evaluation：经验用户/视频评估：构建 VR viewport 预测方法原型，使用经验 360°视频和代表性的头部移动数据集评估。 全景直播推流的预备知识 VR 推流直播 相比于传统的 2D 视频推流的特别之处：&#xA;VR 系统是交互式的，viewport 的选择权在客户端； 呈现给用户的最终视图是整个视频的一部分； 用户头部移动的模式 在大量的 360°视频观看过程中，用户主要的头部移动模式有 4 种，使用$i-j\ move$来表示；&#xA;其中$i$表示处于运动中的物体数量；$j$表示所有运动物体的运动方向的平均数。&#xA;$1-1\ move$：单个物体以单一方向移动； $1-n\ move$：单个物体以多个方向移动； $m-n\ move$：多个物体以多个方向移动； $Arbitrary\ move$：用户不跟随任何感兴趣的物体而移动，viewport 切换随机； 现有的直播 VR 推流中的 viewport 预测方法是基于速度的方式，这种方式只对$1-1\ move$这一种模式有效。</description>
     </item>
   </channel>
