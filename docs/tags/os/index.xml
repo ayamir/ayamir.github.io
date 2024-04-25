@@ -79,8 +79,8 @@
 </item>
 <item>
     <title>进程、线程和协程</title>
-    <link>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</link>
-    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/prcess-thread-coroutine/</guid>
+    <link>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</link>
+    <pubDate>Sat, 06 Apr 2024 19:23:04 &#43;0800</pubDate><author>miracle_l@bupt.edu.cn (Ayamir)</author><guid>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</guid>
     <description><![CDATA[<h2 id="进程">进程</h2>
 <h3 id="是什么">是什么</h3>
 <p>学操作系统课的时候学过一句话叫做：进程是操作系统资源分配的最小单位，进程的资源直接由 OS 分配，并存储在进程控制块 PCB 中：</p>
@@ -498,7 +498,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">Result</span> <span class="nf">CoroutineFunction</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;start coroutine</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">co_await</span> <span class="n">AWaitableObject</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">co_await</span> <span class="n">AWaitableObject</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;finish coroutine</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -506,9 +506,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;start </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;start </span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">coro</span> <span class="o">=</span> <span class="n">CoroutineFunction</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;coroutine co_await</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;coroutine co_await</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">coroutine_handle</span><span class="p">.</span><span class="n">resume</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
