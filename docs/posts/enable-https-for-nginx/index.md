@@ -1,4 +1,0 @@
-# Enable HTTPS for Nginx
-
-
-

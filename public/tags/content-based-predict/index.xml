@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Content-Based Predict on Ayamir&#39;s blog</title>
+    <link>http://localhost:1313/tags/content-based-predict/</link>
+    <description>Recent content in Content-Based Predict on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:23:59 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/content-based-predict/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for Content Based Vp for Live Streaming (2)</title>
+      <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
+      <pubDate>Tue, 25 Jan 2022 11:59:24 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
+      <description>&lt;h1 id=&#34;liveobj&#34;&gt;LiveObj&lt;/h1&gt;&#xA;&lt;p&gt;&lt;code&gt;LiveDeep&lt;/code&gt;方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;模型需要花很长时间从一次预测错误中恢复；&lt;/li&gt;&#xA;&lt;li&gt;在初始化的阶段预测率成功率很低；&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Content Based VP for Live Streaming (1)</title>
+      <link>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
+      <pubDate>Sat, 22 Jan 2022 18:03:09 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
+      <description>&lt;h1 id=&#34;livemotion&#34;&gt;LiveMotion&lt;/h1&gt;&#xA;&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;&#xA;&lt;p&gt;基于视频中物体的运动模式来做对应的&lt;code&gt;FoV&lt;/code&gt;预测。&lt;/p&gt;&#xA;&lt;p&gt;将用户的&lt;code&gt;FoV&lt;/code&gt;轨迹与视频内容中运动物体的轨迹结合到一起考虑：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png&#34; alt=&#34;image-20220126222335930&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;细节可以参见：&lt;a href=&#34;https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/&#34;&gt;note-for-content-motion-viewport-prediction&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Content Assisted Prediction</title>
+      <link>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</link>
+      <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming&#34;&gt;Content Assisted Viewport Prediction for Panoramic Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：IEEE CVPR 2019 CV4ARVR&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Content Motion Viewport Prediction</title>
+      <link>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</link>
+      <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/abs/10.1145/3328914&#34;&gt;Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

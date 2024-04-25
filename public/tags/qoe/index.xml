@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>QoE on Ayamir&#39;s blog</title>
+    <link>http://localhost:1313/tags/qoe/</link>
+    <description>Recent content in QoE on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:24:14 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/qoe/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for DQB</title>
+      <link>http://localhost:1313/posts/papers/note-for-dqb/</link>
+      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-dqb/</guid>
+      <description>&lt;h1 id=&#34;整体概况&#34;&gt;整体概况&lt;/h1&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9317771&#34;&gt;Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact&lt;/a&gt;&#xA;Level：IEEE TCSVT 2021&lt;/p&gt;&#xA;&lt;p&gt;DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。&lt;/p&gt;&#xA;&lt;p&gt;DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。&#xA;这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2) - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.
+" />
+<meta name="keywords"
+  content='ABR' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2) - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2) - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="Bitrate Adaptation Schemes Client-based Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/" />
+<meta property="og:site_name" content="Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2022-02-27 10:39:45 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/">Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Sun, 27 Feb 2022 10:39:45 &#43;0800"
+                    class="no-wrap">
+                    Sun, 27 Feb 2022 10:39:45 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:31:10 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 22:31:10 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      1385 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="bitrate-adaptation-schemes">Bitrate Adaptation Schemes</h1>
+<h2 id="client-based">Client-based</h2>
+<p>Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220227104659348.png" alt="image-20220227104659348"></p>
+<p>Purposes:</p>
+<ol>
+<li>Minimal rebuffering events when the playback buffer depletes.</li>
+<li>Minimal startup delay especially in case of live video streaming.</li>
+<li>A high overall playback bitrate level with respect to network resources.</li>
+<li>Minimal video quality oscillations, which occur due to frequent switching.</li>
+</ol>
+<h3 id="available-bandwidth-based">Available bandwidth-based</h3>
+<p>The client makes its representation decisions based on the measured available network bandwidth, which is usually calculated as the size of the fetched segment(s) divided by the transfer time.</p>
+<p>This scheme suffers from poor QoE due to a lack of a reliable bandwidth estimation methods, which results in frequent buffer underruns.</p>
+<h4 id="general-context">General context</h4>
+<ul>
+<li>
+<p><a href="https://dl.acm.org/doi/10.1145/1943552.1943575">Based on segment fetch time(SFT)</a> measures the time starting from sending the HTTP GET request to receiving the last byte of the segment. Sequential and parallel segment fetching method in CDNs, by using metric that compares the expected segment fetch time(ESFT) with the measured SFT to determine if the selected segment bitrate matches the network capacity.</p>
+<p><a href="https://ieeexplore.ieee.org/document/6333880/">Based on the bitrate observed for the last segment downloaded</a> and the estimated throughput that was calculated during the previous estimation.</p>
+</li>
+<li>
+<p><a href="https://ieeexplore.ieee.org/document/6774592">Probe AND Adapt</a> tries to eliminate the ON-OFF steady state issue as well as reduce bitrate oscillations when multiple clients share the same bottleneck link.</p>
+</li>
+<li>
+<p><a href="https://dl.acm.org/doi/10.1145/2789168.2790118">piStream</a> enables clients to estimate bandwidth based on a resource monitor module that act as a physical-layer daemon.</p>
+</li>
+<li>
+<p><a href="https://dl.acm.org/doi/10.1145/2155555.2155580">SVC with DASH</a> prefetches base layers of future segments or downloads enhancement layers for existing segments using a bandwidth-sloping-based heuristic.</p>
+</li>
+</ul>
+<h4 id="mobile-context">Mobile context</h4>
+<h5 id="static">Static</h5>
+<ul>
+<li><a href="https://dl.acm.org/doi/10.1145/2964284.2964313">DASH2M</a> uses HTTP/2 server push and stream terminate properties to reduce the battery consumption of the mobile device. Adaptive k-push scheme propose to increase/decrease k according to a bandwidth increase/decrease while keeping in mind the overall power consumption in a push cycle.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2990505">LOw-LatenceY Prediction-based adaPtation(LOLYPOP)</a> leverages TCP throughput predictions on multiple times scales to achieve low latency and improve QoE.</li>
+</ul>
+<h5 id="motive">Motive</h5>
+<ul>
+<li><a href="https://dl.acm.org/doi/10.1145/2964284.2964333">GeoStream</a>: introduce the use of geostatistics to estimate future bandwidth in unknown locations.</li>
+</ul>
+<h3 id="playback-buffer-based">Playback Buffer-Based</h3>
+<p>The client uses the playout buffer occupancy as a criterion to select the next segment bitrate during video playback.</p>
+<p>This scheme suffers from many limitations including low overall QoE and instability issues, especially in the case of long-term bandwidth fluctuations. SVC-based approaches have limitations related to the complexity of SVC.</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/7177435">Base</a> combines the buffer size with a tool-set of client metrics for accurate rate selection and smooth switching.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2619239.2626296">BBA</a> aims to maximize the average video quality and avoid unnecessary rebuffering events, but suffers from QoE degradation during long-term bandwidth fluctuations.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7524428">BOLA</a> uses online control algorithm that treats bitrate adaptation as a utility maximization problem. Provide strong theorectical proof that it is near optimal, design a QoE model that incorporates both the average playback quality and the rebuffering time. It is implemented and available in the <code>dash.js</code> player.</li>
+<li><a href="https://ieeexplore.ieee.org/document/6573184">BIEB</a> maximizes video quality based on SVC priority while reducing the number of quality oscillations and avoiding stalls and frequent bitrate switching. it maintains a stable buffer occupancy before increasing the quality.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/3123266.3123390">QUEuing Theory approach to DASH Rate Adaptation(QUETRA)</a> allows to calculate the expected buffer occupancy given a bitrate choice, network throughput, and buffer capacity.</li>
+</ul>
+<h3 id="mixed-adaptation">Mixed Adaptation</h3>
+<p>The client makes its bitrate selection based on a combination of metrics including available bandwidth, buffer occupancy, segment size and/or duration.</p>
+<h4 id="simple-client">Simple client</h4>
+<ul>
+<li>Control-theoretic based: <a href="https://dl.acm.org/doi/10.1145/2829988.2787486">FastMPC</a>, <a href="https://ieeexplore.ieee.org/document/6410740">Another</a></li>
+<li>Optimization problem: <a href="https://dl.acm.org/doi/10.1145/2557642.2557658">Streaming video over HTTP with Consistent Quality</a></li>
+<li><a href="https://dl.acm.org/doi/10.1145/2413176.2413190">Towards agile and smooth video adaptation in dynamic HTTP streaming</a> aims to balance bandwidth utilization and smoothness in DASH in both single and multiple CDN(s) scenarois.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910593">SQUAD</a> is a lightweight bitrate adaptation algorithm that uses the available bandwidth and buffer information to increase the average bitrate while minimizing the number of quality switches.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2155555.2155582">Multi-path solution for abr in wireless networks</a> avoids the problems of TCP congestion control by using parallel TCP streams.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7247436">SARA</a> is Segment-Aware Rate Adaptation algorithm based on the segment size variation, the available bandwidth estimate and the buffer occupancy. It extends MPD file to include the size of every segment.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910596">ABMA+</a> selects the highest segment representation based on the estimated <em>probability of video rebuffering</em>. It makes use of buffer maps, which define the playout buffer capacity that is required under certain conditions to satisfy a rebuffering threshold and to avoid heavy online calculations.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/3204949.3204961">GTA</a> uses a cooperative game in coalition formation then formulates the bitrate selection problem as a bargaining process and consensus mechanism. GTA improves QoE and video stability without increasing the stall rate or startup delay.</li>
+</ul>
+<h4 id="multiple-clients">Multiple clients</h4>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/6691442">ELASTIC</a> generates a long-lived TCP flow and avoids the ON-OFF steady state behavior which leads to bandwidth overestimations. Ensure bandwidth fairness between competing clients based on network feedback assistance, but without taking the QoE into consideration. In addition, it ignores quality oscillations in its bitrate decisions.</li>
+<li><a href="https://ieeexplore.ieee.org/document/6229732">Adaptation algorithm for HAS</a> uses current buffer occupancy level to estimate available bandwidth and average bitrate of the different bitarte levels from MPD as metrics in its bitrate selection.</li>
+<li><a href="https://ieeexplore.ieee.org/document/6704839">FESTIVE</a> contains:
+<ul>
+<li>a bandwidth estimator module</li>
+<li>a bitrate selection and update method with stateful player</li>
+<li>a randomized scheduler which incorporates the buffer size to schedule the download of the next segment.</li>
+</ul>
+</li>
+<li><a href="https://ieeexplore.ieee.org/document/8101529">TSDASH</a> uses a logarithmic-increase-multiplicative-decrease (LIMD) based bandwidth probing algorithm to estimate the available bandwidth and a dual-threshold buffer for the bitrate adaptation.</li>
+</ul>
+<h3 id="mdp-based">MDP-Based</h3>
+<p>The video streaming process is formulated as a finite MDP to be able to make adaptation decisions under fluctuating network conditions.</p>
+<p>This scheme may suffer from instability, unfairness and underutilization when the number of clients increases, probably because such factors are not taken into account in the MDP models and due to clients&rsquo; decentralized ON-OFF patterns.</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/document/6774598">Real-time best-action search algorithm over multiple access networks</a> uses both Bluetooth and WiFi links to simultaneously download video segments. However, this scheme shows limitations during user mobility which negatively affect QoE.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7305810">Optimizing in Vehicular environment</a> introduces a three-variant of RL-based algorithms which take advantage of the historical bandwidth samples to build an accurate bandwidth estimation model.</li>
+<li><a href="https://ieeexplore.ieee.org/document/6838245">Multi-agent Q-Learning-based for fairness</a> uses a central manager in charge of collecting QoE statistics and coordination between the competing clients. The algorithm ensures a fair QoE distribution and improves QoE while avoiding suboptimal decisions.(without considering stalls and quality switches)</li>
+<li><a href="https://dl.acm.org/doi/10.1145/2910017.2910603">Online learning adaptation</a> aims to select the optimal representation and maximize the long-term expected QoE. The reward function is calculated from a combination of quality oscillations, segment quality and stalls experienced by the client. It exploits a parallel learning technique to avoid slow convergence and suboptimal solutions.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7393865">mDASH</a> aims to improve QoE during long-term bandwidth variations. It takes buffer size, bandwidth conditions and bitrate stability as Markov state variables.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/3098822.3098843">Pensive</a> does not rely on pre-programmed models or assumptions about the environment, but gradually learns the best policy for bitrate decisions through observation and experience.</li>
+<li><a href="https://ieeexplore.ieee.org/document/8048013">D-DASH</a> combines DL and RL to improve QoE, achieves a good trade-off between policy optimality and convergence speed during the decision process.</li>
+</ul>
+<h2 id="server-based">Server-Based</h2>
+<p>Server-based schemes use a bitrate shaping method at the server side and do not require any cooperation from the client. The switching between the bitrates is implicitly controlled by the bitrate shaper. The client still makes its own decisions, but the decisions are more or less determined by the shaping method on the server.</p>
+<ul>
+<li><a href="https://dl.acm.org/doi/10.1145/2155555.2155557">Traffic shaping</a> analyzes instability and unfairness issues in the presence of multiple HAS players competing for the available bandwidth. This method can be deployed at a home gateway to improve fairness, stability and convergence delay, and to eliminate the OFF periods during the steady states.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7524620">Tracker-assisted adaptation</a> uses a architecture which consists of clients communicating with a server through a shared proxy and a server having a tracker functionality that manages the clients&rsquo; statuses and helps them share knowledge about their statues.</li>
+<li><a href="https://dl.acm.org/doi/10.1145/1943552.1943573">Quality Adaptation Controller</a> aims to control the size of the server sending buffer in order to adjust and select the most appropriate bitrate level for each DASH player. It maintains the playback buffer occupancy of each player as stable as possible and to match bitrate level decisions with the available bandwidth.</li>
+<li><a href="https://ieeexplore.ieee.org/document/7983147/">Multi-Source Stream system</a>: the client fetches the segments from multi-source stream servers.</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220227213700459.png" alt="image-20220227213700459"></p>
+<p>Cons:</p>
+<ol>
+<li>Produce high overhead on the server side with a high complexity</li>
+<li>These schemes also need modifications to the MPD or a custom server software to implement the bitrate adaptation logic.(a violation of the DASH-standard design principles)</li>
+</ol></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

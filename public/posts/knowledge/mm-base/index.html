@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>音视频基础知识 - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="这篇博客主要总结学习了音视频相关的基础知识。" />
+<meta name="keywords"
+  content='Multimedia' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/mm-base/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="音视频基础知识 - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="这篇博客主要总结学习了音视频相关的基础知识。" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="音视频基础知识 - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="这篇博客主要总结学习了音视频相关的基础知识。" />
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/mm-base/" />
+<meta property="og:site_name" content="音视频基础知识" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2021-12-13 10:03:17 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/knowledge/mm-base/">音视频基础知识</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Mon, 13 Dec 2021 10:03:17 &#43;0800"
+                    class="no-wrap">
+                    Mon, 13 Dec 2021 10:03:17 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:21:02 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 22:21:02 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      1610 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/multimedia">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Multimedia
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="媒体处理过程">媒体处理过程</h1>
+<p><img src="https://s2.loli.net/2021/12/13/8zFCbNiSJjxPoAH.png" alt="处理过程"></p>
+<h2 id="解协议">解协议</h2>
+<p>将流媒体传输方案中要求的数据解析为标准的相应封装格式数据。</p>
+<p>音视频在网络中传播时需要遵守对应的传输方案所要求的格式，如 DASH、HLS 将媒体内容分解成一系列小片段，每个片段有不同的备用码率版本。</p>
+<p>同时应用层的协议会要求在媒体文件本身之外，传输信令数据（如对播放的控制或网络状态的描述）</p>
+<p>解协议的过程会去除信令数据并保留音视频内容，需要的话还要对视频段进行拼接，最终将其还原成传输之前的媒体格式如 MP4，FLV 等。</p>
+<h2 id="封装格式">封装格式</h2>
+<p>封装格式如 AVI、MPEG、Real Video 将音频和视频组合打包成一个完整的文件.</p>
+<p>封装格式不会影响视频的画质，影响画质的是视频的编码格式。</p>
+<p>解封装过程就是将打包好的封装格式分离成某种编码的音频压缩文件和视频压缩文件，有时也包含字幕和脚本。</p>
+<p>比如 FLV 或 TS 格式数据，解封装之后得到 H.264-AVC 编码的视频码流和 AAC 编码的音频码流。</p>
+<h2 id="编码">编码</h2>
+<p>视频的本质是一帧又一帧的图片。</p>
+<p>所以对于一部每秒 30 帧，90 分钟，分辨率为 1920x1080，24 位的真彩色的视频，在压缩之前的大小$S$满足：</p>
+<p>$$
+一帧大小s = 1920 * 1080 * 24 = 49766400(bit) = 6220800(Byte)
+\
+总帧数n = 90 * 60 * 30 = 162000
+\
+总大小S = s * n = 6220800 * 162000 = 1.0077696*10^{12}(Byte) \approx 939(GB)
+$$</p>
+<p>因为未经压缩的视频体积过于庞大，所以需要对其进行压缩，而压缩就是通常所说的编码。</p>
+<p>视频编码方式：H.264-AVC，H.265-HEVC，H.266-VVC</p>
+<p>音频编码方式：MP3，AAC</p>
+<p>压缩比越大，解压还原之后播放的视频越失真，因为压缩过程中不可避免地丢失了视频中原有图像的数据信息。</p>
+<h2 id="解码">解码</h2>
+<p>解码就是解压缩过程。</p>
+<p>解码之后能够得到系统音频驱动和视频驱动能识别的音频采样数据（如 PCM 数据）和视频像素数据（如 YUV420，RGB 数据）。</p>
+<h2 id="音视频同步">音视频同步</h2>
+<p>根据时间，帧率和采样率采用一定的算法，同步解码出来的音频和视频数据，将其分别送至声卡和显卡播放。</p>
+<h1 id="视频质量指标">视频质量指标</h1>
+<h2 id="分辨率">分辨率</h2>
+<ul>
+<li>
+<p>分辨率指的是视频图像在一个单位尺寸内的精密度。</p>
+</li>
+<li>
+<p>将视频放大足够大的倍数之后就能看到组成影像的基本单元：像素。</p>
+</li>
+<li>
+<p>视频的分辨率从数值上描述了像素点的个数，如 1920x1080：视频在水平方向有 1920 个像素，垂直方向有 1080 个像素。</p>
+</li>
+<li>
+<p>常见的描述方式：</p>
+<ul>
+<li>1080P：指视频有<strong>1080 行</strong>像素，P=&gt;Progressive（逐行扫描）</li>
+<li>2K：指视频有<strong>2000 列</strong>像素</li>
+<li>MP：像素总数，指像素的行数 P 与列数 K 乘积的结果（百万像素）</li>
+<li>1080P 的分辨率为 1920x1080=2073600，所以 1080P 通常也称为 200 万像素分辨率</li>
+</ul>
+</li>
+<li>
+<p>通常视频在同样大小的情况下，分辨率越高，所包含的像素点越多，画面就越细腻清晰</p>
+</li>
+<li>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://www.reneelab.com.cn/m/2k-4k-video-resolution.html">科普：视频分辨率是什么？</a></li>
+<li><a href="https://www.zhihu.com/question/24205632/answer/648608086">「1080p」和「2k、4k」的关系与差别在哪里？</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="视频帧率">视频帧率</h2>
+<ul>
+<li>
+<p>帧率的单位 FPS(Frame Per Second)或 Hz，即每秒多少帧，决定视频画面的流畅程度。</p>
+</li>
+<li>
+<p>低帧率会导致播放卡顿，镜头移动不顺畅，并伴随画面模糊的主观体验；</p>
+<p>帧率过高则会造成眩晕的感觉。</p>
+</li>
+<li>
+<p>不同帧率的视频在支持不同帧率的设备上播放：</p>
+<ol>
+<li>
+<p>若设备最高支持 60fps，则播放 120fps 视频的时候，设备会每隔一帧删除一帧，被删除的帧即成为无效帧。</p>
+<p>所以高帧率的视频在低帧率设备上播放时会导致播放卡顿。</p>
+</li>
+<li>
+<p>若设备最高支持 120fps，则播放 60fps 视频的时候，设备会每隔一帧复制一帧，来填补空缺的帧位置。</p>
+<p>但是效果和在 60fps 上的设备播放一样，不能提升播放流畅度。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>关于显卡对帧率的影像：</p>
+<ol>
+<li>显示器帧率低而显卡输出帧率高时，会导致<a href="https://zh.wikipedia.org/wiki/%E7%95%AB%E9%9D%A2%E6%92%95%E8%A3%82">画面撕裂</a>：显示器同时将两帧或几帧显示在同一个画面上</li>
+<li>显示器帧率高而显卡输出帧率低时，同视频帧率高显示器帧率低的情况。</li>
+</ol>
+</li>
+</ul>
+<h2 id="视频码率">视频码率</h2>
+<ul>
+<li>
+<p>码率的概念出现在视频编码之后，因为压缩之后的视频已经成为二进制数据，所以使用码率的称呼。</p>
+</li>
+<li>
+<p>码率的单位是 bps(bit per second)，即每秒多少比特。</p>
+</li>
+<li>
+<p>与视频质量的关系：</p>
+<ol>
+<li>
+<p>分辨率不变的情况下，码率越大，压缩比越好，画面质量越清晰。</p>
+<p>码率越高，精度越高，处理出的文件就越接近压缩前的原始状态，每一帧的图像质量越高，画质越清晰，当然对播放设备的解码能力要求也越高。</p>
+<p>压缩比越小，视频体积越大，越接近源文件。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2021/12/13/TBDfa7CI2RwHzZK.png" alt="常见分辨率、码率关系对照表"></p>
+</article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'repo',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

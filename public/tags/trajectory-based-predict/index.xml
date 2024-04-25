@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Trajectory-Based Predict on Ayamir&#39;s blog</title>
+    <link>http://localhost:1313/tags/trajectory-based-predict/</link>
+    <description>Recent content in Trajectory-Based Predict on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:25:21 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/trajectory-based-predict/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for Content Assisted Prediction</title>
+      <link>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</link>
+      <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-content-assisted-prediction/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming&#34;&gt;Content Assisted Viewport Prediction for Panoramic Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：IEEE CVPR 2019 CV4ARVR&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for RnnQoE</title>
+      <link>http://localhost:1313/posts/papers/note-for-rnnQoE/</link>
+      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-rnnQoE/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9580281&#34;&gt;QoE-driven Mobile 360 Video Streaming: Predictive&#xA;View Generation and Dynamic Tile Selection&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ICCC 2021&lt;/p&gt;&#xA;&lt;p&gt;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for 360ProbDASH</title>
+      <link>http://localhost:1313/posts/papers/note-for-360ProbDASH/</link>
+      <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-360ProbDASH/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://dl.acm.org/doi/10.1145/3123266.3123291&#34;&gt;360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: ACM MM 17&lt;/p&gt;&#xA;&lt;p&gt;Keyword:&lt;/p&gt;&#xA;&lt;p&gt;Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

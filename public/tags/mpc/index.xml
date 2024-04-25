@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MPC on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/mpc/</link>
+    <description>Recent content in MPC on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:24:27 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/mpc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for MPC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/10.1145/2785956.2787486&#34;&gt;A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ACM SIGCOMM 15&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Model Predictive Control，ABR，DASH&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dynamic Tile Selection on Ayamir&#39;s blog</title>
+    <link>http://localhost:1313/tags/dynamic-tile-selection/</link>
+    <description>Recent content in Dynamic Tile Selection on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:25:21 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/dynamic-tile-selection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for RnnQoE</title>
+      <link>http://localhost:1313/posts/papers/note-for-rnnQoE/</link>
+      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-rnnQoE/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9580281&#34;&gt;QoE-driven Mobile 360 Video Streaming: Predictive&#xA;View Generation and Dynamic Tile Selection&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ICCC 2021&lt;/p&gt;&#xA;&lt;p&gt;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

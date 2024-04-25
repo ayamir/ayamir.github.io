@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DRL on Ayamir&#39;s blog</title>
+    <link>http://localhost:1313/tags/drl/</link>
+    <description>Recent content in DRL on Ayamir&#39;s blog</description>
+    <generator>Hugo 0.125.1</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:25:09 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/drl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for RainbowDQN and Multitype Tiles</title>
+      <link>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
+      <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
+      <guid>http://localhost:1313/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Level：IEEE Transaction on multimedia 21&lt;/p&gt;&#xA;&lt;p&gt;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
