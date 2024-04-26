@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebRTC on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/webrtc/</link>
+    <description>Recent content in WebRTC on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 26 Apr 2024 09:02:15 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/webrtc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jitter Buffer学习理解（上）</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</link>
+      <pubDate>Thu, 18 Apr 2024 17:33:24 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</guid>
+      <description>这篇博客主要分析理解 WebRTC 中的 Jitter Buffer 的工作职责以及 Buffer 相关的代码实现。</description>
+    </item>
+    <item>
+      <title>WebRTC任务队列学习笔记</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-task-queue/</link>
+      <pubDate>Tue, 19 Mar 2024 19:32:57 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-task-queue/</guid>
+      <description>这篇博客主要学习了 WebRTC 中的任务队列的实现方式和使用方式。</description>
+    </item>
+    <item>
+      <title>远程桌面与WebRTC</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</link>
+      <pubDate>Thu, 15 Jun 2023 18:21:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</guid>
+      <description>这篇博客主要分析了远程桌面的原理以及不同的实现方式。</description>
+    </item>
+    <item>
+      <title>在Linux下如何搭建WebRTC的开发环境</title>
+      <link>https://ayamir.github.io/posts/development/webrtc-development-prepare/</link>
+      <pubDate>Sun, 23 Apr 2023 21:28:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/development/webrtc-development-prepare/</guid>
+      <description>本文主要记录笔者在 Gentoo Linux 下面搭建 WebRTC 开发环境的过程。&#xA;准备工作 网络：可以科学上网的梯子 IDE：VSCode 或者 CLion 安装depot_tools Google 有自己的一套用于管理 Chromium 项目的工具，名叫depot_tools，其中有包括git在内的一系列工具和脚本。&#xA;# 创建google目录用于存储google相关的代码 mkdir ~/google cd ~/google # clone depot_tools git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git 克隆完成之后需要将depot_tools的路径加到PATH中，Linux 上添加环境变量最简单的方式是修改~/.profile，这种方式与你的登录 shell 是什么没有关系，不管是fish还是bash还是zsh都会吃这种方式：&#xA;# ~/.profile export GOOGLE_BIN=$HOME/google/depot_tools export PATH=$GOOGLE_BIN:$PATH 但是这种方式需要你注销重新登录。&#xA;克隆代码 mkdir webrtc-checkout cd webrtc-checkout fetch --nohooks webrtc gclient sync 整个 WebRTC 的项目代码大小约 20G，克隆过程中需要保证网络畅通顺畅，如果你的梯子有大流量专用节点最好，否则可能克隆完你的流量就用光了。&#xA;克隆期间可能会因为网络问题中断，重新执行gclient sync即可，直到所有的模块都克隆完毕。&#xA;按照官方的建议，克隆完成之后创建自己的本地分支，因为官方分支更新很快，不 checkout 的话，可能你的 commit 还没写完，就被 Remote 的 change 给覆盖了，还要手动处理冲突。&#xA;cd src git checkout master git new-branch &amp;lt;branch-name&amp;gt; 编译 WebRTC 关于 WebRTC 的版本可以在Chromium Dash查到：</description>
+    </item>
+    <item>
+      <title>WebRTC 中关于视频自适应的相关设置</title>
+      <link>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</link>
+      <pubDate>Thu, 15 Sep 2022 20:48:51 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</guid>
+      <description>这篇博客主要分析理解 WebRTC 中的关于视频自适应机制的相关设置。</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paper on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/categories/paper/</link>
+    <description>Recent content in Paper on Ayamir&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 26 Apr 2024 09:02:15 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/categories/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Note for DQB</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-dqb/</link>
+      <pubDate>Sun, 20 Mar 2022 22:09:11 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-dqb/</guid>
+      <description>&lt;h1 id=&#34;整体概况&#34;&gt;整体概况&lt;/h1&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9317771&#34;&gt;Modeling the Perceptual Quality for Viewport-Adaptive Omnidirectional Video Streaming Considering Dynamic Quality Boundary Artifact&lt;/a&gt;&#xA;Level：IEEE TCSVT 2021&lt;/p&gt;&#xA;&lt;p&gt;DQB: Dynamic Quality Boundary，指在基于分块的 FoV 自适应全景视频推流过程中低质量分块区域的暴露和质量切换现象。&lt;/p&gt;&#xA;&lt;p&gt;DQB 现象实际上就是 FoV 内分块间的质量差异和随时间变化的分块质量变化。&#xA;这篇论文主要的贡献在于深入研究了这种现象，并且针对此提出了可以利用现存的 QoE 评估指标的模型，并且可以实际应用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Toward Immersive Experience</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</link>
+      <pubDate>Wed, 09 Mar 2022 11:20:37 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-toward-immersive-experience/</guid>
+      <description>&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://ieeexplore.ieee.org/document/9679801&#34;&gt;Toward Immersive Experience: Evaluation for Interactive Network Services&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: IEEE Network 2022&lt;/p&gt;&#xA;&lt;p&gt;Keywords: QoE Metrics&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</link>
+      <pubDate>Sun, 27 Feb 2022 10:39:45 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</guid>
+      <description>&lt;h1 id=&#34;bitrate-adaptation-schemes&#34;&gt;Bitrate Adaptation Schemes&lt;/h1&gt;&#xA;&lt;h2 id=&#34;client-based&#34;&gt;Client-based&lt;/h2&gt;&#xA;&lt;p&gt;Recently, most of the proposed bitrate adaptation schemes reside at the client side, according to the specifications in the DASH standard.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Survey on Bitrate Adaptation Schemes for Streaming Media Over HTTP (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</link>
+      <pubDate>Sat, 26 Feb 2022 11:26:06 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-1/</guid>
+      <description>&lt;h1 id=&#34;paper-overview&#34;&gt;Paper Overview&lt;/h1&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://ieeexplore.ieee.org/document/8424813&#34;&gt;https://ieeexplore.ieee.org/document/8424813&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: IEEE Communications Surveys &amp;amp; Tutorials 2019&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Content Based Vp for Live Streaming (2)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</link>
+      <pubDate>Tue, 25 Jan 2022 11:59:24 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/</guid>
+      <description>&lt;h1 id=&#34;liveobj&#34;&gt;LiveObj&lt;/h1&gt;&#xA;&lt;p&gt;&lt;code&gt;LiveDeep&lt;/code&gt;方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;模型需要花很长时间从一次预测错误中恢复；&lt;/li&gt;&#xA;&lt;li&gt;在初始化的阶段预测率成功率很低；&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Content Based VP for Live Streaming (1)</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</link>
+      <pubDate>Sat, 22 Jan 2022 18:03:09 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-1/</guid>
+      <description>&lt;h1 id=&#34;livemotion&#34;&gt;LiveMotion&lt;/h1&gt;&#xA;&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;&#xA;&lt;p&gt;基于视频中物体的运动模式来做对应的&lt;code&gt;FoV&lt;/code&gt;预测。&lt;/p&gt;&#xA;&lt;p&gt;将用户的&lt;code&gt;FoV&lt;/code&gt;轨迹与视频内容中运动物体的轨迹结合到一起考虑：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://s2.loli.net/2022/01/26/FRBIAliyvuGDQJp.png&#34; alt=&#34;image-20220126222335930&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;细节可以参见：&lt;a href=&#34;https://ayamir.github.io/posts/note-for-content-motion-viewport-prediction/&#34;&gt;note-for-content-motion-viewport-prediction&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Popularity Aware 360-Degree Video Streaming</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</link>
+      <pubDate>Tue, 18 Jan 2022 16:07:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-popularity-aware-360-degree-video-streaming/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/abstract/document/9488856/&#34;&gt;Popularity-Aware 360-Degree Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：IEEE INFOCOM 2021&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Dynamic tiling, Cross-user division, Heuristic QoE optimization&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for srlABR Cross User</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</link>
+      <pubDate>Sat, 15 Jan 2022 18:46:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9234071&#34;&gt;Sequential Reinforced 360-Degree Video Adaptive Streaming With Cross-User Attentive Network&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：IEEE Transactions on Broadcasting 2021&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Cross-user vp, Sequential RL ABR&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for 360SRL</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-360srl/</link>
+      <pubDate>Thu, 13 Jan 2022 12:08:36 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-360srl/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/8784927&#34;&gt;360SRL: A Sequential Reinforcement Learning Approach for ABR Tile-Based 360 Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ICME 2019&lt;/p&gt;&#xA;&lt;p&gt;Keywords：ABR、RL、Sequential decision&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Content Assisted Prediction</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</link>
+      <pubDate>Thu, 06 Jan 2022 15:17:33 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://www.researchgate.net/publication/333971523_Content_Assisted_Viewport_Prediction_for_Panoramic_Video_Streaming&#34;&gt;Content Assisted Viewport Prediction for Panoramic Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：IEEE CVPR 2019 CV4ARVR&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Trajectory-based predict，Content-based predict，Multi-modality fusion&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for GPAC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-gpac/</link>
+      <pubDate>Thu, 30 Dec 2021 10:23:26 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-gpac/</guid>
+      <description>&lt;h2 id=&#34;dash-客户端自适应逻辑&#34;&gt;Dash 客户端自适应逻辑&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;em&gt;tile priority setup&lt;/em&gt;：根据定义的规则对 tile 进行优先级排名。&lt;/li&gt;&#xA;&lt;li&gt;&lt;em&gt;rate allocation&lt;/em&gt;：收集网络吞吐量信息和 tile 码率信息，使用确定的 tile 优先级排名为其分配码率，努力最大化视频质量。&lt;/li&gt;&#xA;&lt;li&gt;&lt;em&gt;rate adaption&lt;/em&gt;：在播放过程中，执行码率自适应算法，基于播放速度、质量切换的次数、缓冲区占用情况等。&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>Note for MPC</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-mpc/</link>
+      <pubDate>Thu, 23 Dec 2021 10:39:32 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-mpc/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/10.1145/2785956.2787486&#34;&gt;A Control-Theoretic Approach for Dynamic Adaptive Video Streaming over HTTP&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ACM SIGCOMM 15&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Model Predictive Control，ABR，DASH&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for TBRA</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-tbra/</link>
+      <pubDate>Tue, 21 Dec 2021 10:11:23 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-tbra/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3474085.3475590&#34;&gt;TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ACM MM 21&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Adaptive tiling and bitrate，Mobile streaming&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Content Motion Viewport Prediction</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</link>
+      <pubDate>Mon, 20 Dec 2021 10:47:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/abs/10.1145/3328914&#34;&gt;Viewport Prediction for Live 360-Degree Mobile Video Streaming Using User-Content Hybrid Motion Tracking&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2019&lt;/p&gt;&#xA;&lt;p&gt;Keywords：Viewport prediction, content-based motion tracking, dynamic user interest model&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for RnnQoE</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</link>
+      <pubDate>Thu, 16 Dec 2021 19:53:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-rnnQoE/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://ieeexplore.ieee.org/document/9580281&#34;&gt;QoE-driven Mobile 360 Video Streaming: Predictive&#xA;View Generation and Dynamic Tile Selection&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ICCC 2021&lt;/p&gt;&#xA;&lt;p&gt;Keywords：QoE maximization，Trajectory-based viewport prediction，Dynamic tile selection，Differential weight on FOV tiles&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for OpTile</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-optile/</link>
+      <pubDate>Mon, 13 Dec 2021 16:19:02 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-optile/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link：&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3123266.3123339&#34;&gt;OpTile: Toward Optimal Tiling in 360-degree Video Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level：ACM MM 17&lt;/p&gt;&#xA;&lt;p&gt;Keyword：Dynamic tile division, Optimize encoding efficiency, Optimize tile size&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for RainbowDQN and Multitype Tiles</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</link>
+      <pubDate>Sat, 11 Dec 2021 16:14:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Level：IEEE Transaction on multimedia 21&lt;/p&gt;&#xA;&lt;p&gt;Keyword：Rainbow-DQN, Multi-type tiles, Full streaming system&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for 360ProbDASH</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</link>
+      <pubDate>Thu, 09 Dec 2021 10:20:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-360ProbDASH/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://dl.acm.org/doi/10.1145/3123266.3123291&#34;&gt;360ProbDASH: Improving QoE of 360 Video Streaming Using Tile-based HTTP Adaptive Streaming&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: ACM MM 17&lt;/p&gt;&#xA;&lt;p&gt;Keyword:&lt;/p&gt;&#xA;&lt;p&gt;Pre-fetch tiles, QoE-driven optimization, Probabilistic model, Rate and Viewport adaptation&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Note for Dante</title>
+      <link>https://ayamir.github.io/posts/papers/note-for-dante/</link>
+      <pubDate>Wed, 08 Dec 2021 22:14:15 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note-for-dante/</guid>
+      <description>&lt;h2 id=&#34;论文概况&#34;&gt;论文概况&lt;/h2&gt;&#xA;&lt;p&gt;Link: &lt;a href=&#34;https://dl.acm.org/doi/10.1145/3232565.3234686&#34;&gt;https://dl.acm.org/doi/10.1145/3232565.3234686&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Level: SIGCOMM 18&lt;/p&gt;&#xA;&lt;p&gt;Keyword: UDP+FOV-aware+FEC&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体传输的实际度量</title>
+      <link>https://ayamir.github.io/posts/papers/note11/</link>
+      <pubDate>Mon, 22 Nov 2021 15:21:59 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note11/</guid>
+      <description>&lt;h2 id=&#34;度量指标&#34;&gt;度量指标&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;viewport 预测精度。&#xA;&lt;ul&gt;&#xA;&lt;li&gt;使用预测的 viewport 坐标和实际用户的 viewport 坐标的大圈距离来量化。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;视频质量。&#xA;&lt;ul&gt;&#xA;&lt;li&gt;viewport 内部的 tile 质量（1～5）。&lt;/li&gt;&#xA;&lt;li&gt;tile 在最高质量层之上花费的时间。&lt;/li&gt;&#xA;&lt;li&gt;根据用户视线的分布而提出的加权质量度量。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>沉浸式推流中应用层的优化</title>
+      <link>https://ayamir.github.io/posts/papers/note10/</link>
+      <pubDate>Mon, 15 Nov 2021 10:13:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note10/</guid>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&#xA;&lt;p&gt;大多数的 HAS 方案使用 HTTP/1.1 协议进行请求-回应的事务来取得需要的资源、缓冲取到的视频段并以线性的顺序播放。传统的 HAS 中，只需要 1 个 GET 请求来取得下一个视频的暂时的部分。只要视频段的持续时间比网络内的时延高，这种方法就可行。&lt;/p&gt;&#xA;&lt;p&gt;在基于 VR 的 HAS 方案中，播放 1 条视频片段就需要取得多种资源：1 次 GET 请求需要同时请求基础的 tile 层和每个空间视频 tile。使用 4x4 的 tile 方案时，客户端需要发起不少于 17 次 GET 请求。使用 1 s 数量级的分段持续时间，即使是 20 ms 的微小网络延迟也会显着阻碍客户端和服务器之间的整体吞吐量，因此会导致较低的视频质量。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体面临的挑战和启示</title>
+      <link>https://ayamir.github.io/posts/papers/note9/</link>
+      <pubDate>Sun, 14 Nov 2021 19:06:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note9/</guid>
+      <description>&lt;h2 id=&#34;最终的目标&#34;&gt;最终的目标&lt;/h2&gt;&#xA;&lt;p&gt;主要的挑战是用户的临场感，这可以通过避免虚拟的线索来创造出接近真实的世界。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>360度视频的音频处理</title>
+      <link>https://ayamir.github.io/posts/papers/note8/</link>
+      <pubDate>Sun, 14 Nov 2021 16:52:20 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note8/</guid>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&#xA;&lt;p&gt;空间音频是一种全球状空间环绕的声音方式，采用多个声音通道来模拟现实世界中听到的声音。&lt;/p&gt;&#xA;&lt;p&gt;360 度视频由于空间音频而变得更加可靠，因为声音的通道特性使其能够穿越时间和空间。&lt;/p&gt;&#xA;&lt;p&gt;360 度视频显示系统在制作空间音频音轨方面的重要性无论怎样强调都不为过&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>自适应策略之viewport依赖型</title>
+      <link>https://ayamir.github.io/posts/papers/note7/</link>
+      <pubDate>Sun, 14 Nov 2021 13:24:59 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note7/</guid>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;p&gt;在 360 度视频的推流过程中，根据用户头部的运动自适应地动态选择推流的区域，调整其比特率，以达到节省带宽的目的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体现有标准</title>
+      <link>https://ayamir.github.io/posts/papers/note6/</link>
+      <pubDate>Thu, 11 Nov 2021 20:08:03 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note6/</guid>
+      <description>&lt;h2 id=&#34;omafomnidirectional-media-format&#34;&gt;OMAF(Omnidirectional Media Format)&lt;/h2&gt;&#xA;&lt;p&gt;&lt;code&gt;OMAF&lt;/code&gt;是第 1 个国际化的沉浸式媒体格式，描述了对 360 度视频进行编码、演示、消费的方法。&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;OMAF&lt;/code&gt;与与现有格式兼容，包括编码（例如&lt;code&gt;HEVC&lt;/code&gt;），文件格式（例如&lt;code&gt;ISOBMFF&lt;/code&gt;），交付信号（例如&lt;code&gt;DASH&lt;/code&gt;，&lt;code&gt;MMT&lt;/code&gt;）。&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;OMAF&lt;/code&gt;中还包括编码、投影、分包和 viewport 方向的元数据。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>自适应360度视频推流挑战</title>
+      <link>https://ayamir.github.io/posts/papers/note5/</link>
+      <pubDate>Thu, 04 Nov 2021 11:01:18 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note5/</guid>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;&#xA;&lt;p&gt;用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。&lt;/p&gt;&#xA;&lt;p&gt;沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>沉浸式流媒体网络问题的相关解决方案</title>
+      <link>https://ayamir.github.io/posts/papers/note4/</link>
+      <pubDate>Sat, 30 Oct 2021 19:20:00 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note4/</guid>
+      <description>&lt;h1 id=&#34;概况&#34;&gt;概况&lt;/h1&gt;&#xA;&lt;p&gt;现有的沉浸式流媒体应用都对带宽、QoS 和计算需求有着高要求，这主要得益于 5G 网络。&lt;/p&gt;&#xA;&lt;p&gt;传统的中心化云计算和云存储体系结构不适于实时的高码率内容分发。&lt;/p&gt;&#xA;&lt;p&gt;边缘缓存和移动边缘计算成为了推动沉浸式流媒体发展的关键技术。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>自适应360度视频推流方案</title>
+      <link>https://ayamir.github.io/posts/papers/note3/</link>
+      <pubDate>Mon, 25 Oct 2021 09:34:10 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note3/</guid>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;p&gt;360 度视频的推流手段逐渐从视角独立型方案变成基于 tile 的视角依赖型方案。&lt;/p&gt;&#xA;&lt;p&gt;相比于常规视频，360 度视频被编码成全向的场景。&lt;/p&gt;&#xA;&lt;p&gt;自适应 360 度视频推流利用 DASH 框架来实现比特率的自适应。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>自适应视频推流方案</title>
+      <link>https://ayamir.github.io/posts/papers/note2/</link>
+      <pubDate>Thu, 21 Oct 2021 10:50:54 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note2/</guid>
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;p&gt;自适应方案可以在处理不同目标对象时帮助改善推流体验。&lt;/p&gt;&#xA;&lt;p&gt;目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。&lt;/p&gt;&#xA;&lt;p&gt;适应性的视频比特率需要同时匹配网络条件和质量目标的需求。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>360度流媒体面临的挑战、机遇和解决方案</title>
+      <link>https://ayamir.github.io/posts/papers/note1/</link>
+      <pubDate>Wed, 20 Oct 2021 20:08:38 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/papers/note1/</guid>
+      <description>&lt;h2 id=&#34;360-度流媒体视频框架&#34;&gt;360 度流媒体视频框架&lt;/h2&gt;&#xA;&lt;h3 id=&#34;视频采集和拼接&#34;&gt;视频采集和拼接&lt;/h3&gt;&#xA;&lt;p&gt;使用不同的 360 度视频采集相机可以将视频内容存储为 3D 的球形内容&lt;/p&gt;&#xA;&lt;h3 id=&#34;使用不同的投影策略实现降维&#34;&gt;使用不同的投影策略实现降维&lt;/h3&gt;&#xA;&lt;p&gt;策略主要分为 2 种：视角独立型和视角依赖型&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
