@@ -18,24 +18,15 @@ pygmentsUseClasses = true
   avatar = "/images/avatar.png"
   headerIcon = "/images/GitHub-Mark-Light-32px.png"
   location = "China"
-  enableGitalk = true
+  enableUtterances = true
 
-  [params.gitalk]
-    clientID = "1ee3454a8f1f370a7934"
-    clientSecret = "737cbeaf81ce60b50fafd2b0d6c7ebfa42826555"
-    repo = "ayamir.github.io"
-    owner = "ayamir"
-    admin = "ayamir"
-    id = "location.pathname"
-    labels = "gitalk"
-    perPage = 15
-    pagerDirection = "last"
-    createIssueManually = true
-    distractionFreeMode = false
+  [params.utterances]
+    repo = "ayamir/ayamir.github.io"
 
   [[params.links]]
     title = "Zhihu"
     href = "https://www.zhihu.com/people/MiraculousMoon"
+    icon = "/images/zhihu.png"
 
 [frontmatter]
   lastmod = ["lastmod", ":fileModTime", ":default"]
