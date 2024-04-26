@@ -1,7 +1,7 @@
 baseURL = "https://ayamir.github.io"
 languageCode = "zh-cn"
 title = "Ayamir's blog"
-theme = "github-style"
+theme = "github-style-pro"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
 
@@ -23,7 +23,7 @@ pygmentsUseClasses = true
   [params.gitalk]
     clientID = "1ee3454a8f1f370a7934"
     clientSecret = "737cbeaf81ce60b50fafd2b0d6c7ebfa42826555"
-    repo = "repo"
+    repo = "ayamir.github.io"
     owner = "ayamir"
     admin = "ayamir"
     id = "location.pathname"
