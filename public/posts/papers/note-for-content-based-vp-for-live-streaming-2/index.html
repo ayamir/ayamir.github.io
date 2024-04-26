@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>Note for Content Based Vp for Live Streaming (2) - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：
+模型需要花很长时间从一次预测错误中恢复； 在初始化的阶段预测率成功率很低； 为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。
+基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。
+" />
+<meta name="keywords"
+  content='VP' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Note for Content Based Vp for Live Streaming (2) - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：
+模型需要花很长时间从一次预测错误中恢复； 在初始化的阶段预测率成功率很低； 为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。
+基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Note for Content Based Vp for Live Streaming (2) - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="LiveObj LiveDeep方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：
+模型需要花很长时间从一次预测错误中恢复； 在初始化的阶段预测率成功率很低； 为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。
+基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/" />
+<meta property="og:site_name" content="Note for Content Based Vp for Live Streaming (2)" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2022-01-25 11:59:24 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123456-789', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note-for-content-based-vp-for-live-streaming-2/">Note for Content Based Vp for Live Streaming (2)</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Tue, 25 Jan 2022 11:59:24 &#43;0800"
+                    class="no-wrap">
+                    Tue, 25 Jan 2022 11:59:24 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Fri, 26 Apr 2024 09:02:15 &#43;0800"
+                    class="no-wrap">
+                    Fri, 26 Apr 2024 09:02:15 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      4633 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="liveobj">LiveObj</h1>
+<p><code>LiveDeep</code>方法利用卷积层从视频内容中提取深层特征，不受动态背景的影响。然而在整个推流会话中需要更新一个带有大量权重的巨大的神经网络模型。同时因为没有历史视频和用户的轨迹的数据，模型需要在运行时从随机权重开始训练。而这会导致两个问题：</p>
+<ol>
+<li>模型需要花很长时间从一次预测错误中恢复；</li>
+<li>在初始化的阶段预测率成功率很低；</li>
+</ol>
+<p>为了解决这两个问题，提出预训练的模型来分析视频内容，对视频的语义进行层次化。</p>
+<p><strong>基于对内容的分析，进一步设计了一个轻量级用户模型，将用户偏好映射到不同的视频内容。</strong></p>
+<h2 id="用户观看行为分析">用户观看行为分析</h2>
+<p>在直播推流中，不能通过分析其他用户的行为模式来得到特定用户的<code>ROI</code>，因此只能直接从视频内容本身入手。</p>
+<p>通过对视频内容从空间和时间两个维度的分析得出结论：用户的<code>ROI</code>与物体的大小无关，而是很大程度上依赖于物体在视频中的语义，即用户倾向于观看有意义的事物。</p>
+<p>这一结论可以给出推断<code>FoV</code>的直觉：基于检测视频中有意义的物体。</p>
+<h2 id="methods">Methods</h2>
+<p>首先提出两种直观的通过分析视频内容的视点预测方法，进一步总结这些方法的局限性，并逐步切换到对<code>LiveObj</code>的讨论。</p>
+<h3 id="basic-method">Basic method</h3>
+<p><em>Basic</em>方法检测视频中所有的对象并使用其中心作为预测的中心。</p>
+<p>给出每个帧中的 $k$ 个物体， $\vec{O} = [o_1, o_2, o_3, &hellip;, o_k]$ ，其中每个 $o_i(i = 1, &hellip;, k)$ 表示物体的中心坐标： $o_i = &lt;o^{(x)}_i, o^{(y)}_i&gt;$ 。</p>
+<p>最终的预测中心点坐标可以计算出来：</p>
+<p>$$
+C_x = \frac{1}{k} \sum^{k}_{i=1} o^{(x)}_i;\ C_y = \frac{1}{k} \sum^{k}_{i=1} o^{(y)}_i
+$$</p>
+<h3 id="over-cover-method">Over-Cover method</h3>
+<p>受<code>LiveMotion</code>方法的启发，其创建了不规则的预测<code>FoV</code>来覆盖更多的潜在的区域，<em>Over-Cover</em>的方式预测的<code>FoV</code>会覆盖所有包含物体的区域。</p>
+<p>采用<code>YOLOv3</code>来处理帧并检测物体，接着每个检测到的对象生成与该对象共享相同中心的预测子视图，所有子视图的聚合形成最终的预测视口。</p>
+<h3 id="summary-for-intuitive-methods">Summary for intuitive methods</h3>
+<p><em>Basic</em>方式可能会在多个物体的场景中无法正确选择目标；</p>
+<p><em>Over-Cover</em>方式覆盖所有可能的目标来满足较高的精度，但会导致更高的带宽使用量；</p>
+<p><em>Velocity</em>方式能很快的适应用户偏好的变化，但是预测精度在长期预测的情况下会显著下降；</p>
+<h2 id="liveobj-method">LiveObj Method</h2>
+<p><em>Over-Cover</em>方法将所有检测到的目标合并到预测的<code>FoV</code>中而导致冗余问题，而用户一次只能观看其中的几个。</p>
+<p>为了解决这个问题，提出基于用户的反馈选择最吸引人的目标，例如用户当前的<code>FoV</code>来形成预测的<code>FoV</code>。</p>
+<p>基于这种想法而提出<code>LiveObj</code>，一种基于轨迹的 VP 方式，通过从<em>Over-Cover</em>方法的结果中过滤掉用户更小可能性看到的目标来缩小最终的<code>FoV</code>。</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129213505720.png" alt="image-20220129213505720"></p>
+<ul>
+<li><em>Object Detection</em>：处理视频帧并检测目标；</li>
+<li><em>User View Estimation</em>：分析用户反馈并用<em>Velocity</em>的方式估计<code>FoV</code>；</li>
+<li><em>Object tracking</em>：追踪用户观看的目标；</li>
+<li><em>RL-based modeling</em>：接受估计出的<code>FoV</code>和被追踪的目标，最终更新每个分块的状态（选中或未选中）</li>
+</ul>
+<h3 id="object-detection-and-tracking">Object Detection and Tracking</h3>
+<ol>
+<li>
+<p>Detection：<code>YOLOv3</code>；</p>
+</li>
+<li>
+<p>Tracking：追踪的基本假设是用户会在接下来的一段时间内接着观看当前看着的目标。追踪任务在直播推流的运行时完成。因此每隔几秒收集用户反馈，并进一步推断用户之前正在观看的目标，然后据此更新追踪目标。</p>
+<p>追踪算法：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220129235056068.png" alt="image-20220129235056068"></p>
+</li>
+</ol>
+<h3 id="user-view-estimation">User View Estimation</h3>
+<p>分析用户的反馈处于两个目的：</p>
+<ol>
+<li>估计未来的用户的<code>FoV</code>；</li>
+<li>校准当前用户<code>FoV</code>以及要跟踪的对象；</li>
+</ol>
+<p>给出用户反馈（即过去片段中实际的<code>FoV</code>），首先更新用户<code>FoV</code>并分析用户的行为模式，并根据此模式计算出下一帧中的预期用户速度。然后识别更新后的<code>FoV</code>中的对象，这些对象确定为<code>ROI</code>，对象追踪步骤将这些更新用于未来的片段来提高预测精度。</p>
+<h3 id="rl-based-modeling">RL-based Modeling</h3>
+<p>因为预测的误差和用户实际<code>FoV</code>的变化，可能会导致追踪的目标从<code>FoV</code>中消失，而这会使整个预测算法完全失效。所以提出一个基于 RL 的模型来为每个分块建立用户行为模型，旨在最小化预测误差。</p>
+<p>出发点是<strong>不同的分块有不同的概率包含有意义的目标，并且更可能包含有意义目标的分块通常对目标检测错误更敏感。</strong></p>
+<p>将上面的观察形式化为一个策略学习过程 $M$：</p>
+<p>$$
+M = &lt;S, A, P_{s, a, s&rsquo;}, R&gt;
+$$</p>
+<p>其中 $S$ 和 $A$ 表示状态和动作， $P_{s, a, s&rsquo;}$ 是给定状态 $s$ 的情况下选择动作 $a$ 的概率，转移之后的状态为 $s&rsquo;$ ，$R$ 表示奖励函数。</p>
+<p>系统的目标是通过设定不同的 $P_{s, a, s&rsquo;}$ 的值，来学习每个分块对目标检测误差的不同的敏感性。</p>
+<p>状态-价值函数用于估计在为所有可能的状态 $s \in S$ 选择动作 $a$ 时的价值，形式化为：</p>
+<p>$$
+v = E[Q_{s, a} | S_t = s]
+$$</p>
+<p>$$
+Q_{s, a} = R^a_s + \gamma \sum_{s&rsquo; \in S} P_{s, a, s&rsquo;} v
+$$</p>
+<p>其中：$\gamma$ 是奖励参数。</p>
+<p>最终的目标是通过计算每个 $P_{s, a, s&rsquo;}$ 找到最大的 $max(Q_{s, a})$。</p>
+<p>而这一过程很耗费时间，因此使用修改之后的<code>Q-learning</code>过程，用贪心的方式来解决最优化问题。</p>
+<p><code>Q-learning</code>过程在直播推流中有别于传统点播中的应用：</p>
+<ol>
+<li>预测同时基于当前的输入（目标追踪和<code>FoV</code>估计的结果）和历史状态（分块是否被选择）；</li>
+<li>奖励基于用户的反馈在线生成，并且会在整个推流会话中变化，而不是预先设定好的奖励矩阵 $R$ ；</li>
+<li>由于直播推流中内容的不可提前获取性， $Q$ 表必须在每次预测中更新；</li>
+</ol>
+<p>特别的，为每个分块都创建一个 $Q$ 表，对于每个 $Q$ 表有 4 种类型：</p>
+<ul>
+<li><em>object only</em>;</li>
+<li><em>object and viewport</em>;</li>
+<li><em>viewport only</em>;</li>
+<li><em>no objects or viewport</em>;</li>
+</ul>
+<p>将这 4 种类型和 2 种中历史状态（选中或未选中）组合之后，得到每个表中状态 $s$ 的 8 个选项组合；</p>
+<p>对每个状态而言，有 2 种动作（选中或不选中），因此每个表有 8 个状态和 2 个动作。</p>
+<p>对每个表的奖励基于用户是否看到了分块而更新。</p>
+<p>基于状态 $s$ 的对动作 $a$ 的选择转化成了：在相同输入的情况下找到 $max(Q(s, s&rsquo;))$；</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130004348378.png" alt="image-20220130004348378"></p>
+<h1 id="liveroi">LiveROI</h1>
+<p><code>LiveObj</code>的基础是对象检测算法，用于分析视频内容的敏感性。但是其检测性能可能会受到算法、对象的缩放程度和全景视频导致的扭曲失真的影响，进而引起预测误差。类似于<code>LiveObj</code>的出发点，<code>LiveROI</code>的目标是通过使用动作识别来对视频内容进行分析，这会降低预测性能与前面所提因素的敏感性。</p>
+<p>使用<code>3D-CNN</code>等预先训练的模型来分析每个分块上的视频内容，以完成动作识别。同时基于<code>NLP</code>技术，使用轻量级用户模型将用户偏好映射到不同的视频内容。</p>
+<h2 id="用户对视频内容的偏好">用户对视频内容的偏好</h2>
+<p>最基本的研究问题是：找到直播视频内容中的有效特征和信号或用户的行为，这些与用户的未来的<code>FoV</code>有强相关关系，因此可以将其作为预测因子。</p>
+<p>通过对两个固定主题的视频的实验可以得出：</p>
+<ol>
+<li>用户花绝大多数的时间在视频中有意义的部分；</li>
+<li><code>ROI</code>在空间上只占整个帧很小的部分；</li>
+</ol>
+<h2 id="liveroi-method">LiveROI Method</h2>
+<p>融合视频内容感知和用户偏好反馈（即以用户头部运动轨迹的形式）来预测实时 VR 视频流中的<code>FoV</code>。</p>
+<p>主要想法是使用 CV 算法去理解每个分块的内容，除此之外，采用实时的用户反馈方便分块的选择。</p>
+<p>需要满足的条件是：所有分块上的视频处理开销应该保持较小，以避免视频冻结和累计的实时延迟。</p>
+<p>使用<code>3D-CNN</code>进行视频理解，重点是识别视频中隐含的有意义的动作，动作识别结果用于以自然语言的格式描述视频内容。这种 3D-CNN 模型可以在公共数据集上进行训练，因此具有通用性，以适应各种类型的动作和视频，这使得它可以用于实时 VR 流传输，因为在流传输会话之前没有关于视频内容的先验知识。</p>
+<p>但是具有有意义动作的区域可能不是用户最后会确定的<code>FoV</code>，尤其是在目标视频中存在多个有意义动作的情况下。</p>
+<p>为了解决这一问题，通过收集用户关于偏好视频内容的实时描述，进一步设计了基于“词/短语”的用户偏好模型。</p>
+<p>采用<strong>词语嵌入</strong>的方法，通过比较两个来源短语的语义相似度，确定最佳匹配区域作为预测<code>FoV</code>，以此来桥接动作识别结果和用户偏好模型。</p>
+<h3 id="workflow">Workflow</h3>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220130203354647.png" alt="image-20220130203354647"></p>
+<p><code>3D-CNN</code>的输入数据包含一批 $T$ 张图像，因此统一在一个视频片段中子采样 $T$ 帧。</p>
+<p>每个子采样的帧都划分成 $M \times N$ 个分块，VP 问题定义为确定要包含在<code>FoV</code>中的分块。</p>
+<p>为了避免由于分块带来的潜在的信息损失（有意义的动作被划分成多个分块），每个用于动作识别的输入图像是从比原始分块边界更大的区域中所提取出来的，但是将共享与原始分块相同的中心。</p>
+<p><code>3D-CNN</code>模块的输出是动作识别结果，即结果矩阵。</p>
+<p>面对 $M \times N$ 个分块，为了满足性能要求，将每个分块的动作识别过程视为相互独立的过程，创建 $m \times n$ 个线程来实现并行识别，每个线程向结果矩阵输出对应分块的结果向量。</p>
+<p>在预测的最后一步，生成包含所有分块的预测分数的得分向量。进一步对所有的分数向量进行排序，并定位第 $M$ 个值，该值设定为选择分块进入预测<code>FoV</code>中的阈值。通过控制 $M$ 的大小可以控制预测的<code>FoV</code>的大小，分数向量中的分数表示用户对分块内容的感兴趣程度。</p>
+<p>为了计算分数向量，进一步设计用户向量，其中包含描述用户偏好的词或短语。考虑到推流过程中用户可能会改变兴趣，用户向量会基于用户实时轨迹更新。</p>
+<p>在给定用户向量和结果矩阵中的词或短语的情况下，考虑到非自然语言中的两个不同的词可能具有相近的含义，不直接进行词比较，而是使用词分析来计算其相关性。</p>
+<h3 id="cnn-model">CNN Model</h3>
+<p>采用<code>ECO lite</code>模型完成 VR 直播推流中的动作识别。所有来自同一视频片段的图像都被储存在一个缓冲帧集合中。</p>
+<p><code>ECO lite</code>模型为 2D CNN 提取特征图的任务收集工作帧集合（分别由前一视频片段和当前视频片段的缓冲帧集合的后半部分和前半部分组成），在下一个阶段，从每个片段获得的特征图被堆叠到更高的表示中，之后被送到之后的 3D CNN 中用于最终的动作预测。具体的识别过程中同样使用多线程并行处理，处理 1 帧图像是每次创建和分块数相同的线程，为每个分块都初始化一个<code>ECO lite</code>模型。</p>
+<p>显然预训练的模型不能为直播推流提供正确的推理结果，但是它可以看作是对视频内容的验证，即：给定一种类型的视频内容，其实其本身被误分类了，但在同一个模型之下它总是会被分类进在整个推流过程中都有相近分数的簇中。</p>
+<p>利用这个特性，基于动作识别模型提供的对视频内容的描述，进一步设计动态的用户模型来映射用户偏好到不同的视频内容上。</p>
+<h3 id="nlp-model">NLP Model</h3>
+<p>为了桥接动作识别和用户偏好向量，必须分析词/短语之间的相似性。</p>
+<p>然而现有的 ML 算法不能直接处理生数据，因为输入必须是数值。为了解决这个问题，采用单词嵌入技术，使用多种语言模型以数值向量的形式来表示单词，以此来确保有相近意义的词有相近密度的表示。</p>
+<p>具体处理时使用<a href="https://github.com/artetxem/phrase2vec"><code>Phrase2Vec</code></a>作为 NLP 模块的模型（作为<code>Word2Vec</code>的扩展，能更好的分析两个短语之间的相似性）。</p>
+<h2 id="用户模型与预测">用户模型与预测</h2>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004735080.png" alt="image-20220204004735080"></p>
+<p>图 5.3 阐明了基于结果向量和用户向量的预测过程。由动作识别得出的结果向量，包括一个动作向量 $A$ 和一个权重向量 $W$ 。用户向量包括偏好向量 $P$ 和可能性向量 $L$ 。$A$ 和 $P$ 包含词和短语，描述了视频内容和用户偏好。 $W$ 和 $L$ 分别由表示神经网络对动作结果的置信度和用户对视频内容的参考可能性的值组成。</p>
+<p>假设每帧 25 个分块，CNN 模块的输出结果是 25 个 $A$ 向量和 25 个 $W$ 向量；对与用户偏好，只使用 1 个 $P$ 向量和 1 个 $L$ 向量。</p>
+<p>最终的分数向量 $S$ 计算为每个 $A$ 和 唯一的 $P$ 之间的相关性。结果也受相应的 $W$ 和 $L$ 的影响而调整。</p>
+<p>假设余弦相似性函数为 $\rho$ ，那么 $A$ 和 $P$ 中的每个 $a_i$ 和 $p_i$ 的计算可以表示为：</p>
+<p>$$
+{\rho}_i (a_i, p_i) = Phrase2Vec(a_i, p_i)
+$$</p>
+<p>设定每个向量中包含 5 个元素，分数向量 $S$ 计算为：</p>
+<p>$$
+S = L \cdot W \cdot \sum {\rho} (A, P)
+$$</p>
+<p>对应于 25 个分块，最终的分数向量中包含 25 个元素。 $s_k$ 表示 $k_{th}$ 分块的分数值，详细算法：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004335458.png" alt="image-20220204004335458"></p>
+<p>分数向量更新完毕之后就可以获得每个分块内容和用户偏好之间的相关性，用帧上每个分块的亮度来做可视化：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20220204004856763.png" alt="image-20220204004856763"></p>
+<p>将分数向量中的元素从高到低排序，选定 $\frac{1}{3}$ 作为阈值，将前 $\frac{1}{3}$ 的分块看作相同的分数等级作为最后的预测区域。</p>
+<p>为了应对推流过程中用户偏好的变化，为分数向量的计算设计动态加权的用户偏好向量。</p>
+<p>设定用户偏好向量 $P$ 的大小与动作向量 $A$ 的大小相同，一旦系统获取到用户实际的<code>FoV</code>位置，就计算其视野中心并定位到相应的分块，使用前一视频片段中该选中分块的动作向量 $A&rsquo;$ 来更新用户的偏好向量。</p></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'ayamir.github.io',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

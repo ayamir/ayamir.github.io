@@ -4,9 +4,9 @@
     <title>WebRTC on Ayamir&#39;s blog</title>
     <link>https://ayamir.github.io/tags/webrtc/</link>
     <description>Recent content in WebRTC on Ayamir&#39;s blog</description>
-    <generator>Hugo 0.125.1</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 26 Apr 2024 09:02:15 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/tags/webrtc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jitter Buffer学习理解（上）</title>

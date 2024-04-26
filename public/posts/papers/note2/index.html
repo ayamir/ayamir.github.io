@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="application/javascript" src='https://ayamir.github.io/js/theme-mode.js'></script>
+    <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+    <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+    <title>自适应视频推流方案 - Ayamir&#39;s blog</title>
+    
+    <link rel="icon" type="image/x-icon" href='/images/favicon.png'>
+    
+    <meta name="theme-color" content="#1e2327">
+
+    
+    <meta name="description"
+  content="概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。
+目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。
+适应性的视频比特率需要同时匹配网络条件和质量目标的需求。
+" />
+<meta name="keywords"
+  content='Immersive Video' />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note2/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="自适应视频推流方案 - Ayamir&#39;s blog" />
+<meta name="twitter:description"
+  content="概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。
+目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。
+适应性的视频比特率需要同时匹配网络条件和质量目标的需求。
+" />
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image"
+  content="https://ayamir.github.io/">
+
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="自适应视频推流方案 - Ayamir&#39;s blog">
+<meta property="og:description"
+  content="概述 自适应方案可以在处理不同目标对象时帮助改善推流体验。
+目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。
+适应性的视频比特率需要同时匹配网络条件和质量目标的需求。
+" />
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note2/" />
+<meta property="og:site_name" content="自适应视频推流方案" />
+<meta property="og:image"
+  content="https://ayamir.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+<meta property="article:published_time" content="2021-10-21 10:50:54 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-123456-789', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+</head>
+
+<body>
+  <div style="position: relative">
+  <header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+    <div class="Header-item mobile-none" style="margin-top: -4px; margin-bottom: -4px;">
+      <a class="Header-link" href="https://ayamir.github.io/">
+        <img class="octicon" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button class="Header-link btn-link js-details-target" type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'">
+        <img height="24" class="octicon octicon-three-bars" width="24" src="/images/GitHub-Mark-Light-32px.png">
+      </button>
+    </div>
+    <div style="display: none;" id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+        <div class="position-relative">
+          <form target="_blank" action="https://www.google.com/search" accept-charset="UTF-8" method="get"
+            autocomplete="off">
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+              <input type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q" value="" placeholder="Search" autocomplete="off">
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/">
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+      <a class="Header-link " href="https://ayamir.github.io/">
+        <img class="octicon octicon-mark-github v-align-middle" height="32" width="32" src="/images/GitHub-Mark-Light-32px.png">
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0;">
+      <a href="javascript:void(0)" class="Header-link no-select" onclick="switchTheme()">
+        <svg style="fill: var(--color-profile-color-modes-toggle-moon);" class="no-select" viewBox="0 0 16 16"
+          version="1.1" width="16" height="16">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z">
+          </path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32"></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a>
+                  </span>
+                  <span class="path-divider">/</span>
+                  <strong class="css-truncate css-truncate-target mr-1" style="max-width: 410px">
+                    <a href="https://ayamir.github.io/posts/papers/note2/">自适应视频推流方案</a>
+                  </strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Thu, 21 Oct 2021 10:50:54 &#43;0800"
+                    class="no-wrap">
+                    Thu, 21 Oct 2021 10:50:54 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Fri, 26 Apr 2024 09:02:15 &#43;0800"
+                    class="no-wrap">
+                    Fri, 26 Apr 2024 09:02:15 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      4625 Words
+                    
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h2 id="概述">概述</h2>
+<p>自适应方案可以在处理不同目标对象时帮助改善推流体验。</p>
+<p>目标主要包括视频质量、功耗、负载均衡等在移动无线网和有线网接入的情形。</p>
+<p>适应性的视频比特率需要同时匹配网络条件和质量目标的需求。</p>
+<h2 id="分类">分类</h2>
+<h3 id="服务端适应">服务端适应</h3>
+<p>大多数服务端适应的方案要求客户端发送系统或网络相关信息。</p>
+<h4 id="质量导向的适应方案quality-oriented-adaptive-schemeqoas">质量导向的适应方案（Quality-Oriented Adaptive Scheme/QOAS）</h4>
+<p>向终端用户提供了高知觉质量的媒体内容。</p>
+<ol>
+<li>
+<p>QOAS 是 C-S 架构，决策在服务器端产生。</p>
+</li>
+<li>
+<p>QOAS 基于客户知觉质量的反馈，提供对推流质量等级的调整。</p>
+</li>
+</ol>
+<h4 id="智能优先级适应方案intelligent-prioritized-adaptive-schemeipas">智能优先级适应方案（intelligent Prioritized Adaptive Scheme/iPAS）</h4>
+<p>专用于 802.11 网络。</p>
+<ol>
+<li>
+<p>iPAS 服务器上的基于固有印象的带宽分配模块被用于组合 QoS 相关的参数和视频内容特征来进行内容的优先级分类和带宽份额分配。</p>
+</li>
+<li>
+<p>通过区分多媒体流，iPAS 提供可用无线信道的优先级分配。</p>
+</li>
+</ol>
+<h4 id="设备导向的适应方案device-oriented-adaptive-multimedia-schemedoas">设备导向的适应方案（Device-Oriented Adaptive multimedia Scheme/DOAS）</h4>
+<p>专用于 LTE 网络，建立在 LTE 下行链路调度机制之上。</p>
+<ol>
+<li>DOAS 专门根据设备特性实现适配，尤其为多屏终端用户提供了卓越的 QoE。</li>
+</ol>
+<h3 id="客户端适应">客户端适应</h3>
+<h4 id="基于吞吐量的自适应方案">基于吞吐量的自适应方案</h4>
+<p>这类方案基于估计的网络吞吐量从服务端选择视频的比特率。</p>
+<ol>
+<li>HTTP 客户端通过之前的观察记录来估计网络的吞吐量。</li>
+<li>通过测量端获取时间（segment fetch time/SFT）来代表发起和收到回复的瞬时 HTTP GET 请求之间的时间段，以此来确定一个推流会话中吞吐量的变化，进而独立地做出适应决策。</li>
+<li>在分布式网络中，同时考虑并发和顺序的 SFT。通过比较实际的和理想的 SFT 来选择未来的 segment 的质量等级。</li>
+</ol>
+<h5 id="festive-算法">FESTIVE 算法</h5>
+<p>适用于多个 HAS 客户端共享一个常见的拥塞带宽链路的情形。</p>
+<p>以<strong>效率、稳定性、公平性</strong>为度量因素的适应性算法。</p>
+<p>探索了一种为<strong>分段调度、吞吐量估计和比特率选择</strong>而生的健壮的机制。</p>
+<p>包含一个随机调度器来调度下一个视频块的下载。</p>
+<p>多个客户端共享容量为$W$的满带宽链路，每个客户端$x$在$t$时刻播放的视频比特率为$b_x,_t$ ，需要避免以下 3 种问题：</p>
+<ul>
+<li>
+<p><em>Inefficiency</em>：多个 HAS 客户端必须能选择最可能的表示来提高 QoE。</p>
+<p>$$ Inefficiency = \frac{|\sum_{x}b_x,_t - W|}{W} $$</p>
+<p>低<em>Inefficiency</em>值表明多个客户端对带宽实现了最有效的利用。</p>
+</li>
+<li>
+<p><em>Unfairness</em>：可用带宽应该被均等地分配。</p>
+<p>$$ Unfairness = \sqrt{1-JainFair} $$</p>
+<p>低<em>Unfairness</em>值表明多个客户端有相近的比特率。</p>
+</li>
+<li>
+<p><em>Instability</em>：不必要的比特率切换会损害推流体验</p>
+<p>$$Instability = \frac{\sum_{d=0}^{k-1}|b_{x,t-d} - b_{x,t-d-1}|*w(d)}{\sum_{d=1}^{k}b_{x,t-d} * w(d)}$$</p>
+</li>
+</ul>
+<h5 id="probe-and-adaptpanda算法">Probe AND Adapt(PANDA)算法</h5>
+<p>用于检测网络状况，考虑未来比特率选择的平均目标数据比特率。</p>
+<p>目标是当多个 HAS 客户端共享一个拥塞带宽信道时，通过正确探测网络，进而最小化<strong>比特率震荡</strong>。</p>
+<p>PANDA 算法在性能上击败了 FESTIVE 算法，并且 PANDA 算法在这些解决方案中表现出了最好的适应性，在不同带宽情况和播放器设置下实现了最优的<strong>效率、公平性和稳定性</strong>。</p>
+<p>整体上的推流质量不只依赖于本地的吞吐量测量，还依赖服务端的网络容量。</p>
+<ol>
+<li>利用服务器发起的推送机制来降低 DASH 内容推流到移动客户端的端到端延迟。</li>
+<li>利用<em>HTTP/2</em>的流终止特性来实现中间质量调整。</li>
+<li>基于估计的用户 QoE，功耗和可用资源来改善用户端的推流体验。</li>
+</ol>
+<p>虽然有证据表明性能得到了提高，但是评估工作只是在受控的 LAN 环境下有效。</p>
+<h5 id="cross-session-stateful-predictorcs2p方案">Cross Session Stateful Predictor(CS2P)方案</h5>
+<p>一种数据驱动的吞吐量估计方案，以克服不准确的 HAS 流量预测问题。</p>
+<p>将共享相似特性的推流会话分簇，然后对每个簇使用隐马尔科夫模型预测相应的吞吐量样本。</p>
+<p>在一个大规模数据集上实验性的评估表明：CS2P 高效地估计了可用的网络吞吐量，进而改善了整体上的视频比特率的适应性。</p>
+<p>CFA 和 Pytheas 等方案和 CS2P 类似，也使用数据驱动的控制器来估计可用的吞吐量。</p>
+<p>但是这些工作<strong>不支持异构系统</strong>并且<strong>需要额外的训练复杂性</strong>，使其不够具有吸引力。</p>
+<p>基于吞吐量的适应性方案主要的挑战在于对吞吐量的精确估计。</p>
+<p>为 360 度视频采用一个没有经过精巧设计的吞吐量估计机制可能会导致不稳定性和较差的 QoE，在高度动态化的无线和蜂窝网络中尤甚。</p>
+<h4 id="基于缓冲区的自适应方案">基于缓冲区的自适应方案</h4>
+<p>客户端会在播放视频时根据当前缓冲区的占用情况请求将要到来的 segment。</p>
+<h5 id="如何克服不完整的网络信息的限制">如何克服不完整的网络信息的限制</h5>
+<ol>
+<li>
+<p>在多客户端启用缓存的环境中，结合客户端测量工具集和补偿算法构造模型。</p>
+<p>这个模型可以高效探测比特率切换时间并通过选择切换适当的比特率来进行补偿，最终实现了可达 20%的比特率改善。</p>
+</li>
+<li>
+<p>Buffer Based Adaptation(BBA)方法</p>
+<p>应用于 Netfix 客户端时可以减少可达 20%的重新缓冲事件。</p>
+<p>BBA 方法考虑的缓冲区较大，因此对于比较短的视频不一定有这样的性能。</p>
+</li>
+<li>
+<p>Buffer Occupancy-based Lyapunov Algorithm(BOLA)</p>
+<p>把比特率适应性问题看作是与播放质量和重新缓冲时间相关的最优化问题。</p>
+<p>BOLA 旨在通过把缓冲区大小保持在设定的目标水平来避免重新缓冲。</p>
+<p>对于缓冲区级别的突然下降，BOLA 通过请求最低可用视频比特率来避免停顿事件的频率。</p>
+</li>
+</ol>
+<h5 id="如何优化缓冲区利用率">如何优化缓冲区利用率</h5>
+<ol>
+<li>
+<p>Adaptation and Buffer Management Algorithm(ABMA+)</p>
+<ul>
+<li>基于重新缓冲事件的可能性确定未来 representation 的下载时间。</li>
+<li>通过基于预先计算的缓冲区大小和 segment 下载时间选择最大比特率来确保流畅的播放。</li>
+</ul>
+<p>这样可以实现低计算开销的良好部署。</p>
+</li>
+<li>
+<p>Scalable Video Coding(SVC)/Bandwidth Independent Efficient Buffering(BIEB)</p>
+<ul>
+<li>基于层分发获取视频块，进而维持稳定的缓冲区大小来避免频繁的中断。</li>
+<li>没有考虑 QoE 模型中的卡顿和质量切换。</li>
+<li>涉及额外的编码和处理开销。</li>
+</ul>
+</li>
+<li>
+<p>使用 PID 控制器的控制论方法</p>
+<ul>
+<li>强制执行缓冲区设置点来使缓冲区保持在最佳水平。</li>
+<li>略微降低视频比特率，以防止不必要的视频比特率调整。</li>
+<li>在多个客户端竞争的情况下，不能保证公平性。</li>
+</ul>
+</li>
+</ol>
+<h5 id="如何降低-dash-流的排队延迟">如何降低 DASH 流的排队延迟</h5>
+<p>DASH 流会经历最长可达 1s 的排队延迟和严重拥塞，导致缓冲区膨胀问题，而这会严重损害实时多媒体服务的 QoE。</p>
+<p>旨在减少网络拥塞的主动队列管理 (AQM) 策略并没有充分减少这种不必要的延迟。</p>
+<ol>
+<li>DASH 客户端根据网络设备的队列大小动态接收窗口大小可以显著减轻缓冲区膨胀效应。</li>
+<li>由于长期的 viewport 预测的高度不确定性，充足的缓冲区空间对于 360 度视频的流畅播放来说并不可行。</li>
+<li>通常小于 3s 的缓冲区大小对于短期的 viewport 预测来讲比较适合。</li>
+<li>由于小缓冲区很有可能造成播放卡顿，因此较短持续时间的 segment 可以被用于基于 tile 的流中，但是相比于长持续时间的 segment，这样也会降低编码效率。</li>
+</ol>
+<h4 id="混合自适应方案">混合自适应方案</h4>
+<p>客户端同时考虑吞吐量和播放缓冲信号来确定即将到来的 segments 的视频比特率。</p>
+<h5 id="model-predictive-controlmpc">Model Predictive Control(MPC)</h5>
+<p>利用良好定义的参数集合来估计可用的网络和缓冲区资源，进而为高 QoE 的比特率做出最优调整的控制论方法。</p>
+<p>提出的 QoE 模型采用视频的平均质量$R_k$，平均比特率切换，重新缓冲事件，和初始延迟$T_s$作计算：</p>
+<p>$$
+QoE_1^K = \sum_{k=1}^{K}q(R_k) - \lambda\sum_{k=1}^{K-1}|q(R_{k+1}) - q(R_k)| - \mu\sum_{k=1}^{K}(d_k(R_k)/C_k - B_k)_+ - \mu_sT_s
+$$</p>
+<p>$C_k$：第 k 个块的可用带宽，$B_k$：第 k 个块的可用缓冲区大小</p>
+<p>$\lambda, \mu, \mu_s$：可以根据用户兴趣进行调整的权重</p>
+<ul>
+<li>
+<p>MPC 用调和平均的方法来估计吞吐量，并且能够明确管理复杂的控制对象。</p>
+</li>
+<li>
+<p>只研究了单播放器的情况，因此没有公平性的考量。</p>
+</li>
+</ul>
+<h5 id="throughput-and-buffer-occupancy-based-adaptationtboa">Throughput and Buffer Occupancy-based Adaptation(TBOA)</h5>
+<p>选择合适的视频比特率来获得单个或多个客户端环境中改进的推流体验。</p>
+<ul>
+<li>
+<p>激进地提高了比特率来最高效地利用可用的带宽。</p>
+</li>
+<li>
+<p>等待缓冲区超过某个级别，然后降低比特率以获得稳定的性能。</p>
+</li>
+<li>
+<p>为缓冲区等级设置三个阈值，例如：</p>
+<p>$0 &lt; B_{min} &lt; B_{low} &lt; B_{high}$</p>
+<p>目标区间在$B_{low}$和$B_{high}$之间。</p>
+<p>算法努力使最优区间$B_{opt}满足$ $B_{opt} = B_{low} + B_{high} \over 2$。</p>
+<p>通过控制$B_{low}$和$B_{high}$的阈值，使缓冲区和比特率的变化稳定来应对未知的 TCP 吞吐量。</p>
+</li>
+<li>
+<p>算法表现的流畅而公平，但是没有把用户满意度的度量考虑在内。</p>
+</li>
+</ul>
+<h5 id="fuzzy-logic-based-dash">fuzzy logic-based DASH</h5>
+<p>控制重新缓冲事件和视频推流的质量。</p>
+<ul>
+<li>考虑了平均吞吐量的估计方法，获得了更高的视频比特率和更少的质量波动。</li>
+<li>没有考虑 QoE 度量。</li>
+</ul>
+<p>为了更好地调整比特率做出的改进：</p>
+<ul>
+<li>用 Kaufman&rsquo;s Adaptive Moving Average/KAMA 测量法估计吞吐量。</li>
+<li>用 Grey Prediction Model/GPM 来估计缓冲区等级。</li>
+</ul>
+<p>竞争流模拟环境中，改进所取得的效果：</p>
+<ul>
+<li>平均情况下达到 50%的公平性。</li>
+<li>最好情况下达到 17%的更好的接收质量。</li>
+</ul>
+<h5 id="spectrum-based-quality-adaptationsquad算法">Spectrum-based Quality Adaptation(SQUAD)算法</h5>
+<p>解决吞吐量预测和缓冲区等级估计的不连续性。</p>
+<ul>
+<li>吞吐量和缓冲区等级反馈信号都被用于选择恰当的质量。</li>
+<li>在一开始获取最低质量的 segment 来减少启动时间。</li>
+<li>在视频质量切换频率和幅度方面性能显著提高。</li>
+</ul>
+<p>尚未有方案讨论如何在视频质量和带宽利用率之间做出很好的平衡。</p>
+<h5 id="throughput-friendly-dashtfdash">Throughput Friendly DASH/TFDASH</h5>
+<p>获得多个竞争客户端情形下的公平性、稳定性和效率。</p>
+<ul>
+<li>通过避免 OFF 端获得了最大并且公平的带宽利用率。</li>
+<li>双阈值的缓冲区保证播放时的稳定性。</li>
+</ul>
+<p>在单客户端的环境中，混合适应方案表现的很合理。</p>
+<p>但是多个客户端一起竞争带宽时会迅速扼杀整个网络。</p>
+<p>当客户端的缓冲区达到了最大阈值时，客户端进入了 ON-OFF 阶段，此时客户端只对自己的视频比特率做了调整而没有考虑其他客户端，因而不能正确地估计可用的带宽资源。</p>
+<p>这会导致竞争客户端之间带宽利用不足以及带宽分配不均。</p>
+<h4 id="基于多路径的自适应方案">基于多路径的自适应方案</h4>
+<p>解决的主要问题是在异质网络之上，如何面对交付内容的增加。</p>
+<h5 id="multipath-transmission-control-protocolmptcp">Multipath Transmission Control Protocol(MPTCP)</h5>
+<ul>
+<li>有用但是并不理想
+<ul>
+<li>因为需要发送端和接收端同时修改内核堆栈。</li>
+<li>因为受到网络运营商的限制可能无法通过中间件。</li>
+</ul>
+</li>
+</ul>
+<h5 id="cmt-qa-方案">CMT-QA 方案</h5>
+<p>采用多种特定的网络技术来实现并发的多路内容交付。</p>
+<h5 id="multi-source-playermsplayer">Multi-source player(MSPlayer)</h5>
+<p>实现多条链路之上的高质量视频传送和弹性的容错机制。</p>
+<ul>
+<li>
+<p>客户端驱动的对未来视频 segment 的比特率分配依赖于估计的网络状况。</p>
+</li>
+<li>
+<p>视频 segment 可以在两种可用网络之上进行下载，但是多路径的下载可能会造成交付顺序错乱。</p>
+</li>
+</ul>
+<h5 id="cross-layer-fairness-solution">Cross-layer Fairness solution</h5>
+<p>通过探索数据链路层和传输层之间的交互来分析数据传输路径的实时质量，提出了一个公平性驱动的高效流控机制。</p>
+<p>在模拟环境中，相比于 CMT-QA 方案：</p>
+<ul>
+<li>获得了更高的公平性评级。</li>
+<li>获得了更低的平均吞吐量和 PSNR（峰值信噪比）。</li>
+</ul>
+<h5 id="kim-and-chungs-work">Kim and Chung&rsquo;s work</h5>
+<p>同时利用 WiFi 和 LTE 网络接口，从多个视频源下载部分 segment。</p>
+<ul>
+<li>对多路径的聚合带宽进行平滑处理以避免带宽波动。</li>
+<li>实现了一种部分 segment 请求策略以避免乱序问题，经过各种路径传输的部分片段
+在呈现给用户之前进行组合。</li>
+</ul>
+<h5 id="gos-work">Go&rsquo;s work</h5>
+<p>在网络成本限制下，调度跨网络间相同比特率的视频块中的所有 segment。</p>
+<h5 id="基于-mpeg-dash-的推流策略实验性评估">基于 MPEG-DASH 的推流策略实验性评估</h5>
+<p>以低功耗为移动设备提供了 WiFi 和 LTE 网络下的无缝视频播放。</p>
+<ul>
+<li>没有分析感知视频质量的影响。</li>
+</ul>
+<h5 id="davvi">DAVVI</h5>
+<p>基于 HTTP 的推流系统，为了实现 3G 和 WiFi 网络之上的多信道支持。</p>
+<ul>
+<li>基于每个信道的质量，视频 segment 被动态地划分成 subsegment，以便于最大负载可以被应用到每个信道上。</li>
+</ul>
+<p>为多媒体内容交付使用多个网络接口需要为路径质量测量和数据调度精心设计机制，来避免丢包和乱序交付的问题。</p>
+<p>然而因为无线异质网络的高度动态性和复杂性，现有的方案在测量实时信息的时候是受限的。</p>
+<h5 id="elgablis-work">Elgabli&rsquo;s work</h5>
+<p>考虑了基于 SVC 的优先自适应视频传输的两条路径。</p>
+<ul>
+<li>属于每一层的段可以根据质量、块 deadline 和路径偏好从可用路由之一传输。</li>
+<li>没有考虑在任何路径上应用最大贡献度。</li>
+</ul>
+<h5 id="zhangs-work">Zhang&rsquo;s work</h5>
+<p>提出了一种基于两个流的优先级感知自适应解决方案，它为每个流使用不同的视频比特率。</p>
+<ul>
+<li>实现了一个集成带宽的方式来为高优先级流启用更高的视频比特率，并在没有足够的可用带宽时终止低优先级流。</li>
+</ul>
+<h5 id="yun-and-chungs-work">Yun and Chung&rsquo;s work</h5>
+<p>为多视图视频提出了一种基于 DASH 的推流框架，它包括基于缓冲区的服务器推送方案和并行传输机制，以减少不同传输视图之间的切换时间。</p>
+<ul>
+<li>只有一种路径配置被应用。</li>
+</ul>
+<h5 id="rahman-and-chungs-work">Rahman and Chung&rsquo;s work</h5>
+<p>介绍了基于 HAS 的多视图会议流解决方案，其中演示者、观众和演示屏幕的多个流通过多条路径同时传输。</p>
+<ul>
+<li>对所有的 3 个流分配相同的优先级。</li>
+<li>采用统一带宽的方式，以便于统一的质量可以被分配到所有流的 segment 上。</li>
+<li>对于多个流的每个 segment，其路径以通过考虑网络吞吐量和每个 segment 的比特率来决定。</li>
+<li>没有考虑多信道的影响，这可能降低整体性能。</li>
+</ul>
+<p>利用多路径网络的特点和优先级特性可以为 360 度 tile 视频推流提供更高的推流性能。</p>
+<p>提出的所有自适应策略都是通用的，目标是标准的视频交付，并没有对 360 度视频内容做出特别的考虑。</p></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+
+<div id="gitalk-container" class="gitalk-container"></div>
+<link rel="stylesheet" href='https://ayamir.github.io/css/gitalk.css'>
+<script src='https://ayamir.github.io/js/gitalk.min.js'></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '1ee3454a8f1f370a7934',
+    clientSecret: '737cbeaf81ce60b50fafd2b0d6c7ebfa42826555',
+    repo: 'ayamir.github.io',
+    owner: 'ayamir',
+    admin: ['ayamir'],
+    id: eval("location.pathname"), 
+    distractionFreeMode: false 
+  });
+  (function() {
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon d-none d-lg-block mr-lg-4" href="https://ayamir.github.io/">
+      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+        </path>
+      </svg>
+    </a>
+    <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+      
+      <li class="mr-3 mr-lg-0">Theme by <a href='https://github.com/MeiK2333/github-style'>github-style</a></li>
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+
+
+</div>
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>
