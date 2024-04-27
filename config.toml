@@ -1,7 +1,7 @@
 baseURL = "https://ayamir.github.io"
 languageCode = "zh-cn"
 title = "Ayamir's blog"
-theme = "github-style-pro"
+theme = "github-style-plus"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
 
@@ -10,15 +10,16 @@ pygmentsUseClasses = true
   github = "ayamir"
   email = "miracle_l@bupt.edu.cn"
   url = "https://github.com/ayamir"
-  keywords = "blog, google analytics"
-  rss = true
-  lastmod = true
+  keywords = "Multimedia, WebRTC, CloudGame, Programming"
   userStatusEmoji = "🎯"
   favicon = "/images/favicon.png"
   avatar = "/images/avatar.png"
   headerIcon = "/images/GitHub-Mark-Light-32px.png"
   location = "China"
+  rss = true
+  lastmod = true
   enableUtterances = true
+  enableLocalSearch = true
 
   [params.utterances]
     repo = "ayamir/ayamir.github.io"
@@ -33,4 +34,4 @@ pygmentsUseClasses = true
 
 [services]
   [services.googleAnalytics]
-    ID = "UA-123456-789"
+    ID = "G-6KX34MKCTY"
