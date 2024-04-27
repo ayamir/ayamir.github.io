@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Viewport Predict on Ayamir&#39;s blog</title>
+    <link>https://ayamir.github.io/tags/viewport-predict/</link>
+    <description>Recent content in Viewport Predict on Ayamir&#39;s blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <atom:link href="https://ayamir.github.io/tags/viewport-predict/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VR 和全景视频的区别总结</title>
+      <link>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</link>
+      <pubDate>Mon, 17 Jan 2022 17:02:51 +0800</pubDate>
+      <guid>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</guid>
+      <description>这篇博客主要总结了 VR 和全景视频之间的区别。</description>
+    </item>
+  </channel>
+</rss>

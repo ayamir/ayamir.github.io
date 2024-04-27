@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <script
+    type="application/javascript"
+    src='https://ayamir.github.io/js/theme-mode.js'
+  ></script>
+  <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+  
+  <title>
+    WebGL 样例的解释 | Ayamir&#39;s blog
+  </title>
+  
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+  
+  <meta name="theme-color" content="#1e2327" />
+
+  
+  <meta
+  name="description"
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta
+  name="twitter:title"
+  content="WebGL 样例的解释 - Ayamir&#39;s blog"
+/>
+<meta
+  name="twitter:description"
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。"
+/>
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta
+  name="twitter:image"
+  content="https://ayamir.github.io/"
+/>
+
+
+<meta
+  property="og:type"
+  content="article"
+/>
+<meta
+  property="og:title"
+  content="WebGL 样例的解释 - Ayamir&#39;s blog"
+/>
+<meta
+  property="og:description"
+  content="这篇博客主要学习总结了 WebGL 的一些使用样例。"
+/>
+<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/" />
+<meta property="og:site_name" content="WebGL 样例的解释" />
+<meta
+  property="og:image"
+  content="https://ayamir.github.io/"
+/>
+<meta property="og:image:width" content="2048" />
+<meta property="og:image:height" content="1024" />
+
+<meta property="article:published_time" content="2022-03-03 10:31:38 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+ 
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-6KX34MKCTY"
+></script>
+<script>
+  if (navigator.doNotTrack !== "1") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-6KX34MKCTY");
+  }
+</script>
+ 
+
+
+
+
+
+</head>
+
+
+<body>
+  
+
+<style>
+  .height-limitation {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-bottom: 4px solid var(--color-fg-muted);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div style="position: relative">
+  <header
+    class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on"
+  >
+    <div
+      class="Header-item mobile-none"
+      style="margin-top: -4px; margin-bottom: -4px"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button
+        class="Header-link btn-link js-details-target"
+        type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'"
+        aria-label="Search"
+      >
+        <svg
+          height="24"
+          class="octicon octicon-three-bars"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="24"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div
+      style="display: none"
+      id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex"
+    >
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"
+      >
+        <div class="position-relative">
+          <form
+            target="_blank"
+            action="https://www.google.com/search"
+            accept-charset="UTF-8"
+            method="get"
+            autocomplete="off"
+          >
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center"
+            >
+              <input
+                type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q"
+                value=""
+                placeholder="Search"
+                autocomplete="off"
+              />
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/" />
+              <div
+                class="js-jump-to-suggestions-container jump-to-suggestions overflow-hidden position-absolute"
+              >
+                <div
+                  id="search-progress"
+                  class="d-none color-bg-primary no-underline p-2"
+                  role="progress"
+                  aria-selected="false"
+                >
+                  <div class="loader"></div>
+                </div>
+
+                <ul
+                  id="jump-to-results"
+                  role="listbox"
+                  class="Box border-0 p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container js-active-navigation-container height-limitation"
+                ></ul>
+              </div>
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="Header-item Header-item--full flex-justify-center d-md-none position-relative"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon octicon-mark-github v-align-middle"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0">
+      <a
+        href="javascript:void(0)"
+        class="Header-link no-select"
+        onclick="switchTheme()"
+      >
+        <svg
+          style="fill: var(--color-profile-color-modes-toggle-moon)"
+          class="no-select"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="16"
+          height="16"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32" alt=""></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a></span><span
+                    class="path-divider">/</span><strong class="css-truncate-target mr-1" style="max-width: 410px"><a
+                      href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/">WebGL 样例的解释</a></strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Thu, 03 Mar 2022 10:31:38 &#43;0800"
+                    class="no-wrap">
+                    Thu, 03 Mar 2022 10:31:38 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:43:04 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 22:43:04 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      1235 Words
+                    <span class="file-info-divider"></span>
+                                        6 min
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/webgl">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      WebGL
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="context">Context</h1>
+<ol>
+<li>Create an <code>HTML5</code> canvas</li>
+<li>Get the canvas id</li>
+<li>Obtain <code>WebGL</code> Context</li>
+</ol>
+<p>The parameter <code>WebGLContextAttributes</code> is not mandatory.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Attributes</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>alpha</code></td>
+<td style="text-align:center">true: provide an alpha buffer to the canvas;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>depth</code></td>
+<td style="text-align:center">true: drawing buffer contains a depth buffer of at least 16 bits;</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>stencil</code></td>
+<td style="text-align:center">true: drawing buffer contains a stencil buffer of at least 8 bits;</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>antialias</code></td>
+<td style="text-align:center">true: drawing buffer performs anti-aliasing</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>premultipliedAlpha</code></td>
+<td style="text-align:center">true: drawing buffer contains colors with pre-multiplied alpha</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>preserveDrawingBuffer</code></td>
+<td style="text-align:center">true: buffers will not be cleared and will preserve their values until cleared or overwritten by the author</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;my_canvas&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;webgl&#34;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">antialias</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">stencil</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</span></span></code></pre></div><h1 id="geometry">Geometry</h1>
+<h2 id="definition">Definition</h2>
+<p>A 2D or 3D model drawn using vertices is call a <code>mesh</code>.</p>
+<p>Each facet in a mesh is called a polygon and a polygon is made of 3 or more vertices.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// create a 2D triangle which lies on the coordinates {(-5, -5), (5, -5), (5, 5)}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span>   <span class="c1">// Vertex 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>   <span class="c1">// Vertex 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>    <span class="c1">// Vertex 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">];</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/geometry.jpg" alt="Geometry"></p>
+<p>Similarly, we can create an array for the indices follow the sequence.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span></code></pre></div><ul>
+<li><code>drawArrays()</code>: pass the vertices of the primitive using JavaScript arrays.</li>
+<li><code>drawElements()</code>: pass both vertices and indices of the primitive using JavaScript arrays.</li>
+</ul>
+<h2 id="buffer-objects">Buffer Objects</h2>
+<p>A buffer object indicates a memory area allocated in GPU.</p>
+<p>We can store data of the models corresponding to vertices, indices, color and etc.</p>
+<p>There are 2 types of buffer objects:</p>
+<ul>
+<li>Vertex Buffer Object(VBO): It holds the per-vertex data of the graphical model that is going to be rendered.</li>
+<li>Index Buffer Object(IBO): It holds the indices of the graphical model that is going to be rendered.</li>
+</ul>
+<p>After defining the required geometry and storing them in JavaScript arrays, we need to pass these arrays to the buffer objects, from where the data will be passed to the shader programs.</p>
+<ol>
+<li>
+<p>Create an empty buffer.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertex_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">index_buffer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createBuffer</span><span class="p">();</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Bind an appropriate array object to the empty buffer.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bindBuffer</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// ARRAY_BUFFER represents vertex data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">vertex_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ELEMENT_ARRAY_BUFFER represent index data
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="nx">index_buffer</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Pass the data (vertices/indices) to the buffer using one of the typed arrays.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="k">void</span> <span class="nx">bufferData</span><span class="p">(</span><span class="kr">enum</span> <span class="nx">target</span><span class="p">,</span> <span class="nb">Object</span> <span class="nx">data</span><span class="p">,</span> <span class="kr">enum</span> <span class="nx">usage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Usage specifies how to use the buffer object data to draw shapes
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STATIC_DRAW -- Data will be specified once and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.STREAM_DRAW -- Data will be specified once and used a few times.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// gl.DYNAMIC_DRAW -- Data will be specified repeatedly and used many times.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// vertex buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="nx">vertices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// index buffer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">bufferData</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Uint16Array</span><span class="p">(</span><span class="nx">indices</span><span class="p">),</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">STATIC_DRAW</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Unbind the buffer (Optional/Recommended).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">bindBuffer</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">ELEMENT_ARRAY_BUFFER</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+</ol>
+<h1 id="shader">Shader</h1>
+<p>Shaders are written in ES SL which has variables of its own data types, qualifiers, built-in inputs and outputs.</p>
+<h2 id="data-types">Data Types</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>void</code></td>
+<td style="text-align:center">empty value</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool</code></td>
+<td style="text-align:center">true or false</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>int</code></td>
+<td style="text-align:center">signed integer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>float</code></td>
+<td style="text-align:center">floating scalar</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>vec2</code>, <code>vec3</code>, <code>vec4</code></td>
+<td style="text-align:center">n-component floating point vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bvec2</code>, <code>bvec3</code>, <code>bvec4</code></td>
+<td style="text-align:center">boolean vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ivec2</code>, <code>ivec3</code>, <code>ivec4</code></td>
+<td style="text-align:center">signed integer vector</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mat2</code>, <code>mat3</code>, <code>mat4</code></td>
+<td style="text-align:center">2x2, 3x3, 4x4 float matrix</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>sampler2D</code></td>
+<td style="text-align:center">access a 2D texture</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>samplerCube</code></td>
+<td style="text-align:center">access cube mapped texture</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qualifiers">Qualifiers</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Qualifier</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>attribute</code></td>
+<td style="text-align:center">acts as a link between a vertex shader and OpenGL ES for per-vertex data. Its value changes for every execution of the vertex shader.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>uniform</code></td>
+<td style="text-align:center">links shader programs and the WebGL application. Its value is <code>read-only</code>. It can be used for to declare a variable with any basic data types: <code>uniform vec4 lightPosition;</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>varying</code></td>
+<td style="text-align:center">forms a link between a vertex shader and fragment shader for interpolated data. It can be used with the following data types: <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, <code>mat2</code>, <code>mat3</code>, <code>mat4</code>, <code>arrays</code> like: <code>varying vec3 normal;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vertex-shader">Vertex Shader</h2>
+<p>Vertex shader is a program code, which is called on every vertex. Programmer have to define <code>attribute</code> in code of vertex shader to handle data. The <code>attribute</code> point to a VBO written in JavaScript.</p>
+<h3 id="predefined-variables">Predefined Variables</h3>
+<p>OpenGL ES SL provides the following predefined variables for every vertex shader</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>highp vec4 gl_Position</code></td>
+<td style="text-align:center">Holds the position of the vertex</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump float gl_PointSize</code></td>
+<td style="text-align:center">Holds the transformed point size</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">attribute</span> <span class="k">vec2</span> <span class="n">coordinates</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_Position</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>gl_Position</code> is the predefined variable which is available only in the vertex shader. It contains the vertex position. As vertex shader is a per-vertex operation, the <code>gl_Position</code> value is calculated for each vertex.</p>
+<h2 id="fragment-shader">Fragment Shader</h2>
+<p>A mesh is formed by multiple triangles, and the surface of each triangle is known as a fragment.</p>
+<p>Fragment shader is the code that runs on every pixel on each fragment. This is written to calculate and fill the color on individual pixels.</p>
+<h3 id="predefined-variables-1">Predefined Variables</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variables</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within the frame buffer</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>bool gl_FrontFacing;</code></td>
+<td style="text-align:center">Holds the fragment that belongs to a front-facing primitive</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec2 gl_PointCoord;</code></td>
+<td style="text-align:center">Holds the fragment position within a point</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gp_FragColor;</code></td>
+<td style="text-align:center">Holds the output fragment color value of the shader</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mediump vec4 gl_FragData[n];</code></td>
+<td style="text-align:center">Holds the fragment color for color attachment n</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">main</span><span class="p">(</span><span class="k">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="k">vec4</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mo">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="store-and-compiling">Store and Compiling</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertCode</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;attribute vec2 coordinates;&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;gl_Postion = vec4(coordinates, 0.0, 1.0);&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragCode</span> <span class="o">=</span> <span class="s2">&#34;void main(void) {&#34;</span> <span class="o">+</span> <span class="s2">&#34;gl_FragColor = vec4(0, 0.8, 0, 1);&#34;</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span><span class="p">;</span>
+</span></span></code></pre></div><p>Compilation involves following 3 steps</p>
+<ul>
+<li>Creating the shader object</li>
+<li>Attaching the source code to the created shader object</li>
+<li>Compiling the program</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">VERTEX_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">,</span> <span class="nx">vertCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">vertShader</span><span class="p">);</span>
+</span></span></code></pre></div><p>Same process for fragment shader</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">fragShader</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createShader</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">FRAGMENT_SHADER</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">shaderSource</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">,</span> <span class="nx">fragCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">compileShader</span><span class="p">(</span><span class="nx">fragShader</span><span class="p">);</span>
+</span></span></code></pre></div><h2 id="combined-program">Combined Program</h2>
+<ul>
+<li>Create a program object</li>
+<li>Attach both the shaders</li>
+<li>Link both the shaders</li>
+<li>Use the program</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">shaderProgram</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">createProgram</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">vertShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">attachShader</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="nx">fragShader</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">linkProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">useProgram</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">);</span>
+</span></span></code></pre></div><h1 id="associating-attributes--buffer-objects">Associating Attributes &amp; Buffer Objects</h1>
+<ul>
+<li>Get the attribute location</li>
+<li>Point the attributes to a vertex buffer object</li>
+<li>Enable the attribute</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// ulong getAttribLocation(Object program, string name)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">let</span> <span class="nx">coordinatesVar</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getAttribLocation</span><span class="p">(</span><span class="nx">shaderProgram</span><span class="p">,</span> <span class="s2">&#34;coordinates&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// void vertexAttribPointer(location, int size, enum type, bool normalized, long stride, long offset)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">gl</span><span class="p">.</span><span class="nx">vertexAttribPointer</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">FLOAT</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">enableVertexAttribArray</span><span class="p">(</span><span class="nx">coordinatesVar</span><span class="p">);</span>
+</span></span></code></pre></div><h1 id="drawing-a-model">Drawing a Model</h1>
+<h2 id="drawarrays">drawArrays()</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawArrays</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">int</span> <span class="n">first</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">);</span>
+</span></span></code></pre></div><ul>
+<li>mode: <code>gl.POINTS</code>, <code>gl.LINE_STRIP</code>, <code>gl.LINE_LOOP</code>, <code>gl.LINES</code>, <code>gl.TRIANGLE_STRIP</code>, <code>gl.TRANGLE_FAN</code>, <code>gl.TRIANGLES</code>.</li>
+<li>first: specified the starting element in the enabled arrays. (Non-negative)</li>
+<li>count: specifies the number of elements to be rendered.</li>
+</ul>
+<p><code>WebGL</code> will create the geometry in the order in which the vertex coordinates while rendering the shapes.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/triangle.jpg" alt="Triangle"></p>
+<p>draw two contiguous triangles:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawArrays</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/triangles_1.jpg" alt="Triangle 1"></p>
+<h2 id="drawelements">drawElements()</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-glsl" data-lang="glsl"><span class="line"><span class="cl"><span class="k">void</span> <span class="n">drawElements</span><span class="p">(</span><span class="k">enum</span> <span class="n">mode</span><span class="p">,</span> <span class="k">long</span> <span class="n">count</span><span class="p">,</span> <span class="k">enum</span> <span class="n">type</span><span class="p">,</span> <span class="k">long</span> <span class="n">offset</span><span class="p">);</span>
+</span></span></code></pre></div><ul>
+<li>mode: same as <code>drawArrays()</code>;</li>
+<li>count: same as <code>drawArrays()</code>;</li>
+<li>type: specifies the data type of the indices which must be <code>UNSIGNED_BYTE</code> or <code>UNSIGNED_SHORT</code>;</li>
+<li>offset: specifies the starting point for rendering, usually the first element (0);</li>
+</ul>
+<p>If use <code>drawElements()</code> to draw a model, then index buffer object should also be created along with the vertex buffer object. The vertex data will be processed once and used as many time as mentioned in the indices.</p>
+<p>draw a triangle:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/triangle-16462062700213.jpg" alt="Triangle"></p>
+<p>draw two contagious triangles:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">vertices</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="mf">0.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gl</span><span class="p">.</span><span class="nx">drawElements</span><span class="p">(</span><span class="nx">gl</span><span class="p">.</span><span class="nx">TRIANGLES</span><span class="p">,</span> <span class="nx">indices</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">UNSIGNED_SHORT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/triangles_1-16462064099025.jpg" alt="Triangle 1"></p>
+</article>
+              </div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-nav">
+        <div class="pagination-button next-post">
+          
+          <div>«&nbsp;</div><a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/development/note-for-mlflow/"> MLflow 的用法</a>
+          
+        </div>
+        
+        <div class="pagination-button previous-post">
+          
+          <a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/">WebGL 样例&nbsp;</a><div> »</div>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+<script
+  src="https://utteranc.es/client.js"
+  repo="ayamir/ayamir.github.io"
+  issue-term="pathname"
+  theme="github-light"
+  crossorigin="anonymous"
+  async
+></script>
+
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light"
+  >
+    <ul
+      class="list-style-none d-flex flex-wrap col-12 flex-justify-center mb-2 mb-lg-0"
+    >
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+</div>
+
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<script src="https://ayamir.github.io/js/mark.es6.min.js"></script>
+
+
+<script type="text/javascript">
+
+  const host = window.location.host;
+  const keyword = localStorage.getItem('keyword');
+  localStorage.removeItem('keyword');
+
+  if (keyword) {
+    const markInstance = new Mark(document.body);
+    markInstance.unmark({
+      done: function() {
+        markInstance.mark(keyword);
+      }
+    });
+  }
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-primary');
+  const mutedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-fg-muted');
+  const hoverColor = '#216EEB';
+
+  let originalStyle;
+  let svgOriginalStyle;
+  let titleOriginalStyle;
+
+  const onMouseOver = (node) => {
+    originalStyle = Object.assign({}, node.style);
+    node.style.backgroundColor = hoverColor;
+
+    const child = node.querySelector('.js-jump');
+    child.classList.remove('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    if (title && primaryColor === ' #fff') {
+      titleOriginalStyle = title.style;
+      title.style.color = '#fff';
+    }
+
+    const svg = node.querySelector('.octicon');
+    if (svg) {
+      svgOriginalStyle = svg.style;
+      svg.style.color = '#fff';
+    }
+  }
+
+  const onMouseLeave = (node) => {
+    node.style = originalStyle;
+    const child = node.querySelector('.js-jump');
+    child.classList.add('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    title.style = titleOriginalStyle;
+
+    const svg = node.querySelector('.octicon');
+    svg.style = svgOriginalStyle;
+  }
+
+  const createSearchItem = (title, link, index) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="${index}">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="${link}" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16"
+              version="1.1" width="16" data-view-component="true"
+              class="octicon octicon-repo js-jump-to-octicon-repo  flex-shrink-0">
+              <path fill-rule="evenodd"
+                d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z">
+              </path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${title}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Jump to
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const createGoogleSearchItem = (keyword) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="0">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="https://www.google.com/search?q=${keyword}" target="_blank" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search flex-shrink-0">
+                <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${keyword}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Google search
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const stripHtml = (html) => {
+    let tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    
+    const styles = tmp.getElementsByTagName('style');
+    while(styles[0]) {
+      styles[0].parentNode.removeChild(styles[0]);
+    }
+
+    
+    const scripts = tmp.getElementsByTagName('script');
+    while(scripts[0]) {
+      scripts[0].parentNode.removeChild(scripts[0]);
+    }
+    
+    return tmp.textContent || tmp.innerText || "";
+  }
+
+  const inputDom = document.querySelector(".Header-search-input");
+  const resultDom = document.getElementById('jump-to-results');
+  let debounceTimer;
+  let parser;
+  let xmlDoc;
+
+  const search = (_keyword) => {
+
+    resultDom.innerHTML = '';
+
+    const keyword = _keyword;
+
+    if (!keyword) return;
+
+    const progressDom = document.getElementById('search-progress');
+    if (progressDom && progressDom.classList.contains('d-none')) {
+      progressDom.classList.remove('d-none');
+    }
+
+    localStorage.setItem('keyword', keyword);
+    fetch(`${host.indexOf('localhost') > -1 ? 'http://' : 'https://'}${host}/index.xml`).then(resp => resp.text()).then(async (res) => {
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(res, 'text/xml');
+      const linkResult = xmlDoc.getElementsByTagName('link');
+      const titleResult = xmlDoc.getElementsByTagName('title');
+      const arr = [];
+
+      const matched = [];
+      await (async function searchLink() {
+        for (let i = 0; i < linkResult.length; i++) {
+          await fetch(linkResult[i].textContent).then(resp => resp.text().then(res => {
+            const pureText = stripHtml(res);
+            if (pureText.indexOf(keyword) >= 0) {
+              matched.push(i);
+            }
+          }))
+        }
+      })();
+
+      const googleSearchItem = createGoogleSearchItem(keyword);
+      const node= document.createRange().createContextualFragment(googleSearchItem);
+      resultDom.appendChild(node);
+
+      matched.map((itemIndex, index) => {
+        const r = createSearchItem(titleResult[itemIndex].textContent, linkResult[itemIndex].textContent, index + 1);
+        const node = document.createRange().createContextualFragment(r);
+        resultDom.appendChild(node);
+      });
+
+      if (progressDom && !progressDom.classList.contains('d-none')) {
+        progressDom.classList.add('d-none');
+      }
+    });
+  }
+
+  const debounce = (callback, time) => {
+    window.clearTimeout(debounceTimer);
+    debounceTimer = window.setTimeout(callback, time);
+  };
+
+  ['focus', 'input'].forEach(event => {
+    inputDom.addEventListener(event, (e) => {
+      debounce(() => search(e.target.value), 500);
+    }, false);
+  });
+
+  inputDom.addEventListener('blur', () => {
+    setTimeout(() => {
+      resultDom.innerHTML = '';
+    }, 100);
+  });
+
+</script>
+
+
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

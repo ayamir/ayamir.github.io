@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <script
+    type="application/javascript"
+    src='https://ayamir.github.io/js/theme-mode.js'
+  ></script>
+  <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+  
+  <title>
+    Note for TBRA | Ayamir&#39;s blog
+  </title>
+  
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+  
+  <meta name="theme-color" content="#1e2327" />
+
+  
+  <meta
+  name="description"
+  content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
+Level：ACM MM 21
+Keywords：Adaptive tiling and bitrate，Mobile streaming
+"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note-for-tbra/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta
+  name="twitter:title"
+  content="Note for TBRA - Ayamir&#39;s blog"
+/>
+<meta
+  name="twitter:description"
+  content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
+Level：ACM MM 21
+Keywords：Adaptive tiling and bitrate，Mobile streaming
+"
+/>
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta
+  name="twitter:image"
+  content="https://ayamir.github.io/"
+/>
+
+
+<meta
+  property="og:type"
+  content="article"
+/>
+<meta
+  property="og:title"
+  content="Note for TBRA - Ayamir&#39;s blog"
+/>
+<meta
+  property="og:description"
+  content="论文概况 Link：TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming
+Level：ACM MM 21
+Keywords：Adaptive tiling and bitrate，Mobile streaming
+"
+/>
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note-for-tbra/" />
+<meta property="og:site_name" content="Note for TBRA" />
+<meta
+  property="og:image"
+  content="https://ayamir.github.io/"
+/>
+<meta property="og:image:width" content="2048" />
+<meta property="og:image:height" content="1024" />
+
+<meta property="article:published_time" content="2021-12-21 10:11:23 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+ 
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-6KX34MKCTY"
+></script>
+<script>
+  if (navigator.doNotTrack !== "1") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-6KX34MKCTY");
+  }
+</script>
+ 
+
+
+
+
+
+</head>
+
+
+<body>
+  
+
+<style>
+  .height-limitation {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-bottom: 4px solid var(--color-fg-muted);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div style="position: relative">
+  <header
+    class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on"
+  >
+    <div
+      class="Header-item mobile-none"
+      style="margin-top: -4px; margin-bottom: -4px"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button
+        class="Header-link btn-link js-details-target"
+        type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'"
+        aria-label="Search"
+      >
+        <svg
+          height="24"
+          class="octicon octicon-three-bars"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="24"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div
+      style="display: none"
+      id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex"
+    >
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"
+      >
+        <div class="position-relative">
+          <form
+            target="_blank"
+            action="https://www.google.com/search"
+            accept-charset="UTF-8"
+            method="get"
+            autocomplete="off"
+          >
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center"
+            >
+              <input
+                type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q"
+                value=""
+                placeholder="Search"
+                autocomplete="off"
+              />
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/" />
+              <div
+                class="js-jump-to-suggestions-container jump-to-suggestions overflow-hidden position-absolute"
+              >
+                <div
+                  id="search-progress"
+                  class="d-none color-bg-primary no-underline p-2"
+                  role="progress"
+                  aria-selected="false"
+                >
+                  <div class="loader"></div>
+                </div>
+
+                <ul
+                  id="jump-to-results"
+                  role="listbox"
+                  class="Box border-0 p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container js-active-navigation-container height-limitation"
+                ></ul>
+              </div>
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="Header-item Header-item--full flex-justify-center d-md-none position-relative"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon octicon-mark-github v-align-middle"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0">
+      <a
+        href="javascript:void(0)"
+        class="Header-link no-select"
+        onclick="switchTheme()"
+      >
+        <svg
+          style="fill: var(--color-profile-color-modes-toggle-moon)"
+          class="no-select"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="16"
+          height="16"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32" alt=""></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a></span><span
+                    class="path-divider">/</span><strong class="css-truncate-target mr-1" style="max-width: 410px"><a
+                      href="https://ayamir.github.io/posts/papers/note-for-tbra/">Note for TBRA</a></strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Tue, 21 Dec 2021 10:11:23 &#43;0800"
+                    class="no-wrap">
+                    Tue, 21 Dec 2021 10:11:23 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:43:04 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 22:43:04 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      3688 Words
+                    <span class="file-info-divider"></span>
+                                        17 min
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h2 id="论文概况">论文概况</h2>
+<p>Link：<a href="https://dl.acm.org/doi/10.1145/3474085.3475590">TBRA: Tiling and Bitrate Adaptation for Mobile 360-Degree Video Streaming</a></p>
+<p>Level：ACM MM 21</p>
+<p>Keywords：Adaptive tiling and bitrate，Mobile streaming</p>
+<h2 id="创新点">创新点</h2>
+<h3 id="背景">背景</h3>
+<p>现有的固定的 tile 划分方式严重依赖 viewport 预测的精度，然而 viewport 预测的准确率往往变化极大，这导致基于 tile 的策略实际效果并不一定能实现其设计初衷：保证 QoE 的同时减少带宽浪费。</p>
+<p>考虑同样的 viewport 预测结果与不同的 tile 划分方式组合的结果：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221105259853.png" alt="Different tiling scheme with the same prediction"></p>
+<p>从上图可以看到：</p>
+<ul>
+<li>如果采用$6 \times 6$的分块方式，就会浪费 26，32 两个 tile 的带宽，同时 15，16，17 作为本应在实际 viewport 中的 tile 并没有分配最高的优先级去请求。</li>
+<li>如果采用$5 \times 5$的分块方式，即使预测的结果与实际的 viewport 有所出入，但是得益于 tile 分块较大，所有应该被请求的 tile 都得到了最高的优先级，用户的 QoE 得到了保证。</li>
+</ul>
+<p>另一方面，基于 tile 的方式带来了额外的编解码开销（可以看这一篇论文：<a href="https://ayamir.github.io/2021/12/note-for-optile/">note-for-optile</a>），而这样的性能需求对于移动设备而言是不可忽略的。</p>
+<h3 id="创新">创新</h3>
+<p>除了考虑常见的因素如带宽波动和缓冲区占用之外，提出同时自适应分块策略和码率分配以应对变化的 viewport 预测性能和受限的移动设备的解码能力。</p>
+<h3 id="论文组织">论文组织</h3>
+<ol>
+<li>首先使用现实世界的轨迹分析了典型的 viewport 预测算法并确定了其性能的不确定性。</li>
+<li>接着讨论了不同的分块策略在 tile 选择和解码效率上的影响。</li>
+<li>自适应的分块策略可以适应 viewport 预测的错误，并能保证 tile 选择的质量。</li>
+<li>为解码时间建构了分析模型，可以在给定受限的计算资源时用于选择恰当的分块策略和码率。</li>
+<li>形式化了优化模型，讨论了自适应算法的细节。</li>
+<li>评估证明了方案的优越性。</li>
+</ol>
+<h2 id="motivation">Motivation</h2>
+<h3 id="分块策略对-tile-选择的影响">分块策略对 tile 选择的影响</h3>
+<p>实现 4 种轻量的 viewport 预测算法：线性回归 LR、岭回归 RR、支持向量回归、长短期记忆 LSTM。</p>
+<p>设置历史窗口大小为 2s，预测窗口大小为 1s；viewport 的宽度和高度分别为 100°和 90°。</p>
+<p>默认的分块策略为$6 \times 6$；头部移动数据集来自<a href="https://dl.acm.org/doi/10.1145/3204949.3208139">公开数据集</a>。</p>
+<h4 id="viewport-预测的不准确性">viewport 预测的不准确性</h4>
+<p>研究表明，用户的头部运动主要发生在水平方向而较少发生在垂直方向，所以只分析水平方向的预测。</p>
+<p>实际的商业移动终端只有有限的传感和处理能力，并不能支持高频的 viewport 预测采样。</p>
+<p>视频内容的不同类型会显著影响预测的精度，基于录像环境（室内或户外）和相机的运动状态分类。</p>
+<ul>
+<li>
+<p>改变采样频率会直接影响 viewport 预测的精度，频率越低，精度越低。</p>
+</li>
+<li>
+<p>相机运动的 viewport 预测错误率比相机静止的明显更高。</p>
+</li>
+</ul>
+<h4 id="通过分块容忍预测错误">通过分块容忍预测错误</h4>
+<p>因为不管 tile 的哪个部分被包含在预测的 viewport 中，只要包含一部分就会请求整个 tile，所以增大每个 tile 的尺寸能吸收预测错误。</p>
+<p>实验验证：</p>
+<p>设定从$4 \times 4$到$10 \times 10$的分块方式，使用不同的预测误差来检查分块设定可以容纳的最大预测误差，同时保持 tile 选择结果的相同质量。</p>
+<p>用$F_1$分数来表示 tile 选择的质量：$F_1 = \frac{2 \cdot precision \cdot recall}{precision + recall}$。</p>
+<p>实验结果表明更大的 tile 尺寸更能容忍预测错误。</p>
+<h3 id="分块策略对解码复杂性的影响">分块策略对解码复杂性的影响</h3>
+<p>虽然当前的移动设备硬件性能发展迅速，但是实时的高码率高分辨率全景视频的解码任务还是充满挑战。</p>
+<p>分块对于编码的影响：</p>
+<ul>
+<li>tile 越小，帧内和帧间内容的相关区域就越小，编码效率越低。</li>
+</ul>
+<p>直接影响解码复杂性的因素：</p>
+<ul>
+<li>tile 的数量。</li>
+<li>视频的分辨率。</li>
+<li>用于解码的资源。</li>
+</ul>
+<p>固定其中 1 个因素改变另外 2 个因素来检查其对解码的影响：</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211221170105101.png" alt="image-20211221170105101"></p>
+<p>根据对图的观察可以得出这 3 个因素在经验上是相互独立的，因为这三幅图之中的图像几乎相同。</p>
+<p>分别用$F_n(x), F_r(x), F_c(x)$表示 tile 数量、分辨率、线程数量为$x$时，解码时间与基线时间的比值。</p>
+<p>将这 3 个比值作为 3 个乘子建立分析模型：</p>
+<p>$$
+D = D_0 \cdot F_n(x_1) \cdot F_r(x_2) \cdot F_c(x_3)
+$$</p>
+<p>上式表示计算整体的解码时间，其中 tile 数量为$x_1$、分辨率为$x_2$、线程数量为$x_3$；$D_0$时解码的基线时间。</p>
+<p>这个模型将用于帮助做出分块和码率适应的决策。</p>
+<p>注意在实际情况中，可供使用的计算资源（线程数）是受限的，需要根据设备当前可用的计算资源来分配。</p>
+<h2 id="tbra-的设计">TBRA 的设计</h2>
+<ul>
+<li>$S = \lbrace s_1, s_2, &hellip; \rbrace$ 表示 360°视频分块方式的集合；</li>
+<li>对于分块方式$s_i$，$|s_i|$ 表示这种方案中 tile 的数量；</li>
+<li>当 $i &lt; j$ 时，假设 $|s_i| &lt; |s_j|$；</li>
+<li>对于分块方式$s$， $b_{i, j}$ 表示第 $i$ 块的 tile $j$，$i \le 块的数量, j \le |s|$；</li>
+<li>目标是确定分块方式$s$，并为每个 tile 确定其码率$b_{i, j}$；</li>
+</ul>
+<h3 id="分块自适应">分块自适应</h3>
+<h4 id="自适应的概念">自适应的概念</h4>
+<p>分块尺寸大小会导致 viewport 容错率和传输效率的变化。</p>
+<ul>
+<li>分块尺寸小，极端情况下每个像素点作为一个 tile，viewport 容错率最小，但是传输效率达到 100%；</li>
+<li>分块尺寸大，极端情况下整个视频帧作为一个 tile，viewport 容错率最大，但是传输效率最小；</li>
+</ul>
+<p>优化的目标就是在这两种极端条件中找到折中的最优解。</p>
+<h4 id="分块选择">分块选择</h4>
+<p>以$\overline{r_d}, d \in \lbrace left, right, up, down \rbrace$为半径扩大预测区域；$e_d$表示过去 n 秒中方向 $d$ 的预测错误平均值；</p>
+<p>$$
+\overline{r_d} = (1-\alpha) \cdot \overline{r_d} + \alpha \cdot e_d
+$$</p>
+<p>预测区域的扩展被进一步用于 tile 选择，受过去预测精度的动态影响。</p>
+<p>下一步检查不同分块方式，进而找到 QoE 和传输效率之间的折中。</p>
+<p>对于每个分块方式，比较基于扩展的预测区域的 tile 选择的质量。使用 2 个比值作为 QoE 和传输效率的度量：</p>
+<p>$$
+Miss\ Ratio = \frac{of\ missed\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p>$$
+Waste\ ratio = \frac{of\ unnecessary\ pixels\ in\ expanded\ prediction}{of\ viewed\ pixels}
+$$</p>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211222105900626.png" alt="image-20211222105900626"></p>
+<p>这 2 个比值的 tradeoff 可以在上图中清晰地看出。</p>
+<p>使用分块方式对应的惩罚$Tiling\ i_{penalty}$来评估其性能：</p>
+<p>$$
+Tiling\ i_{penalty} = \beta \cdot Miss\ Ratio + |1/cos(\phi_i)| \cdot Waste\ Ratio
+$$</p>
+<p>$\phi_i$ 是 viewport $i$ 的中心纬度坐标，它表明随着 viewport 的垂直移动，浪费率的权重会发生变化。（因为投影方式是 ERP）</p>
+<p>检查完所有的方式之后，最终选择惩罚最小的分块方式。</p>
+<h3 id="码率自适应">码率自适应</h3>
+<h4 id="视频质量">视频质量</h4>
+<p>$w_{i, j}$表示在第 $i$ 个视频块播放时，tile $j$ 的权重；在当前方案中 $w_{i, j} = 0\ or\ 1$ 取决于 tile 是否在预测的 viewport 中。</p>
+<p>$q(b_{i, j})$ 是 tile 比特率选择 $b_{i, j}$ 与用户实际感知到的质量之间的非递减映射函数。</p>
+<p>第 $i$ 个视频块的质量等级可以定义为：</p>
+<p>$$
+Q^{(1)}_i = \sum^n_{j=1} w_{i, j} q(b_{i, j})
+$$</p>
+<p>使用最新研究的<a href="https://ieeexplore.ieee.org/document/8979422/citations?tabFilter=papers">主观视频质量模型</a>：</p>
+<p>$$
+subjective\ PSNR:\ q_i = PSNR_i \cdot [M(v_i)]^{\gamma} [R(v_i)]^{\delta}
+$$</p>
+<p>$M(v_i)$ 是检测阈值；$R(v_i)$ 是视网膜滑移率；$v_i$ 是第播放 $i$ 个视频块时 viewport 的移动速度；$\gamma = 0.172, \delta = -0.267$</p>
+<h4 id="质量变化">质量变化</h4>
+<p>连续视频块之间的强烈质量变化会损害 QoE，定义质量变化作为响铃两个视频块之间质量的变化：</p>
+<p>$$
+Q^{(2)}_i = |Q^{(1)}_1 - Q^{(1)}_{i-1}|,\ i \in [2, m]
+$$</p>
+<h4 id="重缓冲时间">重缓冲时间</h4>
+<p>参数设置：</p>
+<ul>
+<li>$C_i$ 表示下载视频块 $i$ 的预计吞吐量；</li>
+<li>$B_i$ 表示客户端开始下载视频块 $i$ 时缓冲区的占用率；</li>
+<li>$B_{default}$ 表示在启动阶段默认的缓冲区填充等级，记 $B_{default} = B_1$；</li>
+<li>下载第 $i$ 个视频块需要时间 $\sum^n_{j=1} b_{i, j} / C_i$ ；</li>
+<li>每个视频块的长度为 $L$ ；</li>
+</ul>
+<p>缓冲区的状态应该在每次视频块被下载的时候都得到更新，则下一个视频块 $i+1$ 的缓冲区占用情况可以计算为：</p>
+<p>$$
+B_{i+1} = max\lbrace B_1 - \sum^n_{j=1} b_{i, j} / C_i,\ 0\rbrace + L
+$$</p>
+<p>下载第 $i$ 个视频块时的重缓冲时间可以计算为：</p>
+<p>$$
+Q^{(3)}_i = max \lbrace \sum^n_{j=1} b_{i, j} / C_i - B_i,\ 0 \rbrace + t_{miss}
+$$</p>
+<p>第一部分是下载时间过长且缓冲区耗尽，视频无法播放情况下的重新缓冲时间；</p>
+<p>第二部分 $t_{miss}$ 表示下载缺失的 tile 所花费的时间（在视频块播放过程中被看到但是之前没有分配码率的 tile）。</p>
+<h4 id="优化目标">优化目标</h4>
+<p>第 $i$ 个视频块的整体优化目标可以定义为前述 3 个指标的加权和：</p>
+<p>$$
+Q_i = pQ^{(1)}_i - qQ^{(2)}_i - rQ^{(3)}_i
+$$</p>
+<p>各个系数的符号分配表示：最大化视频质量、最小化块间质量变化、最小化重缓冲时间。</p>
+<p>传统意义上使用所有视频块的平均 QoE 作为优化对象，但实际上很难获得从块 $1$ 到块 $m$ 的整个视界的完美的未来信息。</p>
+<p>为了处理预测长期吞吐量和用户行为的难度，采用<a href="https://dl.acm.org/doi/10.1145/2785956.2787486">基于 MPC 的框架</a>，在有限的范围内优化多个视频块的 QoE，最终的目标函数可以形式化为：</p>
+<p>$$
+\underset{b_{i, j}, i \in [t, t+k-1], j \in [1, n]}{max} \sum^{t+k-1}_{i=t} Q_i
+$$</p>
+<p>因为短期内的 viewport 预测性能和网络状况可以很容易得到，QoE 优化可以通过使用窗口 $[t, t+k-1]$ 内的预测信息；</p>
+<p>接着将视界向前移动到 $[t+1, t+k]$ ，更新新的优化窗口的信息，为下一个视频块执行 QoE 优化，直到最后一个窗口。</p>
+<p>使用基于 MPC 的公式的优点：由于受限的问题规模，每个优化问题的实例都是实际可解的。</p>
+<h4 id="高效求解">高效求解</h4>
+<p>提出的公式天然适合在线求解，得益于短窗口的实例问题规模很小，QoE 优化可以通过详尽搜索定期解决。</p>
+<p>但是因为优化过程需要高频调用，所以对于大的搜索空间还是充满挑战。</p>
+<p>为了支持实时优化，需要对搜索空间进行高效剪枝，确定几点约束：</p>
+<ul>
+<li>
+<p>解码时间需要被约束；</p>
+<p>解码时间应该短于回放长度。</p>
+<p>给定移动设备上可用的计算资源，可以得到支持的最大解码线程数。</p>
+<p>基于解码时间的分析模型，由于解码复杂度和分辨率的单调性，可以找到设备能够限定时间内解码的最大质量水平，这会将码率选择限制在有界搜索空间内。</p>
+</li>
+<li>
+<p>码率选择应该考虑吞吐量的限制：$\sum^n_{j=1} b_{i, j} \le LC_i$ ；</p>
+<p>不会主动耗尽缓冲区，无需让其处理吞吐量的波动。</p>
+</li>
+<li>
+<p>码率选择应该考虑 tile 的分类；</p>
+<p>tile 的码率不应该低于同一个视频块中更低权重 tile 的码率： $b_{i, j} \ge b_{i, j&rsquo;}, \forall w_{i, j} &gt; w_{i, j&rsquo;}$ 。</p>
+</li>
+<li>
+<p>属于相同类别的 tile 比特率选择应该是同一个等级；</p>
+<p>这使码率自适应在 tile 类的级别上执行而非单个 tile 的级别，大大减小了搜索空间的规模。</p>
+</li>
+<li>
+<p>当优化窗口中的吞吐量和用户行为保持稳定时，同一个窗口中的 tile 应该有相同的结果。</p>
+</li>
+</ul>
+<h3 id="tbra-workflow">TBRA workflow</h3>
+<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20211223094358829.png" alt="tbra workflow"></p>
+<p>这样的方式需要在服务端存储大量的按照不同分块方式划分的不同码率版本的视频块，这一点可以进一步研究。</p>
+<p>但是对于移动终端设备而言，这样的解决方案只引入了可以忽略不计的开销。</p>
+<p>观察到 tile 自适应问题具有全局最优通常就是局部最优的特点，因此可以大大减少计算量。</p>
+<p>基于 MPC 的优化 workflow 还可以有效地解决码率自适应问题。</p></article>
+              </div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-nav">
+        <div class="pagination-button next-post">
+          
+          <div>«&nbsp;</div><a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/papers/note-for-mpc/"> Note for MPC</a>
+          
+        </div>
+        
+        <div class="pagination-button previous-post">
+          
+          <a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/papers/note-for-content-motion-viewport-prediction/">Note for Content Motion Viewport Prediction&nbsp;</a><div> »</div>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+<script
+  src="https://utteranc.es/client.js"
+  repo="ayamir/ayamir.github.io"
+  issue-term="pathname"
+  theme="github-light"
+  crossorigin="anonymous"
+  async
+></script>
+
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light"
+  >
+    <ul
+      class="list-style-none d-flex flex-wrap col-12 flex-justify-center mb-2 mb-lg-0"
+    >
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+</div>
+
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<script src="https://ayamir.github.io/js/mark.es6.min.js"></script>
+
+
+<script type="text/javascript">
+
+  const host = window.location.host;
+  const keyword = localStorage.getItem('keyword');
+  localStorage.removeItem('keyword');
+
+  if (keyword) {
+    const markInstance = new Mark(document.body);
+    markInstance.unmark({
+      done: function() {
+        markInstance.mark(keyword);
+      }
+    });
+  }
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-primary');
+  const mutedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-fg-muted');
+  const hoverColor = '#216EEB';
+
+  let originalStyle;
+  let svgOriginalStyle;
+  let titleOriginalStyle;
+
+  const onMouseOver = (node) => {
+    originalStyle = Object.assign({}, node.style);
+    node.style.backgroundColor = hoverColor;
+
+    const child = node.querySelector('.js-jump');
+    child.classList.remove('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    if (title && primaryColor === ' #fff') {
+      titleOriginalStyle = title.style;
+      title.style.color = '#fff';
+    }
+
+    const svg = node.querySelector('.octicon');
+    if (svg) {
+      svgOriginalStyle = svg.style;
+      svg.style.color = '#fff';
+    }
+  }
+
+  const onMouseLeave = (node) => {
+    node.style = originalStyle;
+    const child = node.querySelector('.js-jump');
+    child.classList.add('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    title.style = titleOriginalStyle;
+
+    const svg = node.querySelector('.octicon');
+    svg.style = svgOriginalStyle;
+  }
+
+  const createSearchItem = (title, link, index) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="${index}">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="${link}" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16"
+              version="1.1" width="16" data-view-component="true"
+              class="octicon octicon-repo js-jump-to-octicon-repo  flex-shrink-0">
+              <path fill-rule="evenodd"
+                d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z">
+              </path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${title}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Jump to
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const createGoogleSearchItem = (keyword) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="0">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="https://www.google.com/search?q=${keyword}" target="_blank" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search flex-shrink-0">
+                <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${keyword}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Google search
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const stripHtml = (html) => {
+    let tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    
+    const styles = tmp.getElementsByTagName('style');
+    while(styles[0]) {
+      styles[0].parentNode.removeChild(styles[0]);
+    }
+
+    
+    const scripts = tmp.getElementsByTagName('script');
+    while(scripts[0]) {
+      scripts[0].parentNode.removeChild(scripts[0]);
+    }
+    
+    return tmp.textContent || tmp.innerText || "";
+  }
+
+  const inputDom = document.querySelector(".Header-search-input");
+  const resultDom = document.getElementById('jump-to-results');
+  let debounceTimer;
+  let parser;
+  let xmlDoc;
+
+  const search = (_keyword) => {
+
+    resultDom.innerHTML = '';
+
+    const keyword = _keyword;
+
+    if (!keyword) return;
+
+    const progressDom = document.getElementById('search-progress');
+    if (progressDom && progressDom.classList.contains('d-none')) {
+      progressDom.classList.remove('d-none');
+    }
+
+    localStorage.setItem('keyword', keyword);
+    fetch(`${host.indexOf('localhost') > -1 ? 'http://' : 'https://'}${host}/index.xml`).then(resp => resp.text()).then(async (res) => {
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(res, 'text/xml');
+      const linkResult = xmlDoc.getElementsByTagName('link');
+      const titleResult = xmlDoc.getElementsByTagName('title');
+      const arr = [];
+
+      const matched = [];
+      await (async function searchLink() {
+        for (let i = 0; i < linkResult.length; i++) {
+          await fetch(linkResult[i].textContent).then(resp => resp.text().then(res => {
+            const pureText = stripHtml(res);
+            if (pureText.indexOf(keyword) >= 0) {
+              matched.push(i);
+            }
+          }))
+        }
+      })();
+
+      const googleSearchItem = createGoogleSearchItem(keyword);
+      const node= document.createRange().createContextualFragment(googleSearchItem);
+      resultDom.appendChild(node);
+
+      matched.map((itemIndex, index) => {
+        const r = createSearchItem(titleResult[itemIndex].textContent, linkResult[itemIndex].textContent, index + 1);
+        const node = document.createRange().createContextualFragment(r);
+        resultDom.appendChild(node);
+      });
+
+      if (progressDom && !progressDom.classList.contains('d-none')) {
+        progressDom.classList.add('d-none');
+      }
+    });
+  }
+
+  const debounce = (callback, time) => {
+    window.clearTimeout(debounceTimer);
+    debounceTimer = window.setTimeout(callback, time);
+  };
+
+  ['focus', 'input'].forEach(event => {
+    inputDom.addEventListener(event, (e) => {
+      debounce(() => search(e.target.value), 500);
+    }, false);
+  });
+
+  inputDom.addEventListener('blur', () => {
+    setTimeout(() => {
+      resultDom.innerHTML = '';
+    }, 100);
+  });
+
+</script>
+
+
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>

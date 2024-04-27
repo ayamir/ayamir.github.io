@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <script
+    type="application/javascript"
+    src='https://ayamir.github.io/js/theme-mode.js'
+  ></script>
+  <link rel="stylesheet" href='https://ayamir.github.io/css/frameworks.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github.min.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/github-style.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/light.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/dark.css' />
+  <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
+  
+  <title>
+    自适应360度视频推流挑战 | Ayamir&#39;s blog
+  </title>
+  
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+  
+  <meta name="theme-color" content="#1e2327" />
+
+  
+  <meta
+  name="description"
+  content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
+沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
+"
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://ayamir.github.io/posts/papers/note5/" />
+
+
+<meta name="twitter:card" content="summary" />
+<meta
+  name="twitter:title"
+  content="自适应360度视频推流挑战 - Ayamir&#39;s blog"
+/>
+<meta
+  name="twitter:description"
+  content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
+沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
+"
+/>
+<meta name="twitter:site" content="https://ayamir.github.io/" />
+<meta name="twitter:creator" content="" />
+<meta
+  name="twitter:image"
+  content="https://ayamir.github.io/"
+/>
+
+
+<meta
+  property="og:type"
+  content="article"
+/>
+<meta
+  property="og:title"
+  content="自适应360度视频推流挑战 - Ayamir&#39;s blog"
+/>
+<meta
+  property="og:description"
+  content="背景 用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。
+沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。
+"
+/>
+<meta property="og:url" content="https://ayamir.github.io/posts/papers/note5/" />
+<meta property="og:site_name" content="自适应360度视频推流挑战" />
+<meta
+  property="og:image"
+  content="https://ayamir.github.io/"
+/>
+<meta property="og:image:width" content="2048" />
+<meta property="og:image:height" content="1024" />
+
+<meta property="article:published_time" content="2021-11-04 11:01:18 &#43;0800 CST" />
+
+
+
+
+
+
+
+
+
+ 
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-6KX34MKCTY"
+></script>
+<script>
+  if (navigator.doNotTrack !== "1") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-6KX34MKCTY");
+  }
+</script>
+ 
+
+
+
+
+
+</head>
+
+
+<body>
+  
+
+<style>
+  .height-limitation {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-bottom: 4px solid var(--color-fg-muted);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div style="position: relative">
+  <header
+    class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on"
+  >
+    <div
+      class="Header-item mobile-none"
+      style="margin-top: -4px; margin-bottom: -4px"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item d-md-none">
+      <button
+        class="Header-link btn-link js-details-target"
+        type="button"
+        onclick="document.querySelector('#header-search').style.display = document.querySelector('#header-search').style.display == 'none'? 'block': 'none'"
+        aria-label="Search"
+      >
+        <svg
+          height="24"
+          class="octicon octicon-three-bars"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="24"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div
+      style="display: none"
+      id="header-search"
+      class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex"
+    >
+      <div
+        class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to"
+      >
+        <div class="position-relative">
+          <form
+            target="_blank"
+            action="https://www.google.com/search"
+            accept-charset="UTF-8"
+            method="get"
+            autocomplete="off"
+          >
+            <label
+              class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center"
+            >
+              <input
+                type="text"
+                class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable"
+                name="q"
+                value=""
+                placeholder="Search"
+                autocomplete="off"
+              />
+              <input type="hidden" name="q" value="site:https://ayamir.github.io/" />
+              <div
+                class="js-jump-to-suggestions-container jump-to-suggestions overflow-hidden position-absolute"
+              >
+                <div
+                  id="search-progress"
+                  class="d-none color-bg-primary no-underline p-2"
+                  role="progress"
+                  aria-selected="false"
+                >
+                  <div class="loader"></div>
+                </div>
+
+                <ul
+                  id="jump-to-results"
+                  role="listbox"
+                  class="Box border-0 p-0 m-0 js-navigation-container jump-to-suggestions-results-container js-jump-to-suggestions-results-container js-active-navigation-container height-limitation"
+                ></ul>
+              </div>
+            </label>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="Header-item Header-item--full flex-justify-center d-md-none position-relative"
+    >
+      <a class="Header-link" href="https://ayamir.github.io/" aria-label="Home">
+        <svg
+          class="octicon octicon-mark-github v-align-middle"
+          height="32"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="32"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="Header-item" style="margin-right: 0">
+      <a
+        href="javascript:void(0)"
+        class="Header-link no-select"
+        onclick="switchTheme()"
+      >
+        <svg
+          style="fill: var(--color-profile-color-modes-toggle-moon)"
+          class="no-select"
+          viewBox="0 0 16 16"
+          version="1.1"
+          width="16"
+          height="16"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4.52208 7.71754C7.5782 7.71754 10.0557 5.24006 10.0557 2.18394C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961C9.95801 1.07727 10.3495 0.771159 10.6474 0.99992C12.1153 2.12716 13.0615 3.89999 13.0615 5.89383C13.0615 9.29958 10.3006 12.0605 6.89485 12.0605C3.95334 12.0605 1.49286 10.001 0.876728 7.24527C0.794841 6.87902 1.23668 6.65289 1.55321 6.85451C2.41106 7.40095 3.4296 7.71754 4.52208 7.71754Z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+  
+<div>
+  <main>
+    <div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+      <div class="px-0">
+        <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+            <div class="d-flex">
+              <div class="d-none d-md-block">
+                <a class="avatar mr-2 flex-shrink-0" href="https://ayamir.github.io/">
+                  <img class=" avatar-user"
+                    src="/images/avatar.png"
+                    width="32" height="32" alt=""></a>
+              </div>
+              <div class="d-flex flex-column">
+                <h1 class="break-word f3 text-normal mb-md-0 mb-1">
+                  <span class="author">
+                    <a href="https://ayamir.github.io/"></a></span><span
+                    class="path-divider">/</span><strong class="css-truncate-target mr-1" style="max-width: 410px"><a
+                      href="https://ayamir.github.io/posts/papers/note5/">自适应360度视频推流挑战</a></strong>
+                </h1>
+                <div class="note m-0">
+                  Created <relative-time datetime="Thu, 04 Nov 2021 11:01:18 &#43;0800"
+                    class="no-wrap">
+                    Thu, 04 Nov 2021 11:01:18 &#43;0800</relative-time>
+
+                  
+                  <span class="file-info-divider"></span>
+                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:43:04 &#43;0800"
+                    class="no-wrap">
+                    Thu, 25 Apr 2024 22:43:04 &#43;0800</relative-time>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-lg px-3 new-discussion-timeline">
+      <div class="repository-content gist-content">
+        <div>
+          <div class="js-gist-file-update-container js-task-list-container file-box">
+            <div id="file-pytest" class="file my-2">
+              <div id="post-header" class="file-header d-flex flex-md-items-center flex-items-start sticky-header" style="z-index: 2">
+                <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+                  <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                    
+                    <summary id="toc-toggle" onclick="clickToc()" class="btn btn-octicon m-0 mr-2 p-2">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered">
+                        <path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path>
+                      </svg>
+                    </summary>
+                    <details-menu class="SelectMenu" id="toc-details" style="display: none;">
+                      <div class="SelectMenu-modal rounded-3 mt-1" style="max-height: 340px;">
+                        <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;" id="toc-list">
+                        </div>
+                      </div>
+                    </details-menu>
+                      9281 Words
+                    <span class="file-info-divider"></span>
+                                        42 min
+
+                  </div>
+                  <div class="file-actions flex-order-2 pt-0">
+                    
+                    
+                    <a class="muted-link mr-3" href="/tags/immersive-video">
+                      <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                        <path fill-rule="evenodd"
+                          d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                        </path>
+                      </svg>
+                      Immersive Video
+                    </a>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="Box-body px-5 pb-5" style="z-index: 1">
+                <article class="markdown-body entry-content container-lg"><h1 id="背景">背景</h1>
+<p>用户使用头戴设备比使用传统显示器观看 360 度视频内容时的满意度对于扰乱更加敏感。</p>
+<p>沉浸式的体验受到不完美的视角预测和高度动态化的网络状况的消极影响。</p>
+<p>目前主要面临的挑战有以下 4 个：</p>
+<p><img src="https://i.loli.net/2021/11/04/BOIuq9Ws7obHS3i.png" alt="image-20211104111113514"></p>
+<h2 id="viewport-预测">Viewport 预测</h2>
+<h3 id="背景-1">背景</h3>
+<p>HMD 的本质特征是快速响应用户头部的移动。当用户改变 viewport 时 HMD 处理交互并检测相关的 viewport 来精确播放器的信息，这样视野就能以正常的可视角度被提供给用户。Viewport 预测在优化的 360 度视频推流中非常必要。配备有位置传感器的可穿戴 HMD 允许客户端更新其视角方向相应的视角场景。</p>
+<h3 id="分类">分类</h3>
+<ul>
+<li><em>内容不可知</em>的方式基于历史信息对 viewport 进行预测。</li>
+<li><em>内容感知</em>的方式需要视频内容信息来预测未来的 viewport。</li>
+</ul>
+<h3 id="内容不可知方式">内容不可知方式</h3>
+<h4 id="分类-1">分类</h4>
+<ul>
+<li>平均线性回归 LR</li>
+<li>航位推算 DR</li>
+<li>聚类</li>
+<li>机器学习 ML</li>
+<li>编解码器体系结构</li>
+</ul>
+<h4 id="现有成果">现有成果</h4>
+<h5 id="qians-worklr">Qian&rsquo;s work——LR</h5>
+<p>使用平均线性回归和加权线性回归模型来做 viewport 预测，之后对与预测区域重叠的 tile 进行整体推流。</p>
+<ul>
+<li>当预测后 0.5s、1s、2s 加权线性回归表现更好</li>
+</ul>
+<h5 id="petrangelis-worklr">Petrangeli&rsquo;s work——LR</h5>
+<p>将被划分成 tile 的等矩形的帧分成 3 个区域：viewport 区、相邻区、其他区。</p>
+<p>结合观察者头部的移动，将可变比特率分配给可见和不可见区域。</p>
+<p>作者利用最近（100 毫秒）用户观看历史的线性外推来预测未来的注视点。</p>
+<h5 id="mavlankar-and-girods-work运动向量">Mavlankar and Girod&rsquo;s work——运动向量</h5>
+<p>使用运动向量比如观察者的平移、倾斜、缩放等方向上的速度和加速度，来执行视角区域预测。</p>
+<h5 id="la-fuentes-work运动向量">La Fuente&rsquo;s work——运动向量</h5>
+<p>考虑了两种预测变体：角速度和角加速度，从用户以前的方向数据来估计未来的头部方向。按照预测结果分配不同的量化参数到每个 tile 上。</p>
+<p>当进行进一步的预测时（超过 2s），这种方式限制了预测的精度。</p>
+<p>如果视频 tile 被基于错误的预测而被请求，用户的实际 viewport 可能会被没有请求因而没有内容的黑色 tile 所覆盖。</p>
+<h5 id="bans-workknnlr">Ban&rsquo;s work——KNN+LR</h5>
+<p>使用 KNN 算法利用跨用户观看历史，使用 LR 模型利用户个体化的行为。</p>
+<p>就视角预测的准确率而言，分别取得了 20%和 48%的绝对和相对改进。</p>
+<h5 id="lius-workcluster">Liu&rsquo;s work——cluster</h5>
+<p>提出了使用数据融合方法，通过考虑几个特征来估计未来视角位置。特征例如：用户的参与度、用户观看同一视频的行为、单个用户观看多个视频的行为、最终用户设备、移动性水平。</p>
+<h5 id="petrangelis-workcluster">Petrangeli&rsquo;s work——cluster</h5>
+<p>基于车辆轨迹预测的概念，考虑了类似的轨迹形成一个簇来预测未来的 viewport。</p>
+<p>结果表明这种方法为更长的视野提高了精确度。</p>
+<p>检查了来自三个欧拉角的不同轨迹，这样做可能导致性能不足。</p>
+<h5 id="rossis-workcluster">Rossi&rsquo;s work——cluster</h5>
+<p>提出了一种聚类的方法，基于球形空间中有意义的 viewport 重叠来确认用户的簇。</p>
+<p>基于 Bron-Kerbosch（BK）算法的聚类算法能够识别大量用户，这些用户观看的是相同的 60%的 3s 长球形视频块。</p>
+<p>与基准相比，该方法为簇提供了可兼容且重要的几何 viewport 重叠。</p>
+<h5 id="jiangs-work">Jiang&rsquo;s work</h5>
+<p>背景：</p>
+<p>LR 方法对于长期的预测视野会导致较差的预测精度。长短时记忆（LSTM）是一种递归神经网络（RNN）架构，适用于序列建模和模式开发。</p>
+<p>方法：</p>
+<p>为了在 FoV 预测中获取比 LR 方法更高的精确度，开发了一种使用带有 128 个神经元的 LSTM 模型的 viewport 预测方法。</p>
+<ul>
+<li>分析了 360 度数据集，观察到用户在水平方向头部有快速转向，但是在垂直方向几乎是稳定的。</li>
+<li>实验表明，这种方法同时考虑水平和垂直方向的头部移动时，比 LR 等方法产生了更少的预测错误。</li>
+</ul>
+<h5 id="baos-work">Bao&rsquo;s work</h5>
+<p>背景：</p>
+<p>对 150 个用户进行了 16 个视频剪辑的主观实验，并对其行为进行了分析。</p>
+<p>使用 3 个方向的欧拉角$\theta$, $\phi$, $\psi$来表示用户在 3D 空间中头部的移动，结果表明不同方向的动作有强自相关性和消极的互相关性。因此多个角度的预测可以分开进行。</p>
+<p>方法：</p>
+<p>开发两个独立的 LSTM 模型来分别预测$\theta$和$\phi$，之后将预测结果应用于目标区域流来有效利用可用网络资源。</p>
+<h5 id="hous-work">Hou&rsquo;s work</h5>
+<ul>
+<li>提出一种基于深度学习的视角产生方法来只对提前预测的 360 度视频和 3 自由度的 VR 应用的 viewport tile 进行抽取和推流。（使用了大规模的数据集来训练模型）</li>
+<li>使用包含多层感知器和 LSTM 模型来预测 6 自由度的 VR 环境中头部乃至身体的移动，预测的视野被预渲染来做到低延迟的 VR 体验。</li>
+</ul>
+<h5 id="heyses-work">Heyse&rsquo;s work</h5>
+<p>背景：</p>
+<p>在某些例子中，用户的移动在视频的不同部分中非常不稳定。这增加了机器学习方式的训练压力。</p>
+<p>方法：</p>
+<p>提出了一个基于 RL 模型的上下文代理，这个模型首先检测用户的显著移动，然后预测移动的方向。这种分层自学习执行器优于球形轨迹外推法（这种方法将用户运动建模为轨迹的一部分，而不是单位球体上的完整轨迹）</p>
+<h5 id="qians-work">Qian&rsquo;s work</h5>
+<p>提出了一种叫做 Flare 的算法来最小化实际 viewport 和预测 viewport 之间的不匹配。</p>
+<ul>
+<li>应用了一种 ML 方法来执行频繁的 viewport 预测，包括从 130 名用户收集的 1300 条头部运动轨迹的 4 个间隔。</li>
+<li>使用 viewport 轨迹预测，Flare 可以将错误预测替换成最新预测。</li>
+</ul>
+<h5 id="yu-and-lius-work">Yu and Liu&rsquo;s work</h5>
+<p>背景：</p>
+<p>LSTM 网络本身具有耗时的线性训练特性。编解码器的 LSTM 模型把训练过程并行化，相比于 LR 和 LSTM 本身而言，改善了预测精度。</p>
+<p>方法：</p>
+<p>使用基于注意力的 LSTM 编解码器网络体系结构来避免昂贵的递归并能更好地捕获 viewport 变化。</p>
+<ul>
+<li>提出的体系结构相比于传统的 RNN，获得了更高的预测精度，更低的训练复杂度和更快的收敛。</li>
+</ul>
+<h5 id="jamalis-work">Jamali&rsquo;s work</h5>
+<p>提出使用 LSTM 编解码器网络来做长期的 viewport 预测（例如 3.5s）。</p>
+<p>收集了低延迟异质网络上跨用户的方向反馈来调整高延迟网络上目标用户的预测性能。</p>
+<h3 id="内容感知方式">内容感知方式</h3>
+<h4 id="背景-2">背景</h4>
+<p>内容感知方式可以提高预测效率。</p>
+<h4 id="具体方法">具体方法</h4>
+<h5 id="aladaglis-work">Aladagli&rsquo;s work</h5>
+<p>提出了一个显著性驱动的模型来提高预测精度。</p>
+<ul>
+<li>没有考虑用户在 360 度视频中的视角行为。</li>
+<li>viewport 预测错误可以通过理解用户对 360 度视频独特的可见注意力最小化。</li>
+</ul>
+<h5 id="nguyens-work">Nguyen&rsquo;s work</h5>
+<p>背景：</p>
+<p>大多数现存的方法把显著性图看作是 360 度显示中的位置信息来获得更好的预测结果。</p>
+<p>通用的显著性和位置信息体系结构基于固定预测模型。</p>
+<p>方法：</p>
+<p>提出了<code>PanoSalNet</code>来捕获用户在 360 度帧中独特的可见注意力来改善显著性检测的性能。</p>
+<ul>
+<li>同时使用 HMD 特性和显著性图的固定预测模型获得了可测量的结果。</li>
+</ul>
+<h5 id="xus-work">Xu&rsquo;s work</h5>
+<p>提出了两个 DRL(Deep Reinforcement Learning)模型用于同时考虑运动轨迹和可见注意力特性的 viewport 预测网络。</p>
+<ul>
+<li>离线模型基于内容流行度检测每个帧里的显著性。</li>
+<li>在线模型基于从离线模型获得的显著性图和之前的 viewport 预测信息预测 viewport 方向和大小。</li>
+<li>这个网络只能预测 30ms 的下一个 viewport 位置。</li>
+</ul>
+<h5 id="xus-work-1">Xu&rsquo;s work</h5>
+<p>收集了大规模的被使用带有眼部轨迹跟踪的 HMD 的 45 个观测者观察的动态 360 度视频数据集，提出了基于历史扫描路径和图像特征预测注视位移的方法。</p>
+<ul>
+<li>在与当前注视点、viewport 和整个图像相关的三个空间尺度上执行了显著性计算。</li>
+<li>可能的图像特性被通过向 CNN 喂图像和相应的显著性图，同时 LSTM 模型捕获历史信息来抽取出来。</li>
+<li>之后将 LSTM 和 CNN 特性耦合起来，用于下一次的用户注视信息预测。</li>
+</ul>
+<h5 id="fans-work">Fan&rsquo;s work</h5>
+<p>用户更容易被运动的物体吸引，因此除了显著性图之外，Fan 等人也考虑了使用预训练 的 CNN 来估计用户未来注视点的内容运动图。</p>
+<ul>
+<li>由于可能存在多个运动，这让预测变得不可靠，因此运动贴图的开发还需要进一步的研究。</li>
+</ul>
+<h5 id="yangs-work">Yang&rsquo;s work</h5>
+<ul>
+<li>使用 CNN 模型基于历史观测角度信息预测了单 viewport。</li>
+<li>接着考虑了一种使用内容不可知和内容感知方法如 RNN 和 CFVT 模型的融合层的 viewport 轨迹预测策略。</li>
+<li>融合模型使其同时支持更好地预测并且提高了大概 40%的精度。</li>
+</ul>
+<h5 id="ozcinars-work">Ozcinar&rsquo;s work</h5>
+<p>将 viewport 轨迹转换为基于 viewport 的视觉注意图，然后对不同大小的 tile 进行推流以保证更高的编码效率。</p>
+<h5 id="lis-work">Li&rsquo;s work</h5>
+<p>现有的预测模型对未来的预测能力有限，Li 等人提出了两种模型，分别用于 viewport 相关和基于 tile 的推流系统。</p>
+<ul>
+<li>第一个模型应用了基于用户轨迹的 LSTM 编解码网络体系结构。</li>
+<li>第二个模型应用了卷积 LSTM 编解码体系结构，使用序列的热图来预测用户的未来方向。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>精确的方向预测使 360 度视频的客户端可以以高分辨率下载最相关的 tile。</p>
+<p>当前采用显著性和位置信息的神经网络模型的性能比直接利用当前观察位置进行未来 viewport 位置估计的简单无运动的基线方法表现差。估计的显著性中的噪音等级限制了这些模型的预测精度。并且这些模型也引入了额外的计算复杂度。</p>
+<p>对于 360 度视频注意点的可靠预测和用户观看可能性与显著性图之间关系的理解，显著性模型必须被改善并通过训练大规模的数据集来适应，尤其是被配备了不同摄像机旋转的镜头所捕获的数据。</p>
+<p>另一方面，卷积 LSTM 编解码器和基于轨迹的预测方法适合长期预测，并能带来相当大的 QoE 改进，特别是在协作流媒体环境中。</p>
+<h2 id="qoe-评估">QoE 评估</h2>
+<h3 id="背景-3">背景</h3>
+<p>由于全方位视频非常普遍，因此，通过这种类型的视频分发来确定用户的特定质量方面是至关重要的。QoE 在视频推流应用中扮演着重要角色。在传统视频推流中，QoE 很大程度上被网络负载和分发性能所影响。现有的次优目标度量方法并不适用于全向视频，因为全向视频受网络状况和用户视角行为的影响很大。</p>
+<h3 id="主观质量评估">主观质量评估</h3>
+<p>主观质量评估是估计 360 度视频推流质量的现实并且可靠的方法。</p>
+<h4 id="upeniks-work">Upenik&rsquo;s work</h4>
+<p>用一台 MergeVR HMD 执行了主观测试来体验 360 度图像。</p>
+<ul>
+<li>实验数据包括主观分数、视角轨迹、在每个图像上花费的时间由软件上获得。</li>
+<li>视角方向信息被用于计算显著性图。</li>
+<li>但是这项研究没有考虑对 360 度视频的评估。</li>
+</ul>
+<h4 id="zhangs-work">Zhang&rsquo;s work</h4>
+<p>为了弥补 360 度视频和常规视频度量方式之间的性能差距，为全景视频提出了一种主观质量评估方法，称为<em>SAMPVIQ</em>。</p>
+<ul>
+<li>23 位参与者被允许观看 4 个受损视频，整体视频质量体验的评分在 0～5 分之间。</li>
+<li>参与者之间存在较大的评分差异。</li>
+</ul>
+<h4 id="xus-work-2">Xu&rsquo;s work</h4>
+<p>提出两种主观测量方式：总体区分平均意见分数(O-DMOS)和矢量区分平均意见分数(V-DMOS)来获得 360 度视频的质量损失。</p>
+<ul>
+<li>类似于传统食品的 DMOS 度量方式，O-DMOS 度量方式计算主观测试序列的总计区分分数。</li>
+</ul>
+<h4 id="schatzs-work">Schatz&rsquo;s work</h4>
+<p>研究了使用 HMD 观看 360 度内容时停顿事件的影响。</p>
+<ul>
+<li>沉浸式内容的主观质量评估并非不重要，可能导致比实际推荐更多的开放性问题。</li>
+<li>通常来讲人们的期望于传统的 HAS 相似，即如果可能的话，根本没有停顿。</li>
+</ul>
+<h4 id="可用的开源工具">可用的开源工具</h4>
+<p>AVTrack360，OpenTrack 和 360player 能捕获用户观看 360 度视频的头部轨迹。</p>
+<p>VRate 是一个在 VR 环境中提供主观问卷调查的基于 Unity 的工具。</p>
+<p>安卓应用*<a href="https://github.com/zerepolbap/miro360">MIRO360</a>*，支持未来 VR 主观测试的指南开发。</p>
+<h4 id="cybersickness"><code>Cybersickness</code></h4>
+<p><code>Cybersickness</code>是一种获得高 QoE 的潜在障碍，它能引起疲劳、恶心、不适和呕吐。</p>
+<h5 id="singlas-work">Singla&rsquo;s work</h5>
+<p>使用受限的带宽和分辨率，在不同的延迟情况下进行了两个主观实验。</p>
+<ul>
+<li>开发了主观测试平台、测试方法和指标来评估 viewport 自适应 360 度视频推流中的视频感知等级和<code>Cybersickness</code>。</li>
+<li>基于 tile 的推流在带宽受限的情况下表现很好。</li>
+<li>47ms 的延迟实际上不影响感知质量。</li>
+</ul>
+<h5 id="trans-work">Tran&rsquo;s work</h5>
+<p>考虑了几个影响因子例如内容的空间复杂性，数量参数，分辨率特性和渲染模型来评估 cybersickness，质量，可用性和用户的存在。</p>
+<ul>
+<li>VR 环境中快速移动的内容很容易引发 cybersickness。</li>
+<li>由于高可用性和存在性，用户的 cybersickness 也可能加剧。</li>
+</ul>
+<h5 id="singlas-work-1">Singla&rsquo;s work</h5>
+<p>评估了 28 名受试者在 Oculus Rift 和 HTC Vive 头戴式电脑上观看 6 个全高清和超高清分辨率 YouTube 视频时的观看不适感。</p>
+<ul>
+<li>HMD 的类型轻微地影响感知质量。</li>
+<li>分辨率和内容类型强烈影响个人体验。</li>
+<li>女性用户感到<code>cybersickness</code>的人数更多。</li>
+</ul>
+<h4 id="空间存在感">空间存在感</h4>
+<p>空间存在感能增强沉浸感。</p>
+<h5 id="zous-work">Zou&rsquo;s work</h5>
+<p>方法：</p>
+<p>提出了一个主观框架来测量 25 名受试者的空间存在感。</p>
+<ul>
+<li>提出的框架包括三层，从上到下分别为：空间存在层、感知层、科技影响层。</li>
+<li>心理上的空间存在感形成了空间存在层。</li>
+<li>感知层以视频真实感、音频真实感和交互元素为特征。</li>
+<li>科技影响层由几个模块组成，这些模块与感知层相连，以反映传感器的真实性。</li>
+</ul>
+<h5 id="huponts-work">Hupont&rsquo;s work</h5>
+<p>应用通用感知的原则来研究在 Oculus HMD 和传统 2D 显示器上玩游戏的用户的空间存在感。</p>
+<ul>
+<li>与 2D 显示器相比，3D 虚拟现实主义显示出更高的惊奇、沉浸感、存在感、可用性和兴奋感。</li>
+</ul>
+<h4 id="生理特征度量">生理特征度量</h4>
+<h5 id="salgados-work">Salgado&rsquo;s work</h5>
+<p>方法：</p>
+<p>捕获多种多样的生理度量，例如心率 HR，皮肤电活性 EDA、皮肤温度、心电图信号 ECG、呼吸速率、血压 BVP、脑电图信号 EEG 来评价沉浸式模拟器的质量。</p>
+<h5 id="egans-work">Egan&rsquo;s work</h5>
+<p>基于 HR 和 EDA 信号评估 VR 和非 VR 渲染模式质量分数。</p>
+<ul>
+<li>相比于 HR，EDA 对质量分数有强烈的影响。</li>
+</ul>
+<h4 id="技术因素感知">技术因素感知</h4>
+<p>不同的技术和感知特征，如失真、清晰度、色彩、对比度、闪烁等，用于评估感知视频质量。</p>
+<h5 id="fremereys-work">Fremerey&rsquo;s work</h5>
+<p>确定了可视质量强烈地依赖于应用的运动插值（MI）算法和视频特征，例如相机旋转和物体的运动。</p>
+<p>在一项主观实验中，12 位视频专家回顾了使用 FFmpeg 混合、FFmpeg MCI（运动补偿插值）和 butterflow 插值到 90 fps 的四个视频序列。作者发现，与其他算法相比，MCI 在 QoE 方面提供了极好的改进。</p>
+<h4 id="总结-1">总结</h4>
+<p>主观测试与人眼直接相关，并揭示了 360 度视频质量评估的不同方面的影响。</p>
+<p>在这些方面中，空间存在感和由佩戴 VR 头戴设备观看 360 度视频导致的<em>cybersickness</em>极为重要，因为这些效果并不在传统的 2D 视频观看中出现。</p>
+<p>主观评估需要综合的手工努力并因此昂贵耗时并易于出错，相对而言，客观评估更易于管理和可行。</p>
+<h3 id="客观质量评估">客观质量评估</h3>
+<p>由于类似的编码结构和 2D 平面投影格式，对 360 度内容应用客观质量评估很自然。</p>
+<h4 id="计算-psnr">计算 PSNR</h4>
+<p>现有投影方式中的采样密度在每个像素位置并不均匀。</p>
+<h5 id="yus-work">Yu&rsquo;s work</h5>
+<p>为基于球形的 PSNR 计算引入 S-PSNR 和 L-PSNR。</p>
+<ul>
+<li>S-PSNR 通过对球面上所有位置的像素点做同等加权来计算 PSNR。</li>
+<li>利用插值算法，S-PSNR 可以完成对支持多种投影模式的 360 度视频的客观质量评估。</li>
+<li>L-PSNR 通过基于纬度和访问频率的像素点加权测量 PSNR。</li>
+<li>L-PSNR 可以测量 viewport 的平均 PSNR 而无需特定的头部运动轨迹。</li>
+</ul>
+<h5 id="zakharchenkos-work">Zakharchenko&rsquo;s work</h5>
+<p>提出了一种 Craster Parabolic Projection-PSNR (CPP-PSNR) 度量方式来比较多种投影方案，通过不改变空间分辨率和不计算实际像素位置的 PSNR，将像素重新映射成 CPP 投影。</p>
+<ul>
+<li>CPP 投影方式可能使视频分辨率大幅下降。</li>
+</ul>
+<h5 id="suns-work">Sun&rsquo;s work</h5>
+<p>提出了一种叫做 weighted-to-spherically-uniform PSNR (WS-PSNR)的质量度量方式，以此来测量原始和受损内容之间的质量变化。</p>
+<ul>
+<li>根据像素在球面上的位置考虑权重。</li>
+</ul>
+<h4 id="计算-ssim">计算 SSIM</h4>
+<p>SSIM 是另一种质量评估指标，它通过三个因素反映图像失真，包括亮度、对比度和结构。</p>
+<h5 id="chens-work">Chen&rsquo;s work</h5>
+<p>为 2D 和 360 度视频分析了 SSIM 结果，引入了球型结构的相似性度量（S-SSIM）来计算原始和受损的 360 度视频之间的相似性。</p>
+<ul>
+<li>在 S-SSIM 中，使用重投影来计算两个提取的 viewport 之间的相似性。</li>
+</ul>
+<h5 id="zhous-work">Zhou&rsquo;s work</h5>
+<p>考虑相似性的权重提出了 WS-SSIM 来测量投影区域中窗口的相似性。</p>
+<ul>
+<li>性能评估表明，与其他质量评估指标相比，WS-SSIM 更接近人类感知。</li>
+</ul>
+<h5 id="van-der-hoofts-work">Van der Hooft&rsquo;s work</h5>
+<p>提出了<em>ProbGaze</em>度量方式，基于 tile 的空间尺寸和 viewport 中的注视点。</p>
+<ul>
+<li>考虑外围 tile 的权重来提供合适的质量测量。</li>
+<li>相比于基于中心和基于平均的 PSNR 和 SSIM 度量方式，<em>ProbGaze</em>能估计当用户突然改变 viewport 位置时的视频质量变化。</li>
+</ul>
+<h5 id="xus-work-3">Xu&rsquo;s work</h5>
+<p>引入了两种客观质量评估度量手段：基于内容感知的 PSNR 和非内容感知的 PSNR，用于编码 360 度视频。</p>
+<ul>
+<li>第一种方式基于空间全景内容对像素失真进行加权。</li>
+<li>第二种方式考虑人类偏好的统计数据来估计质量损失。</li>
+</ul>
+<h4 id="基于-psnr-和-ssim-方式的改进">基于 PSNR 和 SSIM 方式的改进</h4>
+<p>尽管各种基于 PSNR 和 SSIM 的方式被广阔地应用到了 360 度视频的质量评估中，但这些方式都没有真正地捕获到感知质量，特别是当 HMD 被用于观看视频时。因此需要为 360 度内容特别设计一种优化的质量度量方式。</p>
+<h5 id="upeniks-work-1">Upenik&rsquo;s work</h5>
+<p>考虑了一场使用 4 张高质量 360 度全景图像来让 45 名受试者在不同的编码设定下评估和比较客观质量度量方式性能的主观实验。</p>
+<ul>
+<li>现有的客观度量方式和主观感知到的质量相关性较低。</li>
+</ul>
+<h5 id="trans-work-1">Tran&rsquo;s work</h5>
+<p>论证主观度量和客观度量之间相关性较高，但是使用的数据集较小。</p>
+<h4 id="基于-ml-的方式">基于 ML 的方式</h4>
+<p>基于 ML 的方式可以弥补客观评估和主观评估之间的差距。</p>
+<h5 id="da-costa-filhos-work">Da Costa Filho&rsquo;s work</h5>
+<p>提出了一个有两个阶段的模型。</p>
+<ul>
+<li>首先自适应 VR 视频的播放性能由机器学习算法所确定。</li>
+<li>之后模型利用估计的度量手段如视频质量、质量变化、卡顿时间和启动延迟来确定用户的 QoE。</li>
+</ul>
+<h5 id="lis-work-1">Li&rsquo;s work</h5>
+<p>引入了基于 DRL 的质量获取模型，在一次推流会话中同时考虑头部和眼部的移动。</p>
+<ul>
+<li>360 度视频被分割成几个补丁。</li>
+<li>低观看概率的补丁被消除。</li>
+<li>参考和受损视频序列都被输入到深度学习可执行文件中，以计算补丁的质量分数。</li>
+<li>之后分数被加权并加到一起得到最终的分数。</li>
+</ul>
+<h5 id="yangs-work-1">Yang&rsquo;s work</h5>
+<p>考虑了多质量等级的特性和融合模型。</p>
+<ul>
+<li>质量特性用<code>region of interest(ROI)</code>图来计算，其中包括像素点等级、区域等级、对象等级和赤道偏差。</li>
+<li>混合模型由后向传播的神经网络构造而成，这个神经网络组合了多种质量特性来获取整体的质量评分。</li>
+</ul>
+<h3 id="总结-2">总结</h3>
+<p>精确的 QoE 获取是优化 360 度视频推流服务中重要的因素，也是自适应分发方案中基础的一环。</p>
+<p>单独考虑 VR 中的可视质量对完整的 QoE 框架而言并不足够。</p>
+<p>为能获得学界的认可，找到其他因素的影响也很必要，例如<code>cybersickness</code>，生理症状，用户的不适感，HMD 的重量和可用性，VR 音频，viewport 降级率，网络特性（延迟，抖动，带宽等），内容特性（相机动作，帧率，编码，投影等），推流特性（viewport 偏差，播放缓冲区，时空质量变化等）。</p>
+<h2 id="低延迟推流">低延迟推流</h2>
+<h3 id="背景-4">背景</h3>
+<p>360 度全景视频推流过程中的延迟由几部分组成：传感器延迟、云/边处理延迟、网络延迟、请求开销、缓冲延迟、渲染延迟和反馈延迟。</p>
+<p>低延迟的要求对于云 VR 游戏、沉浸式临场感和视频会议等更为严格。</p>
+<p>要求极低的终端处理延迟、快速的云/边计算和极低的网络延迟来确保对用户头部移动做出反馈。</p>
+<p>现代 HMD 可以做到使传感器延迟降低到用户无法感知的程度。</p>
+<p>传输延迟已经由 5G 移动和无线通信技术大幅减少。</p>
+<p>但是，对于减少处理、缓冲和渲染延迟的工作也是必要的。</p>
+<p>许多沉浸式应用的目标是 MTP 的延迟少于 20ms，理想情况是小于 15ms。</p>
+<h3 id="减少启动时间">减少启动时间</h3>
+<h4 id="减少初始化请求的数据量">减少初始化请求的数据量</h4>
+<p>通常来讲，较小的视频 segment 能减少启动和下载时间。</p>
+<h5 id="van-der-hoofts-work-1">Van der Hooft&rsquo;s work</h5>
+<p>考虑了新闻相关内容的推流，使用的技术有：</p>
+<ol>
+<li>服务端编码</li>
+<li>服务端的用户分析</li>
+<li>服务器推送策略</li>
+<li>客户端积极存储视频数据</li>
+</ol>
+<p>取得的效果：</p>
+<ul>
+<li>降低了启动时间</li>
+<li>允许不同网络设定下的快速内容切换</li>
+<li>较长的响应时间降低了性能</li>
+</ul>
+<h5 id="nguyens-work-1">Nguyen&rsquo;s work</h5>
+<p>基于 viewport 依赖的自适应策略分析了自适应间隔延迟和缓冲延迟的影响。</p>
+<ul>
+<li>使用服务端比特率计算策略来最小化响应延迟的影响。</li>
+<li>根据客户端的响应估计可用的网络吞吐量和未来的 viewport 位置。</li>
+<li>服务端的决策引擎推流合适的 tile 来满足延迟限制。</li>
+</ul>
+<p>取得的效果：</p>
+<ul>
+<li>对于 viewport 依赖型推流方案而言，较少的自适应和缓冲延迟不可避免。</li>
+</ul>
+<h3 id="降低由-tile-分块带来的网络负载">降低由 tile 分块带来的网络负载</h3>
+<p>在 HTTP/1.1 中，在空间上将视频帧分成矩形 tile 会增加网络负载，因为每个 tile 会产生独立的网络请求。</p>
+<p>请求爆炸的问题导致了较长的响应延迟，但是可以通过使用 HTTP/2 的服务器推送特性解决。这个特型使服务器能使用一条 HTTP 请求复用多条消息。</p>
+<h5 id="weis-work">Wei&rsquo;s work</h5>
+<p>利用 HTTP/2 协议来促进低延迟的 HTTP 自适应推流。</p>
+<ul>
+<li>提出的服务端推送的策略使用一条请求同时发送几个 segment 避免多个 GET 请求。</li>
+</ul>
+<h5 id="petrangelis-work">Petrangeli&rsquo;s work</h5>
+<p>结合特定请求参数与 HTTP/2 的服务端推送特性来促进 360 度视频推流。</p>
+<ul>
+<li>客户端为一个 segment 发送一条 call，服务器使用 FCFS 策略传送 k 个 tile。</li>
+<li>利用 HTTP/2 的优先级特性可以使高优先级的 tile 以紧急的优先级被获取，进而改善网络环境中的高往返时间的性能。</li>
+</ul>
+<h5 id="xus-work-4">Xu&rsquo;s work</h5>
+<p>为 360 度内容采用了<code>k-push</code>策略：将 k 个 tile 推送到客户端，组成一个单独的时间段。</p>
+<ul>
+<li>提出的方法与 QoE 感知的比特率自适应算法一起，在不同的 RTT 设定下，提高了 20%的视频质量，减少了 30%的网络传输延迟。</li>
+</ul>
+<h5 id="yahias-work">Yahia&rsquo;s work</h5>
+<p>使用 HTTP/2 的优先级和多路复用功能，在两个连续的 viewport 预测之间，即在交付相同片段之前和期间，组织紧急视频块的受控自适应传输。</p>
+<h5 id="yens-work">Yen&rsquo;s work</h5>
+<p>开发了一种支持 QUIC 的体系结构来利用流优先级和多路复用的特性来实现 360 度视频的安全和低优先级的传输。</p>
+<ul>
+<li>当 viewport 变化发生时，QUIC 能让常规的 tile 以低优先级推流，viewport 内的 tile 以高优先级推流，都通过一条 QUIC 连接来降低 viewport tile 的缺失率。</li>
+<li>作者说测试表明基于 QUIC 的自适应 360 度推流比 HTTP/1.1 和 HTTP/2 的方案表现更好。</li>
+</ul>
+<h3 id="使用移动边缘计算降低延迟">使用移动边缘计算降低延迟</h3>
+<h5 id="mangiantes-work">Mangiante&rsquo;s work</h5>
+<p>提出了利用基于边缘处理的 viewport 渲染方案来减少延迟，同时利用终端设备上的电源和计算负载。</p>
+<ul>
+<li>但是作者没有给出有效的算法或是建立一个实践执行平台。</li>
+</ul>
+<h5 id="lius-work">Liu&rsquo;s work</h5>
+<p>采用远端渲染技术，通过为不受约束的 VR 系统获取高刷新率来隐藏网络延迟。</p>
+<ul>
+<li>采用 60GHz 的无线链路支持的高端 GPU，来加快计算速度和 4K 渲染，减少显示延迟。</li>
+<li>尽管提供了高质量和低延迟的推流，但是使用了昂贵的带宽连接，这通常并不能获得。</li>
+</ul>
+<h5 id="viitanens-work">Viitanen&rsquo;s work</h5>
+<p>引入了端到端的 VR 游戏系统。通过执行边缘渲染来降低延迟，能源和计算开销。</p>
+<ul>
+<li>为 1080p 30fps 的视频格式实现了端到端的低延迟（30ms）的系统。</li>
+<li>前提是有充足的带宽资源、终端设备需要性能强劲的游戏本。</li>
+</ul>
+<h5 id="shis-work">Shi&rsquo;s work</h5>
+<p>考虑了不重视 viewport 预测的高质量 360 度视频渲染。</p>
+<ul>
+<li>提出的 MEC-VR 系统采用了一个远端服务器通过使用一个自适应裁剪过滤器来动态适应 viewport 覆盖率，这个过滤器按照观测到的系统延迟增加 viewport 之外的区域。</li>
+<li>基于 viewport 覆盖率的延迟调整允许客户端容纳和补偿突然的头部移动。</li>
+</ul>
+<h3 id="共享-vr-环境中的延迟处理">共享 VR 环境中的延迟处理</h3>
+<p>共享 VR 环境中用户的延迟取决于用户的位置和边缘资源的分发。</p>
+<h5 id="parks-work">Park&rsquo;s work</h5>
+<p>通过考虑多个用户和边缘服务器之间的双向通信，提出了一种使用线性蜂窝拓扑中的带宽分配策略，以最小化端到端系统延迟。确定了推流延迟强烈地依赖于：</p>
+<ul>
+<li>边缘服务器的处理性能</li>
+<li>多个交互用户之间的物理和虚拟空间</li>
+</ul>
+<h5 id="perfectos-work">Perfecto&rsquo;s work</h5>
+<p>集成了深度神经网络和毫米波多播传输技术来降低协同 VR 环境中的延迟。</p>
+<ul>
+<li>神经网络模型估计了用户即将来临的 viewport。</li>
+<li>用户被基于预测的相关性和位置分组，以此来优化正确的 viewport 许可。</li>
+<li>执行积极的多播资源调度来最小化延迟和拥塞。</li>
+</ul>
+<h3 id="总结-3">总结</h3>
+<p>在单用户和多用户的环境中，边缘辅助的解决方式对于控制延迟而言占主要地位。</p>
+<p>此外还有服务端的 viewport 计算、服务端 push 机制和远程渲染机制都能用于低延迟的控制。</p>
+<p>现有的 4G 网络足以支持早期的自适应沉浸式多媒体，正在成长的 5G 网络更能满足沉浸式内容的需求。</p>
+<h2 id="360-度直播推流">360 度直播推流</h2>
+<h3 id="背景-5">背景</h3>
+<p>传统的广播电视频道是直播推流的流行来源。现在私人的 360 度直播视频在各个社交媒体上也有大幅增长。</p>
+<p>因为视频生产者和消费者之间在云端的转码操作，360 度视频推流是更为延迟敏感的应用。</p>
+<p>现有的处理设备在诸如转码、渲染等实时处理任务上受到了限制。</p>
+<h4 id="内容分发">内容分发</h4>
+<h5 id="hus-work">Hu&rsquo;s work</h5>
+<p>提出了一套基于云端的直播推流系统，叫做<code>MELiveOV</code>，它使高分辨率的全向内容的处理任务以毛细管分布的方式分发到多个支持 5G 的云端服务器。</p>
+<ul>
+<li>端到端的直播推流系统包括内容创作模块、传输模块和 viewport 预测模块。</li>
+<li>移动边缘辅助的推流设计减少了 50%的带宽需求。</li>
+</ul>
+<h5 id="griwodzs-work">Griwodz&rsquo;s work</h5>
+<p>为 360 度直播推流开发了优化 FoV 的原型，结合了 RTP 和基于 DASH 的<code>pull-patching</code>来传送两种质量等级的 360 度视频给华为 IPTV 机顶盒和 Gear VR 头戴设备。</p>
+<ul>
+<li>作者通过在单个 H.265 硬件解码器上多路复用多个解码器来实现集体解码器的想法，以此减少切换时间。</li>
+</ul>
+<h4 id="视频转码">视频转码</h4>
+<h5 id="lius-work-1">Liu&rsquo;s work</h5>
+<p>研究表明只转码 viewport 区域有潜力大幅减少高性能转码的计算需求。</p>
+<h5 id="baigs-work">Baig&rsquo;s work</h5>
+<p>开发了快速编码方案来分发直播的 4K 视频到消费端设备。</p>
+<ul>
+<li>采用了分层视频编码的方式来在高度动态且不可预测的 WiGig 和 WiFi 链路上分发质量可变的块。</li>
+</ul>
+<h5 id="les-work">Le&rsquo;s work</h5>
+<p>使用 RTSP 网络控制协议为 CCTV 的 360 度直播推流提出了实时转码和加密系统。</p>
+<ul>
+<li>转码方式基于 ARIA 加密库，Intel 媒体 SDK 和 FFmpeg 库。</li>
+<li>系统可以管理并行的转码操作，实现高速的转码性能。</li>
+</ul>
+<h4 id="内容拼接缝合">内容拼接缝合</h4>
+<p>相比于其他因素如捕获、转码、解码、渲染，内容拼接在决定整体上的推流质量时扮演至关重要的角色。</p>
+<h5 id="chens-work-1">Chen&rsquo;s work</h5>
+<p>提出了一种内容驱动的拼接方式，这种方式将 360 度帧的语义信息的不同类型看作事件，以此来优化拼接时间预算。</p>
+<ul>
+<li>基于 VR 帧中的语义信息，tile 执行器模块选择合适的 tile 设计。</li>
+<li>拼接器模块然后执行基于 tile 的拼接，这样，基于可用资源，事件 tile 有更高的拼接质量。</li>
+<li>评估表明系统通过实现 89.4%的时间预算，很好地适应了不同的事件和时间限制。</li>
+</ul>
+<h3 id="总结-4">总结</h3>
+<p>相比于点播式流媒体，360 度直播推流面临多个挑战，例如在事先不知情的情况下处理用户导航、视频的首次流式传输以及实时视频的转码。在多用户场景中，这些挑战更为棘手。</p>
+<p>关于处理多个用户的观看模式，可伸缩的多播可以用于在低带宽和高带宽网络上以接近于按需推流的质量等级。</p>
+<p>基于 ROI 的 tile 拼接和转码可以显著地减少延迟敏感的交互型应用的延迟需求。</p></article>
+              </div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-nav">
+        <div class="pagination-button next-post">
+          
+          <div>«&nbsp;</div><a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/papers/note6/"> 沉浸式流媒体现有标准</a>
+          
+        </div>
+        
+        <div class="pagination-button previous-post">
+          
+          <a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/papers/note4/">沉浸式流媒体网络问题的相关解决方案&nbsp;</a><div> »</div>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script type="application/javascript" src='https://ayamir.github.io/js/toc.js'></script>
+<link rel="stylesheet" href='https://ayamir.github.io/css/toc.css' />
+
+<script
+  src="https://utteranc.es/client.js"
+  repo="ayamir/ayamir.github.io"
+  issue-term="pathname"
+  theme="github-light"
+  crossorigin="anonymous"
+  async
+></script>
+
+
+
+  <div class="footer container-xl width-full p-responsive">
+  <div
+    class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light"
+  >
+    <ul
+      class="list-style-none d-flex flex-wrap col-12 flex-justify-center mb-2 mb-lg-0"
+    >
+      
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+</div>
+
+</body>
+
+<script type="application/javascript" src="https://ayamir.github.io/js/github-style.js"></script>
+
+<script src="https://ayamir.github.io/js/mark.es6.min.js"></script>
+
+
+<script type="text/javascript">
+
+  const host = window.location.host;
+  const keyword = localStorage.getItem('keyword');
+  localStorage.removeItem('keyword');
+
+  if (keyword) {
+    const markInstance = new Mark(document.body);
+    markInstance.unmark({
+      done: function() {
+        markInstance.mark(keyword);
+      }
+    });
+  }
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-primary');
+  const mutedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-fg-muted');
+  const hoverColor = '#216EEB';
+
+  let originalStyle;
+  let svgOriginalStyle;
+  let titleOriginalStyle;
+
+  const onMouseOver = (node) => {
+    originalStyle = Object.assign({}, node.style);
+    node.style.backgroundColor = hoverColor;
+
+    const child = node.querySelector('.js-jump');
+    child.classList.remove('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    if (title && primaryColor === ' #fff') {
+      titleOriginalStyle = title.style;
+      title.style.color = '#fff';
+    }
+
+    const svg = node.querySelector('.octicon');
+    if (svg) {
+      svgOriginalStyle = svg.style;
+      svg.style.color = '#fff';
+    }
+  }
+
+  const onMouseLeave = (node) => {
+    node.style = originalStyle;
+    const child = node.querySelector('.js-jump');
+    child.classList.add('d-on-nav-focus');
+
+    const title = node.querySelector('.title');
+    title.style = titleOriginalStyle;
+
+    const svg = node.querySelector('.octicon');
+    svg.style = svgOriginalStyle;
+  }
+
+  const createSearchItem = (title, link, index) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="${index}">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="${link}" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Repository" aria-label="Repository" role="img" height="16" viewBox="0 0 16 16"
+              version="1.1" width="16" data-view-component="true"
+              class="octicon octicon-repo js-jump-to-octicon-repo  flex-shrink-0">
+              <path fill-rule="evenodd"
+                d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z">
+              </path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${title}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Jump to
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const createGoogleSearchItem = (keyword) => {
+    return `
+    <li class="color-bg-primary search-item d-flex flex-justify-start flex-items-center p-0 f5 navigation-item js-navigation-item js-jump-to-scoped-search"
+        role="option" aria-selected="false" tabindex="0">
+        <a onmouseover="onMouseOver(this)" onmouseleave="onMouseLeave(this)"
+          class="no-underline d-flex flex-auto flex-items-center jump-to-suggestions-path js-jump-to-suggestion-path js-navigation-open p-2"
+          href="https://www.google.com/search?q=${keyword}" target="_blank" data-item-type="scoped_search">
+          <div class="jump-to-octicon js-jump-to-octicon flex-shrink-0 mr-2 text-center ">
+            <svg title="Search" aria-label="Search" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search js-jump-to-octicon-search flex-shrink-0">
+                <path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+            </svg>
+          </div>    
+
+          <div
+            class="title jump-to-suggestion-name js-jump-to-suggestion-name flex-auto overflow-hidden text-left no-wrap css-truncate css-truncate-target">
+            ${keyword}
+          </div>
+
+          <div aria-hidden="true" style="color: var(--color-fg-muted);"
+            class="color-bg-primary js-jump border rounded-2 flex-shrink-0 color-bg-subtle px-1 ml-1 f6 d-on-nav-focus js-jump-to-badge-jump">
+            Google search
+            <span class="d-inline-block ml-1 v-align-middle">↵</span>
+          </div>
+        </a>
+      </li>
+    `
+  }
+
+  const stripHtml = (html) => {
+    let tmp = document.createElement('div');
+    tmp.innerHTML = html;
+
+    
+    const styles = tmp.getElementsByTagName('style');
+    while(styles[0]) {
+      styles[0].parentNode.removeChild(styles[0]);
+    }
+
+    
+    const scripts = tmp.getElementsByTagName('script');
+    while(scripts[0]) {
+      scripts[0].parentNode.removeChild(scripts[0]);
+    }
+    
+    return tmp.textContent || tmp.innerText || "";
+  }
+
+  const inputDom = document.querySelector(".Header-search-input");
+  const resultDom = document.getElementById('jump-to-results');
+  let debounceTimer;
+  let parser;
+  let xmlDoc;
+
+  const search = (_keyword) => {
+
+    resultDom.innerHTML = '';
+
+    const keyword = _keyword;
+
+    if (!keyword) return;
+
+    const progressDom = document.getElementById('search-progress');
+    if (progressDom && progressDom.classList.contains('d-none')) {
+      progressDom.classList.remove('d-none');
+    }
+
+    localStorage.setItem('keyword', keyword);
+    fetch(`${host.indexOf('localhost') > -1 ? 'http://' : 'https://'}${host}/index.xml`).then(resp => resp.text()).then(async (res) => {
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(res, 'text/xml');
+      const linkResult = xmlDoc.getElementsByTagName('link');
+      const titleResult = xmlDoc.getElementsByTagName('title');
+      const arr = [];
+
+      const matched = [];
+      await (async function searchLink() {
+        for (let i = 0; i < linkResult.length; i++) {
+          await fetch(linkResult[i].textContent).then(resp => resp.text().then(res => {
+            const pureText = stripHtml(res);
+            if (pureText.indexOf(keyword) >= 0) {
+              matched.push(i);
+            }
+          }))
+        }
+      })();
+
+      const googleSearchItem = createGoogleSearchItem(keyword);
+      const node= document.createRange().createContextualFragment(googleSearchItem);
+      resultDom.appendChild(node);
+
+      matched.map((itemIndex, index) => {
+        const r = createSearchItem(titleResult[itemIndex].textContent, linkResult[itemIndex].textContent, index + 1);
+        const node = document.createRange().createContextualFragment(r);
+        resultDom.appendChild(node);
+      });
+
+      if (progressDom && !progressDom.classList.contains('d-none')) {
+        progressDom.classList.add('d-none');
+      }
+    });
+  }
+
+  const debounce = (callback, time) => {
+    window.clearTimeout(debounceTimer);
+    debounceTimer = window.setTimeout(callback, time);
+  };
+
+  ['focus', 'input'].forEach(event => {
+    inputDom.addEventListener(event, (e) => {
+      debounce(() => search(e.target.value), 500);
+    }, false);
+  });
+
+  inputDom.addEventListener('blur', () => {
+    setTimeout(() => {
+      resultDom.innerHTML = '';
+    }, 100);
+  });
+
+</script>
+
+
+
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+</html>
