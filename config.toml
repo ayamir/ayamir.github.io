@@ -4,6 +4,7 @@ title = "Ayamir's blog"
 theme = "github-style-plus"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
+enableGitInfo = true
 
 [params]
   description = "All is for liberty."

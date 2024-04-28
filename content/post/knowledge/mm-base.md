@@ -3,6 +3,7 @@ title: "音视频基础知识"
 date: 2021-12-13T10:03:17+08:00
 draft: false
 math: true
+mathJax: true
 keywords: ["Multimedia"]
 tags: ["Multimedia"]
 categories: ["knowledge"]
