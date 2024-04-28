@@ -300,9 +300,9 @@
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 25 Apr 2024 22:43:04 &#43;0800"
+                  Modified <relative-time datetime="Sat, 27 Apr 2024 14:31:58 &#43;0800"
                     class="no-wrap">
-                    Thu, 25 Apr 2024 22:43:04 &#43;0800</relative-time>
+                    Sat, 27 Apr 2024 14:31:58 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -749,6 +749,43 @@ $$</p>
   onload="renderMathInElement(document.body);"></script>
 
 
+
+<script type="text/javascript" async
+  src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" },
+          extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+      }
+    });
+
+    MathJax.Hub.Queue(function () {
+      
+      
+      
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+<style>
+  code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+  }
+</style>
 
 
 </html>

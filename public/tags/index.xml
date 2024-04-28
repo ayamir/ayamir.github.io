@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Ayamir&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Apr 2024 00:48:59 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
     <item>
       <title>WebRTC</title>
       <link>https://ayamir.github.io/tags/webrtc/</link>
@@ -34,13 +41,6 @@
       <link>https://ayamir.github.io/tags/abi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://ayamir.github.io/tags/abi/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>C&#43;&#43;</title>
-      <link>https://ayamir.github.io/tags/c&#43;&#43;/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://ayamir.github.io/tags/c&#43;&#43;/</guid>
       <description></description>
     </item>
     <item>

@@ -6,8 +6,15 @@
     <description>Recent content in Knowledge on Ayamir&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 25 Apr 2024 22:43:04 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Apr 2024 00:48:59 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/categories/knowledge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>引用与优化</title>
+      <link>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</link>
+      <pubDate>Sun, 28 Apr 2024 22:49:37 +0800</pubDate>
+      <guid>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</guid>
+      <description>这篇博客主要总结了笔者对于C++中一些与值、引用有关的优化和使用方法。</description>
+    </item>
     <item>
       <title>Jitter Buffer学习理解（上）</title>
       <link>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</link>
