@@ -3,61 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ayamir.github.io/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/c&#43;&#43;/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
-  </url><url>
-    <loc>https://ayamir.github.io/categories/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
-  </url><url>
-    <loc>https://ayamir.github.io/categories/knowledge/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
-  </url><url>
-    <loc>https://ayamir.github.io/post/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
-  </url><url>
-    <loc>https://ayamir.github.io/tags/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</loc>
-    <lastmod>2024-04-29T00:48:59+08:00</lastmod>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
+  </url><url>
+    <loc>https://ayamir.github.io/categories/</loc>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
+  </url><url>
+    <loc>https://ayamir.github.io/categories/knowledge/</loc>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
+  </url><url>
+    <loc>https://ayamir.github.io/post/</loc>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
+  </url><url>
+    <loc>https://ayamir.github.io/tags/</loc>
+    <lastmod>2024-05-02T13:17:55+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webrtc/jitter-buffer/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/webrtc/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/os/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:36+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/os/sync-async-block-nonblock/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:36+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/os/process-thread-coroutine/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:35+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/backend/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:14+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/backend/what-is-rpc/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:14+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/categories/development/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:09+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/development/webrtc-task-queue/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:09+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/os/virtual-memory-space/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:36+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/abi/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:18+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/abi/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:18+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/python/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -75,22 +75,25 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/h264-encode/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:38+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/multimedia/</loc>
-    <lastmod>2024-04-27T14:31:58+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:39+08:00</lastmod>
+  </url><url>
+    <loc>https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/</loc>
+    <lastmod>2024-05-02T13:16:55+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/development/webrtc-development-prepare/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webrtc/note-for-webrtc-1/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/immersive-video/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:12+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note-for-dqb/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -108,19 +111,19 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/webgl/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:37+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note-for-survey-on-bitrate-adaptation-schemes-for-streaming-media-over-http-2/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -153,10 +156,10 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/viewport-predict/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:13+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/360video/summary-for-vr-and-panoramic-video/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:13+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note-for-srlABR-cross-user/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -168,7 +171,7 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/360video/summary-for-vp/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:12+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note-for-content-assisted-prediction/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -198,7 +201,7 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/mm-base/</loc>
-    <lastmod>2024-04-27T14:31:58+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:39+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note-for-rainbowDQN&#43;tiles/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -234,22 +237,22 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/iterator/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:20+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/vector/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:47+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/string/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:25+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/auto/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:19+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/const/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:19+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/reference-and-pointer/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:24+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/papers/note3/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
@@ -261,25 +264,25 @@
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/cpp/Cpp-Types/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:17+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/development/Immersive-Video-Deploy/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/tags/linux/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:33+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/linux/how-to-fix-GPGME-error/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:32+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/development/python-selenium-settings-on-microsoft-edge-dev-on-linux/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/linux/linux-authority/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:33+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/posts/knowledge/linux/dns-settings-on-archlinux/</loc>
-    <lastmod>2024-04-25T22:43:04+08:00</lastmod>
+    <lastmod>2024-05-02T13:09:32+08:00</lastmod>
   </url><url>
     <loc>https://ayamir.github.io/readme/</loc>
     <lastmod>2024-04-25T22:43:04+08:00</lastmod>

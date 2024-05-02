@@ -6,14 +6,14 @@
     <description>Recent content on Ayamir&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 29 Apr 2024 00:48:59 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 May 2024 13:17:55 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>引用与优化</title>
+      <title>C&#43;&#43;中的引用</title>
       <link>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</link>
       <pubDate>Sun, 28 Apr 2024 22:49:37 +0800</pubDate>
       <guid>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</guid>
-      <description>这篇博客主要总结了笔者对于C++中一些与值、引用有关的优化和使用方法。</description>
+      <description>这篇博客主要总结了C++中一些与引用有关的概念和使用方法。</description>
     </item>
     <item>
       <title>Jitter Buffer学习理解（上）</title>
@@ -84,6 +84,13 @@
       <pubDate>Tue, 23 Jan 2024 01:05:20 +0800</pubDate>
       <guid>https://ayamir.github.io/posts/knowledge/h264-encode/</guid>
       <description>这篇博客主要总结了与 h264 编码相关的知识。</description>
+    </item>
+    <item>
+      <title>push_back vs emplace_back</title>
+      <link>https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/</link>
+      <pubDate>Tue, 21 Nov 2023 20:10:00 +0800</pubDate>
+      <guid>https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/</guid>
+      <description>这篇文章主要总结了push_back和emplace_back的区别。</description>
     </item>
     <item>
       <title>远程桌面与WebRTC</title>

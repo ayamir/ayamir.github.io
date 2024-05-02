@@ -308,7 +308,7 @@
                 </path>
               </svg>
               Posts
-              <span class="Counter">66</span>
+              <span class="Counter">67</span>
             </a>
           </nav>
           <div class="profile-color-modes js-promo-color-modes-banner-profile isInitialToggle">
@@ -596,7 +596,7 @@
         </path>
       </svg>
       Posts
-      <span class="Counter ">66</span>
+      <span class="Counter ">67</span>
     </a>
   </nav>
 </div>
@@ -1016,6 +1016,43 @@
           <div class="col-12 d-inline-block">
             <div class="d-inline-block mb-1">
               <h3 class="wb-break-all">
+                <a href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples-explanation/">WebGL 样例的解释</a>
+              </h3>
+            </div>
+
+            <div>
+              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
+                这篇博客主要学习总结了 WebGL 的一些使用样例。
+              </div>
+            </div>
+
+            <div class="f6 text-gray mt-2">
+              
+              
+              <a class="muted-link mr-3" href="/tags/webgl">
+                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                  <path fill-rule="evenodd"
+                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                  </path>
+                </svg>
+                WebGL
+              </a>
+              
+              
+
+              Created
+              <relative-time datetime=" Thu, 03 Mar 2022 10:31:38 &#43;0800" class="no-wrap"
+                title=" Thu, 03 Mar 2022 10:31:38 &#43;0800">
+                Thu, 03 Mar 2022 10:31:38 &#43;0800
+              </relative-time>
+            </div>
+          </div>
+        </li>
+        
+        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
+          <div class="col-12 d-inline-block">
+            <div class="d-inline-block mb-1">
+              <h3 class="wb-break-all">
                 <a href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/">WebGL 样例</a>
               </h3>
             </div>
@@ -1196,52 +1233,6 @@
               <relative-time datetime=" Sat, 26 Feb 2022 11:26:06 &#43;0800" class="no-wrap"
                 title=" Sat, 26 Feb 2022 11:26:06 &#43;0800">
                 Sat, 26 Feb 2022 11:26:06 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/development/webxr-for-panoramic-video/">使用 WebXR 完成基于分块的全景视频自适应码率播放器</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                最近几天一直在用WebXR的技术重构目前的基于分块的全景视频自适应码率播放客户端，下面简述一下过程。
-首先结论是：分块播放+自适应码率+完全的沉浸式场景体验=Impossible（直接使用 WebXR 提供的 API）
-分块播放 分块播放的本质是将一整块的全景视频从空间上划分成多个小块，各个小块在时间上与原视频的长度是相同的。
-在实际播放的时候需要将各个小块按照原有的空间顺序排列好之后播放，为了避免各个分块播放进度不同的问题，播放时还需要经过统一的时间同步。
-对应到 web 端的技术实现就是：
-一个分块的视频&lt;-&gt;一个&lt;video&gt;h5 元素&lt;-&gt;一个&lt;canvas&gt;h5 元素
-视频的播放过程就是各个分块对应的&lt;canvas&gt;元素不断重新渲染的过程
-各个分块时间同步的实现需要一个基准视频进行对齐，大体上的原理如下：
-let baseVideo = null; let videos = []; initBaseVideo(); initVideos(); for (video in videos) { video.currentTime = baseVideo.currentTime; } 自适应码率 自适应码率的方案使用dashjs库实现，即对每个分块&lt;video&gt;元素的播放都用dashjs的方案控制：
-import { MediaPlayer } from &#34;dashjs&#34;; let videos = []; let dashs = []; let mpdUrls = []; initVideos(); initMpdUrls(); for (let i = 0; i &lt; tileNum; i++) { let video = videos[i]; let dash = MediaPlayer().
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/webxr">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                WebXR
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Fri, 25 Feb 2022 11:04:23 &#43;0800" class="no-wrap"
-                title=" Fri, 25 Feb 2022 11:04:23 &#43;0800">
-                Fri, 25 Feb 2022 11:04:23 &#43;0800
               </relative-time>
             </div>
           </div>

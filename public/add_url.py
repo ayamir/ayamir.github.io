@@ -20,6 +20,8 @@ def add_url_to_file(file_path, directory_path, beginning_to_strip) -> bool:
     second_dash_index = None
     count = 0
     for i, line in enumerate(lines):
+        if line.startswith("url"):
+            break
         if line.strip() == "---":
             count += 1
             if count == 2:

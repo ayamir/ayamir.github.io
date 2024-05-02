@@ -15,7 +15,7 @@
   <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
   
   <title>
-    WebGL 中的管线 | Ayamir&#39;s blog
+    push_back vs emplace_back | Ayamir&#39;s blog
   </title>
   
   <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
@@ -25,20 +25,20 @@
   
   <meta
   name="description"
-  content="这篇博客主要学习总结了 WebGL 的管线相关的知识。"
+  content="这篇文章主要总结了push_back和emplace_back的区别。"
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/" />
+<link rel="canonical" href="https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/" />
 
 
 <meta name="twitter:card" content="summary" />
 <meta
   name="twitter:title"
-  content="WebGL 中的管线 - Ayamir&#39;s blog"
+  content="push_back vs emplace_back - Ayamir&#39;s blog"
 />
 <meta
   name="twitter:description"
-  content="这篇博客主要学习总结了 WebGL 的管线相关的知识。"
+  content="这篇文章主要总结了push_back和emplace_back的区别。"
 />
 <meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
@@ -54,14 +54,14 @@
 />
 <meta
   property="og:title"
-  content="WebGL 中的管线 - Ayamir&#39;s blog"
+  content="push_back vs emplace_back - Ayamir&#39;s blog"
 />
 <meta
   property="og:description"
-  content="这篇博客主要学习总结了 WebGL 的管线相关的知识。"
+  content="这篇文章主要总结了push_back和emplace_back的区别。"
 />
-<meta property="og:url" content="https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/" />
-<meta property="og:site_name" content="WebGL 中的管线" />
+<meta property="og:url" content="https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/" />
+<meta property="og:site_name" content="push_back vs emplace_back" />
 <meta
   property="og:image"
   content="https://ayamir.github.io/"
@@ -69,7 +69,7 @@
 <meta property="og:image:width" content="2048" />
 <meta property="og:image:height" content="1024" />
 
-<meta property="article:published_time" content="2022-03-03 10:31:22 &#43;0800 CST" />
+<meta property="article:published_time" content="2023-11-21 20:10:00 &#43;0800 CST" />
 
 
 
@@ -291,18 +291,18 @@
                   <span class="author">
                     <a href="https://ayamir.github.io/"></a></span><span
                     class="path-divider">/</span><strong class="css-truncate-target mr-1" style="max-width: 410px"><a
-                      href="https://ayamir.github.io/posts/knowledge/webgl/webgl-pipeline/">WebGL 中的管线</a></strong>
+                      href="https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/">push_back vs emplace_back</a></strong>
                 </h1>
                 <div class="note m-0">
-                  Created <relative-time datetime="Thu, 03 Mar 2022 10:31:22 &#43;0800"
+                  Created <relative-time datetime="Tue, 21 Nov 2023 20:10:00 &#43;0800"
                     class="no-wrap">
-                    Thu, 03 Mar 2022 10:31:22 &#43;0800</relative-time>
+                    Tue, 21 Nov 2023 20:10:00 &#43;0800</relative-time>
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Thu, 02 May 2024 13:09:37 &#43;0800"
+                  Modified <relative-time datetime="Thu, 02 May 2024 13:16:55 &#43;0800"
                     class="no-wrap">
-                    Thu, 02 May 2024 13:09:37 &#43;0800</relative-time>
+                    Thu, 02 May 2024 13:16:55 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -332,21 +332,21 @@
                         </div>
                       </div>
                     </details-menu>
-                      318 Words
+                      740 Words
                     <span class="file-info-divider"></span>
-                                        1 min
+                                        3 min
 
                   </div>
                   <div class="file-actions flex-order-2 pt-0">
                     
                     
-                    <a class="muted-link mr-3" href="/tags/webgl">
+                    <a class="muted-link mr-3" href="/tags/c&#43;&#43;">
                       <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
                         <path fill-rule="evenodd"
                           d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
                         </path>
                       </svg>
-                      WebGL
+                      C&#43;&#43;
                     </a>
                     
                     
@@ -356,65 +356,117 @@
 
 
               <div class="Box-body px-5 pb-5" style="z-index: 1">
-                <article class="markdown-body entry-content container-lg"><h1 id="overview">Overview</h1>
-<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/webgl_graphics_pipeline.jpg" alt="Graphics Pipeline"></p>
-<h1 id="javascript">JavaScript</h1>
-<p>JavaScript is used to write the control code of the program, which includes the following actions:</p>
+                <article class="markdown-body entry-content container-lg"><p>使用<code>emplace_back</code> 和<code>push_back</code>的性能差别来自于，向<code>vector</code>中添加<strong>自定义类型</strong>的<strong>新对象</strong>时：</p>
 <ul>
-<li>Initialization: initialize WebGL context.</li>
-<li>Arrays: create arrays to hold the data of the geometry.</li>
-<li>Buffer objects: create buffer objects by passing the arrays as parameters.</li>
-<li>Shaders: create, compile and link the shaders.</li>
-<li>Attributes: create attributes, enable them and associate them with buffer objects.</li>
-<li>Uniforms: associate the uniforms.</li>
-<li>Transformation matrix: create transformation matrix.</li>
+<li>前者支持直接传入参数，可以在<code>vector</code> 内直接构造对象；</li>
+<li>后者不支持直接传入参数，所以只能先构造临时对象，调用类的拷贝构造函数将临时对象拷贝到<code>vector</code> 中，之后析构临时对象。</li>
 </ul>
-<h1 id="vertex-shader">Vertex Shader</h1>
-<p>The vertex shader is executed for each vertex provided in the vertex buffer object when start the rendering process by invoking the methods <code>drawElements()</code> and <code>drawArrays()</code>.</p>
-<ul>
-<li>
-<p>It calculates the position of each vertex of a primitive polygon and stores it in the varying <code>gl_position</code></p>
-</li>
-<li>
-<p>It calculates the other attributes such as color, texture coordinates and vertices that are normally associated with a vertex.</p>
-</li>
-</ul>
-<h1 id="primitive-assembly">Primitive Assembly</h1>
-<p>Here the triangles are assembled and passed to the rasterizer.</p>
-<h1 id="resterization">Resterization</h1>
-<p>The pixels in the final image of the primitive are determined.</p>
-<ul>
-<li>Culling: Initially the orientation of the polygons is determined. All those triangles with improper orientation that are not visible in view area are discarded.</li>
-<li>Clipping: If a triangle is partly outside the view area, then the part outside the view area is removed.</li>
-</ul>
-<h1 id="fragment-shader">Fragment Shader</h1>
-<p>The fragment shader gets:</p>
-<ul>
-<li>
-<p>data from the vertex shader in varying variables</p>
-</li>
-<li>
-<p>primitives from the rasterization stage</p>
-</li>
-</ul>
-<p>then:</p>
-<ul>
-<li>calculates the color value for each pixel between the vertices</li>
-<li>stores the color values of every pixel in each fragment</li>
-</ul>
-<h1 id="fragment-operations">Fragment Operations</h1>
-<p>The fragment operations may include:</p>
-<ul>
-<li>Depth</li>
-<li>Color buffer blend</li>
-<li>Dithering</li>
-</ul>
-<p>Once all the fragments are processed, a 2D image is formed and displayed on the screen.</p>
-<h1 id="frame-buffer">Frame Buffer</h1>
-<p>Frame buffer is the final destination of the rendering pipeline.</p>
-<p>Frame buffer is a portion of graphics memory that hold the scene data.</p>
-<p>This buffer contains details such as width and height of the surface (in pixels), color of each pixel and depth and stencil buffers.</p>
-<p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/fragment_operations.jpg" alt="Fragment Operations"></p>
+<p>下面是笔者的测试代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#define RESET &#34;\x1B[0m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define RED &#34;\x1B[31m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define GRN &#34;\x1B[32m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define YEL &#34;\x1B[33m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define BLU &#34;\x1B[34m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define MAG &#34;\x1B[35m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define CYN &#34;\x1B[36m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define WHT &#34;\x1B[37m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">is_reserve</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Point</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%sConstruct (%d, %d)%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">GRN</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">RESET</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Point</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%sCopy (%d, %d)%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">BLU</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">RESET</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 移动构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">    Point(Point &amp;&amp;rhs) : x(rhs.x), y(rhs.y) {
+</span></span></span><span class="line"><span class="cl"><span class="cm">        printf(&#34;%sMove (%d, %d)%s\n&#34;, YEL, x, y, RESET);
+</span></span></span><span class="line"><span class="cl"><span class="cm">    }
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 析构函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">~</span><span class="n">Point</span><span class="p">()</span> <span class="p">{</span> <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%sDestruct (%d, %d)%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">RED</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">RESET</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">EPNotWork</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">noConstructor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push_back_test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">is_reserve</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vec</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">emplace_back_test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">is_reserve</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vec</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test_efficency</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;push_back_test:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">push_back_test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;emplace_back_test:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">emplace_back_test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test_for_strcut</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">EPNotWork</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="mi">0</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// vec.emplace_back({0});
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// No Error after declare Struct name explicitly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vec</span><span class="p">.</span><span class="n">emplace_back</span><span class="o">&lt;</span><span class="n">EPNotWork</span><span class="o">&gt;</span><span class="p">({</span><span class="mi">0</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;No reserve&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_efficency</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Reserve&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_reserve</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_efficency</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>输出：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-ffe3fa95a1818f75160a73efd866dc15_1440w.webp?source=d16d100b" alt="img"></p>
+<p>因为传给<code>push_back</code>的是匿名对象（右值rvalue，更确切来讲是将亡值xvalue），所以相应调用的是接收右值作为参数的<code>push_back</code>的重载。如果取消<code>Point</code>类中移动构造函数的注释，<code>push_back</code>则会调用移动构造函数。</p>
+<p><img src="https://picx.zhimg.com/80/v2-7bdde1df18499481173694974ca29b4b_1440w.webp?source=d16d100b" alt="img"></p>
+<p>由此可见，只要是需要创建<strong>新的自定义类型的对象</strong>并将其加入<code>vector</code>中时，<code>push_back</code>都无法摆脱其需要调用2次构造函数（1次普通构造函数、1次拷贝或移动构造函数）和1次析构函数的行为。</p>
+<p>之所以要强调是加入<strong>新对象</strong>的原因在于如果加入已经构造过的对象，二者不会有任何的性能差距。</p>
+<p><img src="https://picx.zhimg.com/80/v2-85967536c56b178a7d32e1620d99d25e_1440w.webp?source=d16d100b" alt="img"></p>
+<p>在性能上还有一点需要注意的是：<code>vector</code> 在创建之后不使用<code>reserve</code> 预留大小的话，每次添加新元素都会拷贝旧<code>vector</code> 中的所有元素到新的<code>vector</code> 中。</p>
 </article>
               </div>
 
@@ -427,13 +479,13 @@
       <div class="pagination-nav">
         <div class="pagination-button next-post">
           
-          <div>«&nbsp;</div><a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-samples/"> WebGL 样例</a>
+          <div>«&nbsp;</div><a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/knowledge/h264-encode/"> H264 Encode</a>
           
         </div>
         
         <div class="pagination-button previous-post">
           
-          <a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/knowledge/webgl/webgl-basics/">WebGL 基础知识&nbsp;</a><div> »</div>
+          <a class="pagination-link link-reverse" href="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/">远程桌面与WebRTC&nbsp;</a><div> »</div>
           
         </div>
       </div>

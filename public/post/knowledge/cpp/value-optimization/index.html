@@ -15,7 +15,7 @@
   <link rel="stylesheet" href='https://ayamir.github.io/css/syntax.css' />
   
   <title>
-    引用与优化 | Ayamir&#39;s blog
+    C&#43;&#43;中的引用 | Ayamir&#39;s blog
   </title>
   
   <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
@@ -25,7 +25,7 @@
   
   <meta
   name="description"
-  content="这篇博客主要总结了笔者对于C&#43;&#43;中一些与值、引用有关的优化和使用方法。"
+  content="这篇博客主要总结了C&#43;&#43;中一些与引用有关的概念和使用方法。"
 />
 <meta name="robots" content="noodp" />
 <link rel="canonical" href="https://ayamir.github.io/post/knowledge/cpp/value-optimization/" />
@@ -34,11 +34,11 @@
 <meta name="twitter:card" content="summary" />
 <meta
   name="twitter:title"
-  content="引用与优化 - Ayamir&#39;s blog"
+  content="C&#43;&#43;中的引用 - Ayamir&#39;s blog"
 />
 <meta
   name="twitter:description"
-  content="这篇博客主要总结了笔者对于C&#43;&#43;中一些与值、引用有关的优化和使用方法。"
+  content="这篇博客主要总结了C&#43;&#43;中一些与引用有关的概念和使用方法。"
 />
 <meta name="twitter:site" content="https://ayamir.github.io/" />
 <meta name="twitter:creator" content="" />
@@ -54,14 +54,14 @@
 />
 <meta
   property="og:title"
-  content="引用与优化 - Ayamir&#39;s blog"
+  content="C&#43;&#43;中的引用 - Ayamir&#39;s blog"
 />
 <meta
   property="og:description"
-  content="这篇博客主要总结了笔者对于C&#43;&#43;中一些与值、引用有关的优化和使用方法。"
+  content="这篇博客主要总结了C&#43;&#43;中一些与引用有关的概念和使用方法。"
 />
 <meta property="og:url" content="https://ayamir.github.io/post/knowledge/cpp/value-optimization/" />
-<meta property="og:site_name" content="引用与优化" />
+<meta property="og:site_name" content="C&#43;&#43;中的引用" />
 <meta
   property="og:image"
   content="https://ayamir.github.io/"
@@ -291,7 +291,7 @@
                   <span class="author">
                     <a href="https://ayamir.github.io/"></a></span><span
                     class="path-divider">/</span><strong class="css-truncate-target mr-1" style="max-width: 410px"><a
-                      href="https://ayamir.github.io/post/knowledge/cpp/value-optimization/">引用与优化</a></strong>
+                      href="https://ayamir.github.io/post/knowledge/cpp/value-optimization/">C&#43;&#43;中的引用</a></strong>
                 </h1>
                 <div class="note m-0">
                   Created <relative-time datetime="Sun, 28 Apr 2024 22:49:37 &#43;0800"
@@ -300,9 +300,9 @@
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Mon, 29 Apr 2024 00:48:59 &#43;0800"
+                  Modified <relative-time datetime="Thu, 02 May 2024 13:17:55 &#43;0800"
                     class="no-wrap">
-                    Mon, 29 Apr 2024 00:48:59 &#43;0800</relative-time>
+                    Thu, 02 May 2024 13:17:55 &#43;0800</relative-time>
                   
                 </div>
               </div>
@@ -332,9 +332,9 @@
                         </div>
                       </div>
                     </details-menu>
-                      1981 Words
+                      3561 Words
                     <span class="file-info-divider"></span>
-                                        9 min
+                                        16 min
 
                   </div>
                   <div class="file-actions flex-order-2 pt-0">
@@ -434,7 +434,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span><span class="err">；</span>
 </span></span></code></pre></div><p>移动构造函数做了什么呢？如前所述，移动这一行为就是把被移动对象other的成员转移给当前对象，所以：</p>
 <ol>
-<li>递归浅拷贝other的每个成员给this的每个成员</li>
+<li>递归<strong>浅拷贝</strong>other的每个成员给this的每个成员</li>
 <li>释放other的所有成员</li>
 </ol>
 <p>而移动复制运算符就是：</p>
@@ -490,7 +490,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">a</span><span class="p">])</span> <span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// destructor
+</span></span><span class="line"><span class="cl">    <span class="c1">// destructor
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">~</span><span class="n">A</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">delete</span><span class="p">[]</span> <span class="n">array</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -516,7 +516,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">a</span><span class="p">])</span> <span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// move constructor
+</span></span><span class="line"><span class="cl">    <span class="c1">// move constructor
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">A</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;&amp;</span><span class="n">other</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">other</span><span class="p">.</span><span class="n">a</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">array</span> <span class="o">=</span> <span class="n">other</span><span class="p">.</span><span class="n">array</span><span class="p">;</span>
@@ -524,7 +524,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">other</span><span class="p">.</span><span class="n">array</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">other</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// destructor
+</span></span><span class="line"><span class="cl">    <span class="c1">// destructor
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">~</span><span class="n">A</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">delete</span><span class="p">[]</span> <span class="n">array</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -541,8 +541,8 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240429003254819.png" alt="image-20240429003254819"></p>
-<h2 id="stdmove">std::move</h2>
-<p><code>std::move()</code>在<code>&lt;utility&gt;</code>中定义，其作用很简单：就是明确地告诉编译器，需要调用形参是右值版本的函数重载</p>
+<h2 id="stdmove和右值引用">std::move和右值引用</h2>
+<p><code>std::move()</code>在<code>&lt;utility&gt;</code>中定义，其作用很简单：就是明确地告诉编译器，需要调用形参是右值引用版本的函数重载</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -552,7 +552,121 @@
 </span></span><span class="line"><span class="cl">   <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>              <span class="c1">// lvalue version push_back
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>   <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">obj</span><span class="p">));</span>   <span class="c1">// rvalue version push_back
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div><p>未完待续~</p>
+</span></span></code></pre></div><p>需要使用<code>std::move</code>的原因和移动构造函数存在的意义也是一样的，避免对象成员的重复创建，也就是避免开销较大的深拷贝。</p>
+<h2 id="stdforward引用折叠和万能引用">std::forward、引用折叠和万能引用</h2>
+<p>既然提到了<code>std::move</code>就不能绕过<code>std::forward</code>，它和<code>std::move</code>一样，也是在<code>&lt;utility&gt;</code>中定义，两者都是与引用有关的函数，但是使用场合和作用都不太相同，但是它们各自被使用在了<code>vector</code>的<code>push_back</code>和<code>emplace_back</code>定义中，所以也很有意思，这里做一下对比分析。</p>
+<p>因为<code>std::forward</code>和<strong>万能引用</strong>基本上是绑定在一块出现的，所以首先需要明确万能引用的定义。</p>
+<p>万能引用(Universal Reference)就是既可以接受左值、又可以接受右值的引用，还能保持<code>const</code>语义，这也是我们会看到for-range中的变量类型往往是<code>auto&amp;&amp;</code>的原因。</p>
+<p>需要特别注意的是：万能引用的概念在类型推导的场合下是才有意义的，具体来说就是在<code>auto</code>, <code>template &lt;typename T&gt;</code>这样的上下文中才有万能引用这个说法。万能引用和右值引用都是使用<code>&amp;&amp;</code>来表示引用的语义，但是只有在类型推导的上下文中，<code>&amp;&amp;</code>表示的才是万能引用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">)</span> <span class="p">{}</span> <span class="c1">// rvalue reference
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f1</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">)</span> <span class="p">{}</span>   <span class="c1">// universal reference
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">&amp;&amp;</span> <span class="n">v1</span> <span class="o">=</span> <span class="p">...;</span>     <span class="c1">// rvalue reference
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span><span class="o">&amp;&amp;</span> <span class="n">v2</span> <span class="o">=</span> <span class="p">...;</span>    <span class="c1">// universal reference
+</span></span></span></code></pre></div><p>形参类型是万能引用的函数既能接受左值、又能接受右值，左值和右值对应的实参类型的推导结果不同：</p>
+<ul>
+<li>传入左值，实参类型被推导为左值引用</li>
+<li>传入右值，实参类型为推导为非引用类型，也就是值类型</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">)</span> <span class="p">{}</span>   <span class="c1">// universal reference
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">A</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>    <span class="c1">// T推导为A&amp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">f</span><span class="p">(</span><span class="n">A</span><span class="p">{});</span>  <span class="c1">// T推导为A
+</span></span></span></code></pre></div><p>此时可以看到，如果传入左值，<code>T</code>被推导为<code>A&amp;</code>，模板相当于被实例化为<code>void (fA&amp; &amp;&amp; t);</code>，而这样的函数签名在C++中是会报编译错误的，这个时候<strong>引用折叠</strong>就发挥作用了，引用折叠的规则会将函数最终的签名推导为<code>void f(A&amp; t);</code>，也就是说，当编译器在模板实例化之后生成引用的引用的时候，引用折叠的规则会推导出最终的函数签名，具体如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">形参类型</th>
+<th style="text-align:center">实参类型</th>
+<th style="text-align:center">推导结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A&amp;</td>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">A&amp;</td>
+</tr>
+<tr>
+<td style="text-align:center">A&amp;</td>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">A&amp;</td>
+</tr>
+<tr>
+<td style="text-align:center">A&amp;&amp;</td>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">A&amp;</td>
+</tr>
+<tr>
+<td style="text-align:center">A&amp;&amp;</td>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">A&amp;&amp;</td>
+</tr>
+</tbody>
+</table>
+<p><code>std::forward</code>又名<strong>完美转发</strong>(Perfect Forward)，作用其实就是在类型推导的上下文中，可以保持传入实参的引用类型不变，即：传入左值引用就是左值引用，传入右值引用就是右值引用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="n">T</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;lvalue</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="n">T</span> <span class="o">&amp;&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;rvalue</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">g1</span><span class="p">(</span><span class="n">T</span> <span class="o">&amp;&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">g2</span><span class="p">(</span><span class="n">T</span> <span class="o">&amp;&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">f</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">));</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">mem</span><span class="p">)</span> <span class="o">:</span> <span class="n">mem</span><span class="p">(</span><span class="n">mem</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">mem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">f</span><span class="p">(</span><span class="n">A</span><span class="p">{</span><span class="mi">10</span><span class="p">});</span>  <span class="c1">// &#34;rvalue&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">g1</span><span class="p">(</span><span class="n">A</span><span class="p">{</span><span class="mi">10</span><span class="p">});</span> <span class="c1">// &#34;lvalue&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="n">g2</span><span class="p">(</span><span class="n">A</span><span class="p">{</span><span class="mi">10</span><span class="p">});</span> <span class="c1">// &#34;rvalue&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">A</span> <span class="n">a</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="n">g2</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// &#34;lvalue&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>下面是对这4个调用的解释：</p>
+<ol>
+<li>直接调用<code>f</code>的右值版本，所以输出&quot;rvalue&quot;；</li>
+<li><code>g1</code>接受万能引用，传递一个右值给<code>g1</code>，但是右值的这个属性是在<code>main</code>这个上下文中存在的(<code>A{10}</code>)，而对于<code>g1</code>的上下文来说，<code>t</code>就是一个普通的值类型，所以在不使用<code>std::forward</code>的情况下，会调用左值版本的<code>f</code>，从而输出&quot;lvalue&quot;；</li>
+<li><code>g1</code>接受万能引用，传递一个右值给<code>g2</code>，而在<code>g2</code>中使用了<code>std::forward</code>来保持传入的实参的右值属性，所以会调用右值版本的<code>f</code>，从而输出&quot;rvalue&quot;；</li>
+<li><code>g2</code>接受左值，并且使用<code>std::forward</code>保持左值的属性，所以调用左值版本的<code>f</code>，从而输出&quot;lvalue&quot;；</li>
+</ol>
+<h2 id="库代码中的例子">库代码中的例子</h2>
+<p>gcc中对于<code>push_back</code>和<code>emplace_back</code>的实现就分别用到了右值引用、万能引用、<code>std::move</code>和<code>std::forward</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="c1">// push_back
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 接收左值的重载版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span><span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span> <span class="n">__x</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span> <span class="o">!=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_end_of_storage</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_Alloc_traits</span><span class="o">::</span><span class="n">construct</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span><span class="p">,</span> <span class="n">__x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">++</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_M_realloc_insert</span><span class="p">(</span><span class="n">end</span><span class="p">(),</span> <span class="n">__x</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 接收右值的重载版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span><span class="n">value_type</span><span class="o">&amp;&amp;</span> <span class="n">__x</span><span class="p">)</span> <span class="p">{</span> <span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">__x</span><span class="p">));</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// emplace_back
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 万能引用，既接收左值又接收右值的唯一版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">_Tp</span><span class="p">,</span> <span class="k">typename</span> <span class="n">_Alloc</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">_Args</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">_Tp</span><span class="p">,</span> <span class="n">_Alloc</span><span class="o">&gt;::</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">_Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">__args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span> <span class="o">!=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_end_of_storage</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_Alloc_traits</span><span class="o">::</span><span class="n">construct</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">_Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">__args</span><span class="p">)...);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">++</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">_M_impl</span><span class="p">.</span><span class="n">_M_finish</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">_M_realloc_insert</span><span class="p">(</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">_Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">__args</span><span class="p">)...);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>而两者之间的区别可以看我之前的一篇文章：<a href="https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback">push_back vs emplace_back</a></p>
 </article>
               </div>
 
