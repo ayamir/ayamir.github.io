@@ -1,12 +1,13 @@
 ---
-title: "引用与优化"
+title: "C++中的引用"
 date: 2024-04-28T22:49:37+08:00
 draft: false
 math: true
 keywords: ["C++"]
 tags: ["C++"]
 categories: ["knowledge"]
-summary: "这篇博客主要总结了笔者对于C++中一些与值、引用有关的优化和使用方法。"
+summary: "这篇博客主要总结了C++中一些与引用有关的概念和使用方法。"
+url: "post/knowledge/cpp/value-optimization"
 ---
 
 ## 移动语义
@@ -119,7 +120,7 @@ private:
 
 移动构造函数做了什么呢？如前所述，移动这一行为就是把被移动对象other的成员转移给当前对象，所以：
 
-1. 递归浅拷贝other的每个成员给this的每个成员
+1. 递归**浅拷贝**other的每个成员给this的每个成员
 2. 释放other的所有成员
 
 而移动复制运算符就是：
@@ -188,7 +189,7 @@ class A {
     A() = default;
 
     A(int a) : a(a), array(new int[a]) {}
-	// destructor
+    // destructor
     ~A() {
         delete[] array;
         a = 0;
@@ -220,7 +221,7 @@ class A {
     A() = default;
 
     A(int a) : a(a), array(new int[a]) {}
-	// move constructor
+    // move constructor
     A(A &&other) {
         a = other.a;
         array = other.array;
@@ -228,7 +229,7 @@ class A {
         other.array = nullptr;
         other.a = 0;
     }
-	// destructor
+    // destructor
     ~A() {
         delete[] array;
         a = 0;
@@ -248,9 +249,9 @@ int main(int argc, char *argv[]) {
 
 ![image-20240429003254819](https://raw.githubusercontent.com/ayamir/blog-imgs/main/image-20240429003254819.png)
 
-## std::move
+## std::move和右值引用
 
-`std::move()`在`<utility>`中定义，其作用很简单：就是明确地告诉编译器，需要调用形参是右值版本的函数重载
+`std::move()`在`<utility>`中定义，其作用很简单：就是明确地告诉编译器，需要调用形参是右值引用版本的函数重载
 
 ```c++
 #include <vector>
@@ -264,4 +265,116 @@ int main() {
 }
 ```
 
-未完待续~
+需要使用`std::move`的原因和移动构造函数存在的意义也是一样的，避免对象成员的重复创建，也就是避免开销较大的深拷贝。
+
+## std::forward、引用折叠和万能引用
+
+既然提到了`std::move`就不能绕过`std::forward`，它和`std::move`一样，也是在`<utility>`中定义，两者都是与引用有关的函数，但是使用场合和作用都不太相同，但是它们各自被使用在了`vector`的`push_back`和`emplace_back`定义中，所以也很有意思，这里做一下对比分析。
+
+因为`std::forward`和**万能引用**基本上是绑定在一块出现的，所以首先需要明确万能引用的定义。
+
+万能引用(Universal Reference)就是既可以接受左值、又可以接受右值的引用，还能保持`const`语义，这也是我们会看到for-range中的变量类型往往是`auto&&`的原因。
+
+需要特别注意的是：万能引用的概念在类型推导的场合下是才有意义的，具体来说就是在`auto`, `template <typename T>`这样的上下文中才有万能引用这个说法。万能引用和右值引用都是使用`&&`来表示引用的语义，但是只有在类型推导的上下文中，`&&`表示的才是万能引用。
+
+```c++
+void f1(int&& t) {} // rvalue reference
+
+template<typename T>
+void f1(T&& t) {}   // universal reference
+
+int&& v1 = ...;     // rvalue reference
+auto&& v2 = ...;    // universal reference
+```
+
+形参类型是万能引用的函数既能接受左值、又能接受右值，左值和右值对应的实参类型的推导结果不同：
+
+- 传入左值，实参类型被推导为左值引用
+- 传入右值，实参类型为推导为非引用类型，也就是值类型
+
+```c++
+template<typename T>
+void f(T&& t) {}   // universal reference
+
+struct A {};
+A a;
+f(a);    // T推导为A&
+f(A{});  // T推导为A
+```
+
+此时可以看到，如果传入左值，`T`被推导为`A&`，模板相当于被实例化为`void (fA& && t);`，而这样的函数签名在C++中是会报编译错误的，这个时候**引用折叠**就发挥作用了，引用折叠的规则会将函数最终的签名推导为`void f(A& t);`，也就是说，当编译器在模板实例化之后生成引用的引用的时候，引用折叠的规则会推导出最终的函数签名，具体如下：
+
+| 形参类型 | 实参类型 | 推导结果 |
+| :------: | :------: | :------: |
+|    A&    |    &     |    A&    |
+|    A&    |    &&    |    A&    |
+|   A&&    |    &     |    A&    |
+|   A&&    |    &&    |   A&&    |
+
+`std::forward`又名**完美转发**(Perfect Forward)，作用其实就是在类型推导的上下文中，可以保持传入实参的引用类型不变，即：传入左值引用就是左值引用，传入右值引用就是右值引用。
+
+```c++
+#include <iostream>
+#include <utility>
+
+template <typename T> void f(T &t) { std::cout << "lvalue\n"; }
+template <typename T> void f(T &&t) { std::cout << "rvalue\n"; }
+
+template <typename T> void g1(T &&t) { f(t); }
+template <typename T> void g2(T &&t) { f(std::forward<T>(t)); }
+
+struct A {
+  A(int mem) : mem(mem) {}
+  int mem;
+};
+
+int main() {
+  f(A{10});  // "rvalue"
+  g1(A{10}); // "lvalue"
+
+  g2(A{10}); // "rvalue"
+  A a{10};
+  g2(a); // "lvalue"
+  return 0;
+}
+```
+
+下面是对这4个调用的解释：
+
+1. 直接调用`f`的右值版本，所以输出"rvalue"；
+2. `g1`接受万能引用，传递一个右值给`g1`，但是右值的这个属性是在`main`这个上下文中存在的(`A{10}`)，而对于`g1`的上下文来说，`t`就是一个普通的值类型，所以在不使用`std::forward`的情况下，会调用左值版本的`f`，从而输出"lvalue"；
+3. `g1`接受万能引用，传递一个右值给`g2`，而在`g2`中使用了`std::forward`来保持传入的实参的右值属性，所以会调用右值版本的`f`，从而输出"rvalue"；
+4. `g2`接受左值，并且使用`std::forward`保持左值的属性，所以调用左值版本的`f`，从而输出"lvalue"；
+
+## 库代码中的例子
+
+gcc中对于`push_back`和`emplace_back`的实现就分别用到了右值引用、万能引用、`std::move`和`std::forward`：
+
+```c++
+// push_back
+// 接收左值的重载版本
+void push_back(const value_type& __x) {
+  if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage) {
+    _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish, __x);
+    ++this->_M_impl._M_finish;
+  } else
+    _M_realloc_insert(end(), __x);
+}
+// 接收右值的重载版本
+void push_back(value_type&& __x) { emplace_back(std::move(__x)); }
+
+// emplace_back
+// 万能引用，既接收左值又接收右值的唯一版本
+template <typename _Tp, typename _Alloc>
+template <typename... _Args>
+void vector<_Tp, _Alloc>::emplace_back(_Args&&... __args) {
+  if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage) {
+    _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish,
+                             std::forward<_Args>(__args)...);
+    ++this->_M_impl._M_finish;
+  } else
+    _M_realloc_insert(end(), std::forward<_Args>(__args)...);
+}
+```
+
+而两者之间的区别可以看我之前的一篇文章：[push_back vs emplace_back](https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback)
