@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Ayamir&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 02 May 2024 13:17:55 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 05 May 2024 23:36:33 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43;中的值和优化</title>
+      <link>https://ayamir.github.io/post/knowledge/cpp/value-and-optimization/</link>
+      <pubDate>Sun, 05 May 2024 22:34:31 +0800</pubDate>
+      <guid>https://ayamir.github.io/post/knowledge/cpp/value-and-optimization/</guid>
+      <description>这篇博客主要学习记录C++中值和与之相关的优化</description>
+    </item>
     <item>
       <title>C&#43;&#43;中的引用</title>
       <link>https://ayamir.github.io/post/knowledge/cpp/value-optimization/</link>

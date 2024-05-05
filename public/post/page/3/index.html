@@ -308,7 +308,7 @@
                 </path>
               </svg>
               Posts
-              <span class="Counter">67</span>
+              <span class="Counter">68</span>
             </a>
           </nav>
           <div class="profile-color-modes js-promo-color-modes-banner-profile isInitialToggle">
@@ -596,7 +596,7 @@
         </path>
       </svg>
       Posts
-      <span class="Counter ">67</span>
+      <span class="Counter ">68</span>
     </a>
   </nav>
 </div>
@@ -1016,6 +1016,43 @@
           <div class="col-12 d-inline-block">
             <div class="d-inline-block mb-1">
               <h3 class="wb-break-all">
+                <a href="https://ayamir.github.io/post/knowledge/cpp/pushback-emplaceback/">push_back vs emplace_back</a>
+              </h3>
+            </div>
+
+            <div>
+              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
+                这篇文章主要总结了push_back和emplace_back的区别。
+              </div>
+            </div>
+
+            <div class="f6 text-gray mt-2">
+              
+              
+              <a class="muted-link mr-3" href="/tags/c&#43;&#43;">
+                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                  <path fill-rule="evenodd"
+                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
+                  </path>
+                </svg>
+                C&#43;&#43;
+              </a>
+              
+              
+
+              Created
+              <relative-time datetime=" Tue, 21 Nov 2023 20:10:00 &#43;0800" class="no-wrap"
+                title=" Tue, 21 Nov 2023 20:10:00 &#43;0800">
+                Tue, 21 Nov 2023 20:10:00 &#43;0800
+              </relative-time>
+            </div>
+          </div>
+        </li>
+        
+        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
+          <div class="col-12 d-inline-block">
+            <div class="d-inline-block mb-1">
+              <h3 class="wb-break-all">
                 <a href="https://ayamir.github.io/posts/knowledge/webrtc/remote-desktop-with-webrtc/">远程桌面与WebRTC</a>
               </h3>
             </div>
@@ -1207,55 +1244,6 @@ Level：IEEE TCSVT 2021</p>
               <relative-time datetime=" Wed, 09 Mar 2022 11:20:37 &#43;0800" class="no-wrap"
                 title=" Wed, 09 Mar 2022 11:20:37 &#43;0800">
                 Wed, 09 Mar 2022 11:20:37 &#43;0800
-              </relative-time>
-            </div>
-          </div>
-        </li>
-        
-        <li class="col-12 d-flex width-full py-4 border-bottom color-border-secondary public source">
-          <div class="col-12 d-inline-block">
-            <div class="d-inline-block mb-1">
-              <h3 class="wb-break-all">
-                <a href="https://ayamir.github.io/posts/development/note-for-mlflow/">MLflow 的用法</a>
-              </h3>
-            </div>
-
-            <div>
-              <div class="col-12 d-inline-block text-gray mb-2 pr-4">
-                Overview MLflow是一个用于管理机器学习全生命周期的框架。
-其主要的作用是：
-完成训练和测试过程中不同超参数的结果的记录、对比和可视化——MLflow Tracking 以一种可复现重用的方式包装 ML 代码——MLflow Projects 简化模型部署的难度——MLflow Models 提供中心化的模型存储来管理全生命周期——MLflow Model Registry 现在主要用到的是第三个，所以先记录Models的用法
-MLflow Models MLflow Models本质上是一种格式，用来将机器学习模型包装好之后为下游的工具所用。
-这种格式定义了一种惯例来让我们以不同的flavor保存模型进而可以被下游工具所理解。
-存储格式 每个MLflow Model是一个包含任意文件的目录，根目录之下有一个MLmodel文件，用于定义多个flavor。
-flavor是MLflow Model的关键概念，抽象上是部署工具可以用来理解模型的一种约定。
-MLflow定义了其所有内置部署工具都支持的几种标准flavor，比如描述如何将模型作为Python函数运行的python_function flavor。
-目录结构示例如下：
-MLmode文件内容示例如下：
-这个模型可以用于任何支持pytorch或python_function flavor的工具，例如可以使用如下的命令用python_function来 serve 一个有python_function flavor的模型：
-mlflow models serve -m my_model Model Signature 模型的输入输出要么是column-based，要么是tensor-based。
-column-based inputs and outputs can be described as a sequence of (optionally) named columns with type specified as one of the MLflow data type. tensor-based inputs and outputs can be described as a sequence of (optionally) named tensors with type specified as one of the numpy data type.
-              </div>
-            </div>
-
-            <div class="f6 text-gray mt-2">
-              
-              
-              <a class="muted-link mr-3" href="/tags/ml">
-                <svg class="octicon octicon-tag" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                  <path fill-rule="evenodd"
-                    d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z">
-                  </path>
-                </svg>
-                ML
-              </a>
-              
-              
-
-              Created
-              <relative-time datetime=" Mon, 07 Mar 2022 19:25:46 &#43;0800" class="no-wrap"
-                title=" Mon, 07 Mar 2022 19:25:46 &#43;0800">
-                Mon, 07 Mar 2022 19:25:46 &#43;0800
               </relative-time>
             </div>
           </div>
