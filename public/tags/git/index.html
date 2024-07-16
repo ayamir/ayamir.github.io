@@ -84,23 +84,7 @@
 
 
 
- 
-<script
-  async
-  src="https://www.googletagmanager.com/gtag/js?id=G-6KX34MKCTY"
-></script>
-<script>
-  if (navigator.doNotTrack !== "1") {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
 
-    gtag("config", "G-6KX34MKCTY");
-  }
-</script>
- 
 
 
 
@@ -639,13 +623,6 @@
             <div>
               <div class="col-12 d-inline-block text-gray mb-2 pr-4">
                 这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。
-clone 相关 克隆指定 branch ： git clone --branch &lt;branch-name&gt; &lt;remote-repo-url&gt;
-递归克隆（包括 submodule ）：git clone --recursive
-已经 clone 完的仓库：git submodule update --init --recursive
-checkout 相关 切换分支：git checkout &lt;branch-name&gt; / git switch &lt;branch-name&gt;
-新建分支：git checkout -b &lt;branch-name&gt; / git switch -c &lt;branch-name&gt;
-切换到一个 tag ：git fetch --all --tags --prune -&gt; git tag -&gt; 使用 / 快速搜索 -&gt; git checkout tags/&lt;tag-name&gt; -b &lt;branch-name&gt;
-commit 相关 undo 本地改动（还未 commit）：git restore &lt;file-path&gt;
               </div>
             </div>
 

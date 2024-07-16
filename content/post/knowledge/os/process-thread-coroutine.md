@@ -6,6 +6,7 @@ math: true
 keywords: ["进程", "线程", "协程"]
 tags: ["os"]
 categories: ["knowledge"]
+pin: true
 url: "posts/knowledge/os/process-thread-coroutine"
 summary: "这篇博客讨论了进程、线程以及协程的概念以及用法。"
 ---

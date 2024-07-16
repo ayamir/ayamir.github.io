@@ -6,7 +6,7 @@
     <description>Recent content in Development on Ayamir&#39;s blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 02 May 2024 13:09:09 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jul 2024 16:36:13 +0800</lastBuildDate>
     <atom:link href="https://ayamir.github.io/categories/development/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WebRTC任务队列学习笔记</title>
@@ -27,7 +27,7 @@
       <link>https://ayamir.github.io/posts/development/git-usage/</link>
       <pubDate>Tue, 23 Jan 2024 09:50:29 +0800</pubDate>
       <guid>https://ayamir.github.io/posts/development/git-usage/</guid>
-      <description>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。&#xA;clone 相关 克隆指定 branch ： git clone --branch &amp;lt;branch-name&amp;gt; &amp;lt;remote-repo-url&amp;gt;&#xA;递归克隆（包括 submodule ）：git clone --recursive&#xA;已经 clone 完的仓库：git submodule update --init --recursive&#xA;checkout 相关 切换分支：git checkout &amp;lt;branch-name&amp;gt; / git switch &amp;lt;branch-name&amp;gt;&#xA;新建分支：git checkout -b &amp;lt;branch-name&amp;gt; / git switch -c &amp;lt;branch-name&amp;gt;&#xA;切换到一个 tag ：git fetch --all --tags --prune -&amp;gt; git tag -&amp;gt; 使用 / 快速搜索 -&amp;gt; git checkout tags/&amp;lt;tag-name&amp;gt; -b &amp;lt;branch-name&amp;gt;&#xA;commit 相关 undo 本地改动（还未 commit）：git restore &amp;lt;file-path&amp;gt;</description>
+      <description>这篇博客用来记录平时用到的一些 Git 操作，用到之后会不定时更新。</description>
     </item>
     <item>
       <title>在Linux下如何搭建WebRTC的开发环境</title>

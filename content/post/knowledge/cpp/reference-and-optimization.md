@@ -3,6 +3,7 @@ title: "C++中的引用"
 date: 2024-04-28T22:49:37+08:00
 draft: false
 math: true
+pin: true
 keywords: ["C++"]
 tags: ["C++"]
 categories: ["knowledge"]
