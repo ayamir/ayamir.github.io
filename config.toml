@@ -9,6 +9,7 @@ enableGitInfo = true
 [params]
   description = "All is for liberty."
   github = "ayamir"
+  enableGithubFollowers = true
   email = "miracle_l@bupt.edu.cn"
   url = "https://github.com/ayamir"
   keywords = "Multimedia, WebRTC, CloudGame, Programming"
